@@ -1,0 +1,11 @@
+﻿namespace ElevateOTT.BlazorPlate.Features.AppSettings.Commands.UpdateSettings;
+
+public class UpdateFileStorageSettingsCommand
+{
+    #region Public Properties
+
+    public Guid Id { get; set; }
+    public int StorageType { get; set; }
+
+    #endregion Public Properties
+}
