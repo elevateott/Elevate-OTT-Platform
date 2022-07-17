@@ -1,11 +1,11 @@
 ﻿namespace BinaryPlate.Domain.Common.Interfaces;
 
 /// <summary>
-/// Indicates that any class inherits this interface has audit proprties as shadow properies.
+/// Indicates that any class inherits this interface has audit properties as shadow properties.
 /// </summary>
 /// <remarks>
 /// This interface is only allowed to be used with entity classes. This interface is not allowed to
-/// be used with DTO's classes.
+/// be used with DTO classes.
 /// </remarks>
 public interface IAuditable
 {

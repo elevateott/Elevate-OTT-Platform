@@ -33,30 +33,36 @@ builder.Services.AddAuth(builder.Configuration);
 
 //builder.Services.AddHttpsRedirection(options =>
 //{
-// options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-// options.HttpsPort = 44388;
+//    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+//    options.HttpsPort = 44388;
 //});
 
 builder.Services.AddCors(options =>
 {
-    var tenantMode = (TenantMode)Enum.Parse(typeof(TenantMode), builder.Configuration.GetValue<string>("AppOptions:TenantModeOptions"));
-    switch (tenantMode)
-    {
-        case TenantMode.SingleTenant:
-            options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder.WithOrigins(builder.Configuration.GetValue<string>("ClientApp:SingleTenantHostName"))
-                                  .SetIsOriginAllowedToAllowWildcardSubdomains()
-                                  .AllowAnyMethod()
-                                  .AllowAnyHeader()
-                                  .AllowCredentials());
-            break;
-        case TenantMode.MultiTenant:
-            options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder.WithOrigins(builder.Configuration.GetValue<string>("ClientApp:MultiTenantHostName"))
-                                  .SetIsOriginAllowedToAllowWildcardSubdomains()
-                                  .AllowAnyMethod()
-                                  .AllowAnyHeader()
-                                  .AllowCredentials());
-            break;
-    }
+    //var tenantMode = (TenantMode)Enum.Parse(typeof(TenantMode), builder.Configuration.GetValue<string>("AppOptions:TenantModeOptions"));
+    //switch (tenantMode)
+    //{
+    //    case TenantMode.SingleTenant:
+    //        options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder.WithOrigins(builder.Configuration.GetValue<string>("ClientApp:SingleTenantHostName"))
+    //                              .SetIsOriginAllowedToAllowWildcardSubdomains()
+    //                              .AllowAnyMethod()
+    //                              .AllowAnyHeader()
+    //                              .AllowCredentials());
+    //        break;
+    //    case TenantMode.MultiTenant:
+    //        options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder
+    //                  .WithOrigins(builder.Configuration.GetValue<string>("ClientApp:MultiTenantHostName"))
+    //                  .SetIsOriginAllowedToAllowWildcardSubdomains()
+    //                  .AllowAnyMethod()
+    //                  .AllowAnyHeader()
+    //                  .AllowCredentials());
+    //        break;
+    //}
+
+    options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 });
 
 builder.Services.AddSignalR();
@@ -129,7 +135,10 @@ app.UseIdentityOptions();
 
 app.UseAuth();
 
-app.UseHangfireDashboard(); // If you want to access the hangfire dashboard from outside the localhost, please refer to this link. https://docs.hangfire.io/en/latest/configuration/using-dashboard.html
+
+// If you want to access the hangfire dashboard from outside the localhost,
+// please refer to this link. https://docs.hangfire.io/en/latest/configuration/using-dashboard.html
+app.UseHangfireDashboard();
 
 app.UseEndpoints(endpoints =>
 {
