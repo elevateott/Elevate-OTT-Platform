@@ -2,17 +2,28 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Common\Interfaces\Services\ChargebeeServices\**" />
+	  <Compile Remove="Common\Interfaces\Services\EntityServices\**" />
+	  <Compile Remove="Common\Interfaces\Services\MuxServices\**" />
 	  <Compile Remove="Common\Queries\**" />
 	  <Compile Remove="Common\Resources\**" />
 	  <Compile Remove="Features\Identity\Account\Queries\**" />
 	  <Compile Remove="Migrations\**" />
+	  <EmbeddedResource Remove="Common\Interfaces\Services\ChargebeeServices\**" />
+	  <EmbeddedResource Remove="Common\Interfaces\Services\EntityServices\**" />
+	  <EmbeddedResource Remove="Common\Interfaces\Services\MuxServices\**" />
 	  <EmbeddedResource Remove="Common\Queries\**" />
 	  <EmbeddedResource Remove="Common\Resources\**" />
 	  <EmbeddedResource Remove="Features\Identity\Account\Queries\**" />
 	  <EmbeddedResource Remove="Migrations\**" />
+	  <None Remove="Common\Interfaces\Services\ChargebeeServices\**" />
+	  <None Remove="Common\Interfaces\Services\EntityServices\**" />
+	  <None Remove="Common\Interfaces\Services\MuxServices\**" />
 	  <None Remove="Common\Queries\**" />
 	  <None Remove="Common\Resources\**" />
 	  <None Remove="Features\Identity\Account\Queries\**" />
@@ -22,10 +33,11 @@
 	<ItemGroup>
 	  <Compile Remove="Common\Exceptions\IdentityException.cs" />
 	  <Compile Remove="Common\Exceptions\ValidationException.cs" />
+	  <Compile Remove="Common\Interfaces\Services\StorageServices\IBlobStorageService.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="11.0.1" />
+		<PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 		<PackageReference Include="DocumentFormat.OpenXml" Version="2.17.1" />
 		<PackageReference Include="FluentValidation" Version="11.1.0" />
@@ -36,6 +48,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
@@ -59,6 +72,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Common\Interfaces\Services\UtilityServices\" />
 	  <Folder Include="Features\Reports\" />
 	</ItemGroup>
 

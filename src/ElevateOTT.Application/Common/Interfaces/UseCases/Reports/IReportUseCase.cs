@@ -1,13 +1,12 @@
-﻿namespace ElevateOTT.Application.Common.Interfaces.UseCases.Reports
+﻿namespace ElevateOTT.Application.Common.Interfaces.UseCases.Reports;
+
+public interface IReportUseCase
 {
-    public interface IReportUseCase
-    {
-        #region Public Methods
+    #region Public Methods
 
-        Task<Envelope<ReportForEdit>> GetReport(GetReportForEditQuery request);
+    Task<Envelope<ReportForEdit>> GetReport(GetReportForEditQuery request);
 
-        Task<Envelope<ReportsResponse>> GetReports(GetReportsQuery request);
+    Task<Envelope<ReportsResponse>> GetReports(GetReportsQuery request);
 
-        #endregion Public Methods
-    }
+    #endregion Public Methods
 }

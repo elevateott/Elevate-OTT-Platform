@@ -12,6 +12,8 @@
     <RootNamespace>ElevateOTT.Infrastructure</RootNamespace>
     <AssemblyName>ElevateOTT.Infrastructure</AssemblyName>
     <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,12 +28,15 @@
   <ItemGroup>
     <Compile Remove="Identity\Extensions\GoogleAuthExtension.cs" />
     <Compile Remove="Middleware\GlobalExceptionHandler.cs" />
+    <Compile Remove="Services\Chargebee\ChargebeeService.cs" />
+    <Compile Remove="Services\Chargebee\ChargebeeWebhookService.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.12.0" />
     <PackageReference Include="EntityFrameworkCore.Extensions" Version="5.0.0" />
     <PackageReference Include="EntityFrameworkCore.SqlServer.HierarchyId" Version="3.0.1" />
+    <PackageReference Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
     <PackageReference Include="Hangfire" Version="1.7.30" />
     <PackageReference Include="Hangfire.Core" Version="1.7.30" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.30" />
@@ -56,11 +61,17 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
     <PackageReference Include="Stubble.Core" Version="1.9.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ElevateOTT.Application\ElevateOTT.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Chargebee\" />
+    <Folder Include="Services\Mux\" />
   </ItemGroup>
 
 </Project>

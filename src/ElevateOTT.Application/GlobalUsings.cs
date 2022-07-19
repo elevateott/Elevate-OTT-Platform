@@ -110,3 +110,5 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using System.Transactions;
 global using System.Web;
+
+global using Ardalis.GuardClauses;

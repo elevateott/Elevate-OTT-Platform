@@ -25,9 +25,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElevateOTT.BackendResources
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElevateOTT.FrontendResources", "src\ElevateOTT.FrontendResources\ElevateOTT.FrontendResources.csproj", "{CFEFD60F-2B78-4C66-BD0A-E500C13F8123}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElevateOTT.BlazorPlate", "src\ElevateOTT.BlazorPlate\ElevateOTT.BlazorPlate.csproj", "{77267A62-EB6E-4DFA-9BC7-47400192F332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElevateOTT.ClientPortal", "src\ElevateOTT.ClientPortal\ElevateOTT.ClientPortal.csproj", "{77267A62-EB6E-4DFA-9BC7-47400192F332}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElevateOTT.HostApp", "src\ElevateOTT.Host\ElevateOTT.HostApp.csproj", "{D5403C87-6AFC-4123-B9E9-B3278C09035F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{16004C70-6035-4437-8359-A89E69559549}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,10 +91,10 @@ Global
 		{D5403C87-6AFC-4123-B9E9-B3278C09035F} = {24056575-ED44-42AA-B4EA-F6138553E4CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
-		RESX_SortFileContentOnSave = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_PrefixTranslations = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_SortFileContentOnSave = True
+		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
 	EndGlobalSection
 EndGlobal
