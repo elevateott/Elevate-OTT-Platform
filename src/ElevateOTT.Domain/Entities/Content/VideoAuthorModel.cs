@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("VideosAuthors")]
-public class VideoAuthorModel : EntityBase
+public class VideoAuthorModel : BaseEntity
 {
     public Guid VideoId { get; set; }
 

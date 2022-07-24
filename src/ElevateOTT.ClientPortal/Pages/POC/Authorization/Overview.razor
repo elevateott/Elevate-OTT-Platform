@@ -56,7 +56,7 @@
                 <MudText Typo="Typo.body2" Class="mb-2">In Blazor WASM, We use conditional logic to show/hide components/tags according to the assigned roles for the logged in user.</MudText>
                 <MudText Typo="Typo.body2" Class="mb-2">e.g., <code><span>&#64;</span>if (User.IsInRole("admin"))</code>.</MudText>
                 <MudText Typo="Typo.body2" Class="mb-2">Also, we use conditional logic to show/hide components/tags according to the logged in user permissions/claims.</MudText>
-                <MudText Typo="Typo.body2" Class="mb-2">e.g., <code><span>&#64;</span>if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Applicants.UpdateApplicant")))</code>.</MudText>
+                <MudText Typo="Typo.body2" Class="mb-2">e.g., <code><span>&#64;</span>if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Authors.UpdateApplicant")))</code>.</MudText>
                 <MudAlert Severity="Severity.Warning" Class="mb-2">
                     <MudText Typo="Typo.body2" Class="mb-2">Client-Side Authorization method is the first line of defense against malicious users but it's not secure enough to guarantee the highest level of data protection.</MudText>
                 </MudAlert>
@@ -82,16 +82,16 @@
                 <MudList>
                     <MudList>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Login as john@demo.com / password: 123456.</MudText></MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Client-Side Authorization &#8594; Applicants.</MudText></MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Client-Side Authorization &#8594; Authors.</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">You shall notice that you can perform add, view, edit and delete operations..</MudText></MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Server-Side Authorization &#8594; Applicants.</MudText></MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Server-Side Authorization &#8594; Authors.</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">You shall also notice that you can perform add, view, edit and delete operations..</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Login as mandy@demo.com / password: 123456..</MudText></MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Client-Side Authorization &#8594; Applicants.</MudText></MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Client-Side Authorization &#8594; Authors.</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">You shall notice that you can only perform view operation..</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Navigate to poc/authorization/clientSideAuthorization/addApplicant/.</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">The system shall transfer you to 401 error page indicating that you are not authorized to access this page..</MudText></MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Server-Side Authorization &#8594; Applicants.</MudText></MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">Go to Proof of Concepts &#8594; Authorization &#8594; Server-Side Authorization &#8594; Authors.</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">You shall notice that the system displays add, view, edit and delete operations..</MudText></MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Check"><MudText Typo="Typo.body2" Class="mb-2">You shall be able to view any applicant profile but when you chooses to edit some profile, once you click on save button, the server will respond with a message indicating that You are forbidden to access api/applicants/UpdateApplicant..</MudText></MudListItem>
                     </MudList>
@@ -103,7 +103,7 @@
             <MudText Typo="Typo.body2" Class="mb-2">We devised a new outstanding feature that enables both developers and app admins to create and assign permissions to users in more flexible and dynamic way.</MudText>
             <MudText Typo="Typo.body2" Class="mb-2">Before we dive into the details, let's just take a look at the following problematic scenario.</MudText>
             <MudAlert Severity="Severity.Error" Class="mb-2">
-                <MudText Typo="Typo.body2">The developer implemented a new API called Applicants with CRUD operations.</MudText>
+                <MudText Typo="Typo.body2">The developer implemented a new API called Authors with CRUD operations.</MudText>
             </MudAlert>
             <MudAlert Severity="Severity.Error" Class="mb-2">
                 <MudText Typo="Typo.body2" Class="mb-2">The developer decorated each endpoint with [Authorize] attribute and mapped the relevant roles with each endpoint as per customer request. See the following image.</MudText>
@@ -113,7 +113,7 @@
                 <MudText Typo="Typo.body2">The developer published a new release to the production server.</MudText>
             </MudAlert>
             <MudAlert Severity="Severity.Error" Class="mb-2">
-                <MudText Typo="Typo.body2">After few days, the developer received a change request from the customer indicating that a new role called CEO that has access to everything should be granted full access permission to the Applicants API.</MudText>
+                <MudText Typo="Typo.body2">After few days, the developer received a change request from the customer indicating that a new role called CEO that has access to everything should be granted full access permission to the Authors API.</MudText>
             </MudAlert>
             <MudAlert Severity="Severity.Error" Class="mb-2">
                 <MudText Typo="Typo.body2" Class="mb-2">The developer mapped the new CEO role with all endpoints and published another release to the production server. See the following image.</MudText>
@@ -127,7 +127,7 @@
             <MudText Typo="Typo.body2" Class="mb-2">Once you run BlazorPlate, it will scan all the API's that have been decorated with [BPAuthorize] attribute to derive and persist the permission hierarchy based on a fixed naming convention. See the following screenshot.</MudText>
             <img width="100%" src="/images/code-screenshots/AspNetPermissions.png" />
             <MudText Typo="Typo.subtitle2" Class="mb-2">How to make some endpoint within any API decorated with [BPAuthorize] attribute publicly accessible?</MudText>
-            <MudText Typo="Typo.body2" Class="mb-2">That's so simple. Suppose that you want to make api/Applicants/CreateApplicant accessible by non-registered users. How to do this? Simply, decorate the CreateApplicant endpoint with [AllowAnonymous] attribute. See the following screenshot.</MudText>
+            <MudText Typo="Typo.body2" Class="mb-2">That's so simple. Suppose that you want to make api/Authors/CreateApplicant accessible by non-registered users. How to do this? Simply, decorate the CreateApplicant endpoint with [AllowAnonymous] attribute. See the following screenshot.</MudText>
             <img width="100%" src="/images/code-screenshots/applicants-api-with-allow-anonymous.png" />
         </MudExpansionPanel>
         <MudExpansionPanel Style="font-weight:500" Class="mb-2" Text="How to assign permissions to users and roles within the BlazorPlate environment?">

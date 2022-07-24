@@ -3,7 +3,7 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("AssetImages")]
-public class AssetImageModel : EntityBase
+public class AssetImageModel : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 

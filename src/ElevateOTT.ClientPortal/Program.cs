@@ -1,4 +1,4 @@
-namespace ElevateOTT.ClientPortal;
+﻿namespace ElevateOTT.ClientPortal;
 
 public class Program
 {
@@ -91,6 +91,8 @@ public class Program
         services.AddScoped<IReportsClient, ReportsClient>();
 
         services.AddScoped<IDashboardClient, DashboardClient>();
+
+        services.AddScoped<IAuthorsClient, AuthorsClient>();
 
         services.AddLocalization();
 

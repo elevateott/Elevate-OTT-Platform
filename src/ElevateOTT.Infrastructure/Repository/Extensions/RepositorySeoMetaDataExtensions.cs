@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return authors.Where(e => e.SeoTitle.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<SeoMetaDataModel> Sort(this IQueryable<SeoMetaDataModel> authors, string orderByQueryString)
+        public static IQueryable<SeoMetaDataModel>? Sort(this IQueryable<SeoMetaDataModel> authors, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return authors.OrderBy(e => e.SeoTitle);

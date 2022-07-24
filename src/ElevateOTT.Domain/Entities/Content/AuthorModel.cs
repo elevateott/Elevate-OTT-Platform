@@ -3,8 +3,10 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Authors")]
-public class AuthorModel : EntityBase
+public class AuthorModel : BaseEntity, IMustHaveTenant
 {
+    public Guid TenantId { get; set; }
+
     [Required(ErrorMessage = "Author name is a required field.")]
     [MaxLength(50, ErrorMessage = "Maximum length for the Name is 50 characters.")]
     public string Name { get; set; } = string.Empty;
@@ -25,13 +27,10 @@ public class AuthorModel : EntityBase
     public string Permalink { get; set; } = string.Empty;
 
     #region foreign keys
-    //[ForeignKey(nameof(TenantModel))]
-    //public Guid? TenantId { get; set; }
+ 
     #endregion
 
     #region navigational properties
-    //public TenantModel? Tenant { get; set; }
-
     public ICollection<VideoAuthorModel>? VideosAuthors { get; set; }
     #endregion
 }

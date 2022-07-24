@@ -14,12 +14,12 @@ public class ApplicationPermission
     #region Public Properties
 
     public Guid Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     public Guid? ParentId { get; set; }
 
     [ForeignKey("ParentId")]
-    public ApplicationPermission Parent { get; set; }
+    public ApplicationPermission? Parent { get; set; }
 
     public IList<ApplicationPermission> Permissions { get; set; }
 

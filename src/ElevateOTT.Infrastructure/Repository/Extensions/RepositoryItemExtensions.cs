@@ -13,7 +13,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return items.Where(e => e.Title.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<ProductItemModel> Sort(this IQueryable<ProductItemModel> items, string orderByQueryString)
+        public static IQueryable<ProductItemModel>? Sort(this IQueryable<ProductItemModel> items, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return items.OrderBy(e => e.Title);

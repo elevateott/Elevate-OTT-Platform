@@ -49,7 +49,7 @@ public partial class ApplicantReferencesListForEdit : ComponentBase
 
         GetApplicantReferencesQuery.PageNumber = state.Page + 1;
 
-        GetApplicantReferencesQuery.RowsPerPage = state.PageSize;
+        GetApplicantReferencesQuery.PageSize = state.PageSize;
 
         GetApplicantReferencesQuery.SortBy = state.SortDirection == SortDirection.None ? string.Empty : $"{state.SortLabel} {state.SortDirection}";
 

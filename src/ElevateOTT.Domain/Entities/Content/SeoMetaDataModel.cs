@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("SeoMetaData")]
-public class SeoMetaDataModel : EntityBase
+public class SeoMetaDataModel : BaseEntity
 {
     public string SeoTitle { get; set; } = string.Empty;
 

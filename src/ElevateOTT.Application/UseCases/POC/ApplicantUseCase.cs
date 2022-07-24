@@ -50,7 +50,7 @@ public class ApplicantUseCase : IApplicantUseCase
             ? query.SortBy(request.SortBy)
             : query.OrderBy(a => a.FirstName).ThenBy(a => a.LastName);
 
-        var applicantItems = await query.Select(q => ApplicantItem.MapFromEntity(q)).ToPagedListAsync(request.PageNumber, request.RowsPerPage);
+        var applicantItems = await query.Select(q => ApplicantItem.MapFromEntity(q)).ToPagedListAsync(request.PageNumber, request.PageSize);
 
         var applicantsResponse = new ApplicantsResponse
         {
@@ -131,7 +131,7 @@ public class ApplicantUseCase : IApplicantUseCase
             ? query.SortBy(request.SortBy)
             : query.OrderBy(a => a.Name);
 
-        var applicantReferenceItems = await query.Select(q => ApplicantReferenceItem.MapFromEntity(q)).ToPagedListAsync(request.PageNumber, request.RowsPerPage);
+        var applicantReferenceItems = await query.Select(q => ApplicantReferenceItem.MapFromEntity(q)).ToPagedListAsync(request.PageNumber, request.PageSize);
 
         var applicantReferencesResponse = new ApplicantReferencesResponse
         {

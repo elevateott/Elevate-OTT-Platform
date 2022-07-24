@@ -28,6 +28,21 @@
   <ItemGroup>
     <Compile Remove="Identity\Extensions\GoogleAuthExtension.cs" />
     <Compile Remove="Middleware\GlobalExceptionHandler.cs" />
+    <Compile Remove="Repository\CategoryRepository.cs" />
+    <Compile Remove="Repository\CollectionRepository.cs" />
+    <Compile Remove="Repository\CommentRepository.cs" />
+    <Compile Remove="Repository\ContentFeedRepository.cs" />
+    <Compile Remove="Repository\ExtraRepository.cs" />
+    <Compile Remove="Repository\ItemPriceRepository.cs" />
+    <Compile Remove="Repository\LiveStreamRepository.cs" />
+    <Compile Remove="Repository\ProductFamilyRepository.cs" />
+    <Compile Remove="Repository\ProductItemRepository.cs" />
+    <Compile Remove="Repository\RepositoryContext.cs" />
+    <Compile Remove="Repository\RepositoryManager.cs" />
+    <Compile Remove="Repository\SeoMetaDataRepository.cs" />
+    <Compile Remove="Repository\SubscriptionRepository.cs" />
+    <Compile Remove="Repository\SubtitleRepository.cs" />
+    <Compile Remove="Repository\VideoRepository.cs" />
     <Compile Remove="Services\Chargebee\ChargebeeService.cs" />
     <Compile Remove="Services\Chargebee\ChargebeeWebhookService.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ElevateOTT.Domain.Entities.Subscriptions;
 
 [Table("SubscriptionItems")]
-public class SubscriptionItemModel : EntityBase
+public class SubscriptionItemModel : BaseEntity
 {
     #region Chargebee Properties
 

@@ -1,3 +1,8 @@
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
+using ElevateOTT.Application.UseCases.Content;
+using ElevateOTT.Infrastructure.Repository;
+
 namespace ElevateOTT.Infrastructure;
 
 public static class DependencyInjection
@@ -99,6 +104,10 @@ public static class DependencyInjection
         services.AddScoped<ITenantUseCase, TenantUseCase>();
         services.AddScoped<IApplicantUseCase, ApplicantUseCase>();
         services.AddScoped<IReportUseCase, ReportUseCase>();
+
+        services.AddScoped<IAuthorUseCase, AuthorUseCase>();
+
+        services.AddScoped<IAuthorRepository, AuthorRepository>();
 
         return services;
     }

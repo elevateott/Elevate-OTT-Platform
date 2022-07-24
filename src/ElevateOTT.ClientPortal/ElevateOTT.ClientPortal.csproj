@@ -8,11 +8,22 @@
 		<PublishTrimmed>true</PublishTrimmed>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-	</PropertyGroup>
+  </PropertyGroup>
 
 	<PropertyGroup>
 		<BlazorCacheBootResources>true</BlazorCacheBootResources>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Features\Content\Genres\**" />
+	  <Compile Remove="Features\Content\Tags\**" />
+	  <Content Remove="Features\Content\Genres\**" />
+	  <Content Remove="Features\Content\Tags\**" />
+	  <EmbeddedResource Remove="Features\Content\Genres\**" />
+	  <EmbeddedResource Remove="Features\Content\Tags\**" />
+	  <None Remove="Features\Content\Genres\**" />
+	  <None Remove="Features\Content\Tags\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
@@ -21,7 +32,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.6" />
@@ -36,7 +47,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\Content\Categories\Commands\" />
+	  <Folder Include="Features\Content\Categories\Queries\" />
+	  <Folder Include="Features\Content\Collections\Commands\" />
+	  <Folder Include="Features\Content\Collections\Queries\" />
+	  <Folder Include="Features\Content\Extras\Commands\" />
+	  <Folder Include="Features\Content\Extras\Queries\" />
+	  <Folder Include="Features\Content\LiveStreams\Commands\" />
+	  <Folder Include="Features\Content\LiveStreams\Queries\" />
+	  <Folder Include="Features\Content\Videos\Commands\" />
+	  <Folder Include="Features\Content\Videos\Queries\" />
 	  <Folder Include="Models\Reporting\" />
+	  <Folder Include="Pages\Content\Categories\" />
+	  <Folder Include="Pages\Content\Collections\" />
+	  <Folder Include="Pages\Content\Extras\" />
+	  <Folder Include="Pages\Content\LiveStreams\" />
+	  <Folder Include="Pages\Content\Videos\" />
 	</ItemGroup>
 
 </Project>

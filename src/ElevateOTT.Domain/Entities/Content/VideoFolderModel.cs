@@ -3,7 +3,7 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("VideoFolders")]
-public class VideoFolderModel : EntityBase
+public class VideoFolderModel : BaseEntity
 {
     [Required(ErrorMessage = "Name is a required field.")]
     [MaxLength(50, ErrorMessage = "Maximum length for the Name is 50 characters.")]

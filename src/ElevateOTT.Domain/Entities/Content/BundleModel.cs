@@ -2,7 +2,7 @@
 
 [Table("SubscriptionPlans")]
 
-public class BundleModel : EntityBase
+public class BundleModel : BaseEntity
 {
     // freebie
     // rental

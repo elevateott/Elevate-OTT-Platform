@@ -17,15 +17,15 @@ public class ApplicationUser : IdentityUser, IAuditable, IMayHaveTenant
 
     #region Public Properties
 
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Surname { get; set; } = string.Empty;
     public string FullName => $"{Name} {Surname}";
-    public string JobTitle { get; set; }
-    public string AvatarUri { get; set; }
+    public string JobTitle { get; set; } = string.Empty;
+    public string AvatarUri { get; set; } = string.Empty;
     public bool IsSuspended { get; set; }
     public bool IsStatic { get; set; }
     public bool IsDemo { get; set; }
-    public string RefreshToken { get; set; }
+    public string RefreshToken { get; set; } = string.Empty;
     public DateTime RefreshTokenTimeSpan { get; set; }
     public Guid? TenantId { get; set; }
     public List<ApplicationUserClaim> Claims { get; set; }
@@ -33,11 +33,11 @@ public class ApplicationUser : IdentityUser, IAuditable, IMayHaveTenant
     public List<ApplicationUserToken> Tokens { get; set; }
     public List<ApplicationUserRole> UserRoles { get; set; }
     public List<ApplicationUserAttachment> UserAttachments { get; set; }
-    public string CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = string.Empty;
     public DateTime CreatedOn { get; set; }
-    public string ModifiedBy { get; set; }
+    public string ModifiedBy { get; set; } = string.Empty;
     public DateTime? ModifiedOn { get; set; }
-    public string DeletedBy { get; set; }
+    public string DeletedBy { get; set; } = string.Empty;
     public DateTime? DeletedOn { get; set; }
 
     #endregion Public Properties

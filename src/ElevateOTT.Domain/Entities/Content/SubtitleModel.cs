@@ -1,6 +1,6 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
-public class SubtitleModel : EntityBase
+public class SubtitleModel : BaseEntity
 {
     public bool ClosedCaption { get; set; }
 

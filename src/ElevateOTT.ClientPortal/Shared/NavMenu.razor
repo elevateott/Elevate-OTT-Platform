@@ -1,4 +1,5 @@
-﻿<AuthorizeView>
+﻿
+<AuthorizeView>
     <Authorized>
         <PersonCard FullName="@context.User.Claims.FirstOrDefault(c=>c.Type == "FullName").Value"
                     AvatarUri="@context.User.Claims.FirstOrDefault(c=>c.Type == "AvatarUri").Value"
@@ -38,6 +39,23 @@
     <MudNavGroup Title="@Resource.Reporting" Icon="@Icons.Material.Outlined.PictureAsPdf" IconColor="Color.Primary" Expanded="true">
         <MudNavLink Href="/reporting/reports" Icon="@Icons.Material.Outlined.QueryStats">@Resource.Reports</MudNavLink>
     </MudNavGroup>
+
+    <MudNavGroup Title="@Resource.Content" Icon="@Icons.Material.Outlined.Folder" IconColor="Color.Primary" Expanded="false">
+        <MudNavGroup Title="@Resource.Content" Expanded="true">
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.VideoFile">@Resource.Videos</MudNavLink>
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.LiveTv">@Resource.Live_Streams</MudNavLink>
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.AudioFile">@Resource.Audio</MudNavLink>
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.FeaturedPlayList">@Resource.Collections</MudNavLink>
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.AttachFile">@Resource.Extras</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="@Resource.Organize" Expanded="true">
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.GroupWork">@Resource.Categories</MudNavLink>
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.PersonPin">@Resource.Authors</MudNavLink>
+            <MudNavLink Href="" Icon="@Icons.Material.Outlined.FilterAlt">@Resource.Custom_Filters</MudNavLink>
+
+        </MudNavGroup>
+     </MudNavGroup>
 
     <MudNavGroup Title="@Resource.Proof_of_Concepts" Icon="@Icons.Material.Outlined.Movie" IconColor="Color.Primary" Expanded="false">
         <MudNavGroup Title="@Resource.Army" Icon="@Icons.Material.Outlined.Movie" IconColor="Color.Primary" Expanded="false">

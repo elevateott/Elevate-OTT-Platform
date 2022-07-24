@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return comments.Where(e => e.Comment.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<CommentModel> Sort(this IQueryable<CommentModel> comments, string orderByQueryString)
+        public static IQueryable<CommentModel>? Sort(this IQueryable<CommentModel> comments, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return comments.OrderBy(e => e.Comment);

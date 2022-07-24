@@ -547,18 +547,42 @@
     <value>You have successfully created a new account.</value>
   </data>
   <data name="Reference_name_is_required" xml:space="preserve">
-	  <value>Reference name is required.</value>
+    <value>Reference name is required.</value>
   </data>
   <data name="Phone_number_is_required" xml:space="preserve">
-	  <value>Phone number is_required.</value>
+    <value>Phone number is_required.</value>
   </data>
   <data name="Invalid_report_Id" xml:space="preserve">
-	  <value>Invalid report Id.</value>
+    <value>Invalid report Id.</value>
   </data>
   <data name="Unable_to_load_report" xml:space="preserve">
-	  <value>Unable to load report.</value>
+    <value>Unable to load report.</value>
   </data>
   <data name="N_A" xml:space="preserve">
-	  <value>N/A</value>
+    <value>N/A</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Author_has_been_created_successfully" xml:space="preserve">
+    <value>Author has been created successfully.</value>
+  </data>
+  <data name="Author_has_been_deleted_successfully" xml:space="preserve">
+    <value>Author has been deleted successfully.</value>
+  </data>
+  <data name="Author_has_been_updated_successfully" xml:space="preserve">
+    <value>Author has been updated successfully.</value>
+  </data>
+  <data name="Invalid_author_Id" xml:space="preserve">
+    <value>Invalid author ID.</value>
+  </data>
+  <data name="The_author_is_not_found" xml:space="preserve">
+    <value>The author is not found.</value>
+  </data>
+  <data name="Unable_to_load_author" xml:space="preserve">
+    <value>Unable to load author.</value>
+  </data>
+  <data name="Invalid_tenant_Id" xml:space="preserve">
+    <value>Invalid tenant ID.</value>
   </data>
 </root>

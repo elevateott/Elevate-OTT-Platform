@@ -1,12 +1,12 @@
-﻿using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class ContentFeedRepository : RepositoryBase<ContentFeedModel>, IContentFeedRepository
     {
-        public ContentFeedRepository(RepositoryContext repositoryContext)
-        : base(repositoryContext)
+        public ContentFeedRepository(RepositoryContext applicationDbContext)
+        : base(applicationDbContext)
         {
         }
 

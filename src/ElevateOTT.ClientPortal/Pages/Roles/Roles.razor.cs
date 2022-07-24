@@ -39,7 +39,7 @@ public partial class Roles : ComponentBase
 
         GetRolesQuery.PageNumber = state.Page + 1;
 
-        GetRolesQuery.RowsPerPage = state.PageSize;
+        GetRolesQuery.PageSize = state.PageSize;
 
         GetRolesQuery.SortBy = state.SortDirection == SortDirection.None ? string.Empty : $"{state.SortLabel} {state.SortDirection}";
 

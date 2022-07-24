@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Categories")]
-public class CategoryModel : EntityBase
+public class CategoryModel : BaseEntity
 {
     public string Title { get; set; } = string.Empty;
 

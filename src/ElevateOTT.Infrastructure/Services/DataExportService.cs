@@ -41,23 +41,23 @@
             worksheetPart.Worksheet = new Worksheet(new SheetData());
 
             // Add Sheets to the Workbook.
-            var sheets = spreadsheetDocument.WorkbookPart.Workbook.
+            var sheets = spreadsheetDocument?.WorkbookPart?.Workbook.
                 AppendChild(new Sheets());
 
             // Append a new worksheet and associate it with the workbook.
             var sheet = new Sheet()
             {
-                Id = spreadsheetDocument.WorkbookPart.
+                Id = spreadsheetDocument?.WorkbookPart?.
                     GetIdOfPart(worksheetPart),
                 SheetId = 1,
                 Name = "mySheet"
             };
-            sheets.Append(sheet);
+            sheets?.Append(sheet);
 
             workbookpart.Workbook.Save();
 
             // Close the document.
-            spreadsheetDocument.Close();
+            spreadsheetDocument?.Close();
 
             var relativePath = $"Spreadsheets/{fileName}";
 

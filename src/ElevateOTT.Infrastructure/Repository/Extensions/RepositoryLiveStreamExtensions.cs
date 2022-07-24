@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return liveStreams.Where(e => e.Name.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<LiveStreamModel> Sort(this IQueryable<LiveStreamModel> liveStreams, string orderByQueryString)
+        public static IQueryable<LiveStreamModel>? Sort(this IQueryable<LiveStreamModel> liveStreams, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return liveStreams.OrderBy(e => e.Name);

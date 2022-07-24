@@ -54,7 +54,7 @@
         {
             SearchText = Search,
             PageNumber = request.StartIndex + 1,
-            RowsPerPage = roleNum == 0 ? request.Count : roleNum
+            PageSize = roleNum == 0 ? request.Count : roleNum
         });
 
         if (httpResponse.Success)

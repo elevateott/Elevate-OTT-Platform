@@ -439,6 +439,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Audio.
+        /// </summary>
+        public static string Audio {
+            get {
+                return ResourceManager.GetString("Audio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to August.
         /// </summary>
         public static string August {
@@ -480,6 +489,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Authorizing {
             get {
                 return ResourceManager.GetString("Authorizing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authors.
+        /// </summary>
+        public static string Authors {
+            get {
+                return ResourceManager.GetString("Authors", resourceCulture);
             }
         }
         
@@ -669,6 +687,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Carbon {
             get {
                 return ResourceManager.GetString("Carbon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        public static string Categories {
+            get {
+                return ResourceManager.GetString("Categories", resourceCulture);
             }
         }
         
@@ -871,6 +898,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collections.
+        /// </summary>
+        public static string Collections {
+            get {
+                return ResourceManager.GetString("Collections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Completed.
         /// </summary>
         public static string Completed {
@@ -921,6 +957,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Confirm_Password {
             get {
                 return ResourceManager.GetString("Confirm_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
             }
         }
         
@@ -1074,6 +1119,24 @@ namespace ElevateOTT.FrontendResources {
         public static string Current_Transcripts {
             get {
                 return ResourceManager.GetString("Current_Transcripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Filter.
+        /// </summary>
+        public static string Custom_filter {
+            get {
+                return ResourceManager.GetString("Custom_filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Filters.
+        /// </summary>
+        public static string Custom_Filters {
+            get {
+                return ResourceManager.GetString("Custom_Filters", resourceCulture);
             }
         }
         
@@ -1619,6 +1682,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extras.
+        /// </summary>
+        public static string Extras {
+            get {
+                return ResourceManager.GetString("Extras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string Failed {
@@ -1904,6 +1976,15 @@ namespace ElevateOTT.FrontendResources {
             get {
                 return ResourceManager.GetString("Generating_new_recovery_codes_does_not_change_the_keys_used_in_authenticator_apps" +
                         "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genres.
+        /// </summary>
+        public static string Genres {
+            get {
+                return ResourceManager.GetString("Genres", resourceCulture);
             }
         }
         
@@ -2330,6 +2411,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Live_data_powered_by_SignalR {
             get {
                 return ResourceManager.GetString("Live_data_powered_by_SignalR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live Streams.
+        /// </summary>
+        public static string Live_Streams {
+            get {
+                return ResourceManager.GetString("Live_Streams", resourceCulture);
             }
         }
         
@@ -2816,6 +2906,15 @@ namespace ElevateOTT.FrontendResources {
         public static string or {
             get {
                 return ResourceManager.GetString("or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organize.
+        /// </summary>
+        public static string Organize {
+            get {
+                return ResourceManager.GetString("Organize", resourceCulture);
             }
         }
         
@@ -3837,6 +3936,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thank you for confirming your email..
         /// </summary>
         public static string Thank_you_for_confirming_your_email {
@@ -4238,6 +4346,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Verify {
             get {
                 return ResourceManager.GetString("Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Videos.
+        /// </summary>
+        public static string Videos {
+            get {
+                return ResourceManager.GetString("Videos", resourceCulture);
             }
         }
         

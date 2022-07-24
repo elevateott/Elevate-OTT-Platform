@@ -8,14 +8,14 @@ public class ApplicantsController : ApiController
     #region Public Methods
 
     [HttpPost("GetApplicant")]
-    public async Task<IActionResult> GetApplicant(GetApplicantForEditQuery request)
+    public async Task<IActionResult> GetApplicant([FromBody] GetApplicantForEditQuery request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
 
     [HttpPost("GetApplicants")]
-    public async Task<IActionResult> GetApplicants(GetApplicantsQuery request)
+    public async Task<IActionResult> GetApplicants([FromBody] GetApplicantsQuery request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);

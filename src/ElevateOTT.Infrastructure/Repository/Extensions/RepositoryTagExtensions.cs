@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return tags.Where(e => e.Name.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<TagModel> Sort(this IQueryable<TagModel> tags, string orderByQueryString)
+        public static IQueryable<TagModel>? Sort(this IQueryable<TagModel> tags, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return tags.OrderBy(e => e.Name);

@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Products;
 
 [Table("ProductItems")]
-public class ProductItemModel : EntityBase
+public class ProductItemModel : BaseEntity
 {
     #region Chargebee Properties
     public ProductItemType Type { get; set; }
@@ -57,13 +57,13 @@ public class ProductItemModel : EntityBase
 
     public string Title { get; set; } = string.Empty;
 
-    public string? ShortDescription { get; set; }
+    public string ShortDescription { get; set; } = string.Empty;
 
-    public string? LongDescription { get; set; }
+    public string LongDescription { get; set; } = string.Empty;
 
-    public string? Sku { get; set; }
+    public string Sku { get; set; } = string.Empty;
 
-    public string? Image { get; set; }
+    public string Image { get; set; } = string.Empty;
 
     public SubscriptionAvailability SubscriptionAvailability { get; set; }
 

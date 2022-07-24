@@ -1,13 +1,13 @@
-﻿using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Infrastructure.Repository.Extensions;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public class LiveStreamRepository : RepositoryBase<LiveStreamModel>, ILiveStreamRepository
     {
-        public LiveStreamRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
+        public LiveStreamRepository(RepositoryContext applicationDbContext)
+            : base(applicationDbContext)
         {
         }
 

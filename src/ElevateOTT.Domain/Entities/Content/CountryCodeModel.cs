@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("CountryCode")]
-public class CountryCodeModel : EntityBase
+public class CountryCodeModel : BaseEntity
 {
 
 }

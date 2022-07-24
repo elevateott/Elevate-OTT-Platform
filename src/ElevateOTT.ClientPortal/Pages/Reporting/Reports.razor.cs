@@ -111,7 +111,7 @@ public partial class Reports : ComponentBase, IAsyncDisposable
 
         GetReportsQuery.PageNumber = state.Page + 1;
 
-        GetReportsQuery.RowsPerPage = state.PageSize;
+        GetReportsQuery.PageSize = state.PageSize;
 
         GetReportsQuery.SortBy = state.SortDirection == SortDirection.None
             ? string.Empty

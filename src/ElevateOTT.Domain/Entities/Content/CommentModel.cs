@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Comments")]
-public class CommentModel : EntityBase
+public class CommentModel : BaseEntity
 {
     // TODO link to OTT tenant
     // look at how Uscreen handles this

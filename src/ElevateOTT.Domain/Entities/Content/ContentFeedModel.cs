@@ -3,7 +3,7 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("ContentFeeds")]
-public class ContentFeedModel : EntityBase
+public class ContentFeedModel : BaseEntity
 {
     [Url]
     public string Url { get; set; } = string.Empty;

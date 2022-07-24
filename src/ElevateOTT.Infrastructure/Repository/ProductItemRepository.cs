@@ -1,13 +1,13 @@
-﻿using ElevateOTT.Domain.Entities.Products;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Products;
 using ElevateOTT.Infrastructure.Repository.Extensions;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public class ProductItemRepository : RepositoryBase<ProductItemModel>, IProductItemRepository
     {
-        public ProductItemRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
+        public ProductItemRepository(RepositoryContext applicationDbContext)
+            : base(applicationDbContext)
         {
         }
 
@@ -33,10 +33,10 @@ namespace ElevateOTT.Infrastructure.Repository
             await FindByCondition(expression, trackChanges)
                 .SingleOrDefaultAsync();
 
-        public void CreateProductItemForProductFamily(Guid productFamilyId, ProductItemModel item)
+        public async Task CreateProductItemForProductFamily(Guid productFamilyId, ProductItemModel item)
         {
             item.ProductFamilyId = productFamilyId;
-            Create(item);
+            await CreateAsync(item);
         }
         public async Task<IEnumerable<ProductItemModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
             await FindByCondition(x => ids.Contains(x.Id), trackChanges).ToListAsync();

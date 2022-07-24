@@ -1,36 +1,36 @@
-﻿using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 	{
-		protected RepositoryContext RepositoryContext;
+		protected ApplicationDbContext ApplicationDbContext;
 
-		public RepositoryBase(RepositoryContext repositoryContext)
-			=> RepositoryContext = repositoryContext;
+		public RepositoryBase(ApplicationDbContext applicationDbContext)
+			=> ApplicationDbContext = applicationDbContext;
 
 		public IQueryable<T> FindAll(bool trackChanges) =>
 			!trackChanges ?
-			  RepositoryContext.Set<T>()
+			  ApplicationDbContext.Set<T>()
 				.AsNoTracking() :
-			  RepositoryContext.Set<T>();
+			  ApplicationDbContext.Set<T>();
 
 		public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression,
 		bool trackChanges) =>
 			!trackChanges ?
-			  RepositoryContext.Set<T>()
+			  ApplicationDbContext.Set<T>()
 				.Where(expression)
 				.AsNoTracking() :
-			  RepositoryContext.Set<T>()
+			  ApplicationDbContext.Set<T>()
 				.Where(expression);
 
-		public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
+		public async Task CreateAsync(T entity) => await ApplicationDbContext.Set<T>().AddAsync(entity);
 
-		public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
+		public void Update(T entity) => ApplicationDbContext.Set<T>().Update(entity);
 
-		public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+		public void Delete(T entity) => ApplicationDbContext.Set<T>().Remove(entity);
 
         public async Task<bool> ExistsAsync(Expression<Func<T, bool>> expression) 
-            => await RepositoryContext.Set<T>().AnyAsync(expression);
+            => await ApplicationDbContext.Set<T>().AnyAsync(expression);
     }
 }

@@ -1,54 +1,52 @@
-﻿using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using Azure.Core;
+using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Infrastructure.Repository.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class AuthorRepository : RepositoryBase<AuthorModel>, IAuthorRepository
     {
-        public AuthorRepository(RepositoryContext repositoryContext)
-        : base(repositoryContext)
+        public AuthorRepository(ApplicationDbContext applicationDbContext)
+        : base(applicationDbContext)
         {
         }
 
-        //public async Task<PagedList<AuthorModel>> GetAuthorsAsync(Guid tenantId, AuthorParameters authorParameters, bool trackChanges)
-        //{
-        //    var authors = await FindAll(trackChanges)
-        //        .Where(a => a.TenantId.Equals(tenantId))
-        //        .Search(authorParameters.SearchTerm ?? string.Empty)
-        //        .Sort(authorParameters.OrderBy ?? string.Empty)
-        //        .OrderBy(c => c.Name)
-        //        .Skip((authorParameters.PageNumber - 1) * authorParameters.PageSize)
-        //        .Take(authorParameters.PageSize)
-        //        .ToListAsync();
+        public async Task<PagedList<AuthorModel>> GetAuthorsAsync(Guid tenantId, GetAuthorsQuery request, bool trackChanges)
+        {
+            var query = FindAll(trackChanges)
+                .Where(a => a.TenantId.Equals(tenantId))
+                .Search(request.SearchText)
+                .Sort(request.SortBy);
 
-        //    var count = await FindAll(trackChanges).CountAsync();
+            return await query.ToPagedListAsync(request.PageNumber, request.PageSize);
+        }
 
-        //    return new PagedList<AuthorModel>(authors, count, authorParameters.PageNumber, authorParameters.PageSize);
-        //}
-
-        public async Task<AuthorModel?> GetAuthorAsync(Guid authorId, bool trackChanges) =>
-            await FindByCondition(a => a.Id.Equals(authorId), trackChanges)
+        public async Task<AuthorModel?> GetAuthorAsync(Guid tenantId, Guid authorId, bool trackChanges) =>
+            await FindByCondition(a => a.TenantId.Equals(tenantId)
+                                       && a.Id.Equals(authorId), trackChanges)
             .SingleOrDefaultAsync();
 
         public async Task<AuthorModel?> FindAuthorByConditionAsync(Expression<Func<AuthorModel, bool>> expression, bool trackChanges) =>
             await FindByCondition(expression, trackChanges)
                 .SingleOrDefaultAsync();
 
-        public void CreateAuthorForTenant(Guid tenantId, AuthorModel author)
+        public async Task CreateAuthorForTenant(Guid tenantId, AuthorModel author)
+        {
+            author.TenantId = tenantId;
+            author.CreatedOn = DateTime.Now;
+            await CreateAsync(author);
+        }
+
+        public Task<IEnumerable<AuthorModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
             throw new NotImplementedException();
         }
 
-        //public void CreateAuthorForTenant(Guid tenantId, AuthorModel author)
-        //{
-        //    author.TenantId = tenantId;
-        //    Create(author);
-        //}
-        public async Task<IEnumerable<AuthorModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
-            await FindByCondition(x => ids.Contains(x.Id), trackChanges).ToListAsync();
-
         public void DeleteAuthor(AuthorModel author) => Delete(author);
+
         public async Task<bool> AuthorExistsAsync(Expression<Func<AuthorModel, bool>> expression) => await ExistsAsync(expression);
     }
 }

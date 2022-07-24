@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return genres.Where(e => e.Name.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<GenreModel> Sort(this IQueryable<GenreModel> genres, string orderByQueryString)
+        public static IQueryable<GenreModel>? Sort(this IQueryable<GenreModel> genres, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return genres.OrderBy(e => e.Name);

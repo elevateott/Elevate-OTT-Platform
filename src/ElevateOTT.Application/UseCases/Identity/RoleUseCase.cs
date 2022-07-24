@@ -83,7 +83,7 @@ public class RoleUseCase : IRoleUseCase
         query = !string.IsNullOrWhiteSpace(request.SortBy) ? query.SortBy(request.SortBy) : query.OrderBy(r => r.Name);
 
         var roleItems = await query.Select(q => RoleItem.MapFromEntity(q)).AsNoTracking()
-            .ToPagedListAsync(request.PageNumber, request.RowsPerPage);
+            .ToPagedListAsync(request.PageNumber, request.PageSize);
 
         var rolesResponse = new RolesResponse
         {

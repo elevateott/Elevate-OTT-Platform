@@ -65,8 +65,6 @@ builder.Services.AddCors(options =>
         .AllowAnyHeader());
 });
 
-builder.Services.AddAutoMapper(typeof(Program));
-
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<TimerManager>();

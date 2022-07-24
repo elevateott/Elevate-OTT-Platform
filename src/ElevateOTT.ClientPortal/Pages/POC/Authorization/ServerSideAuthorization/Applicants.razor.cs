@@ -42,7 +42,7 @@ public partial class Applicants : ComponentBase
 
         GetApplicantsQuery.PageNumber = state.Page + 1;
 
-        GetApplicantsQuery.RowsPerPage = state.PageSize;
+        GetApplicantsQuery.PageSize = state.PageSize;
 
         GetApplicantsQuery.SortBy = state.SortDirection == SortDirection.None ? string.Empty : $"{state.SortLabel} {state.SortDirection}";
 

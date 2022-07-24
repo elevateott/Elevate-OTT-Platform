@@ -48,9 +48,9 @@ public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 
                 response = await next();
 
-                var isErrorProperty = response.GetType().GetProperty("IsError");
+                var isErrorProperty = response?.GetType().GetProperty("IsError");
 
-                bool isError = isErrorProperty != null ? (bool)isErrorProperty?.GetValue(response, null) : false;
+                bool isError = isErrorProperty != null ? (bool)isErrorProperty.GetValue(response, null) : false;
 
                 var rollbackDisabledProperty = response.GetType().GetProperty("RollbackDisabled");
 

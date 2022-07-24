@@ -7,15 +7,7 @@ public partial class LanguageSwitcher
     private CultureInfo[] _cultures = new[]
     {
         new CultureInfo("en-US"),
-        new CultureInfo("ar-SA"),
-        new CultureInfo("de-DE"),
         new CultureInfo("es-ES"),
-        new CultureInfo("fr-FR"),
-        new CultureInfo("hi-IN"),
-        new CultureInfo("ja-JP"),
-        new CultureInfo("pt-PT"),
-        new CultureInfo("tr-TR"),
-        new CultureInfo("zh-CN"),
     };
 
     private string _buttonText = CultureInfo.CurrentUICulture.DisplayName;

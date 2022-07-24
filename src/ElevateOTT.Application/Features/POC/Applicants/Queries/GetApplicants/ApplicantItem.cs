@@ -4,10 +4,10 @@ public class ApplicantItem : AuditableDto
 {
     #region Public Properties
 
-    public string Id { get; set; }
-    public int Ssn { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string Id { get; set; } = string.Empty;
+    public int Ssn { get; set; } 
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
     public string FullName => $"{FirstName} {LastName}";
     public DateTime? DateOfBirth { get; set; }
     public decimal Height { get; set; }

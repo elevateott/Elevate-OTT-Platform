@@ -1,12 +1,12 @@
-﻿using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class ExtraRepository : RepositoryBase<ExtraModel>, IExtraRepository
     {
-        public ExtraRepository(RepositoryContext repositoryContext)
-        : base(repositoryContext)
+        public ExtraRepository(RepositoryContext applicationDbContext)
+        : base(applicationDbContext)
         {
         }
 

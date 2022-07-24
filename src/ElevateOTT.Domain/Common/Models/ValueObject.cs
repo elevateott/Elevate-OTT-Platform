@@ -5,7 +5,7 @@ public abstract class ValueObject
 {
     #region Public Methods
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj == null || obj.GetType() != GetType())
         {
@@ -44,7 +44,7 @@ public abstract class ValueObject
 
     #region Protected Methods
 
-    protected static bool EqualOperator(ValueObject left, ValueObject right)
+    protected static bool EqualOperator(ValueObject? left, ValueObject? right)
     {
         if (left is null ^ right is null)
         {

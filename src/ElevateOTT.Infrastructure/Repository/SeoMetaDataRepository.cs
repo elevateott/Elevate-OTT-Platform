@@ -1,12 +1,12 @@
-﻿using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class SeoMetaDataRepository : RepositoryBase<SeoMetaDataModel>, ISeoMetaDataRepository
     {
-        public SeoMetaDataRepository(RepositoryContext repositoryContext)
-        : base(repositoryContext)
+        public SeoMetaDataRepository(RepositoryContext applicationDbContext)
+        : base(applicationDbContext)
         {
         }
 

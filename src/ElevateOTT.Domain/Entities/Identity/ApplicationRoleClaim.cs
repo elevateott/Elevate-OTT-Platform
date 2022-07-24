@@ -4,7 +4,7 @@ public class ApplicationRoleClaim : IdentityRoleClaim<string>
 {
     #region Public Properties
 
-    public ApplicationRole Role { get; set; }
+    public ApplicationRole? Role { get; set; }
 
     #endregion Public Properties
 }

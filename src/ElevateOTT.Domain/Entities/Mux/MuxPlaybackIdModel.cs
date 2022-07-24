@@ -3,7 +3,7 @@
 namespace ElevateOTT.Domain.Entities.Mux;
 
 [Table("MuxPlaybackIds")]
-public class MuxPlaybackIdModel : EntityBase
+public class MuxPlaybackIdModel : BaseEntity
 {
     public string Policy { get; set; } = string.Empty;
 

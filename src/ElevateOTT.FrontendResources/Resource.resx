@@ -243,6 +243,9 @@
   <data name="Assign_Roles" xml:space="preserve">
     <value>Assign Roles</value>
   </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
   <data name="August" xml:space="preserve">
     <value>August</value>
   </data>
@@ -257,6 +260,9 @@
   </data>
   <data name="Authorizing" xml:space="preserve">
     <value>Authorizing</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
+    <value>Authors</value>
   </data>
   <data name="Avatar" xml:space="preserve">
     <value>Avatar</value>
@@ -320,6 +326,9 @@
   </data>
   <data name="Carbon" xml:space="preserve">
     <value>Carbon</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
   </data>
   <data name="Cerium" xml:space="preserve">
     <value>Cerium</value>
@@ -387,6 +396,9 @@
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="Collections" xml:space="preserve">
+    <value>Collections</value>
+  </data>
   <data name="Completed" xml:space="preserve">
     <value>Completed</value>
   </data>
@@ -404,6 +416,9 @@
   </data>
   <data name="Confirm_Password" xml:space="preserve">
     <value>Confirm Password</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
   </data>
   <data name="ContentType" xml:space="preserve">
     <value>Content Type</value>
@@ -455,6 +470,12 @@
   </data>
   <data name="Current_Transcripts" xml:space="preserve">
     <value>Current Transcripts</value>
+  </data>
+  <data name="Custom_filter" xml:space="preserve">
+    <value>Custom Filter</value>
+  </data>
+  <data name="Custom_Filters" xml:space="preserve">
+    <value>Customer Filters</value>
   </data>
   <data name="Danger" xml:space="preserve">
     <value>Danger</value>
@@ -636,6 +657,9 @@
   <data name="Exporting_data_may_take_a_while" xml:space="preserve">
     <value>Exporting data may take a while.</value>
   </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Extras</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
@@ -731,6 +755,9 @@
   </data>
   <data name="Generating_new_recovery_codes_does_not_change_the_keys_used_in_authenticator_apps" xml:space="preserve">
     <value>Generating new recovery codes does not change the keys used in authenticator apps.</value>
+  </data>
+  <data name="Genres" xml:space="preserve">
+    <value>Genres</value>
   </data>
   <data name="Geothermal" xml:space="preserve">
     <value>Geothermal</value>
@@ -872,6 +899,9 @@
   </data>
   <data name="Live_data_powered_by_SignalR" xml:space="preserve">
     <value>Live data powered by SignalR</value>
+  </data>
+  <data name="Live_Streams" xml:space="preserve">
+    <value>Live Streams</value>
   </data>
   <data name="Loading_On_Demand" xml:space="preserve">
     <value>Loading on Demand</value>
@@ -1035,6 +1065,9 @@
   <data name="or" xml:space="preserve">
     <value>or</value>
   </data>
+  <data name="Organize" xml:space="preserve">
+    <value>Organize</value>
+  </data>
   <data name="out_of" xml:space="preserve">
     <value>out of</value>
   </data>
@@ -1159,7 +1192,7 @@
     <value>Reporting</value>
   </data>
   <data name="Reports" xml:space="preserve">
-	  <value>Reports</value>
+    <value>Reports</value>
   </data>
   <data name="Report_Details" xml:space="preserve">
     <value>Report Details</value>
@@ -1374,6 +1407,9 @@
   <data name="Sweden" xml:space="preserve">
     <value>Sweden</value>
   </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="Thank_you_for_confirming_your_email" xml:space="preserve">
     <value>Thank you for confirming your email.</value>
   </data>
@@ -1509,6 +1545,9 @@
   <data name="Verify" xml:space="preserve">
     <value>Verify</value>
   </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videos</value>
+  </data>
   <data name="View" xml:space="preserve">
     <value>View</value>
   </data>
@@ -1546,22 +1585,22 @@
     <value>Your password has been reset</value>
   </data>
   <data name="Your_report_0_is_ready_to_download" xml:space="preserve">
-	  <value>Your report {0} is ready to download.</value>
+    <value>Your report {0} is ready to download.</value>
   </data>
   <data name="Your_report_generation_has_failed" xml:space="preserve">
-	  <value>Your report generation has failed.</value>
+    <value>Your report generation has failed.</value>
   </data>
   <data name="Your_report_is_being_generated" xml:space="preserve">
-	  <value>Your report is being generated.</value>
+    <value>Your report is being generated.</value>
   </data>
   <data name="Your_report_is_being_initiated" xml:space="preserve">
-	  <value>Your report is being initiated.</value>
+    <value>Your report is being initiated.</value>
   </data>
   <data name="Your_report_is_ready_to_download" xml:space="preserve">
     <value>Your report is ready to download.</value>
   </data>
   <data name="Your_report__0__is_ready_to_download\" xml:space="preserve">
-	  <value>Your report {0} is ready to download.</value>
+    <value>Your report {0} is ready to download.</value>
   </data>
   <data name="your_two_factor_authentication_app_will_provide_you_with_a_unique_code" xml:space="preserve">
     <value>your two factor authentication app will provide you with a unique code.</value>

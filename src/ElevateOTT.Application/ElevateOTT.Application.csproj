@@ -4,7 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-	</PropertyGroup>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <Compile Remove="Common\Interfaces\Services\ChargebeeServices\**" />
@@ -73,6 +73,16 @@
 
 	<ItemGroup>
 	  <Folder Include="Common\Interfaces\Services\UtilityServices\" />
+	  <Folder Include="Features\Content\Categories\Commands\" />
+	  <Folder Include="Features\Content\Categories\Queries\" />
+	  <Folder Include="Features\Content\Collections\Commands\" />
+	  <Folder Include="Features\Content\Collections\Queries\" />
+	  <Folder Include="Features\Content\Extras\Commands\" />
+	  <Folder Include="Features\Content\Extras\Queries\" />
+	  <Folder Include="Features\Content\LiveStreams\Commands\" />
+	  <Folder Include="Features\Content\LiveStreams\Queries\" />
+	  <Folder Include="Features\Content\Videos\Commands\" />
+	  <Folder Include="Features\Content\Videos\Queries\" />
 	  <Folder Include="Features\Reports\" />
 	</ItemGroup>
 

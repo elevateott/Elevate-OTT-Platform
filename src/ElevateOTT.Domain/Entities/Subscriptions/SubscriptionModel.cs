@@ -8,7 +8,7 @@ using ElevateOTT.Domain.Enums;
 namespace ElevateOTT.Domain.Entities.Subscriptions;
 
 [Table("Subscriptions")]
-public class SubscriptionModel : EntityBase
+public class SubscriptionModel : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 

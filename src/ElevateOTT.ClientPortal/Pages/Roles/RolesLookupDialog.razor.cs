@@ -73,7 +73,7 @@ public partial class RolesLookupDialog : ComponentBase
     {
         GetRolesQuery.SearchText = SearchString;
         GetRolesQuery.PageNumber = state.Page + 1;
-        GetRolesQuery.RowsPerPage = state.PageSize;
+        GetRolesQuery.PageSize = state.PageSize;
         GetRolesQuery.SortBy = state.SortDirection == SortDirection.None ? string.Empty : $"{state.SortLabel} {state.SortDirection}";
 
         var httpResponseWrapper = await RolesClient.GetRoles(GetRolesQuery);

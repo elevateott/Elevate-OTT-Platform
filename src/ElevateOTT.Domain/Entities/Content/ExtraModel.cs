@@ -3,7 +3,7 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Extras")]
-public class ExtraModel : EntityBase 
+public class ExtraModel : BaseEntity 
 {
     public string Title { get; set; } = string.Empty;
 

@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Tags")]
-public class TagModel : EntityBase
+public class TagModel : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 

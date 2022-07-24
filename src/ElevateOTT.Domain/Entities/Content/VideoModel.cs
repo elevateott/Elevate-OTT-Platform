@@ -4,7 +4,7 @@ using ElevateOTT.Domain.Entities.Mux;
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Videos")]
-public class VideoModel : AssetBase
+public class VideoModel : BaseAsset
 {
     // TODO filters
     // TODO Geo-blocking
@@ -14,8 +14,8 @@ public class VideoModel : AssetBase
     public bool Mp4Support { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string? DownloadUrl { get; set; }
-    public string? Passthrough { get; set; }
+    public string DownloadUrl { get; set; } = string.Empty;
+    public string Passthrough { get; set; } = string.Empty;
     public bool ClosedCaptions { get; set; }
 
     #region foreign keys

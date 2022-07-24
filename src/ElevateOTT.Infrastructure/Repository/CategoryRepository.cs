@@ -1,13 +1,13 @@
-﻿using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Infrastructure.Repository.Extensions;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class CategoryRepository : RepositoryBase<CategoryModel>, ICategoryRepository
     {
-        public CategoryRepository(RepositoryContext repositoryContext)
-        : base(repositoryContext)
+        public CategoryRepository(RepositoryContext applicationDbContext)
+        : base(applicationDbContext)
         {
         }
 

@@ -34,8 +34,10 @@ public class ReportUseCase : IReportUseCase
         return Envelope<ReportForEdit>.Result.Ok(reportForEdit);
     }
 
-    public async Task<Envelope<ReportsResponse>> GetReports(GetReportsQuery request)
+    public async Task<Envelope<ReportsResponse>> GetReports(GetReportsQuery? request)
     {
+        Guard.Against.Null(request, nameof(request));
+
         var query = _dbContext.Reports.Where(a => (a.Title.Contains(request.SearchText)
                                                   || a.FileName.Contains(request.SearchText)
                                                   || a.FileUri.Contains(request.SearchText)
@@ -48,7 +50,7 @@ public class ReportUseCase : IReportUseCase
             : query.OrderByDescending(a => a.CreatedOn);
 
         var reportItems = await query.Select(q => ReportItem.MapFromEntity(q))
-            .ToPagedListAsync(request.PageNumber, request.RowsPerPage);
+            .ToPagedListAsync(request.PageNumber, request.PageSize);
 
         var reportsResponse = new ReportsResponse
         {

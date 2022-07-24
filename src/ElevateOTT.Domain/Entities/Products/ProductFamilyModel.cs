@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Products;
 
 [Table("ProductFamilies")]
-public class ProductFamilyModel : EntityBase
+public class ProductFamilyModel : BaseEntity
 {
     public string ChargebeeItemFamilyId { get; set; } = string.Empty;
 

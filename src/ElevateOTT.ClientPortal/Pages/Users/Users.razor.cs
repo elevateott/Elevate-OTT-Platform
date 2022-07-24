@@ -121,7 +121,7 @@ public partial class Users : ComponentBase
 
         GetUsersQuery.PageNumber = state.Page + 1;
 
-        GetUsersQuery.RowsPerPage = state.PageSize;
+        GetUsersQuery.PageSize = state.PageSize;
 
         GetUsersQuery.SortBy = state.SortDirection == SortDirection.None ? string.Empty : $"{state.SortLabel} {state.SortDirection}";
 

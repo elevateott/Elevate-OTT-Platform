@@ -1,4 +1,4 @@
-﻿<MudMenu DisableElevation="true" Icon="@Icons.Material.Filled.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true">
+﻿<MudMenu DisableElevation="true" Icon="@Icons.Material.Filled.Language" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true">
     @foreach (var item in _cultures)
     {
         <MudMenuItem OnClick="() => SetCultureInfo(item)">@item.DisplayName</MudMenuItem>

@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Genres")]
-public class GenreModel : EntityBase
+public class GenreModel : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 

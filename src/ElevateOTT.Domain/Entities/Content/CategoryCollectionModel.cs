@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("CategoriesCollections")]
-public class CategoryCollectionModel : EntityBase
+public class CategoryCollectionModel : BaseEntity
 {
     public Guid CategoryId { get; set; }
 

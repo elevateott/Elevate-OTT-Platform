@@ -133,6 +133,33 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author has been created successfully..
+        /// </summary>
+        public static string Author_has_been_created_successfully {
+            get {
+                return ResourceManager.GetString("Author_has_been_created_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author has been deleted successfully..
+        /// </summary>
+        public static string Author_has_been_deleted_successfully {
+            get {
+                return ResourceManager.GetString("Author_has_been_deleted_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author has been updated successfully..
+        /// </summary>
+        public static string Author_has_been_updated_successfully {
+            get {
+                return ResourceManager.GetString("Author_has_been_updated_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot disable Two-Factor Authentication for user with ID &apos;{0}&apos; as it&apos;s not currently enabled..
         /// </summary>
         public static string Cannot_disable_2FA_for_user_with_Id {
@@ -331,6 +358,15 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid author ID..
+        /// </summary>
+        public static string Invalid_author_Id {
+            get {
+                return ResourceManager.GetString("Invalid_author_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid client request..
         /// </summary>
         public static string Invalid_client_request {
@@ -372,6 +408,15 @@ namespace ElevateOTT.BackendResources {
         public static string Invalid_role_Id {
             get {
                 return ResourceManager.GetString("Invalid_role_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid tenant ID..
+        /// </summary>
+        public static string Invalid_tenant_Id {
+            get {
+                return ResourceManager.GetString("Invalid_tenant_Id", resourceCulture);
             }
         }
         
@@ -891,6 +936,15 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The author is not found..
+        /// </summary>
+        public static string The_author_is_not_found {
+            get {
+                return ResourceManager.GetString("The_author_is_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password and confirmation password do not match..
         /// </summary>
         public static string The_password_and_confirmation_password_do_not_match {
@@ -1022,6 +1076,15 @@ namespace ElevateOTT.BackendResources {
         public static string Unable_to_load_applicant {
             get {
                 return ResourceManager.GetString("Unable_to_load_applicant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load author..
+        /// </summary>
+        public static string Unable_to_load_author {
+            get {
+                return ResourceManager.GetString("Unable_to_load_author", resourceCulture);
             }
         }
         
@@ -1257,6 +1320,15 @@ namespace ElevateOTT.BackendResources {
         public static string Verification_email_has_been_sent {
             get {
                 return ResourceManager.GetString("Verification_email_has_been_sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video.
+        /// </summary>
+        public static string Video {
+            get {
+                return ResourceManager.GetString("Video", resourceCulture);
             }
         }
         

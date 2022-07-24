@@ -1,13 +1,13 @@
-﻿using ElevateOTT.Domain.Entities.Products;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Products;
 using ElevateOTT.Infrastructure.Repository.Extensions;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public class ProductFamilyRepository : RepositoryBase<ProductFamilyModel>, IProductFamilyRepository
     {
-        public ProductFamilyRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
+        public ProductFamilyRepository(RepositoryContext applicationDbContext)
+            : base(applicationDbContext)
         {
         }
 

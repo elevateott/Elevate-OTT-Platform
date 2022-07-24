@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return videos.Where(e => e.Title.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<VideoModel> Sort(this IQueryable<VideoModel> videos, string orderByQueryString)
+        public static IQueryable<VideoModel>? Sort(this IQueryable<VideoModel> videos, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return videos.OrderBy(e => e.Title);

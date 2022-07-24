@@ -4,7 +4,7 @@ public class ApplicationUserClaim : IdentityUserClaim<string>
 {
     #region Public Properties
 
-    public ApplicationUser User { get; set; }
+    public ApplicationUser? User { get; set; }
     public bool IsExcluded { get; set; }
 
     #endregion Public Properties

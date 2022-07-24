@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("Collections")]
-public class CollectionModel : EntityBase
+public class CollectionModel : BaseEntity
 {
     public string Title { get; set; } = string.Empty;
 

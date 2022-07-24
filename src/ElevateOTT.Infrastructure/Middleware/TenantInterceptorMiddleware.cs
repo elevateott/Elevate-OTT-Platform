@@ -33,6 +33,8 @@ public class TenantInterceptorMiddleware
 
     public TenantInterceptorMiddleware(RequestDelegate next, MultiTenancyOptions options)
     {
+        // TODO use Guard 
+
         _next = next ?? throw new ArgumentNullException(nameof(next), nameof(next) + " is required");
         _options = options;
     }
@@ -56,6 +58,11 @@ public class TenantInterceptorMiddleware
 
                     if (tenantName.Count == 0)
                         tenantName = string.Empty;
+
+
+                    var applicants = dbContext.Applicants.ToList();
+
+                    var tenants = dbContext.Tenants.ToList();
 
                     var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name == tenantName.FirstOrDefault())?.Id;
 

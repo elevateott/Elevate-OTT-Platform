@@ -1,13 +1,13 @@
-﻿using ElevateOTT.Domain.Entities.Subscriptions;
-using ElevateOTT.Infrastructure.Interfaces.Repository;
+﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities.Subscriptions;
 using ElevateOTT.Infrastructure.Repository.Extensions;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
     public class SubscriptionRepository : RepositoryBase<SubscriptionModel>, ISubscriptionRepository
     {
-        public SubscriptionRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
+        public SubscriptionRepository(RepositoryContext applicationDbContext)
+            : base(applicationDbContext)
         {
         }
 

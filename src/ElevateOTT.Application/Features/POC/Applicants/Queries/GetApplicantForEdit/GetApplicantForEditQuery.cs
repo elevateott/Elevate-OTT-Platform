@@ -4,7 +4,7 @@ public class GetApplicantForEditQuery : IRequest<Envelope<ApplicantForEdit>>
 {
     #region Public Properties
 
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     #endregion Public Properties
 

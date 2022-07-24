@@ -12,9 +12,9 @@ public class AdAccount : ValueObject
 
     #region Public Properties
 
-    public string Domain { get; private set; }
+    public string Domain { get; private set; }  = string.Empty;
 
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
 
     #endregion Public Properties
 

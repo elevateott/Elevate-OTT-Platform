@@ -89,7 +89,7 @@ public class UserUseCase : IUserUseCase
         query = !string.IsNullOrWhiteSpace(request.SortBy) ? query.SortBy(request.SortBy) : query.OrderBy(u => u.UserName);
 
         var userItems = await query.Select(u => UserItem.MapFromEntity(u)).AsNoTracking()
-            .ToPagedListAsync(request.PageNumber, request.RowsPerPage);
+            .ToPagedListAsync(request.PageNumber, request.PageSize);
 
         var usersResponse = new UsersResponse
         {

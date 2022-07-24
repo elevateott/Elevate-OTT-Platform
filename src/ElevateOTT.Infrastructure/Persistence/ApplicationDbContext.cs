@@ -1,4 +1,4 @@
-namespace ElevateOTT.Infrastructure.Persistence;
+﻿namespace ElevateOTT.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<
         ApplicationUser,
@@ -43,28 +43,28 @@ public class ApplicationDbContext : IdentityDbContext<
 
     public DbContext Current { get; }
 
-    public override DbSet<ApplicationUserRole> UserRoles { get; set; }
-    public override DbSet<ApplicationUserClaim> UserClaims { get; set; }
-    public override DbSet<ApplicationUserLogin> UserLogins { get; set; }
-    public override DbSet<ApplicationRoleClaim> RoleClaims { get; set; }
-    public override DbSet<ApplicationUserToken> UserTokens { get; set; }
+    public override DbSet<ApplicationUserRole>? UserRoles { get; set; }
+    public override DbSet<ApplicationUserClaim>? UserClaims { get; set; }
+    public override DbSet<ApplicationUserLogin>? UserLogins { get; set; }
+    public override DbSet<ApplicationRoleClaim>? RoleClaims { get; set; }
+    public override DbSet<ApplicationUserToken>? UserTokens { get; set; }
 
-    public DbSet<ApplicationUserAttachment> ApplicationUserAttachments { get; set; }
-    public DbSet<ApplicationPermission> ApplicationPermissions { get; set; }
+    public DbSet<ApplicationUserAttachment>? ApplicationUserAttachments { get; set; }
+    public DbSet<ApplicationPermission>? ApplicationPermissions { get; set; }
 
-    public DbSet<UserSettings> UserSettings { get; set; }
-    public DbSet<PasswordSettings> PasswordSettings { get; set; }
-    public DbSet<LockoutSettings> LockoutSettings { get; set; }
-    public DbSet<SignInSettings> SignInSettings { get; set; }
-    public DbSet<TokenSettings> TokenSettings { get; set; }
-    public DbSet<FileStorageSettings> FileStorageSettings { get; set; }
+    public DbSet<UserSettings>? UserSettings { get; set; }
+    public DbSet<PasswordSettings>? PasswordSettings { get; set; }
+    public DbSet<LockoutSettings>? LockoutSettings { get; set; }
+    public DbSet<SignInSettings>? SignInSettings { get; set; }
+    public DbSet<TokenSettings>? TokenSettings { get; set; }
+    public DbSet<FileStorageSettings>? FileStorageSettings { get; set; }
 
-    public DbSet<Tenant> Tenants { get; set; }
+    public DbSet<Tenant>? Tenants { get; set; }
 
-    public DbSet<Applicant> Applicants { get; set; }
-    public DbSet<Reference> References { get; set; }
+    public DbSet<Applicant>? Applicants { get; set; }
+    public DbSet<Reference>? References { get; set; }
 
-    public DbSet<Report> Reports { get; set; }
+    public DbSet<Report>? Reports { get; set; }
 
     #endregion Public Properties
 

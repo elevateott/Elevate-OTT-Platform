@@ -34,7 +34,7 @@ public static class LinqExtensions
         return result;
     }
 
-    public static IEnumerable<T> OrderBy<T>(this IEnumerable<T> query, string name)
+    public static IEnumerable<T>? OrderBy<T>(this IEnumerable<T> query, string name)
     {
         var propInfo = GetPropertyInfo(typeof(T), name);
 
@@ -47,10 +47,10 @@ public static class LinqExtensions
 
         var genericMethod = method.MakeGenericMethod(typeof(T), propInfo.PropertyType);
 
-        return (IEnumerable<T>)genericMethod.Invoke(null, new object[] { query, expr.Compile() });
+        return (IEnumerable<T>?)genericMethod.Invoke(null, new object[] { query, expr.Compile() });
     }
 
-    public static IEnumerable<T> OrderByDescending<T>(this IEnumerable<T> query, string name)
+    public static IEnumerable<T>? OrderByDescending<T>(this IEnumerable<T> query, string name)
     {
         var propInfo = GetPropertyInfo(typeof(T), name);
 
@@ -63,10 +63,10 @@ public static class LinqExtensions
 
         var genericMethod = method.MakeGenericMethod(typeof(T), propInfo.PropertyType);
 
-        return (IEnumerable<T>)genericMethod.Invoke(null, new object[] { query, expr.Compile() });
+        return (IEnumerable<T>?)genericMethod.Invoke(null, new object[] { query, expr.Compile() });
     }
 
-    public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, string name)
+    public static IQueryable<T>? OrderBy<T>(this IQueryable<T> query, string name)
     {
         var propInfo = GetPropertyInfo(typeof(T), name);
 
@@ -79,10 +79,10 @@ public static class LinqExtensions
 
         var genericMethod = method.MakeGenericMethod(typeof(T), propInfo.PropertyType);
 
-        return (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, expr });
+        return (IQueryable<T>?)genericMethod.Invoke(null, new object[] { query, expr });
     }
 
-    public static IQueryable<T> OrderByDescending<T>(this IQueryable<T> query, string name)
+    public static IQueryable<T>? OrderByDescending<T>(this IQueryable<T> query, string name)
     {
         var propInfo = GetPropertyInfo(typeof(T), name);
 
@@ -95,10 +95,10 @@ public static class LinqExtensions
 
         var genericMethod = method.MakeGenericMethod(typeof(T), propInfo.PropertyType);
 
-        return (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, expr });
+        return (IQueryable<T>?)genericMethod.Invoke(null, new object[] { query, expr });
     }
 
-    public static IEnumerable<T> SortBy<T>(this IEnumerable<T> query, string sort)
+    public static IEnumerable<T>? SortBy<T>(this IEnumerable<T> query, string sort)
     {
         var propertyAndOrder = sort.Split(new[] { ' ' });
 
@@ -119,10 +119,10 @@ public static class LinqExtensions
 
         var genericMethod = method.MakeGenericMethod(typeof(T), propInfo.PropertyType);
 
-        return (IEnumerable<T>)genericMethod.Invoke(null, new object[] { query, expr.Compile() });
+        return (IEnumerable<T>?)genericMethod.Invoke(null, new object[] { query, expr.Compile() });
     }
 
-    public static IQueryable<T> SortBy<T>(this IQueryable<T> query, string sort)
+    public static IQueryable<T>? SortBy<T>(this IQueryable<T> query, string sort)
     {
         var propertyAndOrder = sort.Split(new[] { ' ' });
 
@@ -143,7 +143,7 @@ public static class LinqExtensions
 
         var genericMethod = method.MakeGenericMethod(typeof(T), propInfo.PropertyType);
 
-        return (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, expr });
+        return (IQueryable<T>?)genericMethod.Invoke(null, new object[] { query, expr });
     }
 
     public static async Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> query, int pageNumber = 1, int totalRowsPerPage = 10) where T : class

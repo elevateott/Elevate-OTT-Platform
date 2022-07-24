@@ -1,12 +1,28 @@
-﻿namespace ElevateOTT.Application.Common.Mappings;
+﻿using ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
+using ElevateOTT.Application.Features.Content.Authors.Commands.UpdateAuthor;
+using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
+using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.Domain.Entities.Content;
 
-public class MappingProfile : Profile //TODO: Remove this file.
+namespace ElevateOTT.Application.Common.Mappings;
+
+public class MappingProfile : Profile 
 {
     #region Public Constructors
 
     public MappingProfile()
     {
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+
+        // CreateMap<VideoModel, VideoDto>().ReverseMap();
+        // CreateMap<LiveStreamModel, LiveStreamDto>().ReverseMap();
+        // CreateMap<CategoryModel, CategoryDto>().ReverseMap();
+        // CreateMap<CollectionModel, CollectionDto>().ReverseMap();
+        // CreateMap<SubscriptionModel, SubscriptionDto>().ReverseMap();
+        CreateMap<AuthorModel, AuthorDto>().ReverseMap();
+        CreateMap<AuthorModel, AuthorForEdit>().ReverseMap();
+        CreateMap<AuthorModel, CreateAuthorCommand>().ReverseMap();
+        CreateMap<AuthorModel, UpdateAuthorCommand>().ReverseMap();
     }
 
     #endregion Public Constructors

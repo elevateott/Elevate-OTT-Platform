@@ -17,7 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return authors.Where(e => e.Name.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<AuthorModel> Sort(this IQueryable<AuthorModel> authors, string orderByQueryString)
+        public static IQueryable<AuthorModel>? Sort(this IQueryable<AuthorModel> authors, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return authors.OrderBy(e => e.Name);

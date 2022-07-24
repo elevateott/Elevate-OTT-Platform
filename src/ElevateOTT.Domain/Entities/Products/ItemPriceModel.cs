@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Products;
 
 [Table("ItemPrices")]
-public class ItemPriceModel : EntityBase
+public class ItemPriceModel : BaseEntity
 {
     #region Chargebee Properties
     public string ChargebeeItemPriceId { get; set; } = string.Empty;

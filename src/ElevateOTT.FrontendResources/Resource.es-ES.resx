@@ -243,6 +243,9 @@
   <data name="Assign_Roles" xml:space="preserve">
     <value>Asignar roles</value>
   </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
   <data name="August" xml:space="preserve">
     <value>Agosto</value>
   </data>
@@ -257,6 +260,9 @@
   </data>
   <data name="Authorizing" xml:space="preserve">
     <value>Autorizar</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
+    <value>Autores</value>
   </data>
   <data name="Avatar" xml:space="preserve">
     <value>Avatar</value>
@@ -320,6 +326,9 @@
   </data>
   <data name="Carbon" xml:space="preserve">
     <value>Carbono</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categorías</value>
   </data>
   <data name="Cerium" xml:space="preserve">
     <value>Cerio</value>
@@ -387,6 +396,9 @@
   <data name="Code" xml:space="preserve">
     <value>Código</value>
   </data>
+  <data name="Collections" xml:space="preserve">
+    <value>Colecciones</value>
+  </data>
   <data name="Completed" xml:space="preserve">
     <value>¡Completado!</value>
   </data>
@@ -404,6 +416,9 @@
   </data>
   <data name="Confirm_Password" xml:space="preserve">
     <value>Confirmar contraseña</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Contenido</value>
   </data>
   <data name="ContentType" xml:space="preserve">
     <value>Tipo de contenido</value>
@@ -455,6 +470,12 @@
   </data>
   <data name="Current_Transcripts" xml:space="preserve">
     <value>Transcripciones actuales</value>
+  </data>
+  <data name="Custom_filter" xml:space="preserve">
+    <value>Filtro personalizado</value>
+  </data>
+  <data name="Custom_Filters" xml:space="preserve">
+    <value>Filtros de clientes</value>
   </data>
   <data name="Danger" xml:space="preserve">
     <value>Peligro</value>
@@ -636,6 +657,9 @@
   <data name="Exporting_data_may_take_a_while" xml:space="preserve">
     <value>La exportación de datos puede llevar un tiempo.</value>
   </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Extras</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>¡Error!</value>
   </data>
@@ -731,6 +755,9 @@
   </data>
   <data name="Generating_new_recovery_codes_does_not_change_the_keys_used_in_authenticator_apps" xml:space="preserve">
     <value>La generación de nuevos códigos de recuperación no cambia las claves utilizadas en las aplicaciones de autenticación.</value>
+  </data>
+  <data name="Genres" xml:space="preserve">
+    <value>Géneros</value>
   </data>
   <data name="Geothermal" xml:space="preserve">
     <value>Geotérmico</value>
@@ -872,6 +899,9 @@
   </data>
   <data name="Live_data_powered_by_SignalR" xml:space="preserve">
     <value>Datos en vivo impulsados por SignalR</value>
+  </data>
+  <data name="Live_Streams" xml:space="preserve">
+    <value>Transmisiones en vivo</value>
   </data>
   <data name="Loading_On_Demand" xml:space="preserve">
     <value>Carga bajo demanda</value>
@@ -1034,6 +1064,9 @@
   </data>
   <data name="or" xml:space="preserve">
     <value>o</value>
+  </data>
+  <data name="Organize" xml:space="preserve">
+    <value>Organizar</value>
   </data>
   <data name="out_of" xml:space="preserve">
     <value>de</value>
@@ -1374,6 +1407,9 @@
   <data name="Sweden" xml:space="preserve">
     <value>Suecia</value>
   </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Etiquetas</value>
+  </data>
   <data name="Thank_you_for_confirming_your_email" xml:space="preserve">
     <value>Gracias por confirmar su correo electrónico.</value>
   </data>
@@ -1508,6 +1544,9 @@
   </data>
   <data name="Verify" xml:space="preserve">
     <value>Verificar</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videos</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>Vista</value>

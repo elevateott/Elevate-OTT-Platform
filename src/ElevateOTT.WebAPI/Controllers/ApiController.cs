@@ -5,19 +5,14 @@
 public abstract class ApiController : ControllerBase
 {
     #region Private Fields
-
     private IMediator _mediator;
-
     #endregion Private Fields
 
     #region Protected Properties
-
     protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
-
     #endregion Protected Properties
 
     #region Protected Methods
-
     protected IActionResult TryGetResult<T>(Envelope<T> envelope)
     {
         if (envelope == null) throw new Exception("Unhandled exception.");
@@ -31,6 +26,5 @@ public abstract class ApiController : ControllerBase
         envelope.ModelStateErrors.ToList().ForEach(mse => ModelState.AddModelError(mse.Key, mse.Value));
         throw new ApiProblemDetailsException(ModelState);
     }
-
     #endregion Protected Methods
 }
