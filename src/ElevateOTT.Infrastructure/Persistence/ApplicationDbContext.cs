@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Infrastructure.Persistence;
+﻿using ElevateOTT.Domain.Entities.Content;
+
+namespace ElevateOTT.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<
         ApplicationUser,
@@ -25,7 +27,6 @@ public class ApplicationDbContext : IdentityDbContext<
     #endregion Private Fields
 
     #region Public Constructors
-
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
                                 IHttpContextAccessor httpContextAccessor,
                                 ITenantResolver tenantResolver,
@@ -65,6 +66,9 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Reference>? References { get; set; }
 
     public DbSet<Report>? Reports { get; set; }
+
+    public DbSet<AuthorModel>? Authors { get; set; }
+
 
     #endregion Public Properties
 

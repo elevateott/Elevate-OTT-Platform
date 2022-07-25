@@ -72,7 +72,6 @@ namespace ElevateOTT.Infrastructure.Repository
         public DbSet<CommentModel>? Comments { get; set; }
         public DbSet<ContentFeedModel>? ContentFeeds { get; set; }
         public DbSet<ExtraModel>? Extras { get; set; }
-        public DbSet<GenreModel>? Genres { get; set; }
         public DbSet<ProductFamilyModel>? ProductFamilies { get; set; }
         public DbSet<ItemPriceModel>? ItemPrices { get; set; }
         public DbSet<LiveStreamModel>? LiveStreams { get; set; }
@@ -81,7 +80,6 @@ namespace ElevateOTT.Infrastructure.Repository
         public DbSet<SubscriptionModel>? Subscriptions { get; set; }
         public DbSet<SubscriptionItemModel>? SubscriptionItems { get; set; }
         public DbSet<SubtitleModel>? Subtitles { get; set; }
-        public DbSet<TagModel>? Tags { get; set; }
         public DbSet<VideoAuthorModel>? VideosAuthors { get; set; }
         public DbSet<VideoAuthorModel>? VideosCategories { get; set; }
         public DbSet<VideoFolderModel>? VideoFolders { get; set; }

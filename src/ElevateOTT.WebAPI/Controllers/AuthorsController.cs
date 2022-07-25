@@ -36,6 +36,7 @@ public class AuthorsController : ApiController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorCommand request)
     {
         var response = await Mediator.Send(request);

@@ -31,6 +31,6 @@ public class AuthorModel : BaseEntity, IMustHaveTenant
     #endregion
 
     #region navigational properties
-    public ICollection<VideoAuthorModel>? VideosAuthors { get; set; }
+    // public ICollection<VideoAuthorModel>? VideosAuthors { get; set; }
     #endregion
 }
