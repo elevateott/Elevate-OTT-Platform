@@ -5,6 +5,8 @@ public class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorComman
     #region Public Constructors
     public CreateAuthorCommandValidator()
     {
+        // TODO slug - no spaces or special chars
+
         //RuleFor(a => a.Ssn).Cascade(CascadeMode.Stop)
         //    .NotEmpty().WithMessage(BackendResources.Resource.Social_security_number_is_required)
         //    .Must(a => a > 99999999 && a < 1000000000).WithMessage(BackendResources.Resource.Social_security_number_must_contain_only_9_digits)

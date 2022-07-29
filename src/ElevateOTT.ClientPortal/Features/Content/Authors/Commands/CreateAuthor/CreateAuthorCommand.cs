@@ -8,7 +8,6 @@ public class CreateAuthorCommand
     public string ImageUrl { get; set; } = string.Empty;
     public string SeoTitle { get; set; } = string.Empty;
     public string SeoDescription { get; set; } = string.Empty;
-    public string Permalink { get; set; } = string.Empty;
-
+    public string Slug { get; set; } = string.Empty;
     #endregion Public Properties
 }

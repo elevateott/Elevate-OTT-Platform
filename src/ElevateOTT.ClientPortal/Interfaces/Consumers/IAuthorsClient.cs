@@ -1,34 +1,21 @@
-﻿namespace ElevateOTT.ClientPortal.Interfaces.Consumers;
+﻿using ElevateOTT.ClientPortal.Features.Content.Authors.Commands.CreateAuthor;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Commands.UpdateAuthor;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorForEdit;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthors;
+
+namespace ElevateOTT.ClientPortal.Interfaces.Consumers;
 
 public interface IAuthorsClient
 {
     #region Public Methods
+    Task<HttpResponseWrapper<object>> GetAuthor(GetAuthorForEditQuery request);
 
-    Task<HttpResponseWrapper<object>> GetApplicant(GetApplicantForEditQuery request);
+    Task<HttpResponseWrapper<object>> GetAuthors(GetAuthorsQuery request);
 
-    Task<HttpResponseWrapper<object>> GetApplicantReferences(GetApplicantReferencesQuery request);
+    Task<HttpResponseWrapper<object>> CreateAuthor(CreateAuthorCommand request);
 
-    Task<HttpResponseWrapper<object>> GetApplicants(GetApplicantsQuery request);
+    Task<HttpResponseWrapper<object>> UpdateAuthor(UpdateAuthorCommand request);
 
-    Task<HttpResponseWrapper<object>> CreateApplicant(CreateApplicantCommand request);
-
-    Task<HttpResponseWrapper<object>> UpdateApplicant(UpdateApplicantCommand request);
-
-    Task<HttpResponseWrapper<object>> DeleteApplicant(string id);
-
-    Task<HttpResponseWrapper<object>> FluentValidation(CreateApplicantCommand request);
-
-    Task<HttpResponseWrapper<object>> GetApplicantNoAuth(GetApplicantForEditQuery request);
-
-    Task<HttpResponseWrapper<object>> GetApplicantsNoAuth(GetApplicantsQuery request);
-
-    Task<HttpResponseWrapper<object>> CreateApplicantNoAuth(CreateApplicantCommand request);
-
-    Task<HttpResponseWrapper<object>> UpdateApplicantNoAuth(UpdateApplicantCommand request);
-
-    Task<HttpResponseWrapper<object>> DeleteApplicantNoAuth(string id);
-
-    Task<HttpResponseWrapper<object>> ExportAsPdf(ExportApplicantsQuery request);
-
+    Task<HttpResponseWrapper<object>> DeleteAuthor(Guid id);
     #endregion Public Methods
 }

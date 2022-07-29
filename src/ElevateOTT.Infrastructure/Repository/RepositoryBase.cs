@@ -24,7 +24,7 @@ namespace ElevateOTT.Infrastructure.Repository
 			  ApplicationDbContext.Set<T>()
 				.Where(expression);
 
-		public async Task CreateAsync(T entity) => await ApplicationDbContext.Set<T>().AddAsync(entity);
+		public void Create(T entity) => ApplicationDbContext.Set<T>().Add(entity);
 
 		public void Update(T entity) => ApplicationDbContext.Set<T>().Update(entity);
 

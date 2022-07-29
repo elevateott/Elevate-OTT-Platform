@@ -1,16 +1,15 @@
-namespace ElevateOTT.ClientPortal.Services;
+﻿namespace ElevateOTT.ClientPortal.Services;
 
 public class HttpInterceptorService : IDisposable
 {
     #region Private Fields
-
     private readonly HttpClient _httpClient;
     private readonly HttpClientInterceptor _httpClientInterceptor;
     private readonly SpinnerService _spinnerService;
     private readonly NavigationManager _navigationManager;
     private readonly IRefreshTokenService _refreshTokenService;
     private readonly IAuthenticationService _authenticationService;
-
+    private readonly AuthenticationStateProvider _authenticationStateProvider;
     #endregion Private Fields
 
     #region Public Constructors
@@ -20,7 +19,8 @@ public class HttpInterceptorService : IDisposable
                                   SpinnerService spinnerService,
                                   NavigationManager navigationManager,
                                   IRefreshTokenService refreshTokenService,
-                                  IAuthenticationService authenticationService)
+                                  IAuthenticationService authenticationService, 
+                                  AuthenticationStateProvider authenticationStateProvider)
     {
         _httpClient = httpClientFactory.CreateClient("HttpInterceptorService");
         _httpClientInterceptor = httpClientInterceptor;
@@ -28,6 +28,7 @@ public class HttpInterceptorService : IDisposable
         _navigationManager = navigationManager;
         _refreshTokenService = refreshTokenService;
         _authenticationService = authenticationService;
+        _authenticationStateProvider = authenticationStateProvider;
         _httpClientInterceptor.BeforeSend += async (s, e) => await HttpClientInterceptor_BeforeSendAsync(s, e);
         _httpClientInterceptor.AfterSend += async (s, e) => await HttpClientInterceptor_AfterSendAsync(s, e);
     }
@@ -51,9 +52,19 @@ public class HttpInterceptorService : IDisposable
     {
         _spinnerService.Show();
 
-        var subDomain = _navigationManager.GetSubDomain();
+        //
+        // TODO 
+        // Get tenant id from claim and add to header instead if tenant name
+        //
+        var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        var tenantIdClaim = authenticationState.User.Claims.FirstOrDefault(x => x.Type.Equals("TenantId"));
+        string tenantId = tenantIdClaim is not null ? tenantIdClaim.Value : string.Empty;
+        Console.WriteLine($"tenantId: {tenantId}");
 
-        e.Request.Headers.Add("X-Tenant", subDomain);
+
+        string tenantName = _navigationManager.GetSubDomain();
+
+        e.Request.Headers.Add("X-Tenant", tenantName);
 
         if (e.Request.Headers.Authorization != null)
         {

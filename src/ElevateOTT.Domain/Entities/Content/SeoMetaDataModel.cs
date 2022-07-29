@@ -7,7 +7,7 @@ public class SeoMetaDataModel : BaseEntity
 
     public string SeoDescription { get; set; } = string.Empty;
 
-    public string Permalink { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
 
     #region foreign keys
     [ForeignKey(nameof(VideoModel))]

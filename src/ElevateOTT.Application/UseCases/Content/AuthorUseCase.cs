@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElevateOTT.Application.Common.Extensions;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
 using ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
@@ -20,7 +21,7 @@ public class AuthorUseCase : IAuthorUseCase
 
     private readonly IApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
-    private readonly IAuthorRepository _authorRepository;
+    public readonly IRepositoryManager _repositoryManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IReportingService _reportingService;
     private readonly ITenantResolver _tenantResolver;
@@ -31,13 +32,16 @@ public class AuthorUseCase : IAuthorUseCase
 
     public AuthorUseCase(IApplicationDbContext dbContext,
                             IHttpContextAccessor httpContextAccessor,
-                            IReportingService reportingService, IMapper mapper, IAuthorRepository authorRepository, ITenantResolver tenantResolver)
+                            IReportingService reportingService, 
+                            IMapper mapper, 
+                            IRepositoryManager repositoryManager,
+                            ITenantResolver tenantResolver)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
         _reportingService = reportingService;
         _mapper = mapper;
-        _authorRepository = authorRepository;
+        _repositoryManager = repositoryManager;
         _tenantResolver = tenantResolver;
     }
 
@@ -59,7 +63,7 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<AuthorForEdit>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
-        var author = await _authorRepository.GetAuthorAsync(tenantId.Value, request.Id.Value, false);
+        var author = await _repositoryManager.Author.GetAuthorAsync(tenantId.Value, request.Id.Value, false);
 
         if (author == null)
             return Envelope<AuthorForEdit>.Result.NotFound(Resource.Unable_to_load_author);
@@ -78,12 +82,12 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<AuthorsResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
-        var authors = await  _authorRepository.GetAuthorsAsync(tenantId.Value, request, false);
+        var authors = await _repositoryManager.Author.GetAuthorsAsync(tenantId.Value, request, false);
 
 
         var authorsResponse = new AuthorsResponse
         {
-            Authors = _mapper.Map<PagedList<AuthorDto>>(authors)
+            Authors = await authors.Items.Select(author => _mapper.Map<AuthorItem>(author)).ToPagedListAsync(request.PageNumber, request.PageSize)
         };
 
         return Envelope<AuthorsResponse>.Result.Ok(authorsResponse);
@@ -100,7 +104,8 @@ public class AuthorUseCase : IAuthorUseCase
 
         var author = _mapper.Map<AuthorModel>(request);
 
-        await _authorRepository.CreateAuthorForTenant(tenantId.Value, author);
+        _repositoryManager.Author.CreateAuthorForTenant(tenantId.Value, author);
+        await _repositoryManager.SaveAsync();
 
         var createAuthorResponse = new CreateAuthorResponse
         {
@@ -120,7 +125,8 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
-        var authorEntity = await _authorRepository.GetAuthorAsync(tenantId.Value, request.Id, true);
+        var authorEntity = await _repositoryManager.Author.GetAuthorAsync(tenantId.Value, request.Id, true);
+        await _repositoryManager.SaveAsync();
 
         if (authorEntity == null)
             return Envelope<string>.Result.NotFound(Resource.Unable_to_load_author);
@@ -141,12 +147,14 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
-        var authorEntity = await _authorRepository.GetAuthorAsync(tenantId.Value, request.Id, true);
+        var authorEntity = await _repositoryManager.Author.GetAuthorAsync(tenantId.Value, request.Id, true);
+        await _repositoryManager.SaveAsync();
 
         if (authorEntity == null)
             return Envelope<string>.Result.NotFound(Resource.The_author_is_not_found);
 
-        _authorRepository.DeleteAuthor(authorEntity);
+        _repositoryManager.Author.DeleteAuthor(authorEntity);
+        await _repositoryManager.SaveAsync();
 
         return Envelope<string>.Result.Ok(Resource.Author_has_been_deleted_successfully);
     }

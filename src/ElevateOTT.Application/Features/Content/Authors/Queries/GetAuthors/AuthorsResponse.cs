@@ -3,8 +3,6 @@
 public class AuthorsResponse
 {
     #region Public Properties
-
-    public PagedList<AuthorDto>? Authors { get; set; }
-
+    public PagedList<AuthorItem>? Authors { get; set; }
     #endregion Public Properties
 }

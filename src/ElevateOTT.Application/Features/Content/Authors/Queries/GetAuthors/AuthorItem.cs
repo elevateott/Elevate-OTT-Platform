@@ -3,7 +3,7 @@ using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
 
-public class AuthorDto : AuditableDto
+public class AuthorItem : AuditableDto
 {
     //private IMapper _mapper;
 
@@ -20,7 +20,7 @@ public class AuthorDto : AuditableDto
     public string ImageUrl { get; set; } = string.Empty;
     public string SeoTitle { get; set; } = string.Empty;
     public string SeoDescription { get; set; } = string.Empty;
-    public string Permalink { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
 
     #endregion Public Properties
 

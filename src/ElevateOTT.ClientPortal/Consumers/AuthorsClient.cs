@@ -1,69 +1,45 @@
-﻿namespace ElevateOTT.ClientPortal.Consumers;
+﻿using ElevateOTT.ClientPortal.Features.Content.Authors.Commands.CreateAuthor;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Commands.UpdateAuthor;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorForEdit;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthors;
+
+namespace ElevateOTT.ClientPortal.Consumers;
 
 public class AuthorsClient : IAuthorsClient
 {
-    public Task<HttpResponseWrapper<object>> GetApplicant(GetApplicantForEditQuery request)
+    #region Private Fields
+    private readonly IHttpService _httpService;
+    #endregion Private Fields
+
+    #region Public Constructors
+    public AuthorsClient(IHttpService httpService)
     {
-        throw new NotImplementedException();
+        _httpService = httpService;
+    }
+    #endregion Public Constructors
+
+    public async Task<HttpResponseWrapper<object>> GetAuthor(GetAuthorForEditQuery request)
+    {
+        return await _httpService.Post<GetAuthorForEditQuery, AuthorForEdit>("authors/author", request);
     }
 
-    public Task<HttpResponseWrapper<object>> GetApplicantReferences(GetApplicantReferencesQuery request)
+    public async Task<HttpResponseWrapper<object>> GetAuthors(GetAuthorsQuery request)
     {
-        throw new NotImplementedException();
+        return await _httpService.Post<GetAuthorsQuery, AuthorsResponse>("authors/authors", request);
     }
 
-    public Task<HttpResponseWrapper<object>> GetApplicants(GetApplicantsQuery request)
+    public async Task<HttpResponseWrapper<object>> CreateAuthor(CreateAuthorCommand request)
     {
-        throw new NotImplementedException();
+        return await _httpService.Post<CreateAuthorCommand, CreateAuthorResponse>("authors/new-author", request);
     }
 
-    public Task<HttpResponseWrapper<object>> CreateApplicant(CreateApplicantCommand request)
+    public async Task<HttpResponseWrapper<object>> UpdateAuthor(UpdateAuthorCommand request)
     {
-        throw new NotImplementedException();
+        return await _httpService.Put<UpdateAuthorCommand, string>("authors", request);
     }
 
-    public Task<HttpResponseWrapper<object>> UpdateApplicant(UpdateApplicantCommand request)
+    public async Task<HttpResponseWrapper<object>> DeleteAuthor(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> DeleteApplicant(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> FluentValidation(CreateApplicantCommand request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> GetApplicantNoAuth(GetApplicantForEditQuery request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> GetApplicantsNoAuth(GetApplicantsQuery request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> CreateApplicantNoAuth(CreateApplicantCommand request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> UpdateApplicantNoAuth(UpdateApplicantCommand request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> DeleteApplicantNoAuth(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<HttpResponseWrapper<object>> ExportAsPdf(ExportApplicantsQuery request)
-    {
-        throw new NotImplementedException();
+        return await _httpService.Delete<string>($"authors/{id}");
     }
 }

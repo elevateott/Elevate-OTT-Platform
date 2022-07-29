@@ -58,13 +58,11 @@ public class TenantInterceptorMiddleware
 
                     if (tenantName.Count == 0)
                         tenantName = string.Empty;
+                    
 
+                    // TODO check if tenant name is Name or CustomDomain
 
-                    var applicants = dbContext.Applicants.ToList();
-
-                    var tenants = dbContext.Tenants.ToList();
-
-                    var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name == tenantName.FirstOrDefault())?.Id;
+                    var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
 
                     if (httpContext.Request.Path.Value is { } pathValue
                         && tenantId is null

@@ -12,31 +12,22 @@ namespace ElevateOTT.WebAPI.Controllers;
 [BpAuthorize]
 public class AuthorsController : ApiController
 {
-    //private readonly IMediator Mediator;
-
-    //public AuthorsController(IMediator mediator)
-    //{
-    //    Mediator = mediator;
-    //}
-
     #region Public Methods
+    [HttpGet("author/{id:guid}", Name = "AuthorById")]
+    public async Task<IActionResult> GetAuthor(Guid id)
+    {
+        var response = await Mediator.Send(new GetAuthorForEditQuery {Id = id});
+        return TryGetResult(response);
+    }
 
-    [HttpPost("Author")]
-    public async Task<IActionResult> GetAuthor(GetAuthorForEditQuery request)
+    [HttpPost("authors")]
+    public async Task<IActionResult> GetAuthors([FromBody] GetAuthorsQuery request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
 
-    [HttpPost("Authors")]
-    public async Task<IActionResult> GetAuthors(GetAuthorsQuery request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-    [HttpPost]
-    [AllowAnonymous]
+    [HttpPost("new-author")]
     public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorCommand request)
     {
         var response = await Mediator.Send(request);
@@ -50,75 +41,10 @@ public class AuthorsController : ApiController
         return TryGetResult(response);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAuthor(Guid id)
     {
         var response = await Mediator.Send(new DeleteAuthorCommand { Id = id });
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("GetAuthorNoAuth")]
-    public async Task<IActionResult> GetAuthorNoAuth(GetAuthorForEditQuery request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("GetAuthorsNoAuth")]
-    public async Task<IActionResult> GetAuthorsNoAuth(GetAuthorsQuery request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("CreateAuthorNoAuth")]
-    public async Task<IActionResult> CreateAuthorNoAuth(CreateAuthorCommand request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpPut("UpdateAuthorNoAuth")]
-    public async Task<IActionResult> UpdateAuthorNoAuth(UpdateAuthorCommand request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpDelete("DeleteAuthorNoAuth")]
-    public async Task<IActionResult> DeleteAuthorNoAuth(Guid id)
-    {
-        var response = await Mediator.Send(new DeleteAuthorCommand { Id = id });
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("FluentValidation")]
-    public async Task<IActionResult> FluentValidation(CreateAuthorCommand request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-
-    [AllowAnonymous]
-    [HttpPost("ExportAsXls")]
-    public async Task<IActionResult> ExportAsXls(ExportAuthorsQuery request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("ExportAsPdf")]
-    public async Task<IActionResult> ExportAsPdf(ExportAuthorsQuery request)
-    {
-        var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
     #endregion Public Methods

@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using Ardalis.GuardClauses;
+using Azure.Core;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
 using ElevateOTT.Domain.Entities.Content;
@@ -14,12 +15,15 @@ namespace ElevateOTT.Infrastructure.Repository
         {
         }
 
-        public async Task<PagedList<AuthorModel>> GetAuthorsAsync(Guid tenantId, GetAuthorsQuery request, bool trackChanges)
+        public async Task<PagedList<AuthorModel>> GetAuthorsAsync(Guid tenantId, GetAuthorsQuery? request, bool trackChanges)
         {
+            Guard.Against.Null(request, nameof(request));
+
             var query = FindAll(trackChanges)
                 .Where(a => a.TenantId.Equals(tenantId))
                 .Search(request.SearchText)
-                .Sort(request.SortBy);
+                .SortBy(request.SortBy)!  
+                .OrderBy(x =>  x.Name).ThenBy(x => x.CreatedOn);
 
             return await query.ToPagedListAsync(request.PageNumber, request.PageSize);
         }
@@ -33,11 +37,11 @@ namespace ElevateOTT.Infrastructure.Repository
             await FindByCondition(expression, trackChanges)
                 .SingleOrDefaultAsync();
 
-        public async Task CreateAuthorForTenant(Guid tenantId, AuthorModel author)
+        public void CreateAuthorForTenant(Guid tenantId, AuthorModel author)
         {
             author.TenantId = tenantId;
             author.CreatedOn = DateTime.Now;
-            await CreateAsync(author);
+            Create(author);
         }
 
         public Task<IEnumerable<AuthorModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)

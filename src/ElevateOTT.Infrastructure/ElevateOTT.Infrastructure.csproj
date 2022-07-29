@@ -38,7 +38,6 @@
     <Compile Remove="Repository\ProductFamilyRepository.cs" />
     <Compile Remove="Repository\ProductItemRepository.cs" />
     <Compile Remove="Repository\RepositoryContext.cs" />
-    <Compile Remove="Repository\RepositoryManager.cs" />
     <Compile Remove="Repository\SeoMetaDataRepository.cs" />
     <Compile Remove="Repository\SubscriptionRepository.cs" />
     <Compile Remove="Repository\SubtitleRepository.cs" />

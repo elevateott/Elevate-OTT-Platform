@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using ElevateOTT.ClientPortal.Pages.Users;
+using Microsoft.Extensions.Options;
 
 namespace ElevateOTT.ClientPortal.Pages.POC.Army;
 
@@ -55,10 +56,11 @@ public partial class Applicants : ComponentBase, IAsyncDisposable
         {
             new(Resource.Home, "/"),
             new(Resource.Applicants, "#", true)
-        });
+    });
+
 
         var userIdentity = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
-
+        
         if (userIdentity is { IsAuthenticated: true })
         {
             await StartHubConnection();

@@ -107,7 +107,7 @@ public static class DependencyInjection
 
         services.AddScoped<IAuthorUseCase, AuthorUseCase>();
 
-        services.AddScoped<IAuthorRepository, AuthorRepository>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
 
         return services;
     }

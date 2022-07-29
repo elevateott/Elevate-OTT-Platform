@@ -23,8 +23,8 @@ public class AuthorModel : BaseEntity, IMustHaveTenant
     [MaxLength(1000, ErrorMessage = "Maximum length for the SEO Description is 1000 characters.")]
     public string SeoDescription { get; set; } = string.Empty;
 
-    [Url(ErrorMessage = "Permalink must be a valid URL.")]
-    public string Permalink { get; set; } = string.Empty;
+    // TODO validation for no spaces and no special chars
+    public string Slug { get; set; } = string.Empty;
 
     #region foreign keys
  

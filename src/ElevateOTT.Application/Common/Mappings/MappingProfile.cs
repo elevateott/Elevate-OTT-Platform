@@ -19,7 +19,7 @@ public class MappingProfile : Profile
         // CreateMap<CategoryModel, CategoryDto>().ReverseMap();
         // CreateMap<CollectionModel, CollectionDto>().ReverseMap();
         // CreateMap<SubscriptionModel, SubscriptionDto>().ReverseMap();
-        CreateMap<AuthorModel, AuthorDto>().ReverseMap();
+        CreateMap<AuthorModel, AuthorItem>().ReverseMap();
         CreateMap<AuthorModel, AuthorForEdit>().ReverseMap();
         CreateMap<AuthorModel, CreateAuthorCommand>().ReverseMap();
         CreateMap<AuthorModel, UpdateAuthorCommand>().ReverseMap();

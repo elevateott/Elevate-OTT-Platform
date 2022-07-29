@@ -17,17 +17,17 @@ namespace ElevateOTT.Infrastructure.Repository.Extensions
             return authors.Where(e => e.Name.ToLower().Contains(lowerCaseTerm));
         }
 
-        public static IQueryable<AuthorModel>? Sort(this IQueryable<AuthorModel> authors, string orderByQueryString)
-        {
-            if (string.IsNullOrWhiteSpace(orderByQueryString))
-                return authors.OrderBy(e => e.Name);
+        //public static IQueryable<AuthorModel>? Sort(this IQueryable<AuthorModel> authors, string orderByQueryString)
+        //{
+        //    if (string.IsNullOrWhiteSpace(orderByQueryString))
+        //        return authors.OrderBy(e => e.Name);
 
-            var orderQuery = OrderQueryBuilder.CreateOrderQuery<AuthorModel>(orderByQueryString);
+        //    var orderQuery = OrderQueryBuilder.CreateOrderQuery<AuthorModel>(orderByQueryString);
 
-            if (string.IsNullOrWhiteSpace(orderQuery))
-                return authors.OrderBy(e => e.Name);
+        //    if (string.IsNullOrWhiteSpace(orderQuery))
+        //        return authors.OrderBy(e => e.Name);
 
-            return authors.OrderBy(orderQuery);
-        }
+        //    return authors.OrderBy(orderQuery);
+        //}
     }
 }

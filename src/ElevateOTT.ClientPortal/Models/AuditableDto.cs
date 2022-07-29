@@ -1,4 +1,4 @@
-namespace ElevateOTT.ClientPortal.Models;
+﻿namespace ElevateOTT.ClientPortal.Models;
 
 /// <summary>
 /// Indicates that any class inherits this interface has audit properties as shadow properties.
@@ -10,7 +10,6 @@ namespace ElevateOTT.ClientPortal.Models;
 public abstract class AuditableDto
 {
     #region Public Properties
-
     public DateTime CreatedOn { get; set; }
     public string CreatedBy { get; set; }
     public DateTime? ModifiedOn { get; set; }

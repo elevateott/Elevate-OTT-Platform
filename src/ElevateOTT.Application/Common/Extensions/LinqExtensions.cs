@@ -100,7 +100,11 @@ public static class LinqExtensions
 
     public static IEnumerable<T>? SortBy<T>(this IEnumerable<T> query, string sort)
     {
+        if (string.IsNullOrEmpty(sort)) return query;
+
         var propertyAndOrder = sort.Split(new[] { ' ' });
+
+        if (propertyAndOrder.Length < 2) return query;
 
         var property = propertyAndOrder[0];
 
@@ -124,7 +128,11 @@ public static class LinqExtensions
 
     public static IQueryable<T>? SortBy<T>(this IQueryable<T> query, string sort)
     {
+        if (string.IsNullOrEmpty(sort)) return query;
+
         var propertyAndOrder = sort.Split(new[] { ' ' });
+
+        if (propertyAndOrder.Length < 2) return query;
 
         var property = propertyAndOrder[0];
 
@@ -198,7 +206,6 @@ public static class LinqExtensions
     #endregion Public Methods
 
     #region Private Methods
-
     private static PropertyInfo GetPropertyInfo(Type objType, string name)
     {
         var properties = objType.GetProperties();
@@ -221,6 +228,5 @@ public static class LinqExtensions
 
         return expr;
     }
-
     #endregion Private Methods
 }
