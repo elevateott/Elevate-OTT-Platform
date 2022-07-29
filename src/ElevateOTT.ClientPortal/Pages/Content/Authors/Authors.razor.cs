@@ -99,7 +99,7 @@ public partial class Authors : ComponentBase, IAsyncDisposable
 
     private void EditAuthor(Guid id)
     {
-        NavigationManager?.NavigateTo($"poc/army/editAuthor/{id}");
+        NavigationManager?.NavigateTo($"/content/editAuthor/{id}");
     }
 
     private async Task DeleteAuthor(Guid id)

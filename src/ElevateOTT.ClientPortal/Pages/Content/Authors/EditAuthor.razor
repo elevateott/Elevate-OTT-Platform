@@ -1,5 +1,100 @@
-﻿<h3>EditAuthor</h3>
+﻿@page "/content/editAuthor/{authorId}"
+
+@using Syncfusion.Blazor.RichTextEditor
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@Resource.Edit_Author</MudText>
+<ServerSideValidator @ref="ServerSideValidator" />
+<EditForm Model="AuthorForEditVm" OnValidSubmit="SubmitForm">
+    <EditContextServerSideValidator @ref="EditContextServerSideValidator" />
+    <FluentValidationValidator />
+    <MudCard>
+        <MudCardContent>
+            <MudTabs KeepPanelsAlive="true" 
+                     Elevation="25" 
+                     Color="Color.Transparent" 
+                     Rounded="true" 
+                     PanelClass="mt-6">
+                <MudTabPanel Text="@Resource.Details">
+
+                    <!--TODO add resources -->
+                    
+                    <div class="mx-6 my-4">
+                        <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                            <MudItem xs="12" md="4">
+                                <div class="d-flex flex-column">
+                                    <MudText Typo="Typo.h5">@Resource.Author_name_label</MudText>
+                                    <MudText Typo="Typo.body2">
+                                        @Resource.Author_name_description
+                                    </MudText>
+                                </div>
+                            </MudItem>
+                           
+                            <MudItem xs="12" md="8">
+                                <MudTextField Label="@Resource.Author_name_label" Variant="Variant.Outlined" Class="pl-md-12"
+                                              @bind-Value="AuthorForEditVm.Name" For="@(() => AuthorForEditVm.Name)"/>
+                            </MudItem>
+                        </MudGrid>
+                    
+                        <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                            <MudItem xs="12" md="4">
+                                <div class="d-flex flex-column">
+                                    <MudText Typo="Typo.h5">@Resource.Author_bio_label</MudText>
+                                    <MudText Typo="Typo.body2">
+                                        @Resource.Author_bio_description
+                                    </MudText>
+                                </div>
+                            </MudItem>
+                           
+                            <MudItem xs="12" md="8">
+                                
+                               
+                                <!--TODO set bootstrap primary color -->
+                                <div class="pl-md-12">
+                                    <RichTextEditor RteValue="@AuthorForEditVm.Bio" OnValueChangedCallback="@UpdateRteValue" />
+                                </div>
+                             
+                            </MudItem>
+                        </MudGrid>
+                        
+                        <div>
+                            @AuthorForEditVm.Bio
+                        </div>
+                    </div>
+                    
+
+                </MudTabPanel>
+                <MudTabPanel Text="@Resource.Seo">
+                    <MudCard Elevation="25">
+                        <MudCardContent>
+                            <p>Panel content goes here</p>
+
+                            @*       <AuthorReferencesListForEdit AuthorId="@AuthorId"
+                                                        OnAddedAuthorReferencesListChanged="RefreshNewAuthorReferencesList" 
+                                                        OnModifiedAuthorReferencesListChanged="RefreshModifiedAuthorReferencesList" 
+                                                        OnRemovedAuthorReferencesListChanged="RefreshRemovedAuthorReferencesList"/>*@
+
+                            @*<AuthorReferencesListForEdit AuthorId="@AuthorId" OnAuthorReferencesChanged="UpdateAuthorReferences"></AuthorReferencesListForEdit>*@
+                        </MudCardContent>
+                    </MudCard>
+                </MudTabPanel>
+            </MudTabs>
+        </MudCardContent>
+        <MudCardActions Class="pb-4 pl-4">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
+                       FullWidth="true">@Resource.Save</MudButton>
+        </MudCardActions>
+        <MudDivider />
+        <MudExpansionPanels>
+            <MudExpansionPanel Text="@Resource.Validation_Summary" IsExpanded="true" Disabled="true" HideIcon="true">
+                <MudText Color="@Color.Error">
+                    <ValidationSummary />
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </MudCard>
+</EditForm>
 
 @code {
 
+  
 }

@@ -222,6 +222,9 @@
   <data name="Are_you_sure_you_want_to_save_applicant" xml:space="preserve">
     <value>Are you sure you want to save applicant?</value>
   </data>
+  <data name="Are_you_sure_you_want_to_save_author" xml:space="preserve">
+    <value>Are you sure you want to save this author?</value>
+  </data>
   <data name="Are_you_sure_you_want_to_save_role" xml:space="preserve">
     <value>Are you sure you want to save role?</value>
   </data>
@@ -255,6 +258,9 @@
   <data name="Authenticator_Code" xml:space="preserve">
     <value>Authenticator Code</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
   <data name="Authorization" xml:space="preserve">
     <value>Authorization</value>
   </data>
@@ -263,6 +269,24 @@
   </data>
   <data name="Authors" xml:space="preserve">
     <value>Authors</value>
+  </data>
+  <data name="Author_bio_description" xml:space="preserve">
+    <value>The author bio will display on the author details page.</value>
+  </data>
+  <data name="Author_bio_label" xml:space="preserve">
+    <value>Author Bio</value>
+  </data>
+  <data name="Author_image_description" xml:space="preserve">
+    <value>Profile image will appear on the author page as well as any other pages connected to this author. Recommended resolution:</value>
+  </data>
+  <data name="Author_image_label" xml:space="preserve">
+    <value>Author Image</value>
+  </data>
+  <data name="Author_name_description" xml:space="preserve">
+    <value>Name of the author will display on pages associated with this author.</value>
+  </data>
+  <data name="Author_name_label" xml:space="preserve">
+    <value>Author Name</value>
   </data>
   <data name="Avatar" xml:space="preserve">
     <value>Avatar</value>
@@ -528,6 +552,9 @@
   <data name="Deleting_this_data_will_permanently_remove_your_account_and_this_cannot_be_recovered" xml:space="preserve">
     <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="Disable_2FA" xml:space="preserve">
     <value>Disable Two-Factor Authentication</value>
   </data>
@@ -584,6 +611,9 @@
   </data>
   <data name="Edit_Applicant" xml:space="preserve">
     <value>Edit Applicant</value>
+  </data>
+  <data name="Edit_Author" xml:space="preserve">
+    <value>Edit Author</value>
   </data>
   <data name="Edit_Reference" xml:space="preserve">
     <value>Edit Reference</value>
@@ -1307,6 +1337,9 @@
   </data>
   <data name="Send_Activation_Email" xml:space="preserve">
     <value>Send Activation Email</value>
+  </data>
+  <data name="Seo" xml:space="preserve">
+    <value>SEO</value>
   </data>
   <data name="Septemper" xml:space="preserve">
     <value>Septemper</value>

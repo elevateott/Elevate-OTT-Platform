@@ -376,6 +376,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to save this author?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_save_author {
+            get {
+                return ResourceManager.GetString("Are_you_sure_you_want_to_save_author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to save role?.
         /// </summary>
         public static string Are_you_sure_you_want_to_save_role {
@@ -471,6 +480,69 @@ namespace ElevateOTT.FrontendResources {
         public static string Authenticator_Code {
             get {
                 return ResourceManager.GetString("Authenticator_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The author bio will display on the author details page..
+        /// </summary>
+        public static string Author_bio_description {
+            get {
+                return ResourceManager.GetString("Author_bio_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author Bio.
+        /// </summary>
+        public static string Author_bio_label {
+            get {
+                return ResourceManager.GetString("Author_bio_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile image will appear on the author page as well as any other pages connected to this author. Recommended resolution:.
+        /// </summary>
+        public static string Author_image_description {
+            get {
+                return ResourceManager.GetString("Author_image_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author Image.
+        /// </summary>
+        public static string Author_image_label {
+            get {
+                return ResourceManager.GetString("Author_image_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name of the author will display on pages associated with this author..
+        /// </summary>
+        public static string Author_name_description {
+            get {
+                return ResourceManager.GetString("Author_name_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author Name.
+        /// </summary>
+        public static string Author_name_label {
+            get {
+                return ResourceManager.GetString("Author_name_label", resourceCulture);
             }
         }
         
@@ -1295,6 +1367,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable Two-Factor Authentication.
         /// </summary>
         public static string Disable_2FA {
@@ -1462,6 +1543,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Edit_Applicant {
             get {
                 return ResourceManager.GetString("Edit_Applicant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Author.
+        /// </summary>
+        public static string Edit_Author {
+            get {
+                return ResourceManager.GetString("Edit_Author", resourceCulture);
             }
         }
         
@@ -3635,6 +3725,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Send_Activation_Email {
             get {
                 return ResourceManager.GetString("Send_Activation_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEO.
+        /// </summary>
+        public static string Seo {
+            get {
+                return ResourceManager.GetString("Seo", resourceCulture);
             }
         }
         

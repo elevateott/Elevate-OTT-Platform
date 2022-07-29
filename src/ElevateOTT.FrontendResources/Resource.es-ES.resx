@@ -222,6 +222,9 @@
   <data name="Are_you_sure_you_want_to_save_applicant" xml:space="preserve">
     <value>¿Está seguro de que desea salvar al solicitante?</value>
   </data>
+  <data name="Are_you_sure_you_want_to_save_author" xml:space="preserve">
+    <value>¿Seguro que quieres salvar a este autor?</value>
+  </data>
   <data name="Are_you_sure_you_want_to_save_role" xml:space="preserve">
     <value>¿Está seguro de que desea ahorrar rol?</value>
   </data>
@@ -255,6 +258,9 @@
   <data name="Authenticator_Code" xml:space="preserve">
     <value>Código de autenticación</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor!</value>
+  </data>
   <data name="Authorization" xml:space="preserve">
     <value>Autorización</value>
   </data>
@@ -263,6 +269,24 @@
   </data>
   <data name="Authors" xml:space="preserve">
     <value>Autores</value>
+  </data>
+  <data name="Author_bio_description" xml:space="preserve">
+    <value>La biografía del autor se mostrará en la página de detalles del autor.</value>
+  </data>
+  <data name="Author_bio_label" xml:space="preserve">
+    <value>Biografía del autor</value>
+  </data>
+  <data name="Author_image_description" xml:space="preserve">
+    <value>La imagen de perfil aparecerá en la página del autor, así como en cualquier otra página relacionada con este autor. Resolución recomendada:!</value>
+  </data>
+  <data name="Author_image_label" xml:space="preserve">
+    <value>Imagen del Autor</value>
+  </data>
+  <data name="Author_name_description" xml:space="preserve">
+    <value>El nombre del autor se mostrará en las páginas asociadas con este autor.</value>
+  </data>
+  <data name="Author_name_label" xml:space="preserve">
+    <value>Nombre del autor</value>
   </data>
   <data name="Avatar" xml:space="preserve">
     <value>Avatar</value>
@@ -528,6 +552,9 @@
   <data name="Deleting_this_data_will_permanently_remove_your_account_and_this_cannot_be_recovered" xml:space="preserve">
     <value>La eliminación de estos datos eliminará permanentemente su cuenta, y esto no se puede recuperar.</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
   <data name="Disable_2FA" xml:space="preserve">
     <value>Deshabilitar la autenticación de dos factores</value>
   </data>
@@ -584,6 +611,9 @@
   </data>
   <data name="Edit_Applicant" xml:space="preserve">
     <value>Editar solicitante</value>
+  </data>
+  <data name="Edit_Author" xml:space="preserve">
+    <value>Editar autor</value>
   </data>
   <data name="Edit_Reference" xml:space="preserve">
     <value>Editar referencia</value>
@@ -1307,6 +1337,9 @@
   </data>
   <data name="Send_Activation_Email" xml:space="preserve">
     <value>Enviar correo electrónico de activación</value>
+  </data>
+  <data name="Seo" xml:space="preserve">
+    <value>SEO</value>
   </data>
   <data name="Septemper" xml:space="preserve">
     <value>Septemper</value>
