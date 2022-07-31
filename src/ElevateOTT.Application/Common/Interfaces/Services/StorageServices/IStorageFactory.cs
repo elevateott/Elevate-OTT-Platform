@@ -3,8 +3,6 @@
 public interface IStorageFactory
 {
     #region Public Methods
-
     IFileStorageService CreateInstance(StorageTypes storageTypes);
-
     #endregion Public Methods
 }

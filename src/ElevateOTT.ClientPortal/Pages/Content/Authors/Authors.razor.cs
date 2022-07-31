@@ -145,6 +145,8 @@ public partial class Authors : ComponentBase, IAsyncDisposable
     {
         // TODO guard clause
 
+        Console.WriteLine("ServerReload invoked");
+
         GetAuthorsQuery.SearchText = SearchString;
 
         GetAuthorsQuery.PageNumber = state.Page + 1;
@@ -153,7 +155,12 @@ public partial class Authors : ComponentBase, IAsyncDisposable
 
         GetAuthorsQuery.SortBy = state.SortDirection == SortDirection.None ? string.Empty : $"{state.SortLabel} {state.SortDirection}";
 
+        Console.WriteLine("pre GetAuthors");
+
         var responseWrapper = await AuthorsClient.GetAuthors(GetAuthorsQuery);
+
+        Console.WriteLine("post GetAuthors");
+
 
         var tableData = new TableData<AuthorItem>();
 

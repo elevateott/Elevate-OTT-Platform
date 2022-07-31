@@ -3,8 +3,8 @@
 public interface IStorageProvider
 {
     #region Public Methods
-
     Task<IFileStorageService> InvokeInstanceAsync();
+    IFileStorageService InvokeInstanceForAzureStorageAsync();
 
     #endregion Public Methods
 }

@@ -27,7 +27,6 @@ public class ApplicationUserManager : UserManager<ApplicationUser>
     #endregion Public Constructors
 
     #region Public Methods
-
     public void RemoveExcludedUserPermissions(ApplicationUser user, ApplicationUserRole removedUserRole)
     {
         var removedExcludedUserPermissions = from c in user.Claims
@@ -205,7 +204,7 @@ public class ApplicationUserManager : UserManager<ApplicationUser>
     public string GenerateRandomPassword(int passwordLength)
     {
         var rnd = new Random();
-        return rnd.Next().ToString();
+        return rnd.Next(passwordLength).ToString();
     }
 
     public void AddOrRemoveUserRoles(IList<string> assignedUserRoleIds, ApplicationUser dbUser)

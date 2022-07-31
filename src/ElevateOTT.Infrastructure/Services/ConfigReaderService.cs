@@ -8,6 +8,7 @@ public class ConfigReaderService : IConfigReaderService
     private readonly JwtOptions _jwtOptionsSnapshot;
     private readonly SmtpOption _smtpOptionSnapshot;
     private readonly ClientAppOptions _clientAppOptionsSnapshot;
+    private readonly BlobOptions _blobOptionsSnapshot;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     #endregion Private Fields
@@ -18,12 +19,14 @@ public class ConfigReaderService : IConfigReaderService
                                IOptionsSnapshot<JwtOptions> jwtOptionsSnapshot,
                                IOptionsSnapshot<ClientAppOptions> clientAppOptionsSnapshot,
                                IOptionsSnapshot<SmtpOption> smtpOptionSnapshot,
+                               IOptionsSnapshot<BlobOptions> blobOptionsSnapshot,
                                IHttpContextAccessor httpContextAccessor)
     {
         _appOptionsSnapshot = appOptionsSnapshot.Value;
         _jwtOptionsSnapshot = jwtOptionsSnapshot.Value;
         _clientAppOptionsSnapshot = clientAppOptionsSnapshot.Value;
         _smtpOptionSnapshot = smtpOptionSnapshot.Value;
+        _blobOptionsSnapshot = blobOptionsSnapshot.Value;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -79,6 +82,11 @@ public class ConfigReaderService : IConfigReaderService
     public string GetSubDomain()
     {
         return _httpContextAccessor.GetTenantFromRequestHeader();
+    }
+
+    public BlobOptions GetBlobOptions()
+    {
+        return _blobOptionsSnapshot;
     }
 
     #endregion Public Methods

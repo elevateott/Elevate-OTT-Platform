@@ -25,6 +25,8 @@ public class AuthorUseCase : IAuthorUseCase
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IReportingService _reportingService;
     private readonly ITenantResolver _tenantResolver;
+    //private readonly IStorageProvider _storageProvider;
+    //private readonly IConfigReaderService _configReaderService;
 
     #endregion Private Fields
 
@@ -43,6 +45,8 @@ public class AuthorUseCase : IAuthorUseCase
         _mapper = mapper;
         _repositoryManager = repositoryManager;
         _tenantResolver = tenantResolver;
+        //_storageProvider = storageProvider;
+        //_configReaderService = configReaderService;
     }
 
     #endregion Public Constructors
@@ -82,12 +86,16 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<AuthorsResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
-        var authors = await _repositoryManager.Author.GetAuthorsAsync(tenantId.Value, request, false);
+        var query = _repositoryManager.Author.GetAuthors(tenantId.Value, request, false);
 
+        var authorItems = query is not null
+            ? await query.Select(author => AuthorItem.MapFromEntity(author))
+                .ToPagedListAsync(request.PageNumber, request.PageSize)
+            : null;
 
         var authorsResponse = new AuthorsResponse
         {
-            Authors = await authors.Items.Select(author => _mapper.Map<AuthorItem>(author)).ToPagedListAsync(request.PageNumber, request.PageSize)
+            Authors = authorItems
         };
 
         return Envelope<AuthorsResponse>.Result.Ok(authorsResponse);
@@ -125,15 +133,25 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
+        string? fileNamePrefix = string.Empty;
+        if (_dbContext.Tenants != null)
+        {
+            var tenant = await _dbContext.Tenants.FindAsync(tenantId);
+            fileNamePrefix = !string.IsNullOrWhiteSpace(tenant?.StorageFileNamePrefix) 
+                ? tenant.StorageFileNamePrefix : tenantId.Value.ToString();
+        }
+
+
         var authorEntity = await _repositoryManager.Author.GetAuthorAsync(tenantId.Value, request.Id, true);
-        await _repositoryManager.SaveAsync();
 
         if (authorEntity == null)
             return Envelope<string>.Result.NotFound(Resource.Unable_to_load_author);
 
         _mapper.Map(request, authorEntity);
 
-        await _dbContext.SaveChangesAsync();
+        //await UpdateAuthorWithImageAsync(authorEntity, request.ImageFile, fileNamePrefix);
+
+        await _repositoryManager.SaveAsync();
 
         return Envelope<string>.Result.Ok(Resource.Author_has_been_updated_successfully);
     }
@@ -164,45 +182,38 @@ public class AuthorUseCase : IAuthorUseCase
         throw new NotImplementedException();
     }
 
-    //public async Task<Envelope<AuthorReferencesResponse>> GetAuthorReferences(GetAuthorReferencesQuery request)
-    //{
-    //    var tenantId = _tenantResolver.GetTenantId();
-
-
-    //    var query = _dbContext.References.Where(a => a.AuthorId == request.AuthorId
-    //                                                 && (a.Name.Contains(request.SearchText)
-    //                                                 || a.JobTitle.Contains(request.SearchText)
-    //                                                 || a.Phone.Contains(request.SearchText)
-    //                                                 || string.IsNullOrEmpty(request.SearchText)));
-
-    //    query = !string.IsNullOrWhiteSpace(request.SortBy)
-    //        ? query.SortBy(request.SortBy)
-    //        : query.OrderBy(a => a.Name);
-
-    //    var authorReferenceItems = await query.Select(q => AuthorReferenceItem.MapFromEntity(q)).ToPagedListAsync(request.PageNumber, request.RowsPerPage);
-
-    //    var authorReferencesResponse = new AuthorReferencesResponse
-    //    {
-    //        AuthorReferences = authorReferenceItems
-    //    };
-
-    //    return Envelope<AuthorReferencesResponse>.Result.Ok(authorReferencesResponse);
-    //}
-
-    //public async Task<Envelope<ExportAuthorsResponse>> ExportAsPdf(ExportAuthorsQuery request)
-    //{
-    //    //await Task.Delay(5000);
-    //    //var path = _dataExportService.CreateSpreadsheetWorkbook(@"TestReport.xlsx");
-    //    var authorResponse = await GetAuthors(new GetAuthorsQuery { SearchText = request.SearchText, SortBy = request.SortBy });
-
-    //    var issuerName = (await _httpContextAccessor.GetUserNameAsync()).Split("@")[0];
-
-    //    var host = $"{_httpContextAccessor.HttpContext?.Request.Scheme}://{_httpContextAccessor.HttpContext?.Request.Host}";
-
-    //    var payload = await _reportingService.ExportAuthorsAsPdfImmediate(authorResponse.Payload, host, issuerName);
-
-    //    return Envelope<ExportAuthorsResponse>.Result.Ok(payload);
-    //}
-
     #endregion Public Methods
+
+    #region Private Methods
+    //public async Task UpdateAuthorWithImageAsync(AuthorModel author, IFormFile? image, string fileNamePrefix)
+    //{
+    //    var storageService = _storageProvider.InvokeInstanceForAzureStorageAsync();
+
+    //    switch (storageService.GetFileState(image, author.ImageUrl))
+    //    {
+    //        case FileStatus.Unchanged:
+    //            break;
+
+    //        case FileStatus.Modified:
+    //            author.ImageUrl = await UpdateImageAsync(image, fileNamePrefix, author.ImageUrl ?? string.Empty, storageService);
+    //            break;
+
+    //        case FileStatus.Deleted:
+    //            await storageService.DeleteFileIfExists(author.ImageUrl ?? string.Empty);
+    //            author.ImageUrl = null;
+    //            break;
+    //        default:
+    //            throw new ArgumentOutOfRangeException();
+    //    }
+    //}
+
+    //public async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
+    //{
+    //    var blobOptions = _configReaderService.GetBlobOptions();
+
+    //    var newImageUri = await storageService.EditFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix, oldFileUri);
+
+    //    return newImageUri;
+    //}
+    #endregion Private Methods
 }

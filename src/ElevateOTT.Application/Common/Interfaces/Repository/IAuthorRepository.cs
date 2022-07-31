@@ -6,7 +6,7 @@ namespace ElevateOTT.Application.Common.Interfaces.Repository
     public interface IAuthorRepository
     {
         Task<AuthorModel?> GetAuthorAsync(Guid tenantId, Guid authorId, bool trackChanges);
-        Task<PagedList<AuthorModel>> GetAuthorsAsync(Guid tenantId, GetAuthorsQuery request, bool trackChanges);
+        IQueryable<AuthorModel>? GetAuthors(Guid tenantId, GetAuthorsQuery request, bool trackChanges);
         Task<AuthorModel?> FindAuthorByConditionAsync(Expression<Func<AuthorModel, bool>> expression, bool trackChanges);
         void CreateAuthorForTenant(Guid tenantId, AuthorModel author);
         Task<IEnumerable<AuthorModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);

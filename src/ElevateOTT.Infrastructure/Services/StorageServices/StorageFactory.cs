@@ -6,7 +6,7 @@ public class StorageFactory : IStorageFactory
 
     private readonly IDictionary<StorageTypes, IFileStorageService> _factories;
 
-    private readonly IEnumerable<IFileStorageService> _fileStorageServices;
+    private readonly IEnumerable<IFileStorageService>? _fileStorageServices;
 
     #endregion Private Fields
 

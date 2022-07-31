@@ -15,7 +15,7 @@ public class AuthorModel : BaseEntity, IMustHaveTenant
     public string Bio { get; set; } = string.Empty;
 
     [Url(ErrorMessage = "Image URL must be a valid URL.")]
-    public string ImageUrl { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
 
     [MaxLength(250, ErrorMessage = "Maximum length for the SEO Title is 250 characters.")]
     public string SeoTitle { get; set; } = string.Empty;

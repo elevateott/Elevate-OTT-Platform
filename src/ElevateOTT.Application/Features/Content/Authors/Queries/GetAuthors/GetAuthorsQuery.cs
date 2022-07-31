@@ -1,4 +1,5 @@
 ﻿using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
+using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
 
@@ -8,22 +9,29 @@ public class GetAuthorsQuery : FilterableQuery, IRequest<Envelope<AuthorsRespons
     public class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, Envelope<AuthorsResponse>>
     {
         #region Private Fields
+
         private readonly IAuthorUseCase _authorUseCase;
+
         #endregion Private Fields
 
         #region Public Constructors
+
         public GetAuthorsQueryHandler(IAuthorUseCase authorUseCase)
         {
             _authorUseCase = authorUseCase;
         }
+
         #endregion Public Constructors
 
         #region Public Methods
+
         public async Task<Envelope<AuthorsResponse>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
         {
             return await _authorUseCase.GetAuthors(request);
         }
+
         #endregion Public Methods
     }
+
     #endregion Public Classes
 }

@@ -8,3 +8,7 @@
     line-height: 1.66;
     letter-spacing: .03333em;
 }
+
+.semi-bold-text {
+    font-weight: 700;
+}

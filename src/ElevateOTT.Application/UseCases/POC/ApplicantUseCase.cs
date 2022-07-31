@@ -42,15 +42,18 @@ public class ApplicantUseCase : IApplicantUseCase
 
     public async Task<Envelope<ApplicantsResponse>> GetApplicants(GetApplicantsQuery request)
     {
-        var query = _dbContext.Applicants.Include(a => a.References).Where(a => (a.FirstName.Contains(request.SearchText)
-                                                     || a.LastName.Contains(request.SearchText)
-                                                     || request.SearchText == null));
+        var query = _dbContext.Applicants.Include(a => a.References).AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(request.SearchText))
+            query = query.Where(r => r.FirstName.Contains(request.SearchText) || r.LastName.Contains(request.SearchText));
 
         query = !string.IsNullOrWhiteSpace(request.SortBy)
             ? query.SortBy(request.SortBy)
             : query.OrderBy(a => a.FirstName).ThenBy(a => a.LastName);
-
-        var applicantItems = await query.Select(q => ApplicantItem.MapFromEntity(q)).ToPagedListAsync(request.PageNumber, request.PageSize);
+        
+        var applicantItems = await query.Select(q => ApplicantItem.MapFromEntity(q))
+            .AsNoTracking()
+            .ToPagedListAsync(request.PageNumber, request.PageSize);
 
         var applicantsResponse = new ApplicantsResponse
         {

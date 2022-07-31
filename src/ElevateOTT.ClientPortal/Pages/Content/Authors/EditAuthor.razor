@@ -1,23 +1,25 @@
-﻿@page "/content/editAuthor/{authorId}"
+﻿@page "/content/editAuthor/{authorId:guid}"
 
 @using Syncfusion.Blazor.RichTextEditor
 
+<h1>@AuthorId</h1>
+
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@Resource.Edit_Author</MudText>
-<ServerSideValidator @ref="ServerSideValidator" />
-<EditForm Model="AuthorForEditVm" OnValidSubmit="SubmitForm">
-    <EditContextServerSideValidator @ref="EditContextServerSideValidator" />
+<ServerSideValidator @ref="_serverSideValidator" />
+<EditForm Model="_authorForEditVm" OnValidSubmit="SubmitForm">
+    <EditContextServerSideValidator @ref="_editContextServerSideValidator" />
     <FluentValidationValidator />
     <MudCard>
         <MudCardContent>
-            <MudTabs KeepPanelsAlive="true" 
-                     Elevation="25" 
-                     Color="Color.Transparent" 
-                     Rounded="true" 
+            <MudTabs KeepPanelsAlive="true"
+                     Elevation="25"
+                     Color="Color.Transparent"
+                     Rounded="true"
                      PanelClass="mt-6">
-                <MudTabPanel Text="@Resource.Details">
+                <MudTabPanel Text="@Resource.Details" Icon="@Icons.Material.Filled.Person">
 
                     <!--TODO add resources -->
-                    
+
                     <div class="mx-6 my-4">
                         <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
                             <MudItem xs="12" md="4">
@@ -28,13 +30,13 @@
                                     </MudText>
                                 </div>
                             </MudItem>
-                           
+
                             <MudItem xs="12" md="8">
                                 <MudTextField Label="@Resource.Author_name_label" Variant="Variant.Outlined" Class="pl-md-12"
-                                              @bind-Value="AuthorForEditVm.Name" For="@(() => AuthorForEditVm.Name)"/>
+                                              @bind-Value="_authorForEditVm.Name" For="@(() => _authorForEditVm.Name)" />
                             </MudItem>
                         </MudGrid>
-                    
+
                         <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
                             <MudItem xs="12" md="4">
                                 <div class="d-flex flex-column">
@@ -44,34 +46,86 @@
                                     </MudText>
                                 </div>
                             </MudItem>
-                           
+
                             <MudItem xs="12" md="8">
-                                
-                               
+
                                 <!--TODO set bootstrap primary color -->
+                                <!-- the  add link feature in rte uses bootstrap-->
+
                                 <div class="pl-md-12">
-                                    <RichTextEditor RteValue="@AuthorForEditVm.Bio" OnValueChangedCallback="@UpdateRteValue" />
+                                    <RichTextEditor RteValue="@_authorForEditVm.Bio" OnValueChangedCallback="@UpdateRteValue" />
                                 </div>
-                             
+
                             </MudItem>
                         </MudGrid>
-                        
+
+                        <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                            <MudItem xs="12" md="4">
+                                <div class="d-flex flex-column">
+                                    <MudText Typo="Typo.h5">@Resource.Author_image_label</MudText>
+                                    <MudText Typo="Typo.body2">
+                                        @Resource.Author_image_description <span class="semi-bold-text">@_recommendedResolution</span> 
+                                    </MudText>
+                                </div>
+                            </MudItem>
+
+                            <MudItem xs="12" md="8">
+                                <div class="pl-md-12">
+                                    <MudCard Elevation="25">
+                                        <MudCardContent>
+                                        <MudPaper Class="pa-2" Outlined="true">
+                                            <div class="d-flex justify-center mb-4">
+                                                <MudAvatar Image="@(_imageSrc ?? _authorForEditVm.ImageUrl)" 
+                                                           Style="height: 200px; width: 200px;">
+                                                </MudAvatar>
+                                            </div>
+                                            @if (!string.IsNullOrWhiteSpace(_authorForEditVm.ImageUrl))
+                                            {
+                                                <MudText Align="Align.Center">
+                                                    <MudFab OnClick="() => { _authorForEditVm.ImageUrl = null; }"
+                                                            Color="Color.Warning"
+                                                            Icon="@Icons.Material.Filled.Remove"
+                                                            aria-label="edit"/>
+                                                </MudText>
+                                            }
+                                            <MudText Align="Align.Center">@($"{_authorForEditVm.Name}")</MudText>
+                                        </MudPaper>
+                                    </MudCardContent>
+                                    <MudCardActions Class="d-flex justify-center">
+                                        <div class="form-group">
+                                            <BpUploadFile ButtonId="imageInput"
+                                                          ButtonIcon="@Icons.Filled.PhotoCamera"
+                                                          ButtonName="@(HasImage() ? Resource.Replace_image : Resource.Upload_image)"
+                                                          AllowRename="true"
+                                                          AllowedExtensions=".jpg,.png,.jpeg,.bmp"
+                                                          MaxFileSize="10485760"
+                                                          OnFileSelected="ImageSelected"
+                                                          OnFileUnSelected="ImageUnSelected"
+                                                          OnImageUpload="GetBase64StringImageUrl"/>
+                                            <ValidationMessage For="@(() => _authorForEditVm.ImageUrl)"/>
+                                        </div>
+                                    </MudCardActions>
+                                </MudCard>
+                                </div>
+                            </MudItem>
+                        </MudGrid>
+
                         <div>
-                            @AuthorForEditVm.Bio
+                            @_authorForEditVm.Bio
                         </div>
                     </div>
-                    
+
 
                 </MudTabPanel>
-                <MudTabPanel Text="@Resource.Seo">
+                <MudTabPanel Text="@Resource.Seo" Icon="@Icons.Material.Filled.Public">
                     <MudCard Elevation="25">
                         <MudCardContent>
                             <p>Panel content goes here</p>
 
                             @*       <AuthorReferencesListForEdit AuthorId="@AuthorId"
-                                                        OnAddedAuthorReferencesListChanged="RefreshNewAuthorReferencesList" 
-                                                        OnModifiedAuthorReferencesListChanged="RefreshModifiedAuthorReferencesList" 
-                                                        OnRemovedAuthorReferencesListChanged="RefreshRemovedAuthorReferencesList"/>*@
+                            OnAddedAuthorReferencesListChanged="RefreshNewAuthorReferencesList"
+                            OnModifiedAuthorReferencesListChanged="RefreshModifiedAuthorReferencesList"
+                            OnRemovedAuthorReferencesListChanged="RefreshRemovedAuthorReferencesList"/>*@
 
                             @*<AuthorReferencesListForEdit AuthorId="@AuthorId" OnAuthorReferencesChanged="UpdateAuthorReferences"></AuthorReferencesListForEdit>*@
                         </MudCardContent>
@@ -96,5 +150,5 @@
 
 @code {
 
-  
+
 }

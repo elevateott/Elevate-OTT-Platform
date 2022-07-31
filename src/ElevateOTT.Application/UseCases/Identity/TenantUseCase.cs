@@ -41,6 +41,8 @@ public class TenantUseCase : ITenantUseCase
 
         var tenant = request.MapToEntity();
 
+        tenant.StorageFileNamePrefix = Guid.NewGuid().ToString();
+
         await _dbContext.Tenants.AddAsync(tenant);
 
         await _dbContext.SaveChangesAsync();

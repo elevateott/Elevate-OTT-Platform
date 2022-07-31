@@ -3153,6 +3153,24 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Podcast.
+        /// </summary>
+        public static string Podcast {
+            get {
+                return ResourceManager.GetString("Podcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podcasts.
+        /// </summary>
+        public static string Podcasts {
+            get {
+                return ResourceManager.GetString("Podcasts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         public static string Previous {
@@ -3365,6 +3383,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Image.
+        /// </summary>
+        public static string Replace_image {
+            get {
+                return ResourceManager.GetString("Replace_image", resourceCulture);
             }
         }
         
@@ -4337,6 +4364,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Upload_Documents {
             get {
                 return ResourceManager.GetString("Upload_Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Image.
+        /// </summary>
+        public static string Upload_image {
+            get {
+                return ResourceManager.GetString("Upload_image", resourceCulture);
             }
         }
         

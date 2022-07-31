@@ -4,7 +4,7 @@ public interface IFileStorageService
 {
     #region Public Methods
 
-    Task<string> UploadFile(IFormFile formFile, string containerName, string fileNamePrefix);
+    Task<string?> UploadFile(IFormFile formFile, string containerName, string fileNamePrefix);
 
     Task<List<FileMetaData>> UploadMultipleFiles(IList<IFormFile> formFiles, string containerName, string fileNamePrefix, int defaultFileIndex = 0, string subContainerName = "attachments");
 
@@ -14,7 +14,7 @@ public interface IFileStorageService
 
     Task DeleteContainer(string containerName, string subContainerName);
 
-    FileStatus GetFileState(IFormFile formFile, string oldUrl);
+    FileStatus GetFileState(IFormFile? formFile, string? oldUrl);
 
     #endregion Public Methods
 }

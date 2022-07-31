@@ -19,29 +19,38 @@ public class AzureStorageService : IFileStorageService
 
     #region Public Methods
 
-    public async Task<string> UploadFile(IFormFile formFile, string containerName, string fileNamePrefix)
+    public async Task<string?> UploadFile(IFormFile? formFile, string containerName, string fileNamePrefix)
     {
-        if (formFile is not { Length: > 0 })
+        if (formFile is null or not { Length: > 0 })
             return null;
 
         try
         {
-            var fileName = $"{fileNamePrefix}-{formFile.FileName.ReplaceSpaceAndSpecialCharsWithDashes()}";
-            var blobName = $"{fileNamePrefix}/{fileNamePrefix}-{fileName}";
+            var fileName = $"{formFile.FileName.ReplaceSpaceAndSpecialCharsWithDashes()}";
+            var blobName = $"{fileNamePrefix}/{fileName}";
 
-            // Get a reference to a container named "users" and then create it
+            // Get a reference to a container and then create it if doesn't exist
             var container = new BlobContainerClient(_connectionString, containerName);
             await container.CreateIfNotExistsAsync();
             await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-            // Get a reference to a blob named "user-file" in a container named "users"
+            // Get a reference to a blob 
             var blob = container.GetBlobClient(blobName);
+
+            // In the rare case blob name already exists, prepend string to name
+            if (await blob.ExistsAsync())
+            {
+                string fileTimeStr = DateTime.Now.ToFileTimeUtc().ToString();
+                blobName = $"{fileNamePrefix}/{fileTimeStr}-{fileName}";
+                blob = container.GetBlobClient(blobName);
+            }
 
             // Upload local file
             await blob.UploadAsync(formFile.OpenReadStream(), new BlobHttpHeaders
             {
                 ContentType = formFile.ContentType
             });
+
             return blob.Uri.ToString();
         }
         catch
@@ -105,7 +114,7 @@ public class AzureStorageService : IFileStorageService
         return filePaths;
     }
 
-    public async Task<string> EditFile(IFormFile formFile, string containerName, string fileNamePrefix, string oldFileUri)
+    public async Task<string> EditFile(IFormFile? formFile, string containerName, string fileNamePrefix, string oldFileUri)
     {
         if (formFile == null) return oldFileUri;
 
@@ -137,7 +146,7 @@ public class AzureStorageService : IFileStorageService
         await ListBlobsForPrefixRecursive(container, subContainer, 0);
     }
 
-    public FileStatus GetFileState(IFormFile formFile, string oldUrl)
+    public FileStatus GetFileState(IFormFile formFile, string? oldUrl)
     {
         if (formFile is not null or { Length: > 0 }) return FileStatus.Modified;
 

@@ -18,19 +18,31 @@ public class AuthorsClient : IAuthorsClient
     }
     #endregion Public Constructors
 
-    public async Task<HttpResponseWrapper<object>> GetAuthor(GetAuthorForEditQuery request)
+    public async Task<HttpResponseWrapper<object>> GetAuthor(Guid id)
     {
-        return await _httpService.Post<GetAuthorForEditQuery, AuthorForEdit>("authors/author", request);
+        return await _httpService.Get<AuthorForEdit>($"authors/author/{id}");
     }
 
     public async Task<HttpResponseWrapper<object>> GetAuthors(GetAuthorsQuery request)
     {
-        return await _httpService.Post<GetAuthorsQuery, AuthorsResponse>("authors/authors", request);
+        var httpResponse = await _httpService.Post<GetAuthorsQuery, AuthorsResponse>("authors/authors", request);
+        Console.WriteLine("httpResponse: " + httpResponse.Response);
+        return httpResponse;
+    }
+
+    public async Task<HttpResponseWrapper<object>> CreateAuthorFormData(MultipartFormDataContent request)
+    {
+        return await _httpService.PostFormData<MultipartFormDataContent, CreateAuthorResponse>("authors/multipart-form-create", request);
     }
 
     public async Task<HttpResponseWrapper<object>> CreateAuthor(CreateAuthorCommand request)
     {
         return await _httpService.Post<CreateAuthorCommand, CreateAuthorResponse>("authors/new-author", request);
+    }
+
+    public async Task<HttpResponseWrapper<object>> UpdateAuthorFormData(MultipartFormDataContent request)
+    {
+        return await _httpService.PostFormData<MultipartFormDataContent, string>("authors/multipart-form-update", request);
     }
 
     public async Task<HttpResponseWrapper<object>> UpdateAuthor(UpdateAuthorCommand request)

@@ -1146,6 +1146,12 @@
   <data name="PM_Designator" xml:space="preserve">
     <value>PM Designator</value>
   </data>
+  <data name="Podcast" xml:space="preserve">
+    <value>Podcast</value>
+  </data>
+  <data name="Podcasts" xml:space="preserve">
+    <value>Podcasts</value>
+  </data>
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
   </data>
@@ -1217,6 +1223,9 @@
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Replace_image" xml:space="preserve">
+    <value>Replace Image</value>
   </data>
   <data name="Reporting" xml:space="preserve">
     <value>Reporting</value>
@@ -1541,6 +1550,9 @@
   </data>
   <data name="Upload_Documents" xml:space="preserve">
     <value>Upload Documents</value>
+  </data>
+  <data name="Upload_image" xml:space="preserve">
+    <value>Upload Image</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>

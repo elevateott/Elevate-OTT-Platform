@@ -196,6 +196,8 @@ public class HttpService : IHttpService
     {
         var responseString = await httpResponse.Content.ReadAsStringAsync();
 
+        Console.WriteLine($"responseString: {responseString}");
+
         return JsonSerializer.Deserialize<T>(responseString, options);
     }
 

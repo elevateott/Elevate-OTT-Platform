@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Common.Interfaces.Persistence;
+﻿using ElevateOTT.Domain.Entities.Content;
+
+namespace ElevateOTT.Application.Common.Interfaces.Persistence;
 
 public interface IApplicationDbContext : IDisposable
 {
@@ -23,6 +25,9 @@ public interface IApplicationDbContext : IDisposable
     DbSet<Applicant>? Applicants { get; set; }
     DbSet<Reference>? References { get; set; }
     DbSet<Report>? Reports { get; set; }
+
+    DbSet<AuthorModel>? Authors { get; set; }
+
 
     DbContext Current { get; }
     DatabaseFacade Database { get; }

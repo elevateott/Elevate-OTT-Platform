@@ -24,5 +24,7 @@ public interface IConfigReaderService
 
     string GetSubDomain();
 
+    BlobOptions GetBlobOptions();
+
     #endregion Public Methods
 }
