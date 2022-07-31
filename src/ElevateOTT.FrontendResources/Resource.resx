@@ -372,6 +372,9 @@
   <data name="Change_your_account_settings" xml:space="preserve">
     <value>Change Your Account Settings</value>
   </data>
+  <data name="Characters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
   <data name="Chernobyl_1" xml:space="preserve">
     <value>Chernobyl-1</value>
   </data>
@@ -987,6 +990,9 @@
   <data name="Master_Details_Form" xml:space="preserve">
     <value>Master-Details Form</value>
   </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
   <data name="Maximum_Failed_Access_Attempts" xml:space="preserve">
     <value>Maximum Failed Access Attempts</value>
   </data>
@@ -1350,6 +1356,18 @@
   <data name="Seo" xml:space="preserve">
     <value>SEO</value>
   </data>
+  <data name="Seo_description_description" xml:space="preserve">
+    <value>This SEO (search engine optimization) description will only appear in the search engine results.</value>
+  </data>
+  <data name="Seo_description_label" xml:space="preserve">
+    <value>SEO Description</value>
+  </data>
+  <data name="Seo_title_description" xml:space="preserve">
+    <value>The SEO (search engine optimization) title will only appear in search engine results.</value>
+  </data>
+  <data name="Seo_title_label" xml:space="preserve">
+    <value>SEO Title</value>
+  </data>
   <data name="Septemper" xml:space="preserve">
     <value>Septemper</value>
   </data>
@@ -1400,6 +1418,15 @@
   </data>
   <data name="Sign_up" xml:space="preserve">
     <value>Sign up</value>
+  </data>
+  <data name="Slug_description" xml:space="preserve">
+    <value>Set the slug to your author page permalink. Ex: myott.tv/authors/</value>
+  </data>
+  <data name="Slug_helper_text" xml:space="preserve">
+    <value>Typically, first and last name separated with hyphen.</value>
+  </data>
+  <data name="Slug_label" xml:space="preserve">
+    <value>Slug</value>
   </data>
   <data name="Solar" xml:space="preserve">
     <value>Solar</value>
@@ -1526,6 +1553,9 @@
   </data>
   <data name="UI_Culture_Code" xml:space="preserve">
     <value>UI Culture Code</value>
+  </data>
+  <data name="Unable_to_load_author" xml:space="preserve">
+    <value>Unable to load author.</value>
   </data>
   <data name="Unable_to_upload_an_empty_file" xml:space="preserve">
     <value>Unable to upload an empty file.</value>

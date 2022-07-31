@@ -11,8 +11,13 @@ public static class StringExtensions
 
     public static string ReplaceSpaceAndSpecialCharsWithDashes(this string str)
     {
-        var cleanedStr = Regex.Replace(str, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).Replace(" ", "");
+        var cleanedStr = Regex.Replace(str, "[^a-zA-Z0-9_.]+", "-", RegexOptions.Compiled).Replace(" ", "-");
         return cleanedStr;
+    }
+
+    public static string FormatSlug(this string str)
+    {
+        return ReplaceSpaceAndSpecialCharsWithDashes(str).ToLower();
     }
 
     #endregion Public Methods

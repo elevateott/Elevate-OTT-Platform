@@ -31,6 +31,14 @@ public partial class EditAuthor : ComponentBase
     private string? _imageSrc;
 
     private string _recommendedResolution = "700x700";
+    private string _slugExampleName = "carey-bryers";
+    private int _maxNameChars = 60;
+    private int _maxSeoTitleChars = 60;
+    private int _maxSeoDescriptionChars = 170;
+    private int _maxSlugChars = 60;
+    private string SlugPlaceholder => !string.IsNullOrWhiteSpace(_authorForEditVm.Name) 
+        ? _authorForEditVm.Name.FormatSlug()
+        : _slugExampleName;
     private StreamContent? _imageContent { get; set; }
     private ServerSideValidator? _serverSideValidator { get; set; }
     private EditContextServerSideValidator? _editContextServerSideValidator { get; set; }
@@ -67,62 +75,48 @@ public partial class EditAuthor : ComponentBase
     private void GetBase64StringImageUrl(string imageSrc)
     {
         _imageSrc = imageSrc;
+        StateHasChanged();
     }
 
     private void ImageSelected(StreamContent content)
     {
         _imageContent = content;
         _authorForEditVm.IsImageAdded = true;
+        StateHasChanged();
     }
 
     private void ImageUnSelected()
     {
         _imageContent = null;
         _authorForEditVm.IsImageAdded = false;
+        StateHasChanged();
     }
 
-    private bool HasImage()
+    private bool HasUploadedImage()
     {
-        return string.IsNullOrWhiteSpace(_authorForEditVm.ImageUrl) && string.IsNullOrWhiteSpace(_imageSrc);
+        return !string.IsNullOrWhiteSpace(_imageSrc);
     }
     private void UpdateRteValue(string value)
     {
         _authorForEditVm.Bio = value;
     }
+
     private async Task SubmitForm()
     {
-        // TODO remove confirmation dialog 
-
-        var parameters = new DialogParameters
+        _updateAuthorCommand = new UpdateAuthorCommand
         {
-            {"ContentText", Resource.Are_you_sure_you_want_to_save_author},
-            {"ButtonText", Resource.Yes},
-            {"Color", Color.Error}
+            Id = _authorForEditVm.Id,
+            Name = _authorForEditVm.Name,
+            Bio = _authorForEditVm.Bio,
+            ImageUrl = _authorForEditVm.ImageUrl,
+            SeoTitle = _authorForEditVm.SeoTitle,
+            SeoDescription = _authorForEditVm.SeoDescription,
+            Slug = _authorForEditVm.Slug.FormatSlug(),
+            IsImageAdded = _authorForEditVm.IsImageAdded
         };
 
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-        var dialog = DialogService.Show<DialogModal>("Confirm", parameters, options);
-
-        var result = await dialog.Result;
-
-        if (!result.Cancelled)
-        {
-            _updateAuthorCommand = new UpdateAuthorCommand
-            {
-                Id = _authorForEditVm.Id,
-                Name = _authorForEditVm.Name,
-                Bio = _authorForEditVm.Bio,
-                ImageUrl = _authorForEditVm.ImageUrl,
-                SeoTitle = _authorForEditVm.SeoTitle,
-                SeoDescription = _authorForEditVm.SeoDescription,
-                Slug = _authorForEditVm.Slug,
-                IsImageAdded = _authorForEditVm.IsImageAdded
-            };
-
-
-
-            var userFormData = new MultipartFormDataContent
+        var userFormData = new MultipartFormDataContent
             {
                 { new StringContent(_updateAuthorCommand.Id.ToString() ?? string.Empty), "id" },
                 { new StringContent(_updateAuthorCommand.Name ?? string.Empty), "Name" },
@@ -134,24 +128,23 @@ public partial class EditAuthor : ComponentBase
                 { new StringContent(_updateAuthorCommand.IsImageAdded.ToString()), "IsImageAdded" },
             };
 
-            if (_imageContent != null)
-                userFormData.Add(_imageContent, "AuthorImage", _imageContent.Headers.GetValues("FileName").LastOrDefault());
+        if (_imageContent != null)
+            userFormData.Add(_imageContent, "AuthorImage", _imageContent.Headers.GetValues("FileName").LastOrDefault());
 
 
-            var httpResponse = await AuthorsClient.UpdateAuthor(_updateAuthorCommand);
+        var httpResponse = await AuthorsClient.UpdateAuthor(_updateAuthorCommand);
 
-            if (httpResponse.Success)
-            {
-                var successResult = httpResponse.Response as SuccessResult<string>;
-                Snackbar?.Add(successResult?.Result, Severity.Success);
-                NavigationManager?.NavigateTo("content/authors");
-            }
-            else
-            {
-                var exceptionResult = httpResponse.Response as ExceptionResult;
-                _editContextServerSideValidator?.Validate(exceptionResult);
-                _serverSideValidator?.Validate(exceptionResult);
-            }
+        if (httpResponse.Success)
+        {
+            var successResult = httpResponse.Response as SuccessResult<string>;
+            Snackbar?.Add(successResult?.Result, Severity.Success);
+            NavigationManager?.NavigateTo("content/authors");
+        }
+        else
+        {
+            var exceptionResult = httpResponse.Response as ExceptionResult;
+            _editContextServerSideValidator?.Validate(exceptionResult);
+            _serverSideValidator?.Validate(exceptionResult);
         }
     }
     #endregion Private Methods

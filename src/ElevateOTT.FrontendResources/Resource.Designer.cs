@@ -826,6 +826,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Characters.
+        /// </summary>
+        public static string Characters {
+            get {
+                return ResourceManager.GetString("Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chernobyl-1.
         /// </summary>
         public static string Chernobyl_1 {
@@ -2676,6 +2685,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum Failed Access Attempts.
         /// </summary>
         public static string Maximum_Failed_Access_Attempts {
@@ -3765,6 +3783,42 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This SEO (search engine optimization) description will only appear in the search engine results..
+        /// </summary>
+        public static string Seo_description_description {
+            get {
+                return ResourceManager.GetString("Seo_description_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEO Description.
+        /// </summary>
+        public static string Seo_description_label {
+            get {
+                return ResourceManager.GetString("Seo_description_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SEO (search engine optimization) title will only appear in search engine results..
+        /// </summary>
+        public static string Seo_title_description {
+            get {
+                return ResourceManager.GetString("Seo_title_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEO Title.
+        /// </summary>
+        public static string Seo_title_label {
+            get {
+                return ResourceManager.GetString("Seo_title_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Septemper.
         /// </summary>
         public static string Septemper {
@@ -3914,6 +3968,33 @@ namespace ElevateOTT.FrontendResources {
         public static string Sign_up {
             get {
                 return ResourceManager.GetString("Sign_up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the slug to your author page permalink. Ex: myott.tv/authors/.
+        /// </summary>
+        public static string Slug_description {
+            get {
+                return ResourceManager.GetString("Slug_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typically, first and last name separated with hyphen..
+        /// </summary>
+        public static string Slug_helper_text {
+            get {
+                return ResourceManager.GetString("Slug_helper_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slug.
+        /// </summary>
+        public static string Slug_label {
+            get {
+                return ResourceManager.GetString("Slug_label", resourceCulture);
             }
         }
         
@@ -4292,6 +4373,15 @@ namespace ElevateOTT.FrontendResources {
         public static string UI_Culture_Code {
             get {
                 return ResourceManager.GetString("UI_Culture_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load author..
+        /// </summary>
+        public static string Unable_to_load_author {
+            get {
+                return ResourceManager.GetString("Unable_to_load_author", resourceCulture);
             }
         }
         

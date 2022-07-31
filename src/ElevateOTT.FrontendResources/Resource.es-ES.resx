@@ -372,6 +372,9 @@
   <data name="Change_your_account_settings" xml:space="preserve">
     <value>Cambiar la configuración de la cuenta</value>
   </data>
+  <data name="Characters" xml:space="preserve">
+    <value>Caracteres</value>
+  </data>
   <data name="Chernobyl_1" xml:space="preserve">
     <value>Chernóbil-1</value>
   </data>
@@ -987,6 +990,9 @@
   <data name="Master_Details_Form" xml:space="preserve">
     <value>¡Formulario Master-Details!</value>
   </data>
+  <data name="Max" xml:space="preserve">
+    <value>¡Max!</value>
+  </data>
   <data name="Maximum_Failed_Access_Attempts" xml:space="preserve">
     <value>Máximo de intentos de acceso fallidos</value>
   </data>
@@ -1350,6 +1356,18 @@
   <data name="Seo" xml:space="preserve">
     <value>SEO</value>
   </data>
+  <data name="Seo_description_description" xml:space="preserve">
+    <value>Esta descripción de SEO (optimización del motor de búsqueda) solo aparecerá en los resultados del motor de búsqueda.</value>
+  </data>
+  <data name="Seo_description_label" xml:space="preserve">
+    <value>Descripción SEO</value>
+  </data>
+  <data name="Seo_title_description" xml:space="preserve">
+    <value>El título de SEO (optimización de motores de búsqueda) solo aparecerá en los resultados de los motores de búsqueda.</value>
+  </data>
+  <data name="Seo_title_label" xml:space="preserve">
+    <value>SEO Title</value>
+  </data>
   <data name="Septemper" xml:space="preserve">
     <value>Septemper</value>
   </data>
@@ -1400,6 +1418,15 @@
   </data>
   <data name="Sign_up" xml:space="preserve">
     <value>Únete</value>
+  </data>
+  <data name="Slug_description" xml:space="preserve">
+    <value>Establezca el slug en su enlace permanente de la página de autor. Por ejemplo: myott.tv/authors/</value>
+  </data>
+  <data name="Slug_helper_text" xml:space="preserve">
+    <value>Por lo general, el nombre y el apellido se separan con un guión.</value>
+  </data>
+  <data name="Slug_label" xml:space="preserve">
+    <value>Babosa</value>
   </data>
   <data name="Solar" xml:space="preserve">
     <value>Solar</value>
@@ -1526,6 +1553,9 @@
   </data>
   <data name="UI_Culture_Code" xml:space="preserve">
     <value>Código de referencia cultural de la interfaz de usuario</value>
+  </data>
+  <data name="Unable_to_load_author" xml:space="preserve">
+    <value>¡No se puede cargar el autor!</value>
   </data>
   <data name="Unable_to_upload_an_empty_file" xml:space="preserve">
     <value>No se puede cargar un archivo vacío.</value>
