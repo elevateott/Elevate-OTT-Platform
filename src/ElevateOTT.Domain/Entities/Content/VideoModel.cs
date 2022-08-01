@@ -14,8 +14,8 @@ public class VideoModel : BaseAsset
     public bool Mp4Support { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string DownloadUrl { get; set; } = string.Empty;
-    public string Passthrough { get; set; } = string.Empty;
+    public string? DownloadUrl { get; set; } 
+    public string? Passthrough { get; set; } 
     public bool ClosedCaptions { get; set; }
 
     #region foreign keys
@@ -34,8 +34,6 @@ public class VideoModel : BaseAsset
     public CollectionModel? Collection { get; set; }
     public VideoFolderModel? VideoFolder { get; set; }
     public ICollection<VideoAuthorModel>? VideosAuthors { get; set; }
-    public ICollection<VideoGenreModel>? VideosGenres { get; set; }
-    public ICollection<VideoTagModel>? VideosTags { get; set; }
     public ICollection<VideoCategoryModel>? VideosCategories { get; set; }
     public List<ExtraModel>? Extras { get; set; }
     public List<CommentModel>? Comments { get; set; }

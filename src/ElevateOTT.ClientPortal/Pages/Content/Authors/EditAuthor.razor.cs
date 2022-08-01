@@ -6,18 +6,8 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Authors;
 public partial class EditAuthor : ComponentBase
 {
     #region Public Properties
-    public EditAuthor()
-    {
-        //AddedAuthorReferencesList = new List<ReferenceItemForAdd>();
-        //ModifiedAuthorReferencesList = new List<ReferenceItemForEdit>();
-        //RemovedAuthorReferencesList = new List<string>();
-    }
 
     [Parameter] public Guid AuthorId { get; set; }
-
-    public List<ReferenceItemForAdd> AddedAuthorReferencesList { get; set; }
-    public List<ReferenceItemForEdit> ModifiedAuthorReferencesList { get; set; }
-    public List<string> RemovedAuthorReferencesList { get; set; }
 
     #endregion Public Properties
 
@@ -30,15 +20,22 @@ public partial class EditAuthor : ComponentBase
 
     private string? _imageSrc;
 
+    //
+    // TODO these values should come from config
+    //
     private string _recommendedResolution = "700x700";
     private string _slugExampleName = "carey-bryers";
     private int _maxNameChars = 60;
     private int _maxSeoTitleChars = 60;
     private int _maxSeoDescriptionChars = 170;
     private int _maxSlugChars = 60;
+
+
     private string SlugPlaceholder => !string.IsNullOrWhiteSpace(_authorForEditVm.Name) 
         ? _authorForEditVm.Name.FormatSlug()
         : _slugExampleName;
+
+    // TODO getters and setters ??????
     private StreamContent? _imageContent { get; set; }
     private ServerSideValidator? _serverSideValidator { get; set; }
     private EditContextServerSideValidator? _editContextServerSideValidator { get; set; }
@@ -103,6 +100,10 @@ public partial class EditAuthor : ComponentBase
 
     private async Task SubmitForm()
     {
+        // TODO guard clauses
+
+        Console.WriteLine("SubmitForm");
+
         _updateAuthorCommand = new UpdateAuthorCommand
         {
             Id = _authorForEditVm.Id,
@@ -131,8 +132,17 @@ public partial class EditAuthor : ComponentBase
         if (_imageContent != null)
             userFormData.Add(_imageContent, "AuthorImage", _imageContent.Headers.GetValues("FileName").LastOrDefault());
 
+        Console.WriteLine("pre update call");
 
-        var httpResponse = await AuthorsClient.UpdateAuthor(_updateAuthorCommand);
+        var httpResponse = await AuthorsClient.UpdateAuthorFormData(userFormData);
+
+        Console.WriteLine("post update call");
+
+        Console.WriteLine("httpResponse: " + httpResponse);
+        Console.WriteLine("httpResponse.Success: " + httpResponse.Success);
+
+
+
 
         if (httpResponse.Success)
         {

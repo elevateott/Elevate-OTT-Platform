@@ -3,13 +3,13 @@
 [Table("Collections")]
 public class CollectionModel : BaseEntity
 {
-    public string Title { get; set; } = string.Empty;
+    public string? Title { get; set; } 
 
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; } 
 
     public int Position { get; set; }
 
-    public string ImageUrl { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; } 
 
     #region foreign keys
     //[ForeignKey(nameof(TenantModel))]

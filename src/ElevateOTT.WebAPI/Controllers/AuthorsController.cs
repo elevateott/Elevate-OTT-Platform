@@ -55,6 +55,8 @@ public class AuthorsController : ApiController
         return TryGetResult(response);
     }
 
+
+    [AllowAnonymous]
     [HttpPost("multipart-form-update")]
     public async Task<IActionResult> UpdateAuthorByMultipartForm([FromForm] UpdateAuthorCommand request)
     {

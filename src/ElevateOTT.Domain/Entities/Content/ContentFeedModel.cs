@@ -6,15 +6,15 @@ namespace ElevateOTT.Domain.Entities.Content;
 public class ContentFeedModel : BaseEntity
 {
     [Url]
-    public string Url { get; set; } = string.Empty;
+    public string? Url { get; set; } 
 
     public DistributionType DistributionType { get; set; }
 
-    public string ProviderName { get; set; } = string.Empty;
+    public string? ProviderName { get; set; } 
 
-    public string Language { get; set; } = string.Empty;
+    public string? Language { get; set; } 
 
-    public string LastUpdated { get; set; } = string.Empty;
+    public string? LastUpdated { get; set; } 
 
     #region foreign keys
     //[ForeignKey(nameof(TenantModel))]

@@ -103,6 +103,8 @@ public class HttpService : IHttpService
         _httpClient.DefaultRequestHeaders.AcceptLanguage.Clear();
         _httpClient.DefaultRequestHeaders.Add("Accept-Language", await _localStorage.GetItemAsync<string>("Culture"));
 
+        Console.WriteLine("base uri: " + _httpClient.BaseAddress);
+
         using var response = await _httpClient.PostAsync(url, data).ConfigureAwait(false);
 
         if (response.IsSuccessStatusCode)
@@ -195,8 +197,6 @@ public class HttpService : IHttpService
     private static async Task<T> Deserialize<T>(HttpResponseMessage httpResponse, JsonSerializerOptions options)
     {
         var responseString = await httpResponse.Content.ReadAsStringAsync();
-
-        Console.WriteLine($"responseString: {responseString}");
 
         return JsonSerializer.Deserialize<T>(responseString, options);
     }

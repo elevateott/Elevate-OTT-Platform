@@ -5,11 +5,11 @@ namespace ElevateOTT.Domain.Entities.Content;
 public abstract class BaseAsset : BaseEntity
 {
     [Url(ErrorMessage = "Invalid url.")]
-    public string StreamUrl { get; set; } = string.Empty;
+    public string? StreamUrl { get; set; } 
 
     #region mux-specific properties
-    public string PlaybackId { get; set; } = string.Empty;
-    public string AssetId { get; set; } = string.Empty;
+    public string? PlaybackId { get; set; } 
+    public string? AssetId { get; set; } 
     public AssetCreationStatus StreamCreationStatus { get; set; }
     #endregion
 
@@ -19,31 +19,31 @@ public abstract class BaseAsset : BaseEntity
 
     public bool IsHostedOnMux { get; set; } 
 
-    public string FileName { get; set; } = string.Empty;
+    public string? FileName { get; set; } 
 
-    public string BlobName { get; set; } = string.Empty;
+    public string? BlobName { get; set; } 
 
-    public string Title { get; set; } = string.Empty;
+    public string? Title { get; set; } 
 
-    public string ShortDescription { get; set; } = string.Empty;
+    public string? ShortDescription { get; set; } 
 
     // TODO HTML content??
-    public string FullDescription { get; set; } = string.Empty;
+    public string? FullDescription { get; set; } 
 
-    public string LanguageCode { get; set; } = string.Empty;
+    public string? LanguageCode { get; set; } 
 
     public TimeSpan? Duration { get; set; }
 
     public bool AllowDownload { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string ThumbnailUrl { get; set; } = string.Empty;
+    public string? ThumbnailUrl { get; set; } 
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string TrailerVideoUrl { get; set; } = string.Empty;
+    public string? TrailerVideoUrl { get; set; } 
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string BlobUrl { get; set; } = string.Empty;
+    public string? BlobUrl { get; set; } 
 
     public ContentAccess ContentAccess { get; set; }
 

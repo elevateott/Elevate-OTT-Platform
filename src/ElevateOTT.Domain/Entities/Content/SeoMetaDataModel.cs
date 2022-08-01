@@ -3,11 +3,11 @@
 [Table("SeoMetaData")]
 public class SeoMetaDataModel : BaseEntity
 {
-    public string SeoTitle { get; set; } = string.Empty;
+    public string? SeoTitle { get; set; } 
 
-    public string SeoDescription { get; set; } = string.Empty;
+    public string? SeoDescription { get; set; } 
 
-    public string Slug { get; set; } = string.Empty;
+    public string? Slug { get; set; } 
 
     #region foreign keys
     [ForeignKey(nameof(VideoModel))]

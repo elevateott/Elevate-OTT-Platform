@@ -25,9 +25,7 @@ public class AuthorsClient : IAuthorsClient
 
     public async Task<HttpResponseWrapper<object>> GetAuthors(GetAuthorsQuery request)
     {
-        var httpResponse = await _httpService.Post<GetAuthorsQuery, AuthorsResponse>("authors/authors", request);
-        Console.WriteLine("httpResponse: " + httpResponse.Response);
-        return httpResponse;
+        return await _httpService.Post<GetAuthorsQuery, AuthorsResponse>("authors/authors", request);
     }
 
     public async Task<HttpResponseWrapper<object>> CreateAuthorFormData(MultipartFormDataContent request)
@@ -42,6 +40,8 @@ public class AuthorsClient : IAuthorsClient
 
     public async Task<HttpResponseWrapper<object>> UpdateAuthorFormData(MultipartFormDataContent request)
     {
+        Console.WriteLine("UpdateAuthorFormData invoked");
+        Console.WriteLine("request: " + request);
         return await _httpService.PostFormData<MultipartFormDataContent, string>("authors/multipart-form-update", request);
     }
 

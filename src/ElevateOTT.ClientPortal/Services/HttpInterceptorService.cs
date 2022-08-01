@@ -64,6 +64,8 @@ public class HttpInterceptorService : IDisposable
 
         string tenantName = _navigationManager.GetSubDomain();
 
+        Console.WriteLine($"tenantName: {tenantName}");
+
         e.Request.Headers.Add("X-Tenant", tenantName);
 
         if (e.Request.Headers.Authorization != null)

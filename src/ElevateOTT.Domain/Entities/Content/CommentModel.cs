@@ -6,7 +6,7 @@ public class CommentModel : BaseEntity
     // TODO link to OTT tenant
     // look at how Uscreen handles this
 
-    public string Comment { get; set; } = string.Empty;
+    public string? Comment { get; set; } 
 
     #region foreign keys
     [ForeignKey(nameof(VideoModel))]

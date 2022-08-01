@@ -5,10 +5,10 @@ namespace ElevateOTT.Domain.Entities.Content;
 [Table("AssetImages")]
 public class AssetImageModel : BaseEntity
 {
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string Url { get; set; } = string.Empty;
+    public string? Url { get; set; }
 
     public int Width { get; set; }
 

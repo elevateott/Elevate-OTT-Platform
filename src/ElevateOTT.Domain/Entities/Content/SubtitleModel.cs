@@ -4,9 +4,9 @@ public class SubtitleModel : BaseEntity
 {
     public bool ClosedCaption { get; set; }
 
-    public string TrackId { get; set; } = string.Empty;
+    public string? TrackId { get; set; } 
 
-    public string Passthrough { get; set; } = string.Empty;
+    public string? Passthrough { get; set; } 
 
     public Guid? LanguageCodeId { get; set; }
 
