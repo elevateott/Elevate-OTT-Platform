@@ -8,7 +8,9 @@ namespace ElevateOTT.Application.Common.Models.ApplicationOptions;
 public class BlobOptions
 {
     #region Public Fields
+
     public const string Section = "Blob";
+
     #endregion Public Fields
 
     #region Public Properties

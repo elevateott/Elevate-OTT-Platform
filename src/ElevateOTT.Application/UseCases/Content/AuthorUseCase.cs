@@ -25,8 +25,8 @@ public class AuthorUseCase : IAuthorUseCase
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IReportingService _reportingService;
     private readonly ITenantResolver _tenantResolver;
-    //private readonly IStorageProvider _storageProvider;
-    //private readonly IConfigReaderService _configReaderService;
+    private readonly IStorageProvider _storageProvider;
+    private readonly IConfigReaderService _configReaderService;
 
     #endregion Private Fields
 
@@ -37,7 +37,9 @@ public class AuthorUseCase : IAuthorUseCase
                             IReportingService reportingService, 
                             IMapper mapper, 
                             IRepositoryManager repositoryManager,
-                            ITenantResolver tenantResolver)
+                            ITenantResolver tenantResolver, 
+                            IStorageProvider storageProvider, 
+                            IConfigReaderService configReaderService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -45,8 +47,8 @@ public class AuthorUseCase : IAuthorUseCase
         _mapper = mapper;
         _repositoryManager = repositoryManager;
         _tenantResolver = tenantResolver;
-        //_storageProvider = storageProvider;
-        //_configReaderService = configReaderService;
+        _storageProvider = storageProvider;
+        _configReaderService = configReaderService;
     }
 
     #endregion Public Constructors
@@ -149,7 +151,7 @@ public class AuthorUseCase : IAuthorUseCase
 
         _mapper.Map(request, authorEntity);
 
-        //await UpdateAuthorWithImageAsync(authorEntity, request.ImageFile, fileNamePrefix);
+        await UpdateAuthorWithImageAsync(authorEntity, request.ImageFile, fileNamePrefix);
 
         await _repositoryManager.SaveAsync();
 
@@ -185,35 +187,38 @@ public class AuthorUseCase : IAuthorUseCase
     #endregion Public Methods
 
     #region Private Methods
-    //public async Task UpdateAuthorWithImageAsync(AuthorModel author, IFormFile? image, string fileNamePrefix)
-    //{
-    //    var storageService = _storageProvider.InvokeInstanceForAzureStorageAsync();
+    public async Task UpdateAuthorWithImageAsync(AuthorModel author, IFormFile? image, string fileNamePrefix)
+    {
+        var storageService = _storageProvider.InvokeInstanceForAzureStorageAsync();
 
-    //    switch (storageService.GetFileState(image, author.ImageUrl))
-    //    {
-    //        case FileStatus.Unchanged:
-    //            break;
+        switch (storageService.GetFileState(image, author.ImageUrl))
+        {
+            case FileStatus.Unchanged:
+                break;
 
-    //        case FileStatus.Modified:
-    //            author.ImageUrl = await UpdateImageAsync(image, fileNamePrefix, author.ImageUrl ?? string.Empty, storageService);
-    //            break;
+            case FileStatus.Modified:
+                author.ImageUrl = await UpdateImageAsync(image, fileNamePrefix, author.ImageUrl ?? string.Empty, storageService);
+                break;
 
-    //        case FileStatus.Deleted:
-    //            await storageService.DeleteFileIfExists(author.ImageUrl ?? string.Empty);
-    //            author.ImageUrl = null;
-    //            break;
-    //        default:
-    //            throw new ArgumentOutOfRangeException();
-    //    }
-    //}
+            case FileStatus.Deleted:
+                await storageService.DeleteFileIfExists(author.ImageUrl ?? string.Empty, "Users");
+                author.ImageUrl = null;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
 
-    //public async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
-    //{
-    //    var blobOptions = _configReaderService.GetBlobOptions();
+    public async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
+    {
+        var blobOptions = _configReaderService.GetBlobOptions();
 
-    //    var newImageUri = await storageService.EditFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix, oldFileUri);
+        if (image == null) return string.Empty;
 
-    //    return newImageUri;
-    //}
+        var newImageUri = await storageService.EditFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix, oldFileUri);
+
+        return newImageUri;
+
+    }
     #endregion Private Methods
 }

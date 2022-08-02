@@ -8,9 +8,9 @@ public interface IFileStorageService
 
     Task<List<FileMetaData>> UploadMultipleFiles(IList<IFormFile> formFiles, string containerName, string fileNamePrefix, int defaultFileIndex = 0, string subContainerName = "attachments");
 
-    Task<string> EditFile(IFormFile formFile, string containerName, string fileNamePrefix, string oldFileUri);
+    Task<string?> EditFile(IFormFile formFile, string containerName, string fileNamePrefix, string oldFileUri);
 
-    Task DeleteFileIfExists(string fileUri);
+    Task DeleteFileIfExists(string fileUri, string containerName);
 
     Task DeleteContainer(string containerName, string subContainerName);
 

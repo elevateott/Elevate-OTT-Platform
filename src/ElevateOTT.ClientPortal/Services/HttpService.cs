@@ -34,6 +34,8 @@ public class HttpService : IHttpService
     {
         _httpClient.DefaultRequestHeaders.Add("Accept-Language", await _localStorage.GetItemAsync<string>("Culture"));
 
+        //_httpClient.DefaultRequestHeaders.Add("X-Tenant", "testerdave-2022724195054337");
+
         using var response = await _httpClient.GetAsync(url);
 
         if (response.IsSuccessStatusCode)

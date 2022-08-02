@@ -20,7 +20,6 @@ public class UpdateAuthorCommand : IRequest<Envelope<string>>
     #endregion Public Properties
 
 
-
     #region Public Classes
 
     public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, Envelope<string>>

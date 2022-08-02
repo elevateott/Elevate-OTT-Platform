@@ -144,7 +144,7 @@ public class ApplicationUserManager : UserManager<ApplicationUser>
                 break;
 
             case FileStatus.Deleted:
-                await storageService.DeleteFileIfExists(user.AvatarUri);
+                await storageService.DeleteFileIfExists(user.AvatarUri, "Users");
                 user.AvatarUri = null;
                 break;
         }
@@ -175,7 +175,7 @@ public class ApplicationUserManager : UserManager<ApplicationUser>
                 break;
 
             case FileStatus.Deleted:
-                await storageService.DeleteFileIfExists(user.AvatarUri);
+                await storageService.DeleteFileIfExists(user.AvatarUri, "Users");
                 user.AvatarUri = null;
                 break;
         }
@@ -330,7 +330,7 @@ public class ApplicationUserManager : UserManager<ApplicationUser>
             foreach (var userAttachment in userAttachmentsToBeRemoved)
             {
                 user.UserAttachments.Remove(userAttachment);
-                await storageService.DeleteFileIfExists(userAttachment.FileUri);
+                await storageService.DeleteFileIfExists(userAttachment.FileUri, "Users");
             }
         }
 

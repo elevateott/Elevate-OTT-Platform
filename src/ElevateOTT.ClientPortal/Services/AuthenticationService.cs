@@ -33,6 +33,8 @@ public class AuthenticationService : IAuthenticationService
 
         await _localStorageService.SetItemAsync(TokenType.RefreshToken, authResponse.RefreshToken);
 
+        await StoreTenantId();
+
         ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(authResponse.AccessToken);
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", authResponse.AccessToken);
@@ -45,6 +47,8 @@ public class AuthenticationService : IAuthenticationService
         await _localStorageService.SetItemAsync(TokenType.AccessToken, authResponse.AccessToken);
 
         await _localStorageService.SetItemAsync(TokenType.RefreshToken, authResponse.RefreshToken);
+
+        await StoreTenantId();
 
         ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(authResponse.AccessToken);
 
@@ -61,6 +65,7 @@ public class AuthenticationService : IAuthenticationService
         {
             await _localStorageService.RemoveItemAsync(TokenType.AccessToken);
             await _localStorageService.RemoveItemAsync(TokenType.RefreshToken);
+            await _localStorageService.RemoveItemAsync(Constants.TenantIdStorageKey);
             ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
@@ -76,7 +81,18 @@ public class AuthenticationService : IAuthenticationService
 
         await _localStorageService.RemoveItemAsync(TokenType.RefreshToken);
 
+        await _localStorageService.RemoveItemAsync(Constants.TenantIdStorageKey);
+
         _httpClient.DefaultRequestHeaders.Authorization = null;
+    }
+
+    private async Task StoreTenantId()
+    {
+        var authenticationState = await _authStateProvider.GetAuthenticationStateAsync();
+        var tenantIdClaim = authenticationState.User.Claims.FirstOrDefault(x => x.Type.Equals("TenantId"));
+        string tenantId = tenantIdClaim is not null ? tenantIdClaim.Value : string.Empty;
+
+        await _localStorageService.SetItemAsync(Constants.TenantIdStorageKey, tenantId);
     }
 
     #endregion Private Methods

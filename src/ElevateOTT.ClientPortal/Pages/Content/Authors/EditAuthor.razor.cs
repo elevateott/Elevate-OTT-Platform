@@ -130,7 +130,7 @@ public partial class EditAuthor : ComponentBase
             };
 
         if (_imageContent != null)
-            userFormData.Add(_imageContent, "AuthorImage", _imageContent.Headers.GetValues("FileName").LastOrDefault());
+            userFormData.Add(_imageContent, "ImageFile", _imageContent.Headers.GetValues("FileName").LastOrDefault());
 
         Console.WriteLine("pre update call");
 

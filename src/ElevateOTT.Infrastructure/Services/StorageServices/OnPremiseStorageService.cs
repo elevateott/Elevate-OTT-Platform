@@ -111,12 +111,12 @@ public class OnPremiseStorageService : IFileStorageService
             return oldFileUri;
 
         if (!string.IsNullOrEmpty(oldFileUri))
-            await DeleteFileIfExists(oldFileUri);
+            await DeleteFileIfExists(oldFileUri, containerName);
 
         return await UploadFile(formFile, containerName, fileNamePrefix);
     }
 
-    public Task DeleteFileIfExists(string fileUri)
+    public Task DeleteFileIfExists(string fileUri, string containerName)
     {
         if (!string.IsNullOrEmpty(fileUri))
         {

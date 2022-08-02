@@ -3,7 +3,9 @@
 public class ClientAppOptions
 {
     #region Public Fields
+
     public const string Section = "ClientApp";
+
     #endregion Public Fields
 
     #region Public Properties

@@ -26,6 +26,7 @@ public class AuthorsController : ApiController
     [AllowAnonymous]
     public async Task<IActionResult> GetAuthor(Guid id)
     {
+        var httpRequest = Request;
         var response = await Mediator.Send(new GetAuthorForEditQuery {Id = id});
         return TryGetResult(response);
     }
@@ -35,6 +36,7 @@ public class AuthorsController : ApiController
     [AllowAnonymous]
     public async Task<IActionResult> GetAuthors([FromBody] GetAuthorsQuery request)
     {
+        var httpRequest = Request;
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
@@ -44,8 +46,7 @@ public class AuthorsController : ApiController
     public async Task<IActionResult> CreateAuthorByMultipartForm([FromForm] CreateAuthorCommand request)
     {
         var response = await Mediator.Send(request);
-        return Ok(response);
-        //return TryGetResult(response);
+        return TryGetResult(response);
     }
 
     [HttpPost("new-author")]

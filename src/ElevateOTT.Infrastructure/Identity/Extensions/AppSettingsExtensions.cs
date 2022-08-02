@@ -10,6 +10,7 @@ public static class AppSettingsExtensions
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Section));
         services.Configure<SmtpOption>(configuration.GetSection(SmtpOption.Section));
         services.Configure<ClientAppOptions>(configuration.GetSection(ClientAppOptions.Section));
+        services.Configure<BlobOptions>(configuration.GetSection(BlobOptions.Section));
         return services;
     }
 

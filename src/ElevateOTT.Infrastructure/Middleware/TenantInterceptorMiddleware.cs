@@ -58,7 +58,10 @@ public class TenantInterceptorMiddleware
 
                     if (tenantName.Count == 0)
                         tenantName = string.Empty;
+
+                    Console.WriteLine("tenantName @ API interceptor: " + tenantName);
                     
+                    // TODO guard against tenantName null or empty
 
                     // TODO check if tenant name is Name or CustomDomain
 

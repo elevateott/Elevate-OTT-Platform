@@ -1,5 +1,7 @@
 ﻿namespace ElevateOTT.ClientPortal.Services;
 
+// ref: https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor
+
 public class HttpInterceptorService : IDisposable
 {
     #region Private Fields
@@ -9,7 +11,7 @@ public class HttpInterceptorService : IDisposable
     private readonly NavigationManager _navigationManager;
     private readonly IRefreshTokenService _refreshTokenService;
     private readonly IAuthenticationService _authenticationService;
-    private readonly AuthenticationStateProvider _authenticationStateProvider;
+    private readonly ILocalStorageService _localStorageService;
     #endregion Private Fields
 
     #region Public Constructors
@@ -19,8 +21,7 @@ public class HttpInterceptorService : IDisposable
                                   SpinnerService spinnerService,
                                   NavigationManager navigationManager,
                                   IRefreshTokenService refreshTokenService,
-                                  IAuthenticationService authenticationService, 
-                                  AuthenticationStateProvider authenticationStateProvider)
+                                  IAuthenticationService authenticationService, ILocalStorageService localStorageService)
     {
         _httpClient = httpClientFactory.CreateClient("HttpInterceptorService");
         _httpClientInterceptor = httpClientInterceptor;
@@ -28,9 +29,9 @@ public class HttpInterceptorService : IDisposable
         _navigationManager = navigationManager;
         _refreshTokenService = refreshTokenService;
         _authenticationService = authenticationService;
-        _authenticationStateProvider = authenticationStateProvider;
-        _httpClientInterceptor.BeforeSend += async (s, e) => await HttpClientInterceptor_BeforeSendAsync(s, e);
-        _httpClientInterceptor.AfterSend += async (s, e) => await HttpClientInterceptor_AfterSendAsync(s, e);
+        _localStorageService = localStorageService;
+        _httpClientInterceptor.BeforeSendAsync += async (s, e) => await HttpClientInterceptor_BeforeSendAsync(s, e);
+        _httpClientInterceptor.AfterSendAsync += async (s, e) => await HttpClientInterceptor_AfterSendAsync(s, e);
     }
 
     #endregion Public Constructors
@@ -39,8 +40,9 @@ public class HttpInterceptorService : IDisposable
 
     public void Dispose()
     {
-        _httpClientInterceptor.BeforeSend -= async (s, e) => await HttpClientInterceptor_BeforeSendAsync(s, e);
-        _httpClientInterceptor.AfterSend -= async (s, e) => await HttpClientInterceptor_AfterSendAsync(s, e);
+        _httpClientInterceptor.BeforeSendAsync -= HttpClientInterceptor_BeforeSendAsync;
+        _httpClientInterceptor.AfterSendAsync -= HttpClientInterceptor_AfterSendAsync;
+
         _httpClient.Dispose();
     }
 
@@ -53,20 +55,23 @@ public class HttpInterceptorService : IDisposable
         _spinnerService.Show();
 
         //
-        // TODO 
-        // Get tenant id from claim and add to header instead if tenant name
+        // TODO
+        // Use this once using single sub domain
         //
-        var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-        var tenantIdClaim = authenticationState.User.Claims.FirstOrDefault(x => x.Type.Equals("TenantId"));
-        string tenantId = tenantIdClaim is not null ? tenantIdClaim.Value : string.Empty;
-        Console.WriteLine($"tenantId: {tenantId}");
+        var tenantId = await _localStorageService.GetItemAsync<string>(Constants.TenantIdStorageKey);
 
+        Console.WriteLine($"tenantId: {tenantId}");
 
         string tenantName = _navigationManager.GetSubDomain();
 
         Console.WriteLine($"tenantName: {tenantName}");
 
         e.Request.Headers.Add("X-Tenant", tenantName);
+
+        Console.WriteLine(new System.Diagnostics.StackTrace());
+
+
+        Console.WriteLine($"e.Request.Headers: {e.Request.Headers}");
 
         if (e.Request.Headers.Authorization != null)
         {
