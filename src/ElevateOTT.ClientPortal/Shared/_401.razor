@@ -1,4 +1,9 @@
-﻿@page "/pages/error/401"
+﻿@page "/pages/error/unauthorized/{Message?}"
+
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <MudText Typo="Typo.h3">@Message</MudText>
+}
 
 <MudContainer Class="mt-4" MaxWidth="MaxWidth.Small">
     <div class="d-flex flex-column">
@@ -20,6 +25,11 @@
 
 @code {
     #region Public Properties
+
+    // TODO need SVGs for error pages
+
+    [Parameter]
+    public string? Message { get; set; }
 
     [Parameter]
     public string ReturnUrl { get; set; }

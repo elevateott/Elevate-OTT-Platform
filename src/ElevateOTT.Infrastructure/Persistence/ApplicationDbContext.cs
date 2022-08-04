@@ -68,6 +68,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Report>? Reports { get; set; }
 
     public DbSet<AuthorModel>? Authors { get; set; }
+    public DbSet<VideoModel>? Videos { get; set; }
 
 
     #endregion Public Properties

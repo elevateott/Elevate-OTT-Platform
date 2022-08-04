@@ -91,7 +91,7 @@ public class AuthorUseCase : IAuthorUseCase
         var query = _repositoryManager.Author.GetAuthors(tenantId.Value, request, false);
 
         var authorItems = query is not null
-            ? await query.Select(author => AuthorItem.MapFromEntity(author))
+            ? await query.Select(author => _mapper.Map<AuthorItem>(author))
                 .ToPagedListAsync(request.PageNumber, request.PageSize)
             : null;
 

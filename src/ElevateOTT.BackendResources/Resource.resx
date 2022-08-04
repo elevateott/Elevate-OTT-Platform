@@ -138,6 +138,15 @@
   <data name="Applicant_has_been_updated_successfully" xml:space="preserve">
     <value>Applicant has been updated successfully.</value>
   </data>
+  <data name="Author_has_been_created_successfully" xml:space="preserve">
+    <value>Author has been created successfully.</value>
+  </data>
+  <data name="Author_has_been_deleted_successfully" xml:space="preserve">
+    <value>Author has been deleted successfully.</value>
+  </data>
+  <data name="Author_has_been_updated_successfully" xml:space="preserve">
+    <value>Author has been updated successfully.</value>
+  </data>
   <data name="A_user_with_this_login_already_exists" xml:space="preserve">
     <value>A user with this login already exists.</value>
   </data>
@@ -207,6 +216,9 @@
   <data name="Invalid_authenticator_code_entered" xml:space="preserve">
     <value>Invalid authenticator code entered.</value>
   </data>
+  <data name="Invalid_author_Id" xml:space="preserve">
+    <value>Invalid author ID.</value>
+  </data>
   <data name="Invalid_client_request" xml:space="preserve">
     <value>Invalid client request.</value>
   </data>
@@ -216,8 +228,14 @@
   <data name="Invalid_recovery_code_entered" xml:space="preserve">
     <value>Invalid recovery code entered.</value>
   </data>
+  <data name="Invalid_report_Id" xml:space="preserve">
+    <value>Invalid report Id.</value>
+  </data>
   <data name="Invalid_role_Id" xml:space="preserve">
     <value>Invalid role ID.</value>
+  </data>
+  <data name="Invalid_tenant_Id" xml:space="preserve">
+    <value>Invalid tenant ID.</value>
   </data>
   <data name="Invalid_tenant_name" xml:space="preserve">
     <value>Invalid tenant name.</value>
@@ -227,6 +245,9 @@
   </data>
   <data name="Invalid_user_Id" xml:space="preserve">
     <value>Invalid user ID.</value>
+  </data>
+  <data name="Invalid_video_Id" xml:space="preserve">
+    <value></value>
   </data>
   <data name="Job_title_is_required" xml:space="preserve">
     <value>Job title is required.</value>
@@ -254,6 +275,9 @@
   </data>
   <data name="New_password_must_not_exceed_200_characters" xml:space="preserve">
     <value>New password must not exceed 200 characters.</value>
+  </data>
+  <data name="N_A" xml:space="preserve">
+    <value>N/A</value>
   </data>
   <data name="Old_password_is_required" xml:space="preserve">
     <value>Old password is required.</value>
@@ -306,6 +330,9 @@
   <data name="Password_reset_link_was_sent" xml:space="preserve">
     <value>Password reset link was sent. Please check your email.</value>
   </data>
+  <data name="Phone_number_is_required" xml:space="preserve">
+    <value>Phone number is_required.</value>
+  </data>
   <data name="Please_confirm_your_account_by_clicking_here" xml:space="preserve">
     <value>Please confirm your account by &lt;a href='{0}'&gt;clicking here&lt;/a&gt;.</value>
   </data>
@@ -326,6 +353,9 @@
   </data>
   <data name="Recovery_Code_Redemption_Failed" xml:space="preserve">
     <value>Recovery Code Redemption Failed</value>
+  </data>
+  <data name="Reference_name_is_required" xml:space="preserve">
+    <value>Reference name is required.</value>
   </data>
   <data name="Refresh_token_timespan_cannot_be_null" xml:space="preserve">
     <value>Refresh token timespan cannot be null.</value>
@@ -381,6 +411,9 @@
   <data name="The_applicant_is_not_found" xml:space="preserve">
     <value>The applicant is not found.</value>
   </data>
+  <data name="The_author_is_not_found" xml:space="preserve">
+    <value>The author is not found.</value>
+  </data>
   <data name="The_password_and_confirmation_password_do_not_match" xml:space="preserve">
     <value>The password and confirmation password do not match.</value>
   </data>
@@ -395,6 +428,9 @@
   </data>
   <data name="The_specified_username_and_email_are_already_registered_in_the_given_tenant" xml:space="preserve">
     <value>The specified username and email are already registered in the given tenant.</value>
+  </data>
+  <data name="The_video_was_not_found" xml:space="preserve">
+    <value>The video was not found.</value>
   </data>
   <data name="Token_settings_have_been_updated_successfully" xml:space="preserve">
     <value>Token settings have been updated successfully.</value>
@@ -426,11 +462,20 @@
   <data name="Unable_to_load_applicant" xml:space="preserve">
     <value>Unable to load applicant.</value>
   </data>
+  <data name="Unable_to_load_author" xml:space="preserve">
+    <value>Unable to load author.</value>
+  </data>
+  <data name="Unable_to_load_report" xml:space="preserve">
+    <value>Unable to load report.</value>
+  </data>
   <data name="Unable_to_load_role" xml:space="preserve">
     <value>Unable to load role.</value>
   </data>
   <data name="Unable_to_load_user" xml:space="preserve">
     <value>Unable to load user.</value>
+  </data>
+  <data name="Unable_to_load_video" xml:space="preserve">
+    <value>Unable to load video.</value>
   </data>
   <data name="Unable_to_update_static_user" xml:space="preserve">
     <value>Unable to update static user.</value>
@@ -501,6 +546,18 @@
   <data name="Verification_email_has_been_sent" xml:space="preserve">
     <value>Verification email has been sent. Please check your email.</value>
   </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Video_has_been_created_successfully" xml:space="preserve">
+    <value>Video has been created successfully.</value>
+  </data>
+  <data name="Video_has_been_deleted_successfully" xml:space="preserve">
+    <value>Video has been deleted successfully.</value>
+  </data>
+  <data name="Video_has_been_updated_successfully" xml:space="preserve">
+    <value>Video has been updated successfully.</value>
+  </data>
   <data name="Weight_is_required" xml:space="preserve">
     <value>Weight is required.</value>
   </data>
@@ -545,44 +602,5 @@
   </data>
   <data name="You_have_successfully_created_a_new_account" xml:space="preserve">
     <value>You have successfully created a new account.</value>
-  </data>
-  <data name="Reference_name_is_required" xml:space="preserve">
-    <value>Reference name is required.</value>
-  </data>
-  <data name="Phone_number_is_required" xml:space="preserve">
-    <value>Phone number is_required.</value>
-  </data>
-  <data name="Invalid_report_Id" xml:space="preserve">
-    <value>Invalid report Id.</value>
-  </data>
-  <data name="Unable_to_load_report" xml:space="preserve">
-    <value>Unable to load report.</value>
-  </data>
-  <data name="N_A" xml:space="preserve">
-    <value>N/A</value>
-  </data>
-  <data name="Video" xml:space="preserve">
-    <value>Video</value>
-  </data>
-  <data name="Author_has_been_created_successfully" xml:space="preserve">
-    <value>Author has been created successfully.</value>
-  </data>
-  <data name="Author_has_been_deleted_successfully" xml:space="preserve">
-    <value>Author has been deleted successfully.</value>
-  </data>
-  <data name="Author_has_been_updated_successfully" xml:space="preserve">
-    <value>Author has been updated successfully.</value>
-  </data>
-  <data name="Invalid_author_Id" xml:space="preserve">
-    <value>Invalid author ID.</value>
-  </data>
-  <data name="The_author_is_not_found" xml:space="preserve">
-    <value>The author is not found.</value>
-  </data>
-  <data name="Unable_to_load_author" xml:space="preserve">
-    <value>Unable to load author.</value>
-  </data>
-  <data name="Invalid_tenant_Id" xml:space="preserve">
-    <value>Invalid tenant ID.</value>
   </data>
 </root>

@@ -6,7 +6,7 @@ namespace ElevateOTT.Infrastructure.Repository
     {
 		private readonly IApplicationDbContext _repositoryContext;
 		private readonly Lazy<IAuthorRepository> _authorRepository;
-        //private readonly Lazy<IVideoRepository> _videoRepository;
+        private readonly Lazy<IVideoRepository> _videoRepository;
         //private readonly Lazy<ILiveStreamRepository> _liveStreamRepository;
         //private readonly Lazy<ISubtitleRepository> _subtitleRepository;
         //private readonly Lazy<ISeoMetaDataRepository> _seoMetaDateRepository;
@@ -23,7 +23,7 @@ namespace ElevateOTT.Infrastructure.Repository
 		{
 			_repositoryContext = repositoryContext;
 			_authorRepository = new Lazy<IAuthorRepository>(() => new AuthorRepository(repositoryContext));
-			//_videoRepository = new Lazy<IVideoRepository>(() => new VideoRepository(repositoryContext));
+            _videoRepository = new Lazy<IVideoRepository>(() => new VideoRepository(repositoryContext));
    //         _liveStreamRepository = new Lazy<ILiveStreamRepository>(() => new LiveStreamRepository(repositoryContext));
    //         _subtitleRepository = new Lazy<ISubtitleRepository>(() => new SubtitleRepository(repositoryContext));
    //         _seoMetaDateRepository = new Lazy<ISeoMetaDataRepository>(() => new SeoMetaDataRepository(repositoryContext));
@@ -40,7 +40,7 @@ namespace ElevateOTT.Infrastructure.Repository
         }
 
         public IAuthorRepository Author => _authorRepository.Value;
-		//public IVideoRepository Video => _videoRepository.Value;
+		public IVideoRepository Video => _videoRepository.Value;
   //      public ILiveStreamRepository LiveStream => _liveStreamRepository.Value;
   //      public ICategoryRepository Category => _categoryRepository.Value;
   //      public ICollectionRepository Collection => _collectionRepository.Value;

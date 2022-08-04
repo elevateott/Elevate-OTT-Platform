@@ -1727,6 +1727,33 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not authorized to access this resource..
+        /// </summary>
+        public static string Error_401_Message {
+            get {
+                return ResourceManager.GetString("Error_401_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested resource was not found..
+        /// </summary>
+        public static string Error_404_Message {
+            get {
+                return ResourceManager.GetString("Error_404_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong, please try again or contact support..
+        /// </summary>
+        public static string Error_500_Message {
+            get {
+                return ResourceManager.GetString("Error_500_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error Pages.
         /// </summary>
         public static string Error_Pages {
@@ -2339,6 +2366,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Invalid_file_name {
             get {
                 return ResourceManager.GetString("Invalid_file_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid video ID..
+        /// </summary>
+        public static string Invalid_video_Id {
+            get {
+                return ResourceManager.GetString("Invalid_video_Id", resourceCulture);
             }
         }
         
@@ -4188,6 +4224,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The video was not found..
+        /// </summary>
+        public static string The_video_was_not_found {
+            get {
+                return ResourceManager.GetString("The_video_was_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to these docs.
         /// </summary>
         public static string these_docs {
@@ -4386,6 +4431,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to load video..
+        /// </summary>
+        public static string Unable_to_load_video {
+            get {
+                return ResourceManager.GetString("Unable_to_load_video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to upload an empty file..
         /// </summary>
         public static string Unable_to_upload_an_empty_file {
@@ -4571,6 +4625,33 @@ namespace ElevateOTT.FrontendResources {
         public static string Verify {
             get {
                 return ResourceManager.GetString("Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video has been created successfully..
+        /// </summary>
+        public static string Video_has_been_created_successfully {
+            get {
+                return ResourceManager.GetString("Video_has_been_created_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video has been deleted successfully..
+        /// </summary>
+        public static string Video_has_been_deleted_successfully {
+            get {
+                return ResourceManager.GetString("Video_has_been_deleted_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video has been updated successfully..
+        /// </summary>
+        public static string Video_has_been_updated_successfully {
+            get {
+                return ResourceManager.GetString("Video_has_been_updated_successfully", resourceCulture);
             }
         }
         

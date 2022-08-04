@@ -1,10 +1,8 @@
-﻿using ElevateOTT.Application.Features.Content.Authors.Commands.DeleteAuthor;
-using ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
-using ElevateOTT.Application.Features.Content.Authors.Commands.UpdateAuthor;
-using ElevateOTT.Application.Features.Content.Authors.Queries.ExportAuthors;
-using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
-using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
-using AutoWrapper.Filters;
+﻿using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
+using ElevateOTT.Application.Features.Content.Videos.Commands.DeleteVideo;
+using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 
 namespace ElevateOTT.WebAPI.Controllers;
 
@@ -13,44 +11,39 @@ namespace ElevateOTT.WebAPI.Controllers;
 [BpAuthorize]
 public class AuthorsController : ApiController
 {
-    private IApplicationDbContext _dbContext;
-
-    public AuthorsController(IApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
-
     #region Public Methods
+
     [HttpGet("author/{id:guid}", Name = "AuthorById")]
     [AllowAnonymous]
     public async Task<IActionResult> GetAuthor(Guid id)
     {
         var httpRequest = Request;
-        var response = await Mediator.Send(new GetAuthorForEditQuery {Id = id});
+        var response = await Mediator.Send(new GetVideoForEditQuery {Id = id});
         return TryGetResult(response);
     }
 
     //[AutoWrapIgnore]
     [HttpPost("authors")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAuthors([FromBody] GetAuthorsQuery request)
+    public async Task<IActionResult> GetAuthors([FromBody] GetVideosQuery request)
     {
         var httpRequest = Request;
         var response = await Mediator.Send(request);
-        return TryGetResult(response);
+        var result =  TryGetResult(response);
+
+        return result;
     }
 
     [HttpPost("multipart-form-create")]
     [RequestFormLimits(MultipartBodyLengthLimit = 20971520)] // 20MB
-    public async Task<IActionResult> CreateAuthorByMultipartForm([FromForm] CreateAuthorCommand request)
+    public async Task<IActionResult> CreateAuthorByMultipartForm([FromForm] CreateVideoCommand request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
 
     [HttpPost("new-author")]
-    public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorCommand request)
+    public async Task<IActionResult> CreateAuthor([FromBody] CreateVideoCommand request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
@@ -59,14 +52,14 @@ public class AuthorsController : ApiController
 
     [AllowAnonymous]
     [HttpPost("multipart-form-update")]
-    public async Task<IActionResult> UpdateAuthorByMultipartForm([FromForm] UpdateAuthorCommand request)
+    public async Task<IActionResult> UpdateAuthorByMultipartForm([FromForm] UpdateVideoCommand request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorCommand request)
+    public async Task<IActionResult> UpdateAuthor([FromBody] UpdateVideoCommand request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
@@ -75,8 +68,9 @@ public class AuthorsController : ApiController
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAuthor(Guid id)
     {
-        var response = await Mediator.Send(new DeleteAuthorCommand { Id = id });
+        var response = await Mediator.Send(new DeleteVideoCommand { Id = id });
         return TryGetResult(response);
     }
+
     #endregion Public Methods
 }

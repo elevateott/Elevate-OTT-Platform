@@ -106,6 +106,8 @@ public static class DependencyInjection
         services.AddScoped<IReportUseCase, ReportUseCase>();
 
         services.AddScoped<IAuthorUseCase, AuthorUseCase>();
+        services.AddScoped<IVideoUseCase, VideoUseCase>();
+
 
         services.AddScoped<IRepositoryManager, RepositoryManager>();
 

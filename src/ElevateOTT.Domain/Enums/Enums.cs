@@ -51,7 +51,8 @@ public enum VideoResolutionType
 public enum DistributionType
 {
     Web,
-    Mobile,
+    AndroidMobile,
+    iOSMobile,
     Roku,
     FireTV,
     AndroidTV,

@@ -448,6 +448,15 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Invalid_video_Id {
+            get {
+                return ResourceManager.GetString("Invalid_video_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Job title is required..
         /// </summary>
         public static string Job_title_is_required {
@@ -990,6 +999,15 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The video was not found..
+        /// </summary>
+        public static string The_video_was_not_found {
+            get {
+                return ResourceManager.GetString("The_video_was_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Token settings have been updated successfully..
         /// </summary>
         public static string Token_settings_have_been_updated_successfully {
@@ -1112,6 +1130,15 @@ namespace ElevateOTT.BackendResources {
         public static string Unable_to_load_user {
             get {
                 return ResourceManager.GetString("Unable_to_load_user", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load video..
+        /// </summary>
+        public static string Unable_to_load_video {
+            get {
+                return ResourceManager.GetString("Unable_to_load_video", resourceCulture);
             }
         }
         
@@ -1329,6 +1356,33 @@ namespace ElevateOTT.BackendResources {
         public static string Video {
             get {
                 return ResourceManager.GetString("Video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video has been created successfully..
+        /// </summary>
+        public static string Video_has_been_created_successfully {
+            get {
+                return ResourceManager.GetString("Video_has_been_created_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video has been deleted successfully..
+        /// </summary>
+        public static string Video_has_been_deleted_successfully {
+            get {
+                return ResourceManager.GetString("Video_has_been_deleted_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video has been updated successfully..
+        /// </summary>
+        public static string Video_has_been_updated_successfully {
+            get {
+                return ResourceManager.GetString("Video_has_been_updated_successfully", resourceCulture);
             }
         }
         

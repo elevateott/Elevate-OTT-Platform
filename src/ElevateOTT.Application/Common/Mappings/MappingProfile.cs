@@ -1,7 +1,14 @@
-﻿using ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
+﻿using AutoMapper.Extensions.EnumMapping;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
+using ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Commands.UpdateAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
+using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.Common.Mappings;
@@ -23,6 +30,18 @@ public class MappingProfile : Profile
         CreateMap<AuthorModel, AuthorForEdit>().ReverseMap();
         CreateMap<AuthorModel, CreateAuthorCommand>().ReverseMap();
         CreateMap<AuthorModel, UpdateAuthorCommand>().ReverseMap();
+
+        CreateMap<VideoModel, VideoItem>().ReverseMap();
+        CreateMap<VideoModel, VideoForEdit>().ReverseMap();
+        CreateMap<VideoModel, CreateVideoCommand>().ReverseMap();
+        CreateMap<VideoModel, UpdateVideoCommand>().ReverseMap();
+
+        //CreateMap<StorageTypes, StorageTypes>()
+            //.ConvertUsingEnumMapping(opt => opt
+            //    // optional: .MapByValue() or MapByName(), without configuration MapByValue is used
+            //    .MapValue(Source., Destination.Default)
+            //)
+            //.ReverseMap();
     }
 
     #endregion Public Constructors

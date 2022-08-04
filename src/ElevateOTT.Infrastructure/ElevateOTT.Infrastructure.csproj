@@ -44,7 +44,6 @@
     <Compile Remove="Repository\SeoMetaDataRepository.cs" />
     <Compile Remove="Repository\SubscriptionRepository.cs" />
     <Compile Remove="Repository\SubtitleRepository.cs" />
-    <Compile Remove="Repository\VideoRepository.cs" />
     <Compile Remove="Services\Chargebee\ChargebeeService.cs" />
     <Compile Remove="Services\Chargebee\ChargebeeWebhookService.cs" />
   </ItemGroup>

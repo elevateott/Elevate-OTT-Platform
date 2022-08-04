@@ -102,6 +102,8 @@ public class Program
 
         services.AddScoped<IAuthorsClient, AuthorsClient>();
 
+        services.AddScoped<IVideosClient, VideosClient>();
+
         services.AddLocalization();
 
         services.AddBlazoredLocalStorage();

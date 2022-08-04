@@ -672,6 +672,15 @@
   <data name="Erbium" xml:space="preserve">
     <value>Erbio</value>
   </data>
+  <data name="Error_401_Message" xml:space="preserve">
+    <value>No está autorizado a acceder a este recurso.</value>
+  </data>
+  <data name="Error_404_Message" xml:space="preserve">
+    <value>El recurso solicitado no fue encontrado!</value>
+  </data>
+  <data name="Error_500_Message" xml:space="preserve">
+    <value>Algo salió mal, inténtalo de nuevo o ponte en contacto con el soporte técnico.</value>
+  </data>
   <data name="Error_Pages" xml:space="preserve">
     <value>Páginas de error</value>
   </data>
@@ -872,6 +881,9 @@
   </data>
   <data name="Invalid_file_name" xml:space="preserve">
     <value>Nombre de archivo no válido.</value>
+  </data>
+  <data name="Invalid_video_Id" xml:space="preserve">
+    <value>Identificación de video no válida.</value>
   </data>
   <data name="In_Progress" xml:space="preserve">
     <value>¡En progreso!</value>
@@ -1494,6 +1506,9 @@
   <data name="The_selected_file_extension_is_not_allowed" xml:space="preserve">
     <value>La extensión de archivo seleccionada no está permitida.</value>
   </data>
+  <data name="The_video_was_not_found" xml:space="preserve">
+    <value>El video no fue encontrado.!</value>
+  </data>
   <data name="This_action_only_disables_2FA" xml:space="preserve">
     <value>Esta acción solo deshabilita la autenticación de dos factores.</value>
   </data>
@@ -1556,6 +1571,9 @@
   </data>
   <data name="Unable_to_load_author" xml:space="preserve">
     <value>¡No se puede cargar el autor!</value>
+  </data>
+  <data name="Unable_to_load_video" xml:space="preserve">
+    <value>No se puede cargar vídeo.!</value>
   </data>
   <data name="Unable_to_upload_an_empty_file" xml:space="preserve">
     <value>No se puede cargar un archivo vacío.</value>
@@ -1622,6 +1640,15 @@
   </data>
   <data name="Videos" xml:space="preserve">
     <value>Videos</value>
+  </data>
+  <data name="Video_has_been_created_successfully" xml:space="preserve">
+    <value>Su vídeo se ha creado correctamente.</value>
+  </data>
+  <data name="Video_has_been_deleted_successfully" xml:space="preserve">
+    <value>El vídeo seleccionado se ha eliminado correctamente</value>
+  </data>
+  <data name="Video_has_been_updated_successfully" xml:space="preserve">
+    <value>El vídeo se ha actualizado correctamente</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>Vista</value>

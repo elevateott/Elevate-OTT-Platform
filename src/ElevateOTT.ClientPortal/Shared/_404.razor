@@ -1,4 +1,9 @@
-﻿@page "/pages/error/404"
+﻿@page "/pages/error/404/{Message?}"
+
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <MudText Typo="Typo.h3">@Message</MudText>
+}
 
 <MudContainer Class="mt-4" MaxWidth="MaxWidth.Small">
     <div class="d-flex flex-column">
@@ -21,3 +26,11 @@
         <MudText Typo="Typo.h5" Class="mt-6" Align="Align.Center">@Resource.The_page_you_were_looking_for_doesnt_exist</MudText>
     </div>
 </MudContainer>
+
+@code
+{
+    // TODO need SVGs for error pages
+
+    [Parameter]
+    public string? Message { get; set; }
+}

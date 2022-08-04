@@ -3,7 +3,7 @@
     public interface IRepositoryManager
     {
         IAuthorRepository Author { get; }
-        //IVideoRepository Video { get; }
+        IVideoRepository Video { get; }
         //ILiveStreamRepository LiveStream { get; }
         //ICategoryRepository Category { get; }
         //ICollectionRepository Collection { get; }

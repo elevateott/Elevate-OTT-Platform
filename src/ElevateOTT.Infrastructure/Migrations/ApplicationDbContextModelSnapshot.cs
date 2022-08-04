@@ -77,6 +77,119 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AllowDownload")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AssetId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ClosedCaptions")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ContentAccess")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DownloadUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan?>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHostedOnMux")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTestAsset")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LanguageCodeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Mp4Support")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Passthrough")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaybackId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PublicationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReleasedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StreamCreationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreamUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrailerVideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UploadedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Videos");
+                });
+
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Identity.ApplicationPermission", b =>
                 {
                     b.Property<Guid>("Id")

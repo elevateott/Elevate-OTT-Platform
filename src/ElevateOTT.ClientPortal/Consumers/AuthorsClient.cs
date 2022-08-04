@@ -8,14 +8,18 @@ namespace ElevateOTT.ClientPortal.Consumers;
 public class AuthorsClient : IAuthorsClient
 {
     #region Private Fields
+
     private readonly IHttpService _httpService;
+
     #endregion Private Fields
 
     #region Public Constructors
+
     public AuthorsClient(IHttpService httpService)
     {
         _httpService = httpService;
     }
+
     #endregion Public Constructors
 
     public async Task<HttpResponseWrapper<object>> GetAuthor(Guid id)

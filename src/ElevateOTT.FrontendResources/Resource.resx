@@ -672,6 +672,15 @@
   <data name="Erbium" xml:space="preserve">
     <value>Erbium</value>
   </data>
+  <data name="Error_401_Message" xml:space="preserve">
+    <value>You are not authorized to access this resource.</value>
+  </data>
+  <data name="Error_404_Message" xml:space="preserve">
+    <value>The requested resource was not found.</value>
+  </data>
+  <data name="Error_500_Message" xml:space="preserve">
+    <value>Something went wrong, please try again or contact support.</value>
+  </data>
   <data name="Error_Pages" xml:space="preserve">
     <value>Error Pages</value>
   </data>
@@ -872,6 +881,9 @@
   </data>
   <data name="Invalid_file_name" xml:space="preserve">
     <value>Invalid file name.</value>
+  </data>
+  <data name="Invalid_video_Id" xml:space="preserve">
+    <value>Invalid video ID.</value>
   </data>
   <data name="In_Progress" xml:space="preserve">
     <value>Processing</value>
@@ -1494,6 +1506,9 @@
   <data name="The_selected_file_extension_is_not_allowed" xml:space="preserve">
     <value>The selected file extension is not allowed.</value>
   </data>
+  <data name="The_video_was_not_found" xml:space="preserve">
+    <value>The video was not found.</value>
+  </data>
   <data name="This_action_only_disables_2FA" xml:space="preserve">
     <value>This action only disables Two-Factor Authentication.</value>
   </data>
@@ -1556,6 +1571,9 @@
   </data>
   <data name="Unable_to_load_author" xml:space="preserve">
     <value>Unable to load author.</value>
+  </data>
+  <data name="Unable_to_load_video" xml:space="preserve">
+    <value>Unable to load video.</value>
   </data>
   <data name="Unable_to_upload_an_empty_file" xml:space="preserve">
     <value>Unable to upload an empty file.</value>
@@ -1622,6 +1640,15 @@
   </data>
   <data name="Videos" xml:space="preserve">
     <value>Videos</value>
+  </data>
+  <data name="Video_has_been_created_successfully" xml:space="preserve">
+    <value>Video has been created successfully.</value>
+  </data>
+  <data name="Video_has_been_deleted_successfully" xml:space="preserve">
+    <value>Video has been deleted successfully.</value>
+  </data>
+  <data name="Video_has_been_updated_successfully" xml:space="preserve">
+    <value>Video has been updated successfully.</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>View</value>

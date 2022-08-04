@@ -1,4 +1,7 @@
-﻿namespace ElevateOTT.ClientPortal.Services;
+﻿using ElevateOTT.ClientPortal.Exceptions;
+using Microsoft.AspNetCore.Components;
+
+namespace ElevateOTT.ClientPortal.Services;
 
 // ref: https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor
 
@@ -30,8 +33,8 @@ public class HttpInterceptorService : IDisposable
         _refreshTokenService = refreshTokenService;
         _authenticationService = authenticationService;
         _localStorageService = localStorageService;
-        _httpClientInterceptor.BeforeSendAsync += async (s, e) => await HttpClientInterceptor_BeforeSendAsync(s, e);
-        _httpClientInterceptor.AfterSendAsync += async (s, e) => await HttpClientInterceptor_AfterSendAsync(s, e);
+        _httpClientInterceptor.BeforeSendAsync += HttpClientInterceptor_BeforeSendAsync;
+        _httpClientInterceptor.AfterSendAsync += HttpClientInterceptor_AfterSendAsync;
     }
 
     #endregion Public Constructors
@@ -42,7 +45,6 @@ public class HttpInterceptorService : IDisposable
     {
         _httpClientInterceptor.BeforeSendAsync -= HttpClientInterceptor_BeforeSendAsync;
         _httpClientInterceptor.AfterSendAsync -= HttpClientInterceptor_AfterSendAsync;
-
         _httpClient.Dispose();
     }
 
@@ -90,6 +92,42 @@ public class HttpInterceptorService : IDisposable
         _spinnerService.Hide();
         if (e.Response is { StatusCode: HttpStatusCode.Unauthorized })
             await _authenticationService.Logout();
+
+        if (e.Response == null)
+        {
+            _navigationManager.NavigateTo("/pages/error/server-error");
+            throw new HttpResponseException("Server not available");
+        }
+
+        if (!e.Response.IsSuccessStatusCode)
+        {
+            string message = string.Empty;
+            var responseCode = e.Response.StatusCode;
+
+            // TODO new svgs for error pages
+            // TODO test error handling
+
+
+            switch (responseCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = Resource.Error_404_Message;
+                    _navigationManager.NavigateTo($"/pages/error/404/{message}");
+                    break;
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
+                    message = Resource.Error_401_Message;
+                    _navigationManager.NavigateTo($"/pages/error/unauthorized/{message}");
+                    break;
+                default:
+                    message = Resource.Error_500_Message;
+                    _navigationManager.NavigateTo($"/pages/error/server-error/{message}");
+                    break;
+            }
+
+            Console.WriteLine(message);
+            throw new HttpResponseException(message);
+        }
 
         await Task.CompletedTask;
     }
