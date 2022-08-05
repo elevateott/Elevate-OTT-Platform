@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ElevateOTT.Application.Common.Models.Mux;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using ElevateOTT.Infrastructure.Models.Mux;
 
 namespace ElevateOTT.WebAPI.Controllers;
 
-[Route("api/muxwebhooks")]
+[Route("api/mux-webhook")]
 [ApiController]
-public class MuxWebhooksController : ApiController
+public class MuxWebhookController : ApiController
 {
     [HttpPost("callback")]
     public async Task<IActionResult> Post([FromBody] MuxWebhookRequest? hookRequest)

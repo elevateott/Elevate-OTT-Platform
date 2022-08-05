@@ -1,8 +1,13 @@
-﻿namespace ElevateOTT.Infrastructure.Services.StorageServices;
+﻿using Azure.Storage.Sas;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
+
+namespace ElevateOTT.Infrastructure.Services.StorageServices;
 
 public class AzureStorageService : IFileStorageService
 {
     #region Private Fields
+
+    private readonly IConfigReaderService _configReaderService;
 
     private readonly string _connectionString;
 
@@ -10,14 +15,42 @@ public class AzureStorageService : IFileStorageService
 
     #region Public Constructors
 
-    public AzureStorageService(IConfiguration configuration)
+    public AzureStorageService(IConfiguration configuration, IConfigReaderService configReaderService)
     {
+        _configReaderService = configReaderService;
         _connectionString = configuration.GetConnectionString("AzureStorageConnection");
     }
 
     #endregion Public Constructors
 
     #region Public Methods
+    public SasTokenResponse? GetSasTokenForVideoContainer()
+    {
+        // ref: https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview
+
+        // TODO throwing exception
+        // await CheckIfTenantExists(tenantId);
+
+        var blobOptions = _configReaderService.GetBlobOptions();
+
+        string containerName = blobOptions.VideoBlobContainerName;
+        var container = new BlobContainerClient(_connectionString, containerName);
+
+        int expiresOnInMinutes;
+        string expiresOnStr = blobOptions.SASExpiresOnInMinutes.ToString();
+        if (!int.TryParse(expiresOnStr, out expiresOnInMinutes)) return null;
+        var sasUri = GetServiceSasUriForContainer(container, expiresOnInMinutes);
+
+        return new SasTokenResponse
+        {
+            AccountName = container.AccountName,
+            ContainerName = containerName,
+            ContainerUri = container.Uri,
+            SASUri = sasUri,
+            SASToken = sasUri.Query,
+            SASExpireOnInMinutes = expiresOnInMinutes
+        };
+    }
 
     public async Task<string?> UploadFile(IFormFile? formFile, string containerName, string fileNamePrefix)
     {
@@ -168,6 +201,44 @@ public class AzureStorageService : IFileStorageService
 
             foreach (var p in prefixes)
                 await ListBlobsForPrefixRecursive(container, p, level + 1);
+        }
+    }
+
+    private Uri? GetServiceSasUriForContainer(BlobContainerClient containerClient,
+        int expiresOnInMinutes,
+        string? storedPolicyName = null)
+    {
+        // Check whether this BlobContainerClient object has been authorized with Shared Key.
+        if (containerClient.CanGenerateSasUri)
+        {
+            // Create a SAS token that's valid for one hour.
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            {
+                BlobContainerName = containerClient.Name,
+                Resource = "c"
+            };
+
+            if (storedPolicyName == null)
+            {
+                sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(expiresOnInMinutes);
+                sasBuilder.SetPermissions(BlobContainerSasPermissions.Create | BlobContainerSasPermissions.Write);
+            }
+            else
+            {
+                sasBuilder.Identifier = storedPolicyName;
+            }
+
+            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            Console.WriteLine($"SAS URI for blob container is: {sasUri}");
+            Console.WriteLine();
+
+            return sasUri;
+        }
+        else
+        {
+            Console.WriteLine(@"BlobContainerClient must be authorized with Shared Key 
+                          credentials to create a service SAS.");
+            return null;
         }
     }
 

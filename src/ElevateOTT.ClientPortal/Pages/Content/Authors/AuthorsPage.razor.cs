@@ -2,7 +2,7 @@
 
 namespace ElevateOTT.ClientPortal.Pages.Content.Authors;
 
-public partial class Authors : ComponentBase, IAsyncDisposable
+public partial class AuthorsPage : ComponentBase, IAsyncDisposable
 {
     #region Private Properties
     public int ActivePanelIndex { get; set; } = 0;

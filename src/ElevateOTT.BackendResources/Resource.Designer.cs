@@ -1143,6 +1143,15 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to obtain SAS token..
+        /// </summary>
+        public static string Unable_to_obtain_sas_token {
+            get {
+                return ResourceManager.GetString("Unable_to_obtain_sas_token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to update static user..
         /// </summary>
         public static string Unable_to_update_static_user {

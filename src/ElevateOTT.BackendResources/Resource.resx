@@ -477,6 +477,9 @@
   <data name="Unable_to_load_video" xml:space="preserve">
     <value>Unable to load video.</value>
   </data>
+  <data name="Unable_to_obtain_sas_token" xml:space="preserve">
+    <value>Unable to obtain SAS token.</value>
+  </data>
   <data name="Unable_to_update_static_user" xml:space="preserve">
     <value>Unable to update static user.</value>
   </data>

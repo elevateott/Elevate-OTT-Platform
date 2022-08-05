@@ -1,8 +1,12 @@
-﻿namespace ElevateOTT.Application.Common.Interfaces.Services.StorageServices;
+﻿using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
+
+namespace ElevateOTT.Application.Common.Interfaces.Services.StorageServices;
 
 public interface IFileStorageService
 {
     #region Public Methods
+
+    SasTokenResponse? GetSasTokenForVideoContainer();
 
     Task<string?> UploadFile(IFormFile formFile, string containerName, string fileNamePrefix);
 

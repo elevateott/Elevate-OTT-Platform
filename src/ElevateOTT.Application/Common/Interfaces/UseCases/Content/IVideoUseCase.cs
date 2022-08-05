@@ -7,6 +7,7 @@ using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.DeleteVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Queries.ExportVideos;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 
@@ -21,6 +22,7 @@ public interface IVideoUseCase
     Task<Envelope<string>> EditVideo(UpdateVideoCommand request);
     Task<Envelope<string>> DeleteVideo(DeleteVideoCommand request);
     Task<Envelope<ExportVideosResponse>> ExportAsPdf(ExportVideosQuery request);
-    
+    Envelope<SasTokenResponse> GetSasTokenFromAzure();
+
     #endregion Public Methods
 }

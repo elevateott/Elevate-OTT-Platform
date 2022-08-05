@@ -26,5 +26,13 @@ public interface IConfigReaderService
 
     BlobOptions GetBlobOptions();
 
+    ChargebeeOptions GetChargebeeOptions();
+
+    CryptoOptions GetCryptoOptions();
+
+    MuxOptions GetMuxOptions();
+
+    TinyPNGOptions GetTinyPNGOptions();
+
     #endregion Public Methods
 }

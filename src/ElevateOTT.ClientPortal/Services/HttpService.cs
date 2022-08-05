@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.ClientPortal.Services;
+﻿using System.Text.Json.Serialization;
+
+namespace ElevateOTT.ClientPortal.Services;
 
 public class HttpService : IHttpService
 {
@@ -23,7 +25,10 @@ public class HttpService : IHttpService
 
     private static JsonSerializerOptions DefaultJsonSerializerOptions => new JsonSerializerOptions()
     {
-        PropertyNameCaseInsensitive = true
+        PropertyNameCaseInsensitive = true,
+        Converters ={
+            new JsonStringEnumConverter()
+        }
     };
 
     #endregion Private Properties

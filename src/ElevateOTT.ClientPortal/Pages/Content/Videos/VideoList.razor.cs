@@ -161,20 +161,20 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
 
             var tableData = new TableData<VideoItem>();
 
-            //if (responseWrapper.Success)
-            //{
-            //    var successResult = responseWrapper.Response as SuccessResult<VideosResponse>;
-            //    if (successResult != null)
-            //        VideosResponse = successResult.Result;
+            if (responseWrapper.Success)
+            {
+                var successResult = responseWrapper.Response as SuccessResult<VideosResponse>;
+                if (successResult != null)
+                    VideosResponse = successResult.Result;
 
-            //    tableData = new TableData<VideoItem>()
-            //    { TotalItems = VideosResponse.Videos.TotalRows, Items = VideosResponse.Videos.Items };
-            //}
-            //else
-            //{
-            //    var exceptionResult = responseWrapper.Response as ExceptionResult;
-            //    ServerSideValidator.Validate(exceptionResult);
-            //}
+                tableData = new TableData<VideoItem>()
+                { TotalItems = VideosResponse.Videos.TotalRows, Items = VideosResponse.Videos.Items };
+            }
+            else
+            {
+                var exceptionResult = responseWrapper.Response as ExceptionResult;
+                ServerSideValidator.Validate(exceptionResult);
+            }
 
             return tableData;
         }

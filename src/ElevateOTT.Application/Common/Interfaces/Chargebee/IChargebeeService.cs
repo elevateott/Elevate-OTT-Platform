@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+
 // using Customer = ChargeBee.Models.Customer;
 
-namespace ElevateOTT.Infrastructure.Interfaces.Chargebee;
+namespace ElevateOTT.Application.Common.Interfaces.Chargebee;
 
 public interface IChargebeeService
 {

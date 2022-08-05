@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ElevateOTT.Infrastructure.Interfaces.Logging;
+using ElevateOTT.Application.Common.Interfaces.Logging;
 using NLog;
 
 namespace ElevateOTT.Infrastructure.Logging;

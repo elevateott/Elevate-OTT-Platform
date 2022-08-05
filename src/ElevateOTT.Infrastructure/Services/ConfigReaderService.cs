@@ -9,6 +9,10 @@ public class ConfigReaderService : IConfigReaderService
     private readonly SmtpOption _smtpOptionSnapshot;
     private readonly ClientAppOptions _clientAppOptionsSnapshot;
     private readonly BlobOptions _blobOptionsSnapshot;
+    private readonly ChargebeeOptions _chargebeeOptionsSnapshot;
+    private readonly MuxOptions _muxOptionsSnapshot;
+    private readonly CryptoOptions _cryptoOptionsSnapshot;
+    private readonly TinyPNGOptions _tinyPngOptionsSnapshot;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     #endregion Private Fields
@@ -20,6 +24,12 @@ public class ConfigReaderService : IConfigReaderService
                                IOptionsSnapshot<ClientAppOptions> clientAppOptionsSnapshot,
                                IOptionsSnapshot<SmtpOption> smtpOptionSnapshot,
                                IOptionsSnapshot<BlobOptions> blobOptionsSnapshot,
+                               IOptionsSnapshot<ChargebeeOptions> chargebeeOptionsSnapshot,
+                               IOptionsSnapshot<MuxOptions> muxOptionsSnapshot,
+                               IOptionsSnapshot<CryptoOptions> cryptoOptionsSnapshot,
+                               IOptionsSnapshot<TinyPNGOptions> tinyPngOptionsSnapshot,
+
+
                                IHttpContextAccessor httpContextAccessor)
     {
         _appOptionsSnapshot = appOptionsSnapshot.Value;
@@ -27,6 +37,10 @@ public class ConfigReaderService : IConfigReaderService
         _clientAppOptionsSnapshot = clientAppOptionsSnapshot.Value;
         _smtpOptionSnapshot = smtpOptionSnapshot.Value;
         _blobOptionsSnapshot = blobOptionsSnapshot.Value;
+        _chargebeeOptionsSnapshot = chargebeeOptionsSnapshot.Value;
+        _muxOptionsSnapshot = muxOptionsSnapshot.Value;
+        _cryptoOptionsSnapshot = cryptoOptionsSnapshot.Value;
+        _tinyPngOptionsSnapshot = tinyPngOptionsSnapshot.Value;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -87,6 +101,26 @@ public class ConfigReaderService : IConfigReaderService
     public BlobOptions GetBlobOptions()
     {
         return _blobOptionsSnapshot;
+    }
+
+    public ChargebeeOptions GetChargebeeOptions()
+    {
+        return _chargebeeOptionsSnapshot;
+    }
+
+    public CryptoOptions GetCryptoOptions()
+    {
+        return _cryptoOptionsSnapshot;
+    }
+
+    public MuxOptions GetMuxOptions()
+    {
+        return _muxOptionsSnapshot;
+    }
+
+    public TinyPNGOptions GetTinyPNGOptions()
+    {
+        return _tinyPngOptionsSnapshot;
     }
 
     #endregion Public Methods

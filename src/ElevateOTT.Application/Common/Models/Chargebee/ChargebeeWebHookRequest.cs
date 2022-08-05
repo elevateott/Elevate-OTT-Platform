@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using ElevateOTT.Infrastructure.Enums;
+﻿using System.Text.Json.Serialization;
 using BillingPeriodUnit = ElevateOTT.Infrastructure.Enums.BillingPeriodUnit;
 using ItemStatus = ElevateOTT.Infrastructure.Enums.ItemStatus;
 using ProductFamilyStatus = ElevateOTT.Infrastructure.Enums.ProductFamilyStatus;
 using SubscriptionStatus = ElevateOTT.Infrastructure.Enums.SubscriptionStatus;
 
-namespace ElevateOTT.Infrastructure.Models.Chargebee;
+namespace ElevateOTT.Application.Common.Models.Chargebee;
 
 public class ChargebeeWebHookRequest
 {

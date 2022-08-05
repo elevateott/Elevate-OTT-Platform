@@ -1,4 +1,4 @@
-﻿namespace ElevateOTT.Infrastructure.Interfaces.Chargebee;
+﻿namespace ElevateOTT.Application.Common.Interfaces.Chargebee;
 public interface IChargebeeWebhookService
 {
     bool VerifyRequestFromChargebee(string authHeader);

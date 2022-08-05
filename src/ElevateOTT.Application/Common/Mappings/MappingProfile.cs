@@ -36,12 +36,10 @@ public class MappingProfile : Profile
         CreateMap<VideoModel, CreateVideoCommand>().ReverseMap();
         CreateMap<VideoModel, UpdateVideoCommand>().ReverseMap();
 
-        //CreateMap<StorageTypes, StorageTypes>()
-            //.ConvertUsingEnumMapping(opt => opt
-            //    // optional: .MapByValue() or MapByName(), without configuration MapByValue is used
-            //    .MapValue(Source., Destination.Default)
-            //)
-            //.ReverseMap();
+
+        // TODO
+        // ignore enum types
+        // manually cast to equivalent int prop
     }
 
     #endregion Public Constructors

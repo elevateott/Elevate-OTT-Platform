@@ -1575,6 +1575,9 @@
   <data name="Unable_to_load_video" xml:space="preserve">
     <value>Unable to load video.</value>
   </data>
+  <data name="Unable_to_obtain_sas_token" xml:space="preserve">
+    <value>Unable to obtain SAS token.</value>
+  </data>
   <data name="Unable_to_upload_an_empty_file" xml:space="preserve">
     <value>Unable to upload an empty file.</value>
   </data>

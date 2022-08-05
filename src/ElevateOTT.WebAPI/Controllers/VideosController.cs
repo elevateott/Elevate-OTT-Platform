@@ -1,20 +1,20 @@
 ﻿using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.DeleteVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 
 namespace ElevateOTT.WebAPI.Controllers;
 
+//[BpAuthorize]
 [Route("api/videos")]
 [ApiController]
-[BpAuthorize]
 public class VideosController : ApiController
 {
     #region Public Methods
 
     [HttpGet("video/{id:guid}", Name = "VideoById")]
-    [AllowAnonymous]
     public async Task<IActionResult> GetVideo(Guid id)
     {
         var httpRequest = Request;
@@ -22,9 +22,15 @@ public class VideosController : ApiController
         return TryGetResult(response);
     }
 
+    [HttpGet("azure-blob-sas-token")]
+    public async Task<IActionResult> GetSasUrl()
+    {
+        var response = await Mediator.Send(new GetSasTokenQuery());
+        return TryGetResult(response);
+    }
+
     //[AutoWrapIgnore]
     [HttpPost("videos")]
-    [AllowAnonymous]
     public async Task<IActionResult> GetVideos([FromBody] GetVideosQuery request)
     {
         var httpRequest = Request;
@@ -42,7 +48,6 @@ public class VideosController : ApiController
         return TryGetResult(response);
     }
 
-    [AllowAnonymous]
     [HttpPost("new-video")]
     public async Task<IActionResult> CreateVideo([FromBody] CreateVideoCommand request)
     {
@@ -51,7 +56,6 @@ public class VideosController : ApiController
     }
 
 
-    [AllowAnonymous]
     [HttpPost("multipart-form-update")]
     public async Task<IActionResult> UpdateVideoByMultipartForm([FromForm] UpdateVideoCommand request)
     {

@@ -14,9 +14,9 @@ public class VideoItem : AuditableDto
     public string? ShortDescription { get; set; }
     public string? FullDescription { get; set; }
     public string? PlaybackId { get; set; }
-    //public AssetCreationStatus StreamCreationStatus { get; set; }
-    //public PublicationStatus PublicationStatus { get; set; }
-    //public ContentAccess ContentAccess { get; set; }
+    public AssetCreationStatus StreamCreationStatus { get; set; }
+    public PublicationStatus PublicationStatus { get; set; }
+    public ContentAccess ContentAccess { get; set; }
     public bool IsTestAsset { get; set; }
     public bool IsHostedOnMux { get; set; }
     public string? BlobName { get; set; }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
-namespace ElevateOTT.Infrastructure.Models.Mux;
+namespace ElevateOTT.Application.Common.Models.Mux;
 
 public class MuxWebhookRequest
 {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace ElevateOTT.Infrastructure.Enums;
+namespace ElevateOTT.Domain.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
 public enum SubscriptionStatus

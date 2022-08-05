@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Application.Common.Interfaces.Services.StorageServices;
 using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
 using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.DeleteVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Queries.ExportVideos;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 using ElevateOTT.Domain.Entities.Content;
@@ -26,6 +28,8 @@ public class VideoUseCase : IVideoUseCase
     private readonly ITenantResolver _tenantResolver;
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
+    private readonly IFileStorageService _fileStorageService;
+
 
     #endregion Private Fields
 
@@ -38,7 +42,8 @@ public class VideoUseCase : IVideoUseCase
                             IRepositoryManager repositoryManager,
                             ITenantResolver tenantResolver,
                             IStorageProvider storageProvider,
-                            IConfigReaderService configReaderService)
+                            IConfigReaderService configReaderService, 
+                            IFileStorageService fileStorageService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -48,6 +53,7 @@ public class VideoUseCase : IVideoUseCase
         _tenantResolver = tenantResolver;
         _storageProvider = storageProvider;
         _configReaderService = configReaderService;
+        _fileStorageService = fileStorageService;
     }
 
     #endregion Public Constructors
@@ -187,10 +193,18 @@ public class VideoUseCase : IVideoUseCase
         throw new NotImplementedException();
     }
 
+    public Envelope<SasTokenResponse> GetSasTokenFromAzure()
+    {
+        var response = _fileStorageService.GetSasTokenForVideoContainer();
+
+        return response is null ? Envelope<SasTokenResponse>.Result.NotFound(Resource.Unable_to_obtain_sas_token) 
+            : Envelope<SasTokenResponse>.Result.Ok(response);
+    }
+
     #endregion Public Methods
 
     #region Private Methods
-    public async Task UpdateVideoWithImageAsync(VideoModel video, IFormFile? image, string fileNamePrefix)
+    private async Task UpdateVideoWithImageAsync(VideoModel video, IFormFile? image, string fileNamePrefix)
     {
         var storageService = _storageProvider.InvokeInstanceForAzureStorageAsync();
 
@@ -212,7 +226,7 @@ public class VideoUseCase : IVideoUseCase
         //}
     }
 
-    public async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
+    private async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
     {
         var blobOptions = _configReaderService.GetBlobOptions();
 

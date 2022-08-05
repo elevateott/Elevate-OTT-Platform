@@ -1,4 +1,4 @@
-﻿namespace ElevateOTT.Infrastructure.Interfaces.Mux;
+﻿namespace ElevateOTT.Application.Common.Interfaces.Mux;
 
 public interface IMuxDirectUploadService
 {

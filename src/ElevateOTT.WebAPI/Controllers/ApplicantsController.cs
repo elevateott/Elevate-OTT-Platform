@@ -1,8 +1,8 @@
 ﻿namespace ElevateOTT.WebAPI.Controllers;
 
+//[BpAuthorize]
 [Route("api/[controller]")]
 [ApiController]
-[BpAuthorize]
 public class ApplicantsController : ApiController
 {
     #region Public Methods

@@ -70,7 +70,7 @@ public class HttpInterceptorService : IDisposable
 
         e.Request.Headers.Add("X-Tenant", tenantName);
 
-        Console.WriteLine(new System.Diagnostics.StackTrace());
+        // Console.WriteLine(new System.Diagnostics.StackTrace());
 
 
         Console.WriteLine($"e.Request.Headers: {e.Request.Headers}");
