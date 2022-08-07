@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using ElevateOTT.Application.Common.Interfaces.Logging;
+﻿using AutoMapper;
 using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Common.Models.Mux;
 using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Domain.Exceptions;
-using Microsoft.AspNetCore.SignalR;
 
 namespace ElevateOTT.Infrastructure.Services.Mux;
 
@@ -21,28 +14,25 @@ public class MuxWebhookService : IMuxWebhookService
     // TODO signalR to notify portal of updates from Mux
 
     private readonly IRepositoryManager _repository;
-    private readonly ILoggerManager _logger;
+    private readonly ILogger<MuxWebhookService> _logger;
     private readonly IMapper _mapper;
-    private readonly IConfiguration _configuration;
-    private readonly IHubContext<VideoHub> _videoHubContext;
-    private readonly IHubContext<ChatHub> _chatHubContext;
-    private readonly IServiceManager _service;
+    private readonly IConfigReaderService _configReaderService;
+    //private readonly IHubContext<VideoHub> _videoHubContext;
+    private readonly IVideoHubNotificationService _videoHubNotificationService;
+    private readonly ISignalRContextProvider _signalRContextProvider;
 
     public MuxWebhookService(IRepositoryManager repository,
-        ILoggerManager logger,
+        ILogger<MuxWebhookService> logger,
         IMapper mapper,
-        IConfiguration configuration,
-        IHubContext<VideoHub> videoHubContext,
-        IHubContext<ChatHub> chatHubContext,
-        IServiceManager service)
+        IConfiguration configuration, 
+        IVideoHubNotificationService videoHubNotificationService, ISignalRContextProvider signalRContextProvider, IConfigReaderService configReaderService)
     {
         _repository = repository;
         _logger = logger;
         _mapper = mapper;
-        _configuration = configuration;
-        _videoHubContext = videoHubContext;
-        _chatHubContext = chatHubContext;
-        _service = service;
+        _videoHubNotificationService = videoHubNotificationService;
+        _signalRContextProvider = signalRContextProvider;
+        _configReaderService = configReaderService;
     }
 
     public async Task<bool> HandleWebHookEvent(MuxWebhookRequest? hookRequest)
@@ -51,7 +41,7 @@ public class MuxWebhookService : IMuxWebhookService
 
         if (hookRequest == null)
         {
-            _logger.LogInfo("HandleWebHookEvent invoked but hookRequest is null.");
+            _logger.LogInformation("HandleWebHookEvent invoked but hookRequest is null.");
             return eventHandled;
         }
 
@@ -172,7 +162,7 @@ public class MuxWebhookService : IMuxWebhookService
                 eventHandled = await HandleVideoLiveStreamSimulcastTargetDeleted(hookRequest);
                 break;
             default:
-                _logger.LogInfo("HandleWebHookEvent invoked but to type found.");
+                _logger.LogInformation("HandleWebHookEvent invoked but to type found.");
                 return eventHandled;
         }
 
@@ -192,7 +182,9 @@ public class MuxWebhookService : IMuxWebhookService
     {
         // ref: https://docs.mux.com/guides/video/verify-webhook-signatures
 
-        string secret = _configuration["Mux:SigningSecret"];
+        var muxOptions = _configReaderService.GetMuxOptions();
+
+        string secret = muxOptions.SigningSecret;
         byte[] secretBytes = Encoding.ASCII.GetBytes(secret);
         string payload = $"{timestamp}.{requestBody}";
         byte[] payloadBytes = Encoding.ASCII.GetBytes(payload);
@@ -212,98 +204,47 @@ public class MuxWebhookService : IMuxWebhookService
         return signature.Equals(payloadHash) && isWithinTolerance;
     }
 
+    public Task TestSignalR()
+    {
+        throw new NotImplementedException();
+    }
+
     #region direct upload handlers
     private async Task<bool> HandleVideoUploadCreated(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data?.NewAssetSettings == null) return false;
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
-        // find by passthrough id;
-        var directUpload = await _repository.DirectUpload
-            .GetDirectUploadByPassthroughAsync(hookRequest.Data.NewAssetSettings.Passthrough, true);
-
-        if (directUpload == null) return false;
-
-        // update status
-        if (directUpload.DirectUploadStatus == DirectUploadStatus.None)
-        {
-            directUpload.DirectUploadStatus = DirectUploadStatus.Waiting;
-            directUpload.Url = hookRequest.Data.Url;
-            directUpload.MuxDirectUploadId = hookRequest.Data.Id;
-            await _repository.SaveAsync();
-        }
-
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
-
-        return true;
+        return await Task.FromResult(true);
     }
     private async Task<bool> HandleVideoUploadAssetCreated(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data?.NewAssetSettings == null) return false;
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
-        var directUpload = await _repository.DirectUpload
-            .GetDirectUploadByPassthroughAsync(hookRequest.Data.NewAssetSettings.Passthrough, true);
-
-        if (directUpload == null) throw new Exception("No direct upload record found.");
-
-        if (directUpload.DirectUploadStatus != DirectUploadStatus.UploadAssetCreated)
-        {
-            directUpload.DirectUploadStatus = DirectUploadStatus.UploadAssetCreated;
-            await _repository.SaveAsync();
-        }
-
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
-
-        return true;
+        return await Task.FromResult(true);
     }
     private async Task<bool> HandleVideoUploadCancelled(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data?.NewAssetSettings == null) return false;
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
-        var directUpload = await _repository.DirectUpload
-            .GetDirectUploadByPassthroughAsync(hookRequest.Data.NewAssetSettings.Passthrough, true);
-
-        if (directUpload == null) return false;
-
-        if (directUpload.DirectUploadStatus != DirectUploadStatus.Cancelled)
-        {
-            directUpload.DirectUploadStatus = DirectUploadStatus.Cancelled;
-            await _repository.SaveAsync();
-        }
-
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
-
-        return true;
+        return await Task.FromResult(true);
     }
     private async Task<bool> HandleVideoUploadErrored(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data?.NewAssetSettings == null) return false;
-
-        var directUpload = await _repository.DirectUpload
-            .GetDirectUploadByPassthroughAsync(hookRequest.Data.NewAssetSettings.Passthrough, true);
-
-        if (directUpload == null) return false;
-
-        if (directUpload.DirectUploadStatus != DirectUploadStatus.Errored)
-        {
-            directUpload.DirectUploadStatus = DirectUploadStatus.Errored;
-            await _repository.SaveAsync();
-        }
-
         _logger.LogError($"Handle Mux Web Hook for : {hookRequest.Type}");
 
-        return true;
+        return await Task.FromResult(true);
     }
     #endregion
 
 
 
     #region SignalR Tests
-    public async Task TestSignalR()
-    {
-        // TODO use User instead of keeping track of connection ids
+    //public async Task TestSignalR()
+    //{
+    //    // TODO use User instead of keeping track of connection ids
 
-        await _chatHubContext.Clients.All.SendAsync("ReceiveMessage", "superdave", "Hi from MuxWebhookService!");
-    }
+    //    await _chatHubContext.Clients.All.SendAsync("ReceiveMessage", "superdave", "Hi from MuxWebhookService!");
+    //}
 
     #endregion
 
@@ -312,7 +253,7 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data?.Passthrough == null) return false;
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         // TODO update video asset
         var videoToUpdate =
@@ -339,7 +280,7 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data?.Passthrough == null) return false;
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         var videoToUpdate =
             await _repository.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
@@ -354,7 +295,9 @@ public class MuxWebhookService : IMuxWebhookService
         // ex: Clients.User
 
         // Update client with new status via SignalR
-        await _videoHubContext.Clients.All.SendAsync(VideoHub.ReceiveUpdateMethod, videoToUpdate.TenantId, videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
+        // var userNameIdentifier = _signalRContextProvider.GetUserNameIdentifier(Context);
+
+        //await _videoHubContext.Clients.All.SendAsync(VideoHub.ReceiveUpdateMethod, videoToUpdate.TenantId, videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
 
         return true;
 
@@ -362,7 +305,7 @@ public class MuxWebhookService : IMuxWebhookService
     private async Task<bool> HandleVideoAssetLiveStreamCompleted(MuxWebhookRequest? hookRequest)
     {
         if (hookRequest?.Data == null) return false;
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -377,7 +320,7 @@ public class MuxWebhookService : IMuxWebhookService
         video.StreamCreationStatus = AssetCreationStatus.Deleted;
 
         await _repository.SaveAsync();
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -394,7 +337,7 @@ public class MuxWebhookService : IMuxWebhookService
         videoToUpdate.Passthrough = hookRequest.Data.Passthrough;
 
         await _repository.SaveAsync();
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -411,12 +354,12 @@ public class MuxWebhookService : IMuxWebhookService
 
         await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
-        _logger.LogInfo($"Error type: {hookRequest.Data.Errors.Type}");
-        _logger.LogInfo($"Error messages:");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Error type: {hookRequest.Data.Errors.Type}");
+        _logger.LogInformation($"Error messages:");
         foreach (var message in hookRequest.Data.Errors.Messages)
         {
-            _logger.LogInfo(message);
+            _logger.LogInformation(message);
         }
 
         return true;
@@ -426,28 +369,28 @@ public class MuxWebhookService : IMuxWebhookService
     #region video asset track handlers
     private async Task<bool> HandleVideoAssetTrackDeleted(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetTrackErrored(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetTrackReady(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetTrackCreated(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -457,7 +400,7 @@ public class MuxWebhookService : IMuxWebhookService
     private async Task<bool> HandleVideoLiveStreamCreated(MuxWebhookRequest? hookRequest)
     {
         // Saved in db after creation in service
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -466,15 +409,15 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data == null) return false;
 
-        var directUpload = await _repository.LiveStream
-            .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
+        //var directUpload = await _repository.LiveStream
+        //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
-        if (directUpload == null) return false;
+        //if (directUpload == null) return false;
 
-        directUpload.Status = LiveStreamStatus.Active;
-        await _repository.SaveAsync();
+        //directUpload.Status = LiveStreamStatus.Active;
+        //await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -483,15 +426,15 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data == null) return false;
 
-        var directUpload = await _repository.LiveStream
-            .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
+        //var directUpload = await _repository.LiveStream
+        //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
-        if (directUpload == null) return false;
+        //if (directUpload == null) return false;
 
-        directUpload.Status = LiveStreamStatus.Idle;
-        await _repository.SaveAsync();
+        //directUpload.Status = LiveStreamStatus.Idle;
+        //await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -499,15 +442,15 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data == null) return false;
 
-        var directUpload = await _repository.LiveStream
-            .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
+        //var directUpload = await _repository.LiveStream
+        //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
-        if (directUpload == null) return false;
+        //if (directUpload == null) return false;
 
-        directUpload.Status = LiveStreamStatus.Idle;
-        await _repository.SaveAsync();
+        //directUpload.Status = LiveStreamStatus.Idle;
+        //await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -516,15 +459,15 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data == null) return false;
 
-        var directUpload = await _repository.LiveStream
-            .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
+        //var directUpload = await _repository.LiveStream
+        //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
-        if (directUpload == null) return false;
+        //if (directUpload == null) return false;
 
-        directUpload.Status = LiveStreamStatus.Disabled;
-        await _repository.SaveAsync();
+        //directUpload.Status = LiveStreamStatus.Disabled;
+        //await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -533,42 +476,42 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data == null) return false;
 
-        var directUpload = await _repository.LiveStream
-            .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
+        //var directUpload = await _repository.LiveStream
+        //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
-        if (directUpload == null) return false;
+        //if (directUpload == null) return false;
 
-        if (HasLiveStreamDataChanged(directUpload, hookRequest))
-        {
-            directUpload.StreamKey = hookRequest.Data.StreamKey;
-            directUpload.LatencyMode = MapToLatencyMode(hookRequest.Data.LatencyMode);
-            directUpload.ReconnectWindow = hookRequest.Data.ReconnectWindow;
-            directUpload.MaxContinuousDuration = hookRequest.Data.MaxContinuousDuration;
-            await _repository.SaveAsync();
-        }
+        //if (HasLiveStreamDataChanged(directUpload, hookRequest))
+        //{
+        //    directUpload.StreamKey = hookRequest.Data.StreamKey;
+        //    directUpload.LatencyMode = MapToLatencyMode(hookRequest.Data.LatencyMode);
+        //    directUpload.ReconnectWindow = hookRequest.Data.ReconnectWindow;
+        //    directUpload.MaxContinuousDuration = hookRequest.Data.MaxContinuousDuration;
+        //    await _repository.SaveAsync();
+        //}
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamDisconnected(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamRecording(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamConnected(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -577,18 +520,18 @@ public class MuxWebhookService : IMuxWebhookService
     {
         if (hookRequest?.Data == null) return false;
 
-        var directUpload = await _repository.LiveStream
-            .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
+        //var directUpload = await _repository.LiveStream
+        //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
-        if (directUpload == null) throw new LiveStreamNotFoundException();
+        //if (directUpload == null) throw new LiveStreamNotFoundException();
 
-        if (directUpload.TenantId.HasValue)
-        {
-            await _service.LiveStreamService.DeleteLiveStreamForTenantAsync(directUpload.TenantId.Value,
-                directUpload.Id, trackChanges: false);
-        }
+        //if (directUpload.TenantId.HasValue)
+        //{
+        //    await _service.LiveStreamService.DeleteLiveStreamForTenantAsync(directUpload.TenantId.Value,
+        //        directUpload.Id, trackChanges: false);
+        //}
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -597,42 +540,42 @@ public class MuxWebhookService : IMuxWebhookService
     #region live stream simulcast handlers
     private async Task<bool> HandleVideoLiveStreamSimulcastTargetDeleted(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamSimulcastTargetErrored(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamSimulcastTargetBroadcasting(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamSimulcastTargetStarting(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamSimulcastTargetIdle(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoLiveStreamSimulcastTargetCreated(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -642,28 +585,28 @@ public class MuxWebhookService : IMuxWebhookService
     #region video asset master handlers
     private async Task<bool> HandleVideoAssetMasterErrored(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetMasterDeleted(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetMasterPreparing(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetMasterReady(MuxWebhookRequest? hookRequest)
     {
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -683,7 +626,7 @@ public class MuxWebhookService : IMuxWebhookService
             await _repository.SaveAsync();
         }
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -694,8 +637,10 @@ public class MuxWebhookService : IMuxWebhookService
 
         if (hookRequest.Data.PlaybackIds != null)
         {
+            var muxOptions = _configReaderService.GetMuxOptions();
+
             string playbackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
-            string baseStreamUrl = _configuration["Mux:BaseStreamUrl"];
+            string baseStreamUrl = muxOptions.BaseStreamUrl;
 
             var video = await GetVideoByAssetId(hookRequest.Data.Id);
             if (video == null) throw new VideoNotFoundException();
@@ -713,7 +658,7 @@ public class MuxWebhookService : IMuxWebhookService
         }
 
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -728,7 +673,7 @@ public class MuxWebhookService : IMuxWebhookService
         video.StreamCreationStatus = AssetCreationStatus.Errored;
         await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -743,7 +688,7 @@ public class MuxWebhookService : IMuxWebhookService
         video.StreamCreationStatus = AssetCreationStatus.Deleted;
         await _repository.SaveAsync();
 
-        _logger.LogInfo($"Handle Mux Web Hook for : {hookRequest.Type}");
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
@@ -752,15 +697,13 @@ public class MuxWebhookService : IMuxWebhookService
     #region private methods
     private async Task CreateNewVideoAsset(MuxWebhookRequest hookRequest)
     {
-        var directUpload = await _repository.DirectUpload
-            .GetDirectUploadByPassthroughAsync(hookRequest.Data.Passthrough, false);
 
-        var tenantId = directUpload?.TenantId;
-        if (tenantId == null) return;
+        
+        //if (tenantId == null) return;
 
         var videoCreation = new VideoModel
         {
-            TenantId = tenantId,
+            //TenantId = tenantId,
             AssetId = hookRequest.Data.Id,
             StreamCreationStatus = AssetCreationStatus.Ready,
             IsHostedOnMux = true,
@@ -772,15 +715,17 @@ public class MuxWebhookService : IMuxWebhookService
 
         if (hookRequest.Data.PlaybackIds != null)
         {
+            var muxOptions = _configReaderService.GetMuxOptions();
+
             string playbackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
-            string baseStreamUrl = _configuration["Mux:BaseStreamUrl"];
-            videoCreation.VideoImages = GetVideoImageUrls(playbackId, baseStreamUrl);
+            string baseStreamUrl = muxOptions.BaseStreamUrl;
+            // videoCreation.VideoImages = GetVideoImageUrls(playbackId, baseStreamUrl);
             videoCreation.StreamUrl = $"{baseStreamUrl}/{playbackId}.m3u8";
             videoCreation.PlaybackId = playbackId;
         }
 
-        _repository.Video.CreateVideoForTenant(tenantId, videoCreation);
-        await _repository.SaveAsync();
+        //_repository.Video.CreateVideoForTenant(tenantId, videoCreation);
+        //await _repository.SaveAsync();
     }
 
     private async Task<VideoModel?> GetVideoByAssetId(string assetId)

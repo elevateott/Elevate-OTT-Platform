@@ -134,7 +134,7 @@ public partial class EditAuthor : ComponentBase
 
         Console.WriteLine("pre update call");
 
-        var httpResponse = await AuthorsClient.UpdateAuthorFormData(userFormData);
+        var httpResponse = await AuthorsClient.UpdateAuthor(userFormData);
 
         Console.WriteLine("post update call");
 

@@ -9,11 +9,12 @@
 *.user
 *.userosscache
 *.sln.docstates
-src/BinaryPlate.WebAPI/wwwroot/users/*
-src/BinaryPlate.WebAPI/wwwroot/RequestedReports/*
-src/BinaryPlate.BlazorPlate/wwwroot/images/*
-src/BinaryPlate.BlazorPlate/wwwroot/secret/*
-src/BinaryPlate.BlazorPlate/wwwroot/users/*
+src/ElevateOTT.WebAPI/wwwroot/users/*
+src/ElevateOTT.WebAPI/wwwroot/RequestedReports/*
+src/ElevateOTT.ClientPortal/wwwroot/images/*
+src/ElevateOTT.ClientPortal/wwwroot/secret/*
+src/ElevateOTT.ClientPortal/wwwroot/users/*
+src/ElevateOTT.Infrastructure/Secrets/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

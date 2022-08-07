@@ -73,6 +73,11 @@ builder.Services.AddScoped<IHubNotificationService, HubNotificationService>();
 
 builder.Services.AddScoped<ISignalRContextProvider, SignalRContextProvider>();
 
+builder.Services.AddScoped<IVideoHubNotificationService, VideoHubNotificationService>();
+
+builder.Services.AddScoped<ILiveStreamHubNotificationService, LiveStreamHubNotificationService>();
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -145,6 +150,8 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     endpoints.MapHub<DashboardHub>("Hubs/DashboardHub");
     endpoints.MapHub<DataExportHub>("Hubs/DataExportHub");
+    endpoints.MapHub<VideoHub>("Hubs/VideoHub");
+    endpoints.MapHub<LiveStreamHub>("Hubs/LiveStreamHub");
 });
 
 app.Run();

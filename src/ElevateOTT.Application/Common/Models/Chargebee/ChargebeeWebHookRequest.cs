@@ -1,8 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using BillingPeriodUnit = ElevateOTT.Infrastructure.Enums.BillingPeriodUnit;
-using ItemStatus = ElevateOTT.Infrastructure.Enums.ItemStatus;
-using ProductFamilyStatus = ElevateOTT.Infrastructure.Enums.ProductFamilyStatus;
-using SubscriptionStatus = ElevateOTT.Infrastructure.Enums.SubscriptionStatus;
 
 namespace ElevateOTT.Application.Common.Models.Chargebee;
 

@@ -1,27 +1,21 @@
-﻿using static System.Net.WebRequestMethods;
-using System.Net.NetworkInformation;
-
-using ElevateOTT.Shared.DataTransferObjects.Videos;
-using ElevateOTT.Shared.Models ;
-using HttpRepository.Contracts;
-    
-using Syncfusion.Blazor.Inputs;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using ElevateOTT.ClientPortal.Features.Content.Videos.Commands.CreateVideo;
+using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetNewStorageName;
+using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetSasToken;
+using ElevateOTT.ClientPortal.Models.Videos;
 
 namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
 
-public partial class VideoUpload : IDisposable
+public partial class VideoUpload : ComponentBase, IDisposable
 {
-    // inject ISnackbar Snackbar;
+    [Inject] private ISnackbar? Snackbar { get; set; }
+    [Inject] private IVideosClient? VideosClient { get; set; }
 
+    private SasTokenResponse? SasTokenResponse { get; set; }
+    private NewStorageNameResponse? NewStorageNameResponse { get; set; }
+    private ServerSideValidator? ServerSideValidator { get; set; }
 
-    [Inject]
-    public IVideoHttpRepository? _videoRepository { get; set; }
-
-    [Inject]
-    public IUploadHttpRepository? _uploadRepository { get; set; }
-
-    private List<UploadFileModel>? _filesToUpload = new List<UploadFileModel>();
+    private List<UploadFileModel>? _filesToUpload = new ();
 
     private string _acceptedFileExtensions = ".mp4, .mkv, .mov, .avi, .wmv";
 
@@ -31,9 +25,9 @@ public partial class VideoUpload : IDisposable
 
     private bool _showMaxNumberReachedAlert = false;
 
-    private bool Clearing = false;
-    private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
-    private string DragClass = DefaultDragClass;
+    private bool _clearing = false;
+    private static string _defaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
+    private string _dragClass = _defaultDragClass;
 
     private CancellationTokenSource? _cts;
 
@@ -41,9 +35,6 @@ public partial class VideoUpload : IDisposable
 
     IReadOnlyList<IBrowserFile>? _files = null;
 
-    protected override async Task OnInitializedAsync()
-    {
-    }
 
     private void OnInputFileChanged(InputFileChangeEventArgs e)
     {
@@ -72,7 +63,6 @@ public partial class VideoUpload : IDisposable
             StateHasChanged();
         }
 
-        System.Console.WriteLine($"_currentTenantId.Value: {_currentTenantId.Value}");
 
         foreach (var file in _files)
         {
@@ -99,24 +89,38 @@ public partial class VideoUpload : IDisposable
 
     private async Task Clear()
     {
-        Clearing = true;
+        _clearing = true;
         _filesToUpload?.Clear();
         ClearDragClass();
         await Task.Delay(100);
-        Clearing = false;
+        _clearing = false;
         _showMaxNumberReachedAlert = false;
     }
     private async Task UploadAsync()
     {
-        if (_uploadRepository is null || _videoRepository is null || _currentTenantId is null) return;
+        if (VideosClient is null) return;
 
         // TODO diable upload field
 
-        // get SAS token
-        var sasResult = await _uploadRepository.GetSASTokenFromAzure(_currentTenantId.Value);
+        // get SAS token from Azure via API
+        var responseWrapper = await VideosClient.GetAzureBlobSasToken();
 
-        // TODO handle null result
-        if (sasResult is null) return;
+
+        //
+        // TODO refactor this
+        //
+        if (responseWrapper.Success)
+        {
+            var successResult = responseWrapper.Response as SuccessResult<SasTokenResponse>;
+            if (successResult != null)
+                SasTokenResponse = successResult.Result;
+        }
+        else
+        {
+            var exceptionResult = responseWrapper.Response as ExceptionResult;
+            ServerSideValidator?.Validate(exceptionResult);
+        }
+
 
         _uploadInProgress = true;
 
@@ -125,54 +129,71 @@ public partial class VideoUpload : IDisposable
         _cts = new CancellationTokenSource();
 
         // string blobBaseUrl = sasResult.ContainerUri.AbsolutePath;
-        string blobContainerUrl = sasResult.ContainerUri.AbsoluteUri;
-        string sasToken = sasResult.SASToken;
-
-        System.Console.WriteLine("_filesToUpload count: " + _filesToUpload?.Count());
-
-        System.Console.WriteLine($"blobContainerUrl: {blobContainerUrl}");
-        System.Console.WriteLine($"sasToken: {sasToken}");
-
-        if (_filesToUpload is not null)
+        if (SasTokenResponse != null)
         {
-            foreach (var file in _filesToUpload)
+            string blobContainerUrl = SasTokenResponse.ContainerUri.AbsoluteUri;
+            string sasToken = SasTokenResponse.SASToken;
+
+            System.Console.WriteLine("_filesToUpload count: " + _filesToUpload?.Count());
+
+            System.Console.WriteLine($"blobContainerUrl: {blobContainerUrl}");
+            System.Console.WriteLine($"sasToken: {sasToken}");
+
+            if (_filesToUpload is not null)
             {
-                // generates storage name on backend
-                string? generatedFileName = await _videoRepository.GenerateStorageName(_currentTenantId.Value);
-
-                // backup plan for storage name in case failure
-                if (generatedFileName is null) generatedFileName = $"{StripHyphensFromGuid(Guid.NewGuid())}";
-                file.StorageName = $"{generatedFileName}{file.Extension.ToLower()}";
-
-                string directUploadUrl = $"{blobContainerUrl}/{file.StorageName}{sasToken}";
-                System.Console.WriteLine($"url: {directUploadUrl}");
-
-                file.UploadProgress = UploadProgressModel.CreateUploadProgress();
-                file.UploadProgress.Maximum = 100;
-                file.UploadProgress.PropertyChanged += ProgressValueChangedHandler;
-
-                Uri sasUri = new Uri(directUploadUrl);
-                await _uploadRepository.DirectUploadToAzureStorageAsync(sasUri, file, _cts.Token);
-                //
-                //  save to db
-                //
-                var videoCreation = new VideoForCreationDto
+                foreach (var file in _filesToUpload)
                 {
-                    FileName = file.FileName,
-                    BlobName = file.StorageName,
-                    StreamCreationStatus = ElevateOTT.Shared.AssetCreationStatus.None
-                };
 
-                await _videoRepository.CreateVideoAsync(_currentTenantId.Value, videoCreation);
+                    // TODO refactor
+
+                    responseWrapper = await VideosClient.GetNewStorageName();
+
+                    if (responseWrapper.Success)
+                    {
+                        var successResult = responseWrapper.Response as SuccessResult<NewStorageNameResponse>;
+                        if (successResult != null)
+                            NewStorageNameResponse = successResult.Result;
+                    }
+                    else
+                    {
+                        var exceptionResult = responseWrapper.Response as ExceptionResult;
+                        ServerSideValidator?.Validate(exceptionResult);
+                        continue;
+                    }
+                    
+                    file.StorageName = $"{NewStorageNameResponse?.Name}{file.Extension.ToLower()}";
+
+                    string directUploadUrl = $"{blobContainerUrl}/{file.StorageName}{sasToken}";
+                    System.Console.WriteLine($"url: {directUploadUrl}");
+
+                    file.UploadProgress = UploadProgressModel.CreateUploadProgress();
+                    file.UploadProgress.Maximum = 100;
+                    file.UploadProgress.PropertyChanged += ProgressValueChangedHandler;
+
+                    Uri sasUri = new Uri(directUploadUrl);
+                    await VideosClient.DirectUploadToAzureStorageAsync(sasUri, file, _cts.Token);
+                    //
+                    //  save to db
+                    //
+                    var createVideoCommand = new CreateVideoCommand()
+                    {
+                        FileName = file.FileName,
+                        BlobName = file.StorageName,
+                        StreamCreationStatus = AssetCreationStatus.None
+                    };
+
+                    await VideosClient.CreateVideo(createVideoCommand);
+                }
             }
         }
+
         _filesToUpload?.Clear();
         _uploadInProgress = false;
 
         ShowSnackbar("Upload complete!", Severity.Success);
 
         // store video assets for streaming
-        await _videoRepository.StoreVideosForStreaming(_currentTenantId.Value);
+        //await _videoRepository.StoreVideosForStreaming(_currentTenantId.Value);
     }
 
     private void ShowSnackbar(string message, Severity level)
@@ -193,12 +214,12 @@ public partial class VideoUpload : IDisposable
 
     private void SetDragClass()
     {
-        DragClass = $"{DefaultDragClass} mud-border-primary";
+        _dragClass = $"{_defaultDragClass} mud-border-primary";
     }
 
     private void ClearDragClass()
     {
-        DragClass = DefaultDragClass;
+        _dragClass = _defaultDragClass;
     }
 
     private string StripHyphensFromGuid(Guid guid)
@@ -206,9 +227,10 @@ public partial class VideoUpload : IDisposable
         return guid.ToString().Replace("-", "");
     }
 
-    public override void Dispose()
+    public void Dispose()
     {
         _cts?.Dispose();
+        Snackbar?.Dispose();
     }
 }
 

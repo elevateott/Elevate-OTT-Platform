@@ -28,7 +28,7 @@ public class VideoUseCase : IVideoUseCase
     private readonly ITenantResolver _tenantResolver;
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
-    private readonly IFileStorageService _fileStorageService;
+    private readonly IBlobStorageService _fileStorageService;
 
 
     #endregion Private Fields
@@ -42,8 +42,8 @@ public class VideoUseCase : IVideoUseCase
                             IRepositoryManager repositoryManager,
                             ITenantResolver tenantResolver,
                             IStorageProvider storageProvider,
-                            IConfigReaderService configReaderService, 
-                            IFileStorageService fileStorageService)
+                            IConfigReaderService configReaderService,
+                            IBlobStorageService fileStorageService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;

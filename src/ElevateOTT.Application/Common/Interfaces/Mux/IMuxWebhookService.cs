@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Common.Interfaces.Mux;
+﻿using ElevateOTT.Application.Common.Models.Mux;
+
+namespace ElevateOTT.Application.Common.Interfaces.Mux;
 
 public interface IMuxWebhookService
 {

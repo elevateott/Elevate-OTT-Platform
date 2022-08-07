@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ElevateOTT.Domain.Enums;
@@ -104,35 +106,56 @@ public enum LatencyMode
     Standard
 }
 
+[JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
 public enum SubscriptionStatus
 {
-    Future, // The subscription is scheduled to start at a future date.
-    InTrial, // The subscription is in trial.
-    Active, // The subscription is active and will be charged for automatically based on the items in it.
-    NotRenewing, // The subscription will be canceled at the end of the current term.
-    Paused, // The subscription is paused. The subscription will not renew while in this state.
-    Cancelled, // The subscription has been canceled and is no longer in service.
+    [EnumMember(Value = "future")] Future, // The subscription is scheduled to start at a future date.
+    [EnumMember(Value = "in_trial")] InTrial, // The subscription is in trial.
+    [EnumMember(Value = "active")] Active, // The subscription is active and will be charged for automatically based on the items in it.
+    [EnumMember(Value = "not_renewing")] NotRenewing, // The subscription will be canceled at the end of the current term.
+    [EnumMember(Value = "paused")] Paused, // The subscription is paused. The subscription will not renew while in this state.
+    [EnumMember(Value = "cancelled")] Cancelled, // The subscription has been canceled and is no longer in service.
 }
 
+[JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
 public enum ItemStatus
 {
-    Active,
-    Archived,
-    Deleted,
+    [EnumMember(Value = "active")] Active,
+    [EnumMember(Value = "archived")] Archived,
+    [EnumMember(Value = "deleted")] Deleted,
 }
 
+[JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
 public enum ProductFamilyStatus
 {
-    Active,
-    Deleted,
+    [EnumMember(Value = "active")] Active,
+    [EnumMember(Value = "deleted")] Deleted,
 }
 
+[JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
 public enum BillingPeriodUnit
 {
-    Day,
-    Week,
-    Month,
-    Year
+    [EnumMember(Value = "day")] Day,
+    [EnumMember(Value = "week")] Week,
+    [EnumMember(Value = "month")] Month,
+    [EnumMember(Value = "year")] Year
+}
+
+
+[JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
+public enum ItemType
+{
+    [EnumMember(Value = "plan")] Plan,
+    [EnumMember(Value = "addon")] AddOn,
+    [EnumMember(Value = "charge")] Charge,
+}
+
+[JsonConverter(typeof(JsonStringEnumConverterWithAttributeSupport))]
+public enum PlanStatus
+{
+    [EnumMember(Value = "active")] Active,
+    [EnumMember(Value = "archived")] Archived,
+    [EnumMember(Value = "deleted")] Deleted,
 }
 
 public enum ProductItemType

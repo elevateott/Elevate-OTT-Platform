@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Infrastructure.Services.StorageServices;
+﻿using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
+
+namespace ElevateOTT.Infrastructure.Services.StorageServices;
 
 public class OnPremiseStorageService : IFileStorageService
 {
@@ -20,6 +22,11 @@ public class OnPremiseStorageService : IFileStorageService
     #endregion Public Constructors
 
     #region Public Methods
+
+    public SasTokenResponse? GetSasTokenForVideoContainer()
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<string> UploadFile(IFormFile formFile, string containerName, string fileNamePrefix)
     {

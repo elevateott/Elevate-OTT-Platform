@@ -33,7 +33,7 @@
 	<ItemGroup>
 	  <Compile Remove="Common\Exceptions\IdentityException.cs" />
 	  <Compile Remove="Common\Exceptions\ValidationException.cs" />
-	  <Compile Remove="Common\Interfaces\Services\StorageServices\IBlobStorageService.cs" />
+	  <Compile Remove="Common\Interfaces\Logging\ILoggerManager.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -73,6 +73,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Common\Interfaces\Logging\" />
 	  <Folder Include="Common\Interfaces\Services\UtilityServices\" />
 	  <Folder Include="Features\Content\Categories\Commands\" />
 	  <Folder Include="Features\Content\Categories\Queries\" />

@@ -16,12 +16,10 @@ public class DataExportHub : Hub
     #region Public Constructors
 
     public DataExportHub(IBackgroundJobClient backgroundJob,
-                         IReportingService reportingService,
                          ISignalRContextProvider signalRContextProvider)
     {
         _signalRContextProvider = signalRContextProvider;
         _backgroundJob = backgroundJob;
-        _reportingService = reportingService;
     }
 
     #endregion Public Constructors

@@ -1,4 +1,7 @@
-﻿namespace ElevateOTT.Application.UseCases.Identity;
+﻿using ElevateOTT.Application.Features.Identity.Tenants.Queries;
+using Microsoft.EntityFrameworkCore;
+
+namespace ElevateOTT.Application.UseCases.Identity;
 
 public class TenantUseCase : ITenantUseCase
 {
@@ -41,7 +44,7 @@ public class TenantUseCase : ITenantUseCase
 
         var tenant = request.MapToEntity();
 
-        tenant.StorageFileNamePrefix = Guid.NewGuid().ToString();
+        tenant.StorageFileNamePrefix = Guid.NewGuid().ToString().Replace("-", "");
 
         await _dbContext.Tenants.AddAsync(tenant);
 
@@ -67,6 +70,25 @@ public class TenantUseCase : ITenantUseCase
         return result.IsError
             ? Envelope<CreateTenantResponse>.Result.ServerError(result.Message)
             : Envelope<CreateTenantResponse>.Result.Ok(payload);
+    }
+
+    public StorageNamePrefixResponse GetTenantStorageNamePrefix()
+    {
+        var tenantId = _tenantResolver.GetTenantId();
+
+        if (tenantId is null)  return new StorageNamePrefixResponse
+        {
+            TenantId = null,
+            StorageFileNamePrefix = null
+        };
+
+        var tenant = _dbContext.Tenants?.FirstOrDefault(t => t.Id.Equals(tenantId));
+
+        return new StorageNamePrefixResponse
+        {
+            TenantId = tenantId, 
+            StorageFileNamePrefix = tenant?.StorageFileNamePrefix
+        };
     }
 
     #endregion Public Methods

@@ -1,4 +1,5 @@
 ﻿namespace ElevateOTT.Application.Common.Interfaces.Logging;
+
 public interface ILoggerManager
 {
     void LogInfo(string message);

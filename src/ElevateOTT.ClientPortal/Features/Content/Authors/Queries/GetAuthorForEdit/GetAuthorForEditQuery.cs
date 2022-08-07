@@ -3,6 +3,8 @@
 public class GetAuthorForEditQuery
 {
     #region Public Properties
+
     public Guid Id { get; set; }
+
     #endregion Public Properties
 }

@@ -6,8 +6,6 @@ public interface IFileStorageService
 {
     #region Public Methods
 
-    SasTokenResponse? GetSasTokenForVideoContainer();
-
     Task<string?> UploadFile(IFormFile formFile, string containerName, string fileNamePrefix);
 
     Task<List<FileMetaData>> UploadMultipleFiles(IList<IFormFile> formFiles, string containerName, string fileNamePrefix, int defaultFileIndex = 0, string subContainerName = "attachments");

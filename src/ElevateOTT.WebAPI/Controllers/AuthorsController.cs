@@ -13,7 +13,7 @@ public class AuthorsController : ApiController
 {
     #region Public Methods
 
-    [HttpGet("author/{id:guid}", Name = "AuthorById")]
+    [HttpGet("{id:guid}", Name = "AuthorById")]
     [AllowAnonymous]
     public async Task<IActionResult> GetAuthor(Guid id)
     {
@@ -23,47 +23,46 @@ public class AuthorsController : ApiController
     }
 
     //[AutoWrapIgnore]
-    [HttpPost("authors")]
+    [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> GetAuthors([FromBody] GetAuthorsQuery request)
     {
         var httpRequest = Request;
         var response = await Mediator.Send(request);
-        var result =  TryGetResult(response);
 
-        return result;
+        return TryGetResult(response);
     }
 
-    [HttpPost("multipart-form-create")]
+    [HttpPost("add")]
     [RequestFormLimits(MultipartBodyLengthLimit = 20971520)] // 20MB
-    public async Task<IActionResult> CreateAuthorByMultipartForm([FromForm] CreateAuthorCommand request)
+    public async Task<IActionResult> CreateAuthor([FromForm] CreateAuthorCommand request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
 
-    [HttpPost("new-author")]
-    public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorCommand request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
+    //[HttpPost]
+    //public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorCommand request)
+    //{
+    //    var response = await Mediator.Send(request);
+    //    return TryGetResult(response);
+    //}
 
 
     [AllowAnonymous]
-    [HttpPost("multipart-form-update")]
-    public async Task<IActionResult> UpdateAuthorByMultipartForm([FromForm] UpdateAuthorCommand request)
+    [HttpPut]
+    public async Task<IActionResult> UpdateAuthor([FromForm] UpdateAuthorCommand request)
     {
         var response = await Mediator.Send(request);
         return TryGetResult(response);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorCommand request)
-    {
-        var response = await Mediator.Send(request);
-        return TryGetResult(response);
-    }
+    //[HttpPut]
+    //public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorCommand request)
+    //{
+    //    var response = await Mediator.Send(request);
+    //    return TryGetResult(response);
+    //}
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAuthor(Guid id)

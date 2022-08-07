@@ -11,10 +11,10 @@ public interface IAuthorsClient
 
     Task<HttpResponseWrapper<object>> GetAuthor(Guid id);
     Task<HttpResponseWrapper<object>> GetAuthors(GetAuthorsQuery request);
-    Task<HttpResponseWrapper<object>> CreateAuthorFormData(MultipartFormDataContent request);
-    Task<HttpResponseWrapper<object>> CreateAuthor(CreateAuthorCommand request);
-    Task<HttpResponseWrapper<object>> UpdateAuthorFormData(MultipartFormDataContent request);
-    Task<HttpResponseWrapper<object>> UpdateAuthor(UpdateAuthorCommand request);
+    Task<HttpResponseWrapper<object>> CreateAuthor(MultipartFormDataContent request);
+    //Task<HttpResponseWrapper<object>> CreateAuthor(CreateAuthorCommand request);
+    Task<HttpResponseWrapper<object>> UpdateAuthor(MultipartFormDataContent request);
+    //Task<HttpResponseWrapper<object>> UpdateAuthor(UpdateAuthorCommand request);
     Task<HttpResponseWrapper<object>> DeleteAuthor(Guid id);
 
     #endregion Public Methods

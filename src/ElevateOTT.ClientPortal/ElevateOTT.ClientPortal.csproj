@@ -30,7 +30,6 @@
 	  <Compile Remove="Pages\Content\Videos\VideoCreation.razor.cs" />
 	  <Compile Remove="Pages\Content\Videos\VideoDetails.razor.cs" />
 	  <Compile Remove="Pages\Content\Videos\VideoUpdate.razor.cs" />
-	  <Compile Remove="Pages\Content\Videos\VideoUpload.razor.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,6 +40,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
 		<PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
 		<PackageReference Include="Lorem.Universal.Net" Version="4.0.80" />
@@ -72,6 +72,7 @@
 	  <Folder Include="Features\Content\Extras\Queries\" />
 	  <Folder Include="Features\Content\LiveStreams\Commands\" />
 	  <Folder Include="Features\Content\LiveStreams\Queries\" />
+	  <Folder Include="Models\Authors\" />
 	  <Folder Include="Models\Reporting\" />
 	  <Folder Include="Pages\Content\Categories\" />
 	  <Folder Include="Pages\Content\Collections\" />

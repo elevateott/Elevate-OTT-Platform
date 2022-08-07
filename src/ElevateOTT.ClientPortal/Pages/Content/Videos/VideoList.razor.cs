@@ -5,11 +5,9 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
     public partial class VideoList : ComponentBase, IAsyncDisposable
     {
         #region Private Properties
-        public int ActivePanelIndex { get; set; } = 0;
         [Inject] private IAccessTokenProvider? AccessTokenProvider { get; set; }
         [Inject] private IApiUrlProvider? ApiUrlProvider { get; set; }
         [Inject] private IVideosClient? VideosClient { get; set; }
-        [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
         [Inject] private IDialogService? DialogService { get; set; }
         [Inject] private IJSRuntime? Js { get; set; }
         [Inject] private ILocalStorageService? LocalStorage { get; set; }
@@ -46,11 +44,8 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
         #region Protected Methods
         protected override async Task OnInitializedAsync()
         {
-            BreadcrumbService?.SetBreadcrumbItems(new List<BreadcrumbItem>
-        {
-            new(Resource.Home, "/"),
-            new(Resource.Videos, "#", true)
-        });
+            
+            // TODO connect to video hub
 
             var userIdentity = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity;
 
