@@ -1,4 +1,5 @@
 ﻿using ElevateOTT.Application.Features.Identity.Tenants.Queries;
+using ElevateOTT.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElevateOTT.Application.UseCases.Identity;
@@ -89,6 +90,18 @@ public class TenantUseCase : ITenantUseCase
             TenantId = tenantId, 
             StorageFileNamePrefix = tenant?.StorageFileNamePrefix
         };
+    }
+
+    public async Task AddTenantStorageNamePrefixIfNotExists()
+    {
+        var tenantId = _tenantResolver.GetTenantId();
+        var tenant = _dbContext.Tenants?.FirstOrDefault(t => t.Id.Equals(tenantId));
+        if (tenant == null) return;
+        if (string.IsNullOrWhiteSpace(tenant.StorageFileNamePrefix))
+        {
+            tenant.StorageFileNamePrefix = Guid.NewGuid().ToString().Replace("-", "");
+            await _dbContext.SaveChangesAsync();
+        }
     }
 
     #endregion Public Methods

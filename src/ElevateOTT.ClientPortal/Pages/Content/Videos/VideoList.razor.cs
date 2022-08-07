@@ -20,6 +20,9 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
         private ServerSideValidator? ServerSideValidator { get; set; }
         private GetVideosQuery GetVideosQuery { get; set; } = new();
         private HubConnection? HubConnection { get; set; }
+
+        //[Inject] public VideoHub? VideoHub { get; set; }
+
         private MudTable<VideoItem>? Table { get; set; }
         #endregion Private Properties
 
@@ -84,10 +87,31 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
                 }));
             }
         }
-        #endregion Protected Methods
+    #endregion Protected Methods
 
-        #region Private Methods
-        private void AddVideo()
+    #region Private Methods
+    private async Task ConnectToVideoHub()
+    {
+        //if (_currentTenantId == null || VideoHub == null) return;
+
+        //VideoHub.Connect(_currentTenantId.Value);
+        //if (VideoHub.HubConnection == null) return;
+        //VideoHub?.HubConnection?.On<Guid?, Guid?, AssetCreationStatus>("ReceiveUpdate", (tenantId, videoId, status) =>
+        //{
+        //    // TODO do stuff with return data
+
+        //    Console.WriteLine("video hub update received!");
+        //    Console.WriteLine($"tenantId id: {tenantId}");
+        //    Console.WriteLine($"video id: {videoId}");
+        //    Console.WriteLine($"status: {status}");
+
+        //    _updateReceived = true;
+        //    InvokeAsync(StateHasChanged);
+        //});
+        //await VideoHub.HubConnection.StartAsync();
+    }
+
+    private void AddVideo()
         {
             NavigationManager?.NavigateTo("poc/army/addVideo");
         }

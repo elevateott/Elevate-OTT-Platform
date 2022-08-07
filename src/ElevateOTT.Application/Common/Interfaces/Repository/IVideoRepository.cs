@@ -5,12 +5,12 @@ namespace ElevateOTT.Application.Common.Interfaces.Repository
 {
     public interface IVideoRepository
     {
-        Task<VideoModel?> GetVideoAsync(Guid tenantId, Guid authorId, bool trackChanges);
+        Task<VideoModel?> GetVideoAsync(Guid tenantId, Guid videoId, bool trackChanges);
         IQueryable<VideoModel>? GetVideos(Guid tenantId, GetVideosQuery request, bool trackChanges);
         Task<VideoModel?> FindVideoByConditionAsync(Expression<Func<VideoModel, bool>> expression, bool trackChanges);
-        void CreateVideoForTenant(Guid tenantId, VideoModel author);
+        void CreateVideoForTenant(Guid tenantId, VideoModel video);
         Task<IEnumerable<VideoModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);
-        void DeleteVideo(VideoModel author);
+        void DeleteVideo(VideoModel video);
         Task<bool> VideoExistsAsync(Expression<Func<VideoModel, bool>> expression);
     }
 }

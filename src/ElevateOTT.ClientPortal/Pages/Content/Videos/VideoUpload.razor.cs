@@ -126,6 +126,8 @@ public partial class VideoUpload : ComponentBase, IDisposable
 
         System.Console.WriteLine("_files count: " + _files?.Count());
 
+        Console.WriteLine($"SasTokenResponse : {SasTokenResponse}");
+
         _cts = new CancellationTokenSource();
 
         // string blobBaseUrl = sasResult.ContainerUri.AbsolutePath;
@@ -162,15 +164,22 @@ public partial class VideoUpload : ComponentBase, IDisposable
                     }
                     
                     file.StorageName = $"{NewStorageNameResponse?.Name}{file.Extension.ToLower()}";
-
                     string directUploadUrl = $"{blobContainerUrl}/{file.StorageName}{sasToken}";
+
                     System.Console.WriteLine($"url: {directUploadUrl}");
+                    Console.WriteLine($"NewStorageNameResponse : {NewStorageNameResponse}");
+
 
                     file.UploadProgress = UploadProgressModel.CreateUploadProgress();
                     file.UploadProgress.Maximum = 100;
                     file.UploadProgress.PropertyChanged += ProgressValueChangedHandler;
 
                     Uri sasUri = new Uri(directUploadUrl);
+
+                    Console.WriteLine($"sas uri: {sasUri}");
+
+
+
                     await VideosClient.DirectUploadToAzureStorageAsync(sasUri, file, _cts.Token);
                     //
                     //  save to db
@@ -191,9 +200,6 @@ public partial class VideoUpload : ComponentBase, IDisposable
         _uploadInProgress = false;
 
         ShowSnackbar("Upload complete!", Severity.Success);
-
-        // store video assets for streaming
-        //await _videoRepository.StoreVideosForStreaming(_currentTenantId.Value);
     }
 
     private void ShowSnackbar(string message, Severity level)

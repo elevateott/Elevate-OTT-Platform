@@ -53,6 +53,11 @@ public class VideosClient : IVideosClient
     //    return await _httpService.PostFormData<MultipartFormDataContent, CreateVideoResponse>($"{ControllerName}", request);
     //}
 
+    //public async Task StoreVideosForStreaming()
+    //{
+    //    await _httpService.Get($"{ControllerName}/new-storage-name");
+    //}
+
     public async Task<HttpResponseWrapper<object>> CreateVideo(CreateVideoCommand request)
     {
         return await _httpService.Post<CreateVideoCommand, CreateVideoResponse>($"{ControllerName}/add", request);
@@ -66,7 +71,6 @@ public class VideosClient : IVideosClient
         Console.WriteLine($"container name: {blockBlobClient.BlobContainerName}");
         Console.WriteLine($"file size: {file.FileSize}");
 
-        List<string> blockList = new List<string>();
         await using var stream = file.BrowserFile?.OpenReadStream(file.MaxSizeAllowed, cancellationToken);
 
         var uploadOptions = new BlobUploadOptions

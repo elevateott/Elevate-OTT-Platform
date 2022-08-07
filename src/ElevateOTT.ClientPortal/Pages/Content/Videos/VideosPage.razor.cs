@@ -1,6 +1,6 @@
 ﻿namespace ElevateOTT.ClientPortal.Pages.Content.Videos
 {
-    public partial class VideosPage : IDisposable
+    public partial class VideosPage
     {
         [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
 
@@ -11,12 +11,6 @@
                 new(Resource.Home, "/"),
                 new(Resource.Videos, "#", true)
             });
-        }
-
-
-
-        public void Dispose()
-        {
         }
     }
 }

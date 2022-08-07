@@ -15,6 +15,8 @@ public interface IVideosClient
     Task<HttpResponseWrapper<object>> GetNewStorageName();
     Task DirectUploadToAzureStorageAsync(Uri uriSasToken, UploadFileModel file,
         CancellationToken cancellationToken = default);
+    //Task StoreVideosForStreaming();
+
     //Task<HttpResponseWrapper<object>> CreateVideo(MultipartFormDataContent request);
     Task<HttpResponseWrapper<object>> CreateVideo(CreateVideoCommand request);
     Task<HttpResponseWrapper<object>> UpdateVideo(MultipartFormDataContent request);

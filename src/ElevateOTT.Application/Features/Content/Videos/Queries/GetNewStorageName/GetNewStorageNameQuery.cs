@@ -28,9 +28,10 @@ public class GetNewStorageNameQuery : IRequest<Envelope<NewStorageNameResponse>>
         {
             var namePrefixResponse = _tenantUseCase.GetTenantStorageNamePrefix();
 
-            if (namePrefixResponse?.StorageFileNamePrefix is null)
+            if (string.IsNullOrWhiteSpace(namePrefixResponse.StorageFileNamePrefix))
             {
-                return await Task.FromResult(Envelope<NewStorageNameResponse>.Result.NotFound("No tenant storage file name prefix was found."));
+                await _tenantUseCase.AddTenantStorageNamePrefixIfNotExists();
+                namePrefixResponse = _tenantUseCase.GetTenantStorageNamePrefix();
             }
 
             var storageName = $"{namePrefixResponse.StorageFileNamePrefix}/{Guid.NewGuid().ToString().Replace("-", "")}";

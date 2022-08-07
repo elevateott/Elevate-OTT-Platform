@@ -61,6 +61,20 @@ public class VideosController : ApiController
     public async Task<IActionResult> CreateVideo([FromBody] CreateVideoCommand request)
     {
         var response = await Mediator.Send(request);
+
+        // Send video asset to Mux for transcoding and streaming
+        var createAssetAtMuxCommand = new CreateAssetAtMuxCommand
+        {
+            BlobUrl = response.Payload.BlobUrl,
+            LanguageCode = response.Payload.LanguageCode,
+            ClosedCaption = response.Payload.ClosedCaptions,
+            IsTestAsset = response.Payload.IsTestAsset,
+            Mp4Support = response.Payload.Mp4Support,
+            Passthrough = response.Payload.Passthrough
+        };
+
+        await Mediator.Send(createAssetAtMuxCommand);
+
         return TryGetResult(response);
     }
 

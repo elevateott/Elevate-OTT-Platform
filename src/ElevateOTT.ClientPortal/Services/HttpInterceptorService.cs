@@ -73,7 +73,7 @@ public class HttpInterceptorService : IDisposable
         // Console.WriteLine(new System.Diagnostics.StackTrace());
 
 
-        Console.WriteLine($"e.Request.Headers: {e.Request.Headers}");
+        // Console.WriteLine($"e.Request.Headers: {e.Request.Headers}");
 
         if (e.Request.Headers.Authorization != null)
         {

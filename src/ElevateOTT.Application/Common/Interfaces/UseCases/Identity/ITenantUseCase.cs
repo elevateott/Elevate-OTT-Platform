@@ -8,6 +8,7 @@ public interface ITenantUseCase
 
     Task<Envelope<CreateTenantResponse>> AddTenant(CreateTenantCommand request);
     StorageNamePrefixResponse GetTenantStorageNamePrefix();
+    Task AddTenantStorageNamePrefixIfNotExists();
 
     #endregion Public Methods
 }

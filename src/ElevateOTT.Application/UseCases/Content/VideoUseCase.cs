@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Presentation;
+using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Common.Interfaces.Services.StorageServices;
 using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
+using ElevateOTT.Application.Features.Content.Videos.Commands.CreateAssetAtMux;
 using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.DeleteVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
@@ -29,7 +32,7 @@ public class VideoUseCase : IVideoUseCase
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
     private readonly IBlobStorageService _fileStorageService;
-
+    private readonly IMuxAssetService _muxAssetService;
 
     #endregion Private Fields
 
@@ -43,7 +46,8 @@ public class VideoUseCase : IVideoUseCase
                             ITenantResolver tenantResolver,
                             IStorageProvider storageProvider,
                             IConfigReaderService configReaderService,
-                            IBlobStorageService fileStorageService)
+                            IBlobStorageService fileStorageService,
+                            IMuxAssetService muxAssetService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -54,6 +58,7 @@ public class VideoUseCase : IVideoUseCase
         _storageProvider = storageProvider;
         _configReaderService = configReaderService;
         _fileStorageService = fileStorageService;
+        _muxAssetService = muxAssetService;
     }
 
     #endregion Public Constructors
@@ -122,17 +127,34 @@ public class VideoUseCase : IVideoUseCase
 
         var video = _mapper.Map<VideoModel>(request);
 
+        var blobOptions = _configReaderService.GetBlobOptions();
+        string blobBaseUrl = blobOptions.BlobBaseUrl;
+        string containerName = blobOptions.VideoBlobContainerName;
+
+        string videoUrl = $"{blobBaseUrl}/{containerName}/{video.BlobName}";
+        video.Passthrough = Guid.NewGuid().ToString();
+        video.StreamCreationStatus = AssetCreationStatus.Preparing;
+        video.DownloadUrl = videoUrl;
+
         _repositoryManager.Video.CreateVideoForTenant(tenantId.Value, video);
         await _repositoryManager.SaveAsync();
 
         var createVideoResponse = new CreateVideoResponse
         {
             Id = video.Id,
-            SuccessMessage = Resource.Video_has_been_created_successfully
+            SuccessMessage = Resource.Video_has_been_created_successfully,
+            BlobUrl = videoUrl,
+            DownloadUrl = videoUrl,
+            Passthrough = video.Passthrough,
+            LanguageCode = video.LanguageCode ?? string.Empty,
+            ClosedCaptions = video.ClosedCaptions,
+            Mp4Support = video.Mp4Support,
+            IsTestAsset = video.IsTestAsset
         };
 
         return Envelope<CreateVideoResponse>.Result.Ok(createVideoResponse);
     }
+   
 
     public async Task<Envelope<string>> EditVideo(UpdateVideoCommand request)
     {
