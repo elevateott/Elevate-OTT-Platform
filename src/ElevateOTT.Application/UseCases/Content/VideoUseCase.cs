@@ -135,12 +135,14 @@ public class VideoUseCase : IVideoUseCase
         video.Passthrough = Guid.NewGuid().ToString();
         video.StreamCreationStatus = AssetCreationStatus.Preparing;
         video.DownloadUrl = videoUrl;
+        video.TenantId = tenantId.Value;
 
         _repositoryManager.Video.CreateVideoForTenant(tenantId.Value, video);
         await _repositoryManager.SaveAsync();
 
         var createVideoResponse = new CreateVideoResponse
         {
+            TenantId = video.TenantId,
             Id = video.Id,
             SuccessMessage = Resource.Video_has_been_created_successfully,
             BlobUrl = videoUrl,

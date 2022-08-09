@@ -1,20 +1,32 @@
-﻿namespace ElevateOTT.WebAPI.Services.HubServices;
+﻿using ElevateOTT.Application.Common.Interfaces.Services.HubServices;
+
+namespace ElevateOTT.WebAPI.Services.HubServices;
 
 public class VideoHubNotificationService: IVideoHubNotificationService
 {
     #region Private Fields
 
     private readonly IHubContext<VideoHub> _hubContext;
+    private readonly ISignalRContextProvider _signalRContextProvider;
 
-    public VideoHubNotificationService(IHubContext<VideoHub> hubContext)
+    public VideoHubNotificationService(IHubContext<VideoHub> hubContext, ISignalRContextProvider signalRContextProvider)
     {
         _hubContext = hubContext;
+        _signalRContextProvider = signalRContextProvider;
     }
 
     #endregion Private Fields
 
-    public async Task NotifyCreationStatus(string userNameIdentifier, Guid videoId, AssetCreationStatus status)
+    public async Task NotifyCreationStatus(Guid videoId, AssetCreationStatus status)
     {
-        await _hubContext.Clients.User(userNameIdentifier).SendAsync("NotifyCreationStatus", videoId, status);
+        //
+        // TODO send to user instead of all
+        //
+        // Update client with new status via SignalR
+        //var userNameIdentifier = _signalRContextProvider.GetUserNameIdentifier(Context);
+      
+        //_signalRContextProvider.
+
+        await _hubContext.Clients.All.SendAsync("ReceiveVideoUpdate", videoId, status);
     }
 }

@@ -12,6 +12,7 @@
 
 	<PropertyGroup>
 		<BlazorCacheBootResources>true</BlazorCacheBootResources>
+		<UserSecretsId>a8cff7ac-bd2d-40c4-aa81-bccae50fea31</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>

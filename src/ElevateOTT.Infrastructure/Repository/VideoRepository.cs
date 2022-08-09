@@ -31,6 +31,12 @@ namespace ElevateOTT.Infrastructure.Repository
             return query;
         }
 
+        public VideoModel? GetVideoByPassthrough(string passthrough)
+        {
+            var video = ApplicationDbContext?.Videos?.FirstOrDefault(v => v.Passthrough != null && v.Passthrough.Equals(passthrough));
+            return video;
+        }
+
         public async Task<VideoModel?> GetVideoAsync(Guid tenantId, Guid videoId, bool trackChanges) =>
             await FindByCondition(a => a.TenantId.Equals(tenantId)
                                        && a.Id.Equals(videoId), trackChanges)

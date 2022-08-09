@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Common.Models.Mux;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.Domain.Entities;
 using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Domain.Exceptions;
+using ElevateOTT.Infrastructure.Repository;
 
 namespace ElevateOTT.Infrastructure.Services.Mux;
 
@@ -13,26 +17,31 @@ public class MuxWebhookService : IMuxWebhookService
 
     // TODO signalR to notify portal of updates from Mux
 
-    private readonly IRepositoryManager _repository;
+    private readonly IRepositoryManager _repositoryManager;
     private readonly ILogger<MuxWebhookService> _logger;
     private readonly IMapper _mapper;
     private readonly IConfigReaderService _configReaderService;
     //private readonly IHubContext<VideoHub> _videoHubContext;
     private readonly IVideoHubNotificationService _videoHubNotificationService;
-    private readonly ISignalRContextProvider _signalRContextProvider;
+    private readonly IApplicationDbContext _dbContext;
+    private readonly ITenantResolver _tenantResolver;
 
-    public MuxWebhookService(IRepositoryManager repository,
+    public MuxWebhookService(IRepositoryManager repositoryManager,
         ILogger<MuxWebhookService> logger,
         IMapper mapper,
         IConfiguration configuration, 
-        IVideoHubNotificationService videoHubNotificationService, ISignalRContextProvider signalRContextProvider, IConfigReaderService configReaderService)
+        IVideoHubNotificationService videoHubNotificationService, 
+        IConfigReaderService configReaderService, 
+        IApplicationDbContext dbContext, 
+        ITenantResolver tenantResolver)
     {
-        _repository = repository;
+        _repositoryManager = repositoryManager;
         _logger = logger;
         _mapper = mapper;
         _videoHubNotificationService = videoHubNotificationService;
-        _signalRContextProvider = signalRContextProvider;
         _configReaderService = configReaderService;
+        _dbContext = dbContext;
+        this._tenantResolver = tenantResolver;
     }
 
     public async Task<bool> HandleWebHookEvent(MuxWebhookRequest? hookRequest)
@@ -204,6 +213,13 @@ public class MuxWebhookService : IMuxWebhookService
         return signature.Equals(payloadHash) && isWithinTolerance;
     }
 
+    public void SetTenantViaTenantResolver(string passthrough)
+    {
+        var passthroughSplit = passthrough.Split("/");
+        var tenantId = Guid.Parse(passthroughSplit[0]);
+        _tenantResolver.SetTenantId(tenantId);
+    }
+
     public Task TestSignalR()
     {
         throw new NotImplementedException();
@@ -251,13 +267,13 @@ public class MuxWebhookService : IMuxWebhookService
     #region video asset handlers
     public async Task<bool> HandleVideoAssetCreated(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data?.Passthrough == null) return false;
-
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
+
+        string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
         // TODO update video asset
         var videoToUpdate =
-            await _repository.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
+            await _repositoryManager.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
                 trackChanges: true);
 
         if (videoToUpdate == null) return false;
@@ -271,33 +287,32 @@ public class MuxWebhookService : IMuxWebhookService
         videoToUpdate.Mp4Support = hookRequest.Data.Mp4Support == "standard";
         videoToUpdate.IsHostedOnMux = true;
 
-        await _repository.SaveAsync();
+        await _repositoryManager.SaveAsync();
 
         return true;
     }
 
     private async Task<bool> HandleVideoAssetReady(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data?.Passthrough == null) return false;
-
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
+        
+        string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
-        var videoToUpdate =
-            await _repository.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
-                trackChanges: true);
+        var videoToUpdate = _repositoryManager.Video.GetVideoByPassthrough(passthrough);
+
+        //var videoToUpdate =
+        //    await _repositoryManager.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
+        //        trackChanges: true);
 
         if (videoToUpdate is not { StreamCreationStatus: AssetCreationStatus.Preparing }) return false;
 
         videoToUpdate.StreamCreationStatus = AssetCreationStatus.Ready;
-        await _repository.SaveAsync();
-
-        // TODO use User instead of keeping track of connection ids
-        // ex: Clients.User
+        await _repositoryManager.SaveAsync();
 
         // Update client with new status via SignalR
-        // var userNameIdentifier = _signalRContextProvider.GetUserNameIdentifier(Context);
+        await _videoHubNotificationService.NotifyCreationStatus(videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
 
-        //await _videoHubContext.Clients.All.SendAsync(VideoHub.ReceiveUpdateMethod, videoToUpdate.TenantId, videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
+       // await _videoHubContext.Clients.All.SendAsync(VideoHub.ReceiveUpdateMethod, videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
 
         return true;
 
@@ -312,14 +327,12 @@ public class MuxWebhookService : IMuxWebhookService
 
     private async Task<bool> HandleVideoAssetDeleted(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
-
         var video = await GetVideoByAssetId(hookRequest.Data.Id);
         if (video == null) throw new VideoNotFoundException();
 
         video.StreamCreationStatus = AssetCreationStatus.Deleted;
 
-        await _repository.SaveAsync();
+        await _repositoryManager.SaveAsync();
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
@@ -328,15 +341,13 @@ public class MuxWebhookService : IMuxWebhookService
     private async Task<bool> HandleVideoAssetUpdated(MuxWebhookRequest? hookRequest)
     {
         // ref: https://docs.mux.com/api-reference/video#operation/update-asset
-        // Asset update support is only for passthrough property. 
-        if (hookRequest?.Data == null) return false;
+
+        string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
         var videoToUpdate = await GetVideoByAssetId(hookRequest.Data.Id);
         if (videoToUpdate == null) return false;
 
-        videoToUpdate.Passthrough = hookRequest.Data.Passthrough;
-
-        await _repository.SaveAsync();
+        await _repositoryManager.SaveAsync();
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
@@ -352,7 +363,7 @@ public class MuxWebhookService : IMuxWebhookService
 
         video.StreamCreationStatus = AssetCreationStatus.Errored;
 
-        await _repository.SaveAsync();
+        await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
         _logger.LogInformation($"Error type: {hookRequest.Data.Errors.Type}");
@@ -407,15 +418,13 @@ public class MuxWebhookService : IMuxWebhookService
 
     private async Task<bool> HandleVideoLiveStreamActive(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
-
-        //var directUpload = await _repository.LiveStream
+        //var directUpload = await _repositoryManager.LiveStream
         //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
         //if (directUpload == null) return false;
 
         //directUpload.Status = LiveStreamStatus.Active;
-        //await _repository.SaveAsync();
+        //await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
@@ -424,15 +433,14 @@ public class MuxWebhookService : IMuxWebhookService
 
     private async Task<bool> HandleVideoLiveStreamEnabled(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
 
-        //var directUpload = await _repository.LiveStream
+        //var directUpload = await _repositoryManager.LiveStream
         //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
         //if (directUpload == null) return false;
 
         //directUpload.Status = LiveStreamStatus.Idle;
-        //await _repository.SaveAsync();
+        //await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
@@ -440,15 +448,13 @@ public class MuxWebhookService : IMuxWebhookService
     }
     private async Task<bool> HandleVideoLiveStreamIdle(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
-
-        //var directUpload = await _repository.LiveStream
+        //var directUpload = await _repositoryManager.LiveStream
         //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
         //if (directUpload == null) return false;
 
         //directUpload.Status = LiveStreamStatus.Idle;
-        //await _repository.SaveAsync();
+        //await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
@@ -457,15 +463,14 @@ public class MuxWebhookService : IMuxWebhookService
 
     private async Task<bool> HandleVideoLiveStreamDisabled(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
 
-        //var directUpload = await _repository.LiveStream
+        //var directUpload = await _repositoryManager.LiveStream
         //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
         //if (directUpload == null) return false;
 
         //directUpload.Status = LiveStreamStatus.Disabled;
-        //await _repository.SaveAsync();
+        //await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
@@ -474,9 +479,8 @@ public class MuxWebhookService : IMuxWebhookService
 
     private async Task<bool> HandleVideoLiveStreamUpdated(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
 
-        //var directUpload = await _repository.LiveStream
+        //var directUpload = await _repositoryManager.LiveStream
         //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
         //if (directUpload == null) return false;
@@ -487,7 +491,7 @@ public class MuxWebhookService : IMuxWebhookService
         //    directUpload.LatencyMode = MapToLatencyMode(hookRequest.Data.LatencyMode);
         //    directUpload.ReconnectWindow = hookRequest.Data.ReconnectWindow;
         //    directUpload.MaxContinuousDuration = hookRequest.Data.MaxContinuousDuration;
-        //    await _repository.SaveAsync();
+        //    await _repositoryManager.SaveAsync();
         //}
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
@@ -518,9 +522,8 @@ public class MuxWebhookService : IMuxWebhookService
 
     private async Task<bool> HandleVideoLiveStreamDeleted(MuxWebhookRequest? hookRequest)
     {
-        if (hookRequest?.Data == null) return false;
 
-        //var directUpload = await _repository.LiveStream
+        //var directUpload = await _repositoryManager.LiveStream
         //    .GetLiveStreamByPassthroughAsync(hookRequest.Data.Passthrough, true);
 
         //if (directUpload == null) throw new LiveStreamNotFoundException();
@@ -623,7 +626,7 @@ public class MuxWebhookService : IMuxWebhookService
         if (video.StreamCreationStatus != AssetCreationStatus.Preparing)
         {
             video.StreamCreationStatus = AssetCreationStatus.Preparing;
-            await _repository.SaveAsync();
+            await _repositoryManager.SaveAsync();
         }
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
@@ -654,7 +657,7 @@ public class MuxWebhookService : IMuxWebhookService
             video.StreamCreationStatus = AssetCreationStatus.Ready;
             video.DownloadUrl = $"{baseStreamUrl}/{playbackId}/{fileName}";
 
-            await _repository.SaveAsync();
+            await _repositoryManager.SaveAsync();
         }
 
 
@@ -671,7 +674,7 @@ public class MuxWebhookService : IMuxWebhookService
         if (video == null) throw new VideoNotFoundException();
 
         video.StreamCreationStatus = AssetCreationStatus.Errored;
-        await _repository.SaveAsync();
+        await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
@@ -686,7 +689,7 @@ public class MuxWebhookService : IMuxWebhookService
         if (video == null) throw new VideoNotFoundException();
 
         video.StreamCreationStatus = AssetCreationStatus.Deleted;
-        await _repository.SaveAsync();
+        await _repositoryManager.SaveAsync();
 
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
@@ -695,6 +698,12 @@ public class MuxWebhookService : IMuxWebhookService
     #endregion
 
     #region private methods
+
+    private string GetPassthroughValue(string passthrough)
+    {
+        var passthroughSplit = passthrough.Split("/");
+        return passthroughSplit.Length > 1 ? passthroughSplit[1] : passthroughSplit[0];
+    }
     private async Task CreateNewVideoAsset(MuxWebhookRequest hookRequest)
     {
 
@@ -724,13 +733,13 @@ public class MuxWebhookService : IMuxWebhookService
             videoCreation.PlaybackId = playbackId;
         }
 
-        //_repository.Video.CreateVideoForTenant(tenantId, videoCreation);
-        //await _repository.SaveAsync();
+        //_repositoryManager.Video.CreateVideoForTenant(tenantId, videoCreation);
+        //await _repositoryManager.SaveAsync();
     }
 
     private async Task<VideoModel?> GetVideoByAssetId(string assetId)
     {
-        var video = await _repository.Video.FindVideoByConditionAsync(x =>
+        var video = await _repositoryManager.Video.FindVideoByConditionAsync(x =>
             x.AssetId.Equals(assetId), true);
 
         return video;

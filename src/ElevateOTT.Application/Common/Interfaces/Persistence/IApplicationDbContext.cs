@@ -27,6 +27,8 @@ public interface IApplicationDbContext : IDisposable
     DbSet<Report>? Reports { get; set; }
 
     DbSet<AuthorModel>? Authors { get; set; }
+    DbSet<VideoModel>? Videos { get; set; }
+
 
 
     DbContext Current { get; }

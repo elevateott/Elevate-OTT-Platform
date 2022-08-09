@@ -6,6 +6,7 @@ public class CreateVideoCommand : IRequest<Envelope<CreateVideoResponse>>
 {
     #region Public Properties
 
+    public Guid TenantId { get; set; }
     public string? AssetId { get; set; }
     public string? Title { get; set; }
     public string? FileName { get; set; }

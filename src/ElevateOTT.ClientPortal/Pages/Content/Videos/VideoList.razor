@@ -2,6 +2,25 @@
 
 @namespace ElevateOTT.ClientPortal.Pages.Content.Videos
 
+
+<button class="btn btn-primary form-control-append" @onclick="Connect">
+    Connect
+</button>
+
+<H3>@_message</H3>
+
+@if (_updateReceived)
+{
+    <h4>Update received!</h4>
+}
+
+<MudIcon Icon="@Icons.Filled.VideoFile" Color="Color.Dark" Size="Size.Large" />
+
+<div class="d-flex flex-row gap-1">
+    <MudIcon Icon="fas fa-cog fa-spin" Color="Color.Primary" />
+    <MudText Typo="Typo.body1">Preparing...</MudText>
+</div>
+
 <ServerSideValidator @ref="ServerSideValidator" />
         <MudTable Context="video" 
                   ServerData="@(new Func<TableState, Task<TableData<VideoItem>>>(ServerReload))" 

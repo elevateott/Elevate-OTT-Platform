@@ -4,6 +4,8 @@ public class CreateVideoResponse
 {
     #region Public Properties
 
+    public Guid TenantId { get; set; }
+
     public Guid Id { get; set; } 
 
     public string SuccessMessage { get; set; } = string.Empty;

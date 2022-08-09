@@ -9,7 +9,7 @@ public class ChatHub : Hub
         Console.WriteLine("Connected");
 
         string username = Context.GetHttpContext().Request.Query["username"];
-        Users.Add(Context.ConnectionId, username);
+         Users.Add(Context.ConnectionId, username);
         await AddMessageToChat(string.Empty, $"{username} joined the party!");
         await base.OnConnectedAsync();
     }

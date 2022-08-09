@@ -12,9 +12,9 @@ public class AuthStateProvider : AuthenticationStateProvider
 
     #region Public Constructors
 
-    public AuthStateProvider(HttpClient httpClient, IAccessTokenProvider accessTokenProvider)
+    public AuthStateProvider(IHttpClientFactory clientFactory, IAccessTokenProvider accessTokenProvider)
     {
-        _httpClient = httpClient;
+        _httpClient = clientFactory.CreateClient("ApiUrl");
         _accessTokenProvider = accessTokenProvider;
         _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
     }

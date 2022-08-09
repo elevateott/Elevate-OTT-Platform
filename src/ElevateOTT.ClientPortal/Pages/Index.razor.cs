@@ -31,12 +31,12 @@ public partial class Index : ComponentBase, IAsyncDisposable
 
         if (httpResponseWrapper.Success)
         {
-            await StartHubConnection();
-            HubConnection.On<HeadlinesResponse>("SendHeadlinesData", (data) =>
-            {
-                HeadlinesResponse = data;
-                StateHasChanged();
-            });
+            //await StartHubConnection();
+            //HubConnection.On<HeadlinesResponse>("SendHeadlinesData", (data) =>
+            //{
+            //    HeadlinesResponse = data;
+            //    StateHasChanged();
+            //});
         }
         else
         {

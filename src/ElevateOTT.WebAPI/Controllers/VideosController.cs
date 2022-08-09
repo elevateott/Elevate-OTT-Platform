@@ -7,14 +7,24 @@ using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 using ElevateOTT.Application.Features.Identity.Tenants.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElevateOTT.WebAPI.Controllers;
 
 //[BpAuthorize]
+[AllowAnonymous]
 [Route("api/videos")]
 [ApiController]
 public class VideosController : ApiController
 {
+    private readonly IApplicationDbContext _dbContext;
+
+    public VideosController(IApplicationDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+
     #region Public Methods
 
     [HttpGet("{id:guid}", Name = "VideoById")]
@@ -23,6 +33,14 @@ public class VideosController : ApiController
         var httpRequest = Request;
         var response = await Mediator.Send(new GetVideoForEditQuery { Id = id });
         return TryGetResult(response);
+    }
+    
+
+    [HttpGet("test")]
+    public async Task<IActionResult> GetTest()
+    {
+        var videos = await _dbContext.Videos.Select(r => r).ToListAsync();
+        return Ok(videos);
     }
 
     [HttpGet("azure-blob-sas-token")]
@@ -70,7 +88,9 @@ public class VideosController : ApiController
             ClosedCaption = response.Payload.ClosedCaptions,
             IsTestAsset = response.Payload.IsTestAsset,
             Mp4Support = response.Payload.Mp4Support,
-            Passthrough = response.Payload.Passthrough
+
+            // Passthrough gets spilt at '/' in webhook callback
+            Passthrough = $"{response.Payload.TenantId}/{response.Payload.Passthrough}" 
         };
 
         await Mediator.Send(createAssetAtMuxCommand);

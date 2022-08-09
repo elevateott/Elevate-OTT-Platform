@@ -7,6 +7,7 @@ using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
 namespace ElevateOTT.WebAPI.Controllers;
 
 //[BpAuthorize]
+[AllowAnonymous]
 [Route("api/authors")]
 [ApiController]
 public class AuthorsController : ApiController
@@ -14,7 +15,6 @@ public class AuthorsController : ApiController
     #region Public Methods
 
     [HttpGet("{id:guid}", Name = "AuthorById")]
-    [AllowAnonymous]
     public async Task<IActionResult> GetAuthor(Guid id)
     {
         var httpRequest = Request;
@@ -24,7 +24,6 @@ public class AuthorsController : ApiController
 
     //[AutoWrapIgnore]
     [HttpPost]
-    [AllowAnonymous]
     public async Task<IActionResult> GetAuthors([FromBody] GetAuthorsQuery request)
     {
         var httpRequest = Request;
@@ -49,7 +48,6 @@ public class AuthorsController : ApiController
     //}
 
 
-    [AllowAnonymous]
     [HttpPut]
     public async Task<IActionResult> UpdateAuthor([FromForm] UpdateAuthorCommand request)
     {

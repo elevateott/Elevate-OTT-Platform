@@ -13,9 +13,9 @@ public class HttpService : IHttpService
 
     #region Public Constructors
 
-    public HttpService(HttpClient httpClient, ILocalStorageService localStorage)
+    public HttpService(IHttpClientFactory clientFactory, ILocalStorageService localStorage)
     {
-        _httpClient = httpClient;
+        _httpClient = clientFactory.CreateClient("ApiUrl");
         _localStorage = localStorage;
     }
 

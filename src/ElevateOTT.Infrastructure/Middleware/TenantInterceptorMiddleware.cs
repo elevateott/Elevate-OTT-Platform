@@ -53,33 +53,39 @@ public class TenantInterceptorMiddleware
                 throw new ArgumentNullException(nameof(httpContext), nameof(httpContext) + " is required");
 
             case TenantMode.MultiTenant:
-                {
-                    var tenantName = httpContext.Request.Headers["X-Tenant"];
+            {
+                // If 'callback' in path, then request is from a webhook.
+                // In webhook callbacks, tenants are set in the webhook services.
+                if (httpContext.Request.Path.Value != null &&
+                    httpContext.Request.Path.Value.Contains("callback")) break;
 
-                    if (tenantName.Count == 0)
-                        tenantName = string.Empty;
+                var tenantName = httpContext.Request.Headers["X-Tenant"];
 
-                    Console.WriteLine("tenantName @ API interceptor: " + tenantName);
-                    
-                    // TODO guard against tenantName null or empty
+                if (tenantName.Count == 0)
+                    tenantName = string.Empty;
 
-                    // TODO check if tenant name is Name or CustomDomain
+                Console.WriteLine("tenantName @ API interceptor: " + tenantName);
+                
+                // TODO guard against tenantName null or empty
 
-                    var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
+                // TODO check if tenant name is Name or CustomDomain
 
-                    if (httpContext.Request.Path.Value is { } pathValue
-                        && tenantId is null
-                        && tenantName[0] != Host
-                        && !pathValue.Contains("hangfire")
-                        && !pathValue.Contains("/Hubs/"))
-                        throw new Exception(Resource.Invalid_tenant_name);
+                var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
 
-                    tenantResolver.SetTenantId(tenantId);
+                if (httpContext.Request.Path.Value is { } pathValue
+                    && tenantId is null
+                    && tenantName[0] != Host
+                    && !pathValue.Contains("hangfire")
+                    && !pathValue.Contains("/Hubs/")
+                    && !pathValue.Contains("callback"))
+                    throw new Exception(Resource.Invalid_tenant_name);
 
-                    tenantResolver.SetTenantName(tenantName);
+                tenantResolver.SetTenantId(tenantId);
 
-                    break;
-                }
+                tenantResolver.SetTenantName(tenantName);
+
+                break;
+            }
 
             case TenantMode.SingleTenant:
                 {

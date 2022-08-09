@@ -7,13 +7,16 @@ public class VideoHub : Hub
 
     #region Private Fields
 
-    private readonly IBackgroundJobClient _backgroundJob;
-
     private readonly ISignalRContextProvider _signalRContextProvider;
+
+    public VideoHub(ISignalRContextProvider signalRContextProvider)
+    {
+        _signalRContextProvider = signalRContextProvider;
+    }
 
     #endregion Private Fields
 
-    public static string ReceiveUpdateMethod => "ReceiveUpdate";
+    public static string ReceiveUpdateMethodName => "ReceiveVideoUpdate";
 
     public override async Task OnConnectedAsync()
     {
@@ -22,9 +25,10 @@ public class VideoHub : Hub
         if (Context.User?.Identity != null)
         {
             var name = _signalRContextProvider.GetUserName(Context);
-            await Groups.AddToGroupAsync(Context.ConnectionId, name);
+            //await Groups.AddToGroupAsync(Context.ConnectionId, name);
         }
 
+        //await Test();
         await base.OnConnectedAsync();
     }
 
@@ -33,8 +37,13 @@ public class VideoHub : Hub
         Console.WriteLine("Disconnected!");
     }
 
+    public Task Test()
+    {
+        return Clients.Caller.SendAsync("ReceiveVideoUpdate", "Hello from Video Hub on backend!");
+    }
+
     //public Task NotifyVideoCreationStatus(Guid? videoId, AssetCreationStatus status)
     //{
-    //    return Clients.Caller.SendAsync(ReceiveUpdateMethod, videoId, status);
+    //    return Clients.Caller.SendAsync(ReceiveUpdateMethodName, videoId, status);
     //}
 }

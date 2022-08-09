@@ -20,7 +20,7 @@ public class ApiUrlProvider : IApiUrlProvider
     #region Public Properties
 
     public string BaseUrl => _configuration["BaseApiUrl"];
-    public string BaseHubUrl => _configuration["BaseApiUrl"].Split("/api/")[0];
+    public string BaseHubUrl => _configuration["BaseHubUrl"];
 
     #endregion Public Properties
 }

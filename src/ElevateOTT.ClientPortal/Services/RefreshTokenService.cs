@@ -18,13 +18,13 @@ public class RefreshTokenService : IRefreshTokenService
                                IAuthenticationService authenticationService,
                                IAccountsClient accountsClient,
                                AuthStateProvider authStateProvider,
-                               HttpClient httpClient)
+                               IHttpClientFactory clientFactory)
     {
         _localStorageService = localStorageService;
         _authenticationService = authenticationService;
         _accountsClient = accountsClient;
         _authStateProvider = authStateProvider;
-        _httpClient = httpClient;
+        _httpClient = clientFactory.CreateClient("ApiUrl");
     }
 
     #endregion Public Constructors

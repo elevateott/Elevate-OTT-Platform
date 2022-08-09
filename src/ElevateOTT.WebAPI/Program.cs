@@ -152,6 +152,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<DataExportHub>("Hubs/DataExportHub");
     endpoints.MapHub<VideoHub>("Hubs/VideoHub");
     endpoints.MapHub<LiveStreamHub>("Hubs/LiveStreamHub");
+    endpoints.MapHub<ChatHub>("Hubs/ChatHub");
 });
 
 app.Run();

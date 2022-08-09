@@ -1,5 +1,6 @@
 ﻿using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Models.Mux;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElevateOTT.WebAPI.Controllers;
 
@@ -9,9 +10,12 @@ public class MuxWebhookController : ApiController
 {
     private readonly IMuxWebhookService? _webhookService;
 
-    public MuxWebhookController(IMuxWebhookService? webhookService)
+    private readonly IApplicationDbContext _dbContext;
+
+    public MuxWebhookController(IMuxWebhookService? webhookService, IApplicationDbContext dbContext)
     {
         _webhookService = webhookService;
+        _dbContext = dbContext;
     }
 
     [HttpPost("callback")]
@@ -28,6 +32,12 @@ public class MuxWebhookController : ApiController
             _webhookService.VerifyRequestFromMux(timestamp, muxSignature, rawRequestBody);
 
         if (!requestFromMux) return BadRequest();
+
+        if (hookRequest?.Data == null) return Ok();
+
+        // Get tenant ID from passthrough value and set tenant via tenant resolver 
+        _webhookService.SetTenantViaTenantResolver(hookRequest.Data.Passthrough);
+
         var eventHandled = await _webhookService.HandleWebHookEvent(hookRequest);
         if (!eventHandled) return BadRequest();
 

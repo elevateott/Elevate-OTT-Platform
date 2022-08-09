@@ -8,5 +8,5 @@ namespace ElevateOTT.Application.Common.Interfaces.Services.HubServices;
 
 public interface IVideoHubNotificationService
 {
-    Task NotifyCreationStatus(string userNameIdentifier, Guid videoId, AssetCreationStatus status);
+    Task NotifyCreationStatus(Guid videoId, AssetCreationStatus status);
 }

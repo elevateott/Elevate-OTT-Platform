@@ -1,4 +1,5 @@
 ﻿using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.ClientPortal.Hubs;
 
 namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
 
@@ -14,6 +15,7 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
         [Inject] private ISnackbar? Snackbar { get; set; }
         [Inject] private AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
         [Inject] private NavigationManager? NavigationManager { get; set; }
+        [Inject] public VideoHub? VideoHub { get; set; }
 
         private string SearchString { get; set; } = string.Empty;
         private VideosResponse? VideosResponse { get; set; }
@@ -21,7 +23,8 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
         private GetVideosQuery GetVideosQuery { get; set; } = new();
         private HubConnection? HubConnection { get; set; }
 
-        //[Inject] public VideoHub? VideoHub { get; set; }
+        private string _message;
+        private bool _updateReceived;
 
         private MudTable<VideoItem>? Table { get; set; }
         #endregion Private Properties
@@ -41,7 +44,21 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
                     Snackbar?.Add("Reporting Hub is closed.", Severity.Error);
                 }
             }
+
+            if (VideoHub?.HubConnection is not null && VideoHub.HubConnection.State == HubConnectionState.Connected)
+            {
+                try
+                {
+                    await VideoHub.HubConnection.StopAsync();
+                }
+                finally
+                {
+                    await VideoHub.HubConnection.DisposeAsync();
+                    Snackbar?.Add("Video Hub is closed.", Severity.Error);
+                }
+            }
         }
+
         #endregion Public Methods
 
         #region Protected Methods
@@ -54,7 +71,7 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
 
             if (userIdentity is { IsAuthenticated: true })
             {
-                await StartHubConnection();
+                //await StartHubConnection();
                 HubConnection?.On("NotifyReportIssuer", (Func<FileMetaData, ReportStatus, Task>)(async
                 (fileMetaData, reportStatus) =>
                 {
@@ -86,35 +103,54 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
                     }
                 }));
             }
+
+            //await ConnectToVideoHub();
         }
-    #endregion Protected Methods
+        #endregion Protected Methods
 
-    #region Private Methods
-    private async Task ConnectToVideoHub()
-    {
-        //if (_currentTenantId == null || VideoHub == null) return;
+        #region Private Methods
 
-        //VideoHub.Connect(_currentTenantId.Value);
-        //if (VideoHub.HubConnection == null) return;
-        //VideoHub?.HubConnection?.On<Guid?, Guid?, AssetCreationStatus>("ReceiveUpdate", (tenantId, videoId, status) =>
-        //{
-        //    // TODO do stuff with return data
+        private async Task Connect()
+        {
+            await ConnectToVideoHub();
 
-        //    Console.WriteLine("video hub update received!");
-        //    Console.WriteLine($"tenantId id: {tenantId}");
-        //    Console.WriteLine($"video id: {videoId}");
-        //    Console.WriteLine($"status: {status}");
+        }
 
-        //    _updateReceived = true;
-        //    InvokeAsync(StateHasChanged);
-        //});
-        //await VideoHub.HubConnection.StartAsync();
+        private async Task ConnectToVideoHub()
+        {
+
+            Console.WriteLine("Connecting To VideoHub");
+
+            VideoHub?.Connect();
+            //if (VideoHub?.HubConnection == null) return;
+
+            //VideoHub.HubConnection.On<string>("ReceiveVideoUpdate", (message) =>
+            //{
+            //    Console.WriteLine($"ReceiveVideoUpdate message: {message}");
+            //    _message = message;
+            //    _updateReceived = true;
+            //    InvokeAsync(StateHasChanged);
+            //});
+
+        VideoHub.HubConnection.On<Guid?, AssetCreationStatus>("ReceiveVideoUpdate", (videoId, status) =>
+        {
+                // TODO do stuff with return data
+
+            Console.WriteLine("video hub update received!");
+            Console.WriteLine($"video id: {videoId}");
+            Console.WriteLine($"status: {status}");
+
+            _updateReceived = true;
+            InvokeAsync(StateHasChanged);
+        });
+
+        await VideoHub.HubConnection.StartAsync();
     }
 
-    private void AddVideo()
-        {
-            NavigationManager?.NavigateTo("poc/army/addVideo");
-        }
+        private void AddVideo()
+            {
+                NavigationManager?.NavigateTo("poc/army/addVideo");
+            }
 
         private void EditVideo(Guid id)
         {
@@ -199,23 +235,23 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
         }
 
         private async Task ShowDownloadFileDialogue(FileMetaData fileMetaData, ReportStatus reportStatus)
-        {
-            var parameters = new DialogParameters
-        {
-            {"ContentText", Resource.Your_report_is_ready_to_download},
-            {"ButtonText", Resource.Download},
-            {"Color", Color.Error}
-        };
+    {
+        var parameters = new DialogParameters
+    {
+        {"ContentText", Resource.Your_report_is_ready_to_download},
+        {"ButtonText", Resource.Download},
+        {"Color", Color.Error}
+    };
 
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<DialogModal>(Resource.Export, parameters, options);
+        var dialog = DialogService.Show<DialogModal>(Resource.Export, parameters, options);
 
-            var result = await dialog.Result;
+        var result = await dialog.Result;
 
-            if (!result.Cancelled)
-                await Js.InvokeVoidAsync("triggerFileDownload", fileMetaData.FileName, fileMetaData.FileUri);
-        }
+        if (!result.Cancelled)
+            await Js.InvokeVoidAsync("triggerFileDownload", fileMetaData.FileName, fileMetaData.FileUri);
+    }
 
         private async Task StartHubConnection()
         {
@@ -241,11 +277,34 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
             }
         }
 
-        private void ViewVideo(Guid id)
-        {
-            NavigationManager.NavigateTo($"poc/army/viewVideo/{id}");
-        }
-        #endregion Private Methods
+        //private async Task StartVideoHubConnection()
+        //{
+        //    if (VideoHub?.HubConnection is null || VideoHub.HubConnection.State == HubConnectionState.Disconnected)
+        //    {
+        //        Snackbar.Add("Video Hub is being initialed.", Severity.Info);
 
+        //        var subDomain = NavigationManager.GetSubDomain();
+
+        //        var culture = await LocalStorage.GetItemAsync<string>("Culture");
+
+        //        HubConnection = new HubConnectionBuilder()
+        //            .WithUrl($"{ApiUrlProvider.BaseHubUrl}/Hubs/VideoHub?X-Tenant={subDomain}&Accept-Language={culture}",
+        //                options =>
+        //                {
+        //                    //options.Headers.Add("X-Tenant", subDomain); //Doesn't Work
+        //                    //options.Headers.Add("Accept-Language", culture); //Doesn't Work
+        //                    options.AccessTokenProvider = () => AccessTokenProvider.TryGetAccessToken();
+        //                }).Build();
+
+        //        await HubConnection.StartAsync();
+        //        Snackbar.Add("Video Hub is now connected.", Severity.Success);
+        //    }
+        //}
+
+        private void ViewVideo(Guid id)
+            {
+                NavigationManager.NavigateTo($"poc/army/viewVideo/{id}");
+            }
+        #endregion Private Methods
     }
 

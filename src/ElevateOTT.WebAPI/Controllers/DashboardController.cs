@@ -1,8 +1,9 @@
 ﻿namespace ElevateOTT.WebAPI.Controllers;
 
+//[BpAuthorize]
+[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class DashboardController : ApiController
 {
     #region Private Fields

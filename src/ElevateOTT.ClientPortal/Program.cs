@@ -1,4 +1,5 @@
-﻿using Syncfusion.Blazor;
+﻿using ElevateOTT.ClientPortal.Hubs;
+using Syncfusion.Blazor;
 
 namespace ElevateOTT.ClientPortal;
 
@@ -28,10 +29,17 @@ public class Program
 
         builder.Services.AddHttpClient("HttpInterceptorService");
 
-        builder.Services.AddScoped(sp => new HttpClient
+        builder.Services.AddHttpClient("ApiUrl", (sp, client) =>
         {
-            BaseAddress = new Uri(builder.Configuration.GetSection("BaseApiUrl").Value)
-        }.EnableIntercept(sp));
+            client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseApiUrl"));
+            client.EnableIntercept(sp);
+        });
+
+        builder.Services.AddHttpClient("HubUrl", (sp, client) =>
+        {
+            client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseHubUrl"));
+            client.EnableIntercept(sp);
+        });
 
         ConfigureServices(builder.Services);
 
@@ -103,6 +111,12 @@ public class Program
         services.AddScoped<IAuthorsClient, AuthorsClient>();
 
         services.AddScoped<IVideosClient, VideosClient>();
+
+        services.AddScoped<VideoHub>();
+
+        services.AddScoped<LiveStreamHub>();
+
+        services.AddScoped<ChatHub>();
 
         services.AddLocalization();
 

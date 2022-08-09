@@ -4,5 +4,12 @@
         <name>ElevateOTT.WebAPI</name>
     </assembly>
     <members>
+        <member name="M:ElevateOTT.WebAPI.Controllers.ChargebeeWebhookController.Callback(System.Guid,ElevateOTT.Application.Common.Models.Chargebee.ChargebeeWebHookRequest)">
+            <summary>
+            Webhook for Chargebee integration.
+            </summary>
+            <param name="hookRequest"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
