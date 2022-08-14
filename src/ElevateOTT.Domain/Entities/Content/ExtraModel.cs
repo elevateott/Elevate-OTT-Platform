@@ -17,7 +17,7 @@ public class ExtraModel : BaseEntity
     public Guid? VideoId { get; set; }
     #endregion
 
-    #region navigational properties
+    #region Navigational Properties
     public VideoModel? Video { get; set; }
     #endregion
 }

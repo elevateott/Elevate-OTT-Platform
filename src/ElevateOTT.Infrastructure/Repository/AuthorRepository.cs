@@ -1,12 +1,7 @@
 ﻿using Ardalis.GuardClauses;
-using Azure.Core;
-using ElevateOTT.Application.Common.Extensions;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
-using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
 using ElevateOTT.Domain.Entities.Content;
-using ElevateOTT.Infrastructure.Repository.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace ElevateOTT.Infrastructure.Repository
 {

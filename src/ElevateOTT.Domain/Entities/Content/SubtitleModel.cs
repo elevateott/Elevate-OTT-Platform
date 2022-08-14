@@ -18,7 +18,7 @@ public class SubtitleModel : BaseEntity
     public Guid? LiveStreamId { get; set; }
     #endregion
 
-    #region navigational properties
+    #region Navigational Properties
     public VideoModel? Video { get; set; }
     public LiveStreamModel? LiveStream { get; set; }
     #endregion

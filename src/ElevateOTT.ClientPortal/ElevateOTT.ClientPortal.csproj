@@ -30,14 +30,12 @@
 	  <Compile Remove="Pages\Content\Authors\Authors.razor.cs" />
 	  <Compile Remove="Pages\Content\Videos\VideoCreation.razor.cs" />
 	  <Compile Remove="Pages\Content\Videos\VideoDetails.razor.cs" />
-	  <Compile Remove="Pages\Content\Videos\VideoUpdate.razor.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Content Remove="Pages\Content\Authors\Authors.razor" />
 	  <Content Remove="Pages\Content\Videos\VideoCreation.razor" />
 	  <Content Remove="Pages\Content\Videos\VideoDetails.razor" />
-	  <Content Remove="Pages\Content\Videos\VideoUpdate.razor" />
 	</ItemGroup>
 
 	<ItemGroup>

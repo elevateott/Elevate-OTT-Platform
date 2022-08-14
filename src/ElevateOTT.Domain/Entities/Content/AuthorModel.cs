@@ -24,13 +24,14 @@ public class AuthorModel : BaseEntity, IMustHaveTenant
     public string? SeoDescription { get; set; } 
 
     // TODO validation for no spaces and no special chars
-    public string? Slug { get; set; } 
+    public string? Slug { get; set; }
 
-    #region foreign keys
- 
-    #endregion
 
-    #region navigational properties
-    // public ICollection<VideoAuthorModel>? VideosAuthors { get; set; }
+    #region Navigational Properties
+
+    public List<VideoModel>? Videos { get; set; }
+    public List<LiveStreamModel>? LiveStreams { get; set; }
+    public List<PodcastModel>? Podcasts { get; set; }
+
     #endregion
 }

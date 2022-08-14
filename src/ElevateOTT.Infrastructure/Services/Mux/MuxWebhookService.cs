@@ -2,12 +2,14 @@
 using Azure.Core;
 using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Application.Common.Models.ApplicationOptions;
 using ElevateOTT.Application.Common.Models.Mux;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 using ElevateOTT.Domain.Entities;
 using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Domain.Exceptions;
 using ElevateOTT.Infrastructure.Repository;
+using MuxPlaybackIdModel = ElevateOTT.Domain.Entities.Mux.MuxPlaybackIdModel;
 
 namespace ElevateOTT.Infrastructure.Services.Mux;
 
@@ -269,6 +271,8 @@ public class MuxWebhookService : IMuxWebhookService
     {
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
+        if (hookRequest.Data is null) return false;
+
         string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
         // TODO update video asset
@@ -295,10 +299,29 @@ public class MuxWebhookService : IMuxWebhookService
     private async Task<bool> HandleVideoAssetReady(MuxWebhookRequest? hookRequest)
     {
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
-        
+
+        if (hookRequest.Data is null) return false;
+
         string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
         var videoToUpdate = _repositoryManager.Video.GetVideoByPassthrough(passthrough);
+
+        // TODO Playback IDs
+        // save all in playback ids
+        // use main one for stream url
+        // https://stream.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk.m3u8
+
+        // TODO saves image urls
+        /*
+         * https://image.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk/thumbnail.png?width=314&height=178&fit_mode=pad
+
+            https://image.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk/thumbnail.png?width=214&height=121&fit_mode=pad
+
+            https://image.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk/thumbnail.png?width=140&height=64&fit_mode=pad
+         */
+
+        // TODO playback url
+        // https://stream.mux.com/{PLAYBACK_ID}.m3u8
 
         //var videoToUpdate =
         //    await _repositoryManager.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
@@ -307,6 +330,21 @@ public class MuxWebhookService : IMuxWebhookService
         if (videoToUpdate is not { StreamCreationStatus: AssetCreationStatus.Preparing }) return false;
 
         videoToUpdate.StreamCreationStatus = AssetCreationStatus.Ready;
+
+        if (hookRequest.Data.PlaybackIds != null)
+        {
+            var muxOptions = _configReaderService.GetMuxOptions();
+            string publicPlaybackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
+            string signedPlaybackId = GetSignedPlaybackId(hookRequest.Data.PlaybackIds);
+            string baseStreamUrl = muxOptions.BaseStreamUrl;
+            string baseImageUrl = muxOptions.BaseImageUrl;
+            videoToUpdate.StreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
+            videoToUpdate.VideoImages = GetVideoImageUrls(publicPlaybackId, baseImageUrl, videoToUpdate.TenantId, videoToUpdate.Id);
+            videoToUpdate.PublicPlaybackId = publicPlaybackId;
+            videoToUpdate.SignedPlaybackId = signedPlaybackId;
+            videoToUpdate.ThumbnailUrl = GetVideoThumbnailUrl(publicPlaybackId, baseImageUrl, 140, 64);
+        }
+
         await _repositoryManager.SaveAsync();
 
         // Update client with new status via SignalR
@@ -704,38 +742,38 @@ public class MuxWebhookService : IMuxWebhookService
         var passthroughSplit = passthrough.Split("/");
         return passthroughSplit.Length > 1 ? passthroughSplit[1] : passthroughSplit[0];
     }
-    private async Task CreateNewVideoAsset(MuxWebhookRequest hookRequest)
-    {
 
-        
-        //if (tenantId == null) return;
+    //private async Task CreateNewVideoAsset(MuxWebhookRequest hookRequest)
+    //{
 
-        var videoCreation = new VideoModel
-        {
-            //TenantId = tenantId,
-            AssetId = hookRequest.Data.Id,
-            StreamCreationStatus = AssetCreationStatus.Ready,
-            IsHostedOnMux = true,
-            Mp4Support = hookRequest.Data.Mp4Support == "standard",
-            IsTestAsset = hookRequest.Data.Test,
-            Passthrough = hookRequest.Data.Passthrough,
-            Duration = TimeSpan.FromSeconds(hookRequest.Data.Duration),
-        };
+    //    //if (tenantId == null) return;
 
-        if (hookRequest.Data.PlaybackIds != null)
-        {
-            var muxOptions = _configReaderService.GetMuxOptions();
+    //    var videoCreation = new VideoModel
+    //    {
+    //        //TenantId = tenantId,
+    //        AssetId = hookRequest.Data.Id,
+    //        StreamCreationStatus = AssetCreationStatus.Ready,
+    //        IsHostedOnMux = true,
+    //        Mp4Support = hookRequest.Data.Mp4Support == "standard",
+    //        IsTestAsset = hookRequest.Data.Test,
+    //        Passthrough = hookRequest.Data.Passthrough,
+    //        Duration = TimeSpan.FromSeconds(hookRequest.Data.Duration),
+    //    };
 
-            string playbackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
-            string baseStreamUrl = muxOptions.BaseStreamUrl;
-            // videoCreation.VideoImages = GetVideoImageUrls(playbackId, baseStreamUrl);
-            videoCreation.StreamUrl = $"{baseStreamUrl}/{playbackId}.m3u8";
-            videoCreation.PlaybackId = playbackId;
-        }
+    //    if (hookRequest.Data.PlaybackIds != null)
+    //    {
+    //        var muxOptions = _configReaderService.GetMuxOptions();
 
-        //_repositoryManager.Video.CreateVideoForTenant(tenantId, videoCreation);
-        //await _repositoryManager.SaveAsync();
-    }
+    //        string? playbackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
+    //        string baseStreamUrl = muxOptions.BaseStreamUrl;
+    //        // videoCreation.VideoImages = GetVideoImageUrls(playbackId, baseStreamUrl);
+    //        videoCreation.StreamUrl = $"{baseStreamUrl}/{playbackId}.m3u8";
+    //        videoCreation.PublicPlaybackId = playbackId;
+    //    }
+
+    //    //_repositoryManager.Video.CreateVideoForTenant(tenantId, videoCreation);
+    //    //await _repositoryManager.SaveAsync();
+    //}
 
     private async Task<VideoModel?> GetVideoByAssetId(string assetId)
     {
@@ -744,7 +782,7 @@ public class MuxWebhookService : IMuxWebhookService
 
         return video;
     }
-    private List<AssetImageModel> GetVideoImageUrls(string playbackId, string baseStreamUrl)
+    private List<AssetImageModel> GetVideoImageUrls(string playbackId, string baseStreamUrl, Guid tenantId, Guid videoId)
     {
         // ref: https://docs.mux.com/guides/video/get-images-from-a-video
 
@@ -755,28 +793,36 @@ public class MuxWebhookService : IMuxWebhookService
                     Name = "Thumbnail_314x178",
                     Url = GetVideoThumbnailUrl(playbackId, baseStreamUrl, 314, 178),
                     Width = 314,
-                    Height = 178
+                    Height = 178,
+                    TenantId = tenantId,
+                    VideoId = videoId
                 },
                 new()
                 {
                     Name = "Thumbnail_214x121",
                     Url = GetVideoThumbnailUrl(playbackId, baseStreamUrl, 214, 121),
                     Width = 214,
-                    Height = 121
+                    Height = 121,
+                    TenantId = tenantId,
+                    VideoId = videoId
                 },
                 new()
                 {
                     Name = "Thumbnail_140x64",
                     Url = GetVideoThumbnailUrl(playbackId, baseStreamUrl, 140, 64),
                     Width = 140,
-                    Height = 64
+                    Height = 64,
+                    TenantId = tenantId,
+                    VideoId = videoId
                 },
                 new()
                 {
                     Name = "AnimatedGifUrl",
                     Url = $"{baseStreamUrl}/{playbackId}/animated.gif",
                     Width = 640,
-                    Height = 0
+                    Height = 0,
+                    TenantId = tenantId,
+                    VideoId = videoId
                 },
             };
 
@@ -804,20 +850,20 @@ public class MuxWebhookService : IMuxWebhookService
         return fileName;
     }
 
-    public string GetPublicPlaybackId(List<PlaybackId> playbackIds)
+    public string? GetPublicPlaybackId(List<PlaybackId> playbackIds)
     {
         var id = playbackIds
             .FirstOrDefault(x => x.Policy.Equals("public"))
             ?.Id;
-        return id ?? string.Empty;
+        return id;
     }
 
-    public string GetSignedPlaybackId(List<PlaybackId> playbackIds)
+    public string? GetSignedPlaybackId(List<PlaybackId> playbackIds)
     {
         var id = playbackIds
             .FirstOrDefault(x => x.Policy.Equals("signed"))
             ?.Id;
-        return id ?? string.Empty;
+        return id;
     }
 
     private LatencyMode MapToLatencyMode(string latencyMode)

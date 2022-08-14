@@ -61,15 +61,17 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<FileStorageSettings>? FileStorageSettings { get; set; }
 
     public DbSet<Tenant>? Tenants { get; set; }
-
     public DbSet<Applicant>? Applicants { get; set; }
     public DbSet<Reference>? References { get; set; }
-
     public DbSet<Report>? Reports { get; set; }
 
     public DbSet<AuthorModel>? Authors { get; set; }
     public DbSet<VideoModel>? Videos { get; set; }
+    public DbSet<LiveStreamModel>? LiveStreams { get; set; }
+    public DbSet<PodcastModel>? Podcasts { get; set; }
 
+    public DbSet<AssetImageModel>? AssetImages { get; set; }
+    public DbSet<ContentFeedModel>? ContentFeeds { get; set; }
 
     #endregion Public Properties
 
@@ -193,6 +195,10 @@ public class ApplicationDbContext : IdentityDbContext<
 
         ConfigureSettingsSchemaEntities(modelBuilder);
 
+        ConfigureOneToManyRelationships(modelBuilder);
+
+        ConfigureManyToManyRelationships(modelBuilder);
+
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -238,7 +244,7 @@ public class ApplicationDbContext : IdentityDbContext<
 
     private static void ConfigureSettingsSchemaEntities(ModelBuilder modelBuilder)
     {
-        //Creating SQL database schema for the settings tables
+        // Creating SQL database schema for the settings tables
         foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(e => typeof(ISettingsSchema).IsAssignableFrom(e.ClrType)))
             modelBuilder.Entity(entityType.ClrType).ToTable(entityType.ClrType.Name, "Settings");
     }
@@ -254,12 +260,44 @@ public class ApplicationDbContext : IdentityDbContext<
 
     private static void ConfigureSoftDeletableEntities(ModelBuilder builder)
     {
-        //Creating navigation or shadow properties for all entity
+        // Creating navigation or shadow properties for all entity
 
         foreach (var entityType in builder.Model.GetEntityTypes().Where(e => typeof(ISoftDeletable).IsAssignableFrom(e.ClrType)))
             builder.Entity(entityType.ClrType).Property<bool>("IsDeleted").IsRequired();
 
         builder.SetQueryFilterOnAllEntities<ISoftDeletable>(p => EF.Property<bool>(p, "IsDeleted") == false);
+    }
+
+    private static void ConfigureOneToManyRelationships(ModelBuilder modelBuilder)
+    {
+        // Creating one-to-many relationships where ClientSetNull required
+
+        modelBuilder.Entity<VideoModel>()
+            .HasOne(p => p.Author)
+            .WithMany(b => b.Videos)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
+        modelBuilder.Entity<PodcastModel>()
+            .HasOne(p => p.Author)
+            .WithMany(b => b.Podcasts)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+
+        modelBuilder.Entity<LiveStreamModel>()
+            .HasOne(p => p.Author)
+            .WithMany(b => b.LiveStreams)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+    }
+
+    private static void ConfigureManyToManyRelationships(ModelBuilder modelBuilder)
+    {
+        // Creating many-to-many relationships
+
+        modelBuilder.Entity<VideoCategoryModel>().HasKey(x => new { x.VideoId, x.CategoryId });
+        modelBuilder.Entity<VideoCollectionModel>().HasKey(x => new { x.VideoId, x.CollectionId });
+        modelBuilder.Entity<LiveStreamCategoryModel>().HasKey(x => new { x.LiveStreamId, x.CategoryId });
+        modelBuilder.Entity<PodcastCategoryModel>().HasKey(x => new { x.PodcastId, x.CategoryId });
+        modelBuilder.Entity<PodcastCollectionModel>().HasKey(x => new { x.PodcastId, x.CollectionId });
+        modelBuilder.Entity<CategoryCollectionModel>().HasKey(x => new { x.CategoryId, x.CollectionId });
     }
 
     private void InitiateTenantMode()

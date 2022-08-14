@@ -7,7 +7,7 @@ public class CollectionVideoPositionModel : BaseEntity
     public Guid? VideoId { get; set; }
     public int Position { get; set; }
 
-    #region navigational properties
+    #region Navigational Properties
     public CollectionModel? Collection { get; set; }
     public VideoModel? Video { get; set; }
     #endregion

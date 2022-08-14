@@ -32,17 +32,12 @@
     <Compile Remove="Identity\Extensions\GoogleAuthExtension.cs" />
     <Compile Remove="Logging\LoggerManager.cs" />
     <Compile Remove="Middleware\GlobalExceptionHandler.cs" />
-    <Compile Remove="Repository\CategoryRepository.cs" />
-    <Compile Remove="Repository\CollectionRepository.cs" />
     <Compile Remove="Repository\CommentRepository.cs" />
-    <Compile Remove="Repository\ContentFeedRepository.cs" />
     <Compile Remove="Repository\ExtraRepository.cs" />
     <Compile Remove="Repository\ItemPriceRepository.cs" />
-    <Compile Remove="Repository\LiveStreamRepository.cs" />
     <Compile Remove="Repository\ProductFamilyRepository.cs" />
     <Compile Remove="Repository\ProductItemRepository.cs" />
     <Compile Remove="Repository\RepositoryContext.cs" />
-    <Compile Remove="Repository\SeoMetaDataRepository.cs" />
     <Compile Remove="Repository\SubscriptionRepository.cs" />
     <Compile Remove="Repository\SubtitleRepository.cs" />
     <Compile Remove="Services\Chargebee\ChargebeeService.cs" />
@@ -55,6 +50,7 @@
     <PackageReference Include="EntityFrameworkCore.Extensions" Version="5.0.0" />
     <PackageReference Include="EntityFrameworkCore.SqlServer.HierarchyId" Version="3.0.1" />
     <PackageReference Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
+    <PackageReference Include="ErikEJ.EntityFrameworkCore.DgmlBuilder" Version="6.0.0" />
     <PackageReference Include="Hangfire" Version="1.7.30" />
     <PackageReference Include="Hangfire.Core" Version="1.7.30" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.30" />
@@ -93,6 +89,25 @@
     <Folder Include="Logging\" />
     <Folder Include="Secrets\" />
     <Folder Include="Services\Chargebee\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EFModel1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EFModel1.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="EFModel1.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EFModel1.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

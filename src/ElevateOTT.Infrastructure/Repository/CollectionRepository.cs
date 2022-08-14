@@ -5,7 +5,7 @@ namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class CollectionRepository : RepositoryBase<CollectionModel>, ICollectionRepository
     {
-        public CollectionRepository(RepositoryContext applicationDbContext)
+        public CollectionRepository(ApplicationDbContext applicationDbContext)
         : base(applicationDbContext)
         {
         }

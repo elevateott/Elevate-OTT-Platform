@@ -1,16 +1,20 @@
-﻿namespace ElevateOTT.Application.Common.Interfaces.Repository
+﻿using ElevateOTT.Domain.Entities.Content;
+
+namespace ElevateOTT.Application.Common.Interfaces.Repository
 {
     public interface IRepositoryManager
     {
-        IAuthorRepository Author { get; }
         IVideoRepository Video { get; }
-        //ILiveStreamRepository LiveStream { get; }
-        //ICategoryRepository Category { get; }
-        //ICollectionRepository Collection { get; }
+        ILiveStreamRepository LiveStream { get; }
+        IPodcastRepository Podcast { get; }
+        IAssetImageRepository AssetImage { get; }
+        IContentFeedRepository ContentFeed { get; }
+        IAuthorRepository Author { get; }
+        ICategoryRepository Category { get; }
+        ICollectionRepository Collection { get; }
+
         //ICommentRepository Comment { get; }
-        //IContentFeedRepository ContentFeed { get; }
         //IExtraRepository Extra { get; }
-        //ISeoMetaDataRepository SeoMetaData { get; }
         //ISubtitleRepository Subtitle { get; }
         //ISubscriptionRepository Subscription { get; }
         //IProductItemRepository ProductItem { get; }

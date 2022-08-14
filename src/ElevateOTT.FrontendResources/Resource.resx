@@ -423,6 +423,9 @@
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="Code_Samples" xml:space="preserve">
+    <value>Code Samples</value>
+  </data>
   <data name="Collections" xml:space="preserve">
     <value>Collections</value>
   </data>
@@ -545,6 +548,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
   </data>
   <data name="Delete_my_Account" xml:space="preserve">
     <value>Delete My Account</value>
@@ -671,6 +677,9 @@
   </data>
   <data name="Erbium" xml:space="preserve">
     <value>Erbium</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="Error_401_Message" xml:space="preserve">
     <value>You are not authorized to access this resource.</value>
@@ -1595,6 +1604,9 @@
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="Uploaded_On" xml:space="preserve">
+    <value>Uploaded On</value>
   </data>
   <data name="Upload_Avatar" xml:space="preserve">
     <value>Upload Avatar</value>

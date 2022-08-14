@@ -17,10 +17,69 @@ namespace ElevateOTT.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AssetImageModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("LiveStreamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PodcastId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("VideoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LiveStreamId");
+
+                    b.HasIndex("PodcastId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("AssetImages");
+                });
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AuthorModel", b =>
                 {
@@ -77,7 +136,241 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CategoryCollectionModel", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CollectionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CategoryId", "CollectionId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("CategoriesCollections");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CategoryModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CollectionModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Collections");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.ContentFeedModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DistributionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastUpdated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProviderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContentFeeds");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.LiveStreamCategoryModel", b =>
+                {
+                    b.Property<Guid>("LiveStreamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LiveStreamId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("LiveStreamsCategories");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.LiveStreamModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,6 +381,274 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BlobName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ButtonPurchaseText")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("ClosedCaptions")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ContentAccess")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DownloadUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan?>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullDescription")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("IsHostedOnMux")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMuxLiveStream")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTestAsset")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LatencyMode")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LiveStreamCreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MaxContinuousDuration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MuxLiveStreamId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Passthrough")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreRegistrationText")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("PublicPlaybackId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PublicationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ReconnectWindow")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("ReleasedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RtmpUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RtmpsUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SignedPlaybackId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sku")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StreamCreationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreamKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StreamType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreamUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TestLiveStreamPasscode")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("TrailerVideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UploadedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VideoResolutionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("LiveStreams");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastCategoryModel", b =>
+                {
+                    b.Property<Guid>("PodcastId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PodcastId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("PodcastsCategories");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastCollectionModel", b =>
+                {
+                    b.Property<Guid>("PodcastId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CollectionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PodcastId", "CollectionId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("PodcastsCollections");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AllowDownload")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AssetId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BlobName")
                         .HasColumnType("nvarchar(max)");
@@ -126,7 +687,8 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsHostedOnMux")
                         .HasColumnType("bit");
@@ -137,22 +699,16 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("LanguageCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("LanguageCodeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Mp4Support")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Passthrough")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlaybackId")
+                    b.Property<string>("PublicPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PublicationStatus")
@@ -161,7 +717,20 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<DateTime?>("ReleasedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShortDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SignedPlaybackId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StreamCreationStatus")
@@ -177,7 +746,8 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("TrailerVideoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -186,6 +756,216 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Podcasts");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoCategoryModel", b =>
+                {
+                    b.Property<Guid>("VideoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("VideoId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("VideosCategories");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoCollectionModel", b =>
+                {
+                    b.Property<Guid>("VideoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CollectionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("VideoId", "CollectionId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("VideosCollections");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AllowDownload")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AssetId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BlobName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlobUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ClosedCaptions")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ContentAccess")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DownloadUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan?>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullDescription")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("IsHostedOnMux")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTestAsset")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Mp4Support")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Passthrough")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicPlaybackId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PublicationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReleasedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SignedPlaybackId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StreamCreationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreamUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("TrailerVideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UploadedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Videos");
                 });
@@ -825,44 +1605,204 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomDomain")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("OttChannelName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StorageFileNamePrefix")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Tenants");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AssetImageModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.LiveStreamModel", "LiveStream")
+                        .WithMany("LiveStreamImages")
+                        .HasForeignKey("LiveStreamId");
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.PodcastModel", "Podcast")
+                        .WithMany("PodcastImages")
+                        .HasForeignKey("PodcastId");
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.VideoModel", "Video")
+                        .WithMany("VideoImages")
+                        .HasForeignKey("VideoId");
+
+                    b.Navigation("LiveStream");
+
+                    b.Navigation("Podcast");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CategoryCollectionModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CategoryModel", "Category")
+                        .WithMany("CategoriesCollections")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CollectionModel", "Collection")
+                        .WithMany("CategoriesCollections")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Collection");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.LiveStreamCategoryModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CategoryModel", "Category")
+                        .WithMany("LiveStreamsCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.LiveStreamModel", "LiveStream")
+                        .WithMany("LiveStreamsCategories")
+                        .HasForeignKey("LiveStreamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("LiveStream");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.LiveStreamModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.AuthorModel", "Author")
+                        .WithMany("LiveStreams")
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastCategoryModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CategoryModel", "Category")
+                        .WithMany("PodcastsCategoriess")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.PodcastModel", "Podcast")
+                        .WithMany("PodcastsCategoriess")
+                        .HasForeignKey("PodcastId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Podcast");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastCollectionModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CollectionModel", "Collection")
+                        .WithMany("PodcastsCollections")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.PodcastModel", "Podcast")
+                        .WithMany("PodcastsCollections")
+                        .HasForeignKey("PodcastId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Collection");
+
+                    b.Navigation("Podcast");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.AuthorModel", "Author")
+                        .WithMany("Podcasts")
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoCategoryModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CategoryModel", "Category")
+                        .WithMany("VideosCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.VideoModel", "Video")
+                        .WithMany("VideosCategories")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoCollectionModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.CollectionModel", "Collection")
+                        .WithMany("VideosCollections")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.VideoModel", "Video")
+                        .WithMany("VideosCollections")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Collection");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
+                {
+                    b.HasOne("ElevateOTT.Domain.Entities.Content.AuthorModel", "Author")
+                        .WithMany("Videos")
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Identity.ApplicationPermission", b =>
@@ -957,6 +1897,60 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Applicant");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AuthorModel", b =>
+                {
+                    b.Navigation("LiveStreams");
+
+                    b.Navigation("Podcasts");
+
+                    b.Navigation("Videos");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CategoryModel", b =>
+                {
+                    b.Navigation("CategoriesCollections");
+
+                    b.Navigation("LiveStreamsCategories");
+
+                    b.Navigation("PodcastsCategoriess");
+
+                    b.Navigation("VideosCategories");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CollectionModel", b =>
+                {
+                    b.Navigation("CategoriesCollections");
+
+                    b.Navigation("PodcastsCollections");
+
+                    b.Navigation("VideosCollections");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.LiveStreamModel", b =>
+                {
+                    b.Navigation("LiveStreamImages");
+
+                    b.Navigation("LiveStreamsCategories");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastModel", b =>
+                {
+                    b.Navigation("PodcastImages");
+
+                    b.Navigation("PodcastsCategoriess");
+
+                    b.Navigation("PodcastsCollections");
+                });
+
+            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
+                {
+                    b.Navigation("VideoImages");
+
+                    b.Navigation("VideosCategories");
+
+                    b.Navigation("VideosCollections");
                 });
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Identity.ApplicationPermission", b =>

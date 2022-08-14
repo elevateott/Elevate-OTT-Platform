@@ -979,6 +979,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code Samples.
+        /// </summary>
+        public static string Code_Samples {
+            get {
+                return ResourceManager.GetString("Code_Samples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collections.
         /// </summary>
         public static string Collections {
@@ -1366,6 +1375,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleted.
+        /// </summary>
+        public static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleting this data will permanently remove your account, and this cannot be recovered..
         /// </summary>
         public static string Deleting_this_data_will_permanently_remove_your_account_and_this_cannot_be_recovered {
@@ -1723,6 +1741,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Erbium {
             get {
                 return ResourceManager.GetString("Erbium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -4526,6 +4553,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Upload_image {
             get {
                 return ResourceManager.GetString("Upload_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded On.
+        /// </summary>
+        public static string Uploaded_On {
+            get {
+                return ResourceManager.GetString("Uploaded_On", resourceCulture);
             }
         }
         

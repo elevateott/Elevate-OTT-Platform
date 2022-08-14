@@ -4,9 +4,9 @@ using ElevateOTT.Infrastructure.Repository.Extensions;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
-    public class LiveStreamRepository : RepositoryBase<LiveStreamModel>, ILiveStreamRepository
+    public sealed class LiveStreamRepository : RepositoryBase<LiveStreamModel>, ILiveStreamRepository
     {
-        public LiveStreamRepository(RepositoryContext applicationDbContext)
+        public LiveStreamRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
         }

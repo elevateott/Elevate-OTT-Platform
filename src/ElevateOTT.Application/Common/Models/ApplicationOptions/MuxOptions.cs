@@ -21,6 +21,7 @@ public class MuxOptions
     public string BasePath { get; set; } = string.Empty;
     public string CorsOrigin { get; set; } = string.Empty;
     public string BaseStreamUrl { get; set; } = string.Empty;
+    public string BaseImageUrl { get; set; } = string.Empty;
     public string RTMPUrl { get; set; } = string.Empty;
     public string RTMPSUrl { get; set; } = string.Empty;
 

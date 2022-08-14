@@ -3,25 +3,20 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("ContentFeeds")]
-public class ContentFeedModel : BaseEntity
+public class ContentFeedModel : BaseEntity, IMustHaveTenant
 {
+    public Guid TenantId { get; set; }
+
     [Url]
-    public string? Url { get; set; } 
+    public string? Url { get; set; }
+
+    public int Version { get; set; }
 
     public DistributionType DistributionType { get; set; }
 
     public string? ProviderName { get; set; } 
 
-    public string? Language { get; set; } 
+    public string? Language { get; set; }
 
-    public string? LastUpdated { get; set; } 
-
-    #region foreign keys
-    //[ForeignKey(nameof(TenantModel))]
-    //public Guid? TenantId { get; set; }
-    #endregion
-
-    #region navigational properties
-    //public TenantModel? Tenant { get; set; }
-    #endregion
+    public string? LastUpdated { get; set; }
 }

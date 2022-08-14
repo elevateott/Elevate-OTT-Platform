@@ -154,7 +154,7 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("Passthrough")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlaybackId")
+                    b.Property<string>("PublicPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PublicationStatus")

@@ -3,8 +3,7 @@
 public enum DistributionType
 {
     Web,
-    AndroidMobile,
-    iOSMobile,
+    Mobile,
     Roku,
     FireTV,
     AndroidTV,

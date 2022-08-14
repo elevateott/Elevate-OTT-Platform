@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B14E0C4-2F5C-471E-8435-F1675FFA0A49}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElevateOTT.StreamingWebApp", "src\ElevateOTT.StreamingWebApp\ElevateOTT.StreamingWebApp.csproj", "{C4A92F41-5653-4192-B6C7-7CED33B84D5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{D5403C87-6AFC-4123-B9E9-B3278C09035F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5403C87-6AFC-4123-B9E9-B3278C09035F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5403C87-6AFC-4123-B9E9-B3278C09035F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A92F41-5653-4192-B6C7-7CED33B84D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A92F41-5653-4192-B6C7-7CED33B84D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A92F41-5653-4192-B6C7-7CED33B84D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A92F41-5653-4192-B6C7-7CED33B84D5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{CFEFD60F-2B78-4C66-BD0A-E500C13F8123} = {1644630B-561A-4EC8-8566-CDCAE8E601CC}
 		{77267A62-EB6E-4DFA-9BC7-47400192F332} = {24056575-ED44-42AA-B4EA-F6138553E4CA}
 		{D5403C87-6AFC-4123-B9E9-B3278C09035F} = {24056575-ED44-42AA-B4EA-F6138553E4CA}
+		{C4A92F41-5653-4192-B6C7-7CED33B84D5C} = {24056575-ED44-42AA-B4EA-F6138553E4CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		RESX_PrefixTranslations = False

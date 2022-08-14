@@ -3,8 +3,10 @@
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("AssetImages")]
-public class AssetImageModel : BaseEntity
+public class AssetImageModel : BaseEntity, IMustHaveTenant
 {
+    public Guid TenantId { get; set; }
+
     public string? Name { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
@@ -20,10 +22,14 @@ public class AssetImageModel : BaseEntity
 
     [ForeignKey(nameof(LiveStreamModel))]
     public Guid? LiveStreamId { get; set; }
+
+    [ForeignKey(nameof(PodcastModel))]
+    public Guid? PodcastId { get; set; }
     #endregion
 
-    #region navigational properties
+    #region Navigational Properties
     public VideoModel? Video { get; set; }
     public LiveStreamModel? LiveStream { get; set; }
+    public PodcastModel? Podcast { get; set; }
     #endregion
 }

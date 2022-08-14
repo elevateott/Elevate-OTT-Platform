@@ -7,7 +7,21 @@ public abstract class BaseAsset : BaseEntity
     [Url(ErrorMessage = "Invalid url.")]
     public string? StreamUrl { get; set; }
 
-    public string? PlaybackId { get; set; } 
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? BlobUrl { get; set; }
+
+    public string? SeoTitle { get; set; }
+
+    public string? SeoDescription { get; set; }
+
+    public string? Slug { get; set; }
+
+    public string? Passthrough { get; set; }
+    public bool ClosedCaptions { get; set; }
+
+    public string? PublicPlaybackId { get; set; }
+    public string? SignedPlaybackId { get; set; }
+
     public string? AssetId { get; set; } 
     public AssetCreationStatus StreamCreationStatus { get; set; }
 
@@ -21,13 +35,15 @@ public abstract class BaseAsset : BaseEntity
 
     public string? FileName { get; set; } 
 
-    public string? BlobName { get; set; } 
+    public string? BlobName { get; set; }
 
-    public string? Title { get; set; } 
+    [StringLength(300)]
+    public string? Title { get; set; }
 
-    public string? ShortDescription { get; set; } 
+    [StringLength(500)]
+    public string? ShortDescription { get; set; }
 
-    // TODO HTML content??
+    [StringLength(2000)]
     public string? FullDescription { get; set; } 
 
     public string? LanguageCode { get; set; } 
@@ -37,20 +53,17 @@ public abstract class BaseAsset : BaseEntity
     public bool AllowDownload { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
+    public string? DownloadUrl { get; set; }
+
+    [Url(ErrorMessage = "Invalid url.")]
     public string? ThumbnailUrl { get; set; } 
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string? TrailerVideoUrl { get; set; } 
-
-    [Url(ErrorMessage = "Invalid url.")]
-    public string? BlobUrl { get; set; } 
-
+    public string? TrailerVideoUrl { get; set; }
 
     public DateTime? UploadedOn { get; set; }
 
     public DateTime? ReleasedDate { get; set; }
 
     public DateTime? ExpirationDate { get; set; }
-
-    public Guid? LanguageCodeId { get; set; }
 }

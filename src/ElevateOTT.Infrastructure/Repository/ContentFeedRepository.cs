@@ -5,7 +5,7 @@ namespace ElevateOTT.Infrastructure.Repository
 {
     public sealed class ContentFeedRepository : RepositoryBase<ContentFeedModel>, IContentFeedRepository
     {
-        public ContentFeedRepository(RepositoryContext applicationDbContext)
+        public ContentFeedRepository(ApplicationDbContext applicationDbContext)
         : base(applicationDbContext)
         {
         }

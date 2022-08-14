@@ -46,13 +46,58 @@
                         Icon="@Icons.Material.Filled.Add" OnClick="AddVideo" />
             </ToolBarContent>
             <HeaderContent>
+                <MudTh T="VideoItem"></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Title" T="VideoItem" InitialDirection="SortDirection.Ascending">@Resource.Title</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Added On" T="VideoItem">@Resource.Created_On</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Uploaded On" T="VideoItem">@Resource.Uploaded_On</MudTableSortLabel></MudTh>
                 <MudTh>@Resource.Options</MudTh>
             </HeaderContent>
             <RowTemplate>
+                <MudTd>
+                    @switch (video.StreamCreationStatus)
+                    {
+                        case AssetCreationStatus.Ready:
+                            <MudImage Src="@video.ThumbnailUrl"
+                                      Width="140"
+                                      Height="64"
+                                      Alt="@video.Title"
+                                      Elevation="25"
+                                      Class="rounded-lg ma-4"/>
+                            break;
+                        case AssetCreationStatus.None:
+                        case AssetCreationStatus.Preparing:
+                        case AssetCreationStatus.Errored:
+                        case AssetCreationStatus.Deleted:
+                        default:
+                            <MudIcon Icon="@Icons.Filled.VideoFile" Color="Color.Primary" Size="Size.Large" />
+                            break;
+                    }
+                   
+                </MudTd>
                 <MudTd DataLabel="Title">@video.Title</MudTd>
-                <MudTd DataLabel="Added On">@video.CreatedOn.ToShortDateString()</MudTd>
+                <MudTd DataLabel="Uploaded On">
+                    @switch (video.StreamCreationStatus)
+                    {
+                        case AssetCreationStatus.None:
+                        case AssetCreationStatus.Preparing:
+                            <div class="d-flex flex-row gap-2">
+                                <MudIcon Size="Size.Small" Icon="fas fa-cog fa-spin" Color="Color.Primary"/>
+                                <MudText Typo="Typo.body1">Preparing...</MudText>
+                            </div>
+                            break;
+                        case AssetCreationStatus.Ready:
+                            @video.CreatedOn.ToShortDateString()
+                            break;
+                        case AssetCreationStatus.Errored:
+                            <MudAlert Severity="Severity.Error">@Resource.Error</MudAlert>
+                            break;
+                        case AssetCreationStatus.Deleted:
+                            <MudAlert Severity="Severity.Error">@Resource.Deleted</MudAlert>
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                </MudTd>
                 <MudTd>
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Text">
                         <MudButton Variant="Variant.Filled"

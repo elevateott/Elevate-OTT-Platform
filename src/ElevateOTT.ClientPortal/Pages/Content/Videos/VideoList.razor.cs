@@ -132,19 +132,24 @@ namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
             //    InvokeAsync(StateHasChanged);
             //});
 
-        VideoHub.HubConnection.On<Guid?, AssetCreationStatus>("ReceiveVideoUpdate", (videoId, status) =>
+        VideoHub?.HubConnection?.On<Guid?, AssetCreationStatus>("ReceiveVideoUpdate", (videoId, status) =>
         {
-                // TODO do stuff with return data
+            //
+            // TODO hub should call this user only for production
+            // currently call All for development
+            //
 
             Console.WriteLine("video hub update received!");
             Console.WriteLine($"video id: {videoId}");
             Console.WriteLine($"status: {status}");
 
+            Table?.ReloadServerData();
+
             _updateReceived = true;
             InvokeAsync(StateHasChanged);
         });
 
-        await VideoHub.HubConnection.StartAsync();
+        await VideoHub?.HubConnection?.StartAsync();
     }
 
         private void AddVideo()

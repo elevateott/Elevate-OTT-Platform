@@ -11,7 +11,8 @@ public class VideoForEdit
     public string? StreamUrl { get; set; }
     public string? ShortDescription { get; set; }
     public string? FullDescription { get; set; }
-    public string? PlaybackId { get; set; }
+    public string? PublicPlaybackId { get; set; }
+    public string? SignedPlaybackId { get; set; }
     public AssetCreationStatus StreamCreationStatus { get; set; }
     public PublicationStatus PublicationStatus { get; set; }
     public ContentAccess ContentAccess { get; set; }
