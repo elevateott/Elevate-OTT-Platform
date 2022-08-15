@@ -39,26 +39,6 @@ builder.Services.AddAuth(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    //var tenantMode = (TenantMode)Enum.Parse(typeof(TenantMode), builder.Configuration.GetValue<string>("AppOptions:TenantModeOptions"));
-    //switch (tenantMode)
-    //{
-    //    case TenantMode.SingleTenant:
-    //        options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder.WithOrigins(builder.Configuration.GetValue<string>("ClientApp:SingleTenantHostName"))
-    //                              .SetIsOriginAllowedToAllowWildcardSubdomains()
-    //                              .AllowAnyMethod()
-    //                              .AllowAnyHeader()
-    //                              .AllowCredentials());
-    //        break;
-    //    case TenantMode.MultiTenant:
-    //        options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder
-    //                  .WithOrigins(builder.Configuration.GetValue<string>("ClientApp:MultiTenantHostName"))
-    //                  .SetIsOriginAllowedToAllowWildcardSubdomains()
-    //                  .AllowAnyMethod()
-    //                  .AllowAnyHeader()
-    //                  .AllowCredentials());
-    //        break;
-    //}
-
     options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder
         .AllowAnyOrigin()
         .AllowAnyMethod()

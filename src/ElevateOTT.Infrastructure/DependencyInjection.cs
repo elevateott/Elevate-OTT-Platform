@@ -87,8 +87,9 @@ public static class DependencyInjection
         services.AddScoped<IReportingService, ReportingService>();
         services.AddScoped<IHtmlReportBuilder, HtmlReportBuilder>();
 
-        services.AddScoped<IBlobStorageService, AzureStorageService>();
+        services.AddScoped<IFileStorageService, AzureStorageService>();
         services.AddScoped<IFileStorageService, OnPremiseStorageService>();
+
         services.AddScoped<IDataExportService, DataExportService>();
         services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
         services.AddScoped<IConfigReaderService, ConfigReaderService>();

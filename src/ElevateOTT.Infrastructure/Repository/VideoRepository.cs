@@ -18,10 +18,13 @@ namespace ElevateOTT.Infrastructure.Repository
             Guard.Against.Null(request, nameof(request));
 
             var query = FindAll(trackChanges)
+                .Include(nameof(VideoModel.VideoImages))
                 .Where(v => v.TenantId.Equals(tenantId));
 
             if (!string.IsNullOrWhiteSpace(request.SearchText))
-                query = query.Where(v => v.Title != null && v.Title.Contains(request.SearchText)
+                query = query
+                    .Include(nameof(VideoModel.VideoImages))
+                    .Where(v => v.Title != null && v.Title.Contains(request.SearchText)
                 || v.FileName != null && v.FileName.Contains(request.SearchText));
 
             query = !string.IsNullOrWhiteSpace(request.SortBy)
@@ -40,10 +43,12 @@ namespace ElevateOTT.Infrastructure.Repository
         public async Task<VideoModel?> GetVideoAsync(Guid tenantId, Guid videoId, bool trackChanges) =>
             await FindByCondition(a => a.TenantId.Equals(tenantId)
                                        && a.Id.Equals(videoId), trackChanges)
+                .Include(nameof(VideoModel.VideoImages))
                 .SingleOrDefaultAsync();
 
         public async Task<VideoModel?> FindVideoByConditionAsync(Expression<Func<VideoModel, bool>> expression, bool trackChanges) =>
             await FindByCondition(expression, trackChanges)
+                .Include(nameof(VideoModel.VideoImages))
                 .SingleOrDefaultAsync();
 
         public void CreateVideoForTenant(Guid tenantId, VideoModel video)

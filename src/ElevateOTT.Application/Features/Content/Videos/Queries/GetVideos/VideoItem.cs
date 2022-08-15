@@ -35,12 +35,12 @@ public class VideoItem : AuditableDto
     public string? DownloadUrl { get; set; }
     public string? Passthrough { get; set; }
     public bool ClosedCaptions { get; set; }
+    public string? SeoTitle { get; set; }
+    public string? SeoDescription { get; set; }
+    public string? Slug { get; set; }
+    public Guid? AuthorId { get; set; }
 
-    // public Guid? VideoFolderId { get; set; }
-
-    // TODO can video be in multiple collections??
-    //
-    // public Guid? CollectionId { get; set; }
+    //public List<AssetImageModel>? VideoImages { get; set; }
 
     #endregion Public Properties
 

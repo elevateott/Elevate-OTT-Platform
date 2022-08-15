@@ -141,11 +141,20 @@
   <data name="Add" xml:space="preserve">
     <value>Agregar</value>
   </data>
+  <data name="Add Collection" xml:space="preserve">
+    <value>Añadir Colección</value>
+  </data>
   <data name="Add_Applicant" xml:space="preserve">
     <value>Agregar solicitante</value>
   </data>
   <data name="Add_Authenticator_App" xml:space="preserve">
     <value>Agregar aplicación Authenticator</value>
+  </data>
+  <data name="Add_Author" xml:space="preserve">
+    <value>Añadir Autor</value>
+  </data>
+  <data name="Add_Category" xml:space="preserve">
+    <value>Añadir una categoría</value>
   </data>
   <data name="Add_New_File" xml:space="preserve">
     <value>Agregar nuevo archivo</value>

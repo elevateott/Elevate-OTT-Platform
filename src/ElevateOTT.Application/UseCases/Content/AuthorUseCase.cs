@@ -12,6 +12,7 @@ using ElevateOTT.Application.Features.Content.Authors.Commands.UpdateAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Queries.ExportAuthors;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.Domain.Entities;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.UseCases.Content;
@@ -112,9 +113,17 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<CreateAuthorResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
+        string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
+
         var author = _mapper.Map<AuthorModel>(request);
 
-        _repositoryManager.Author.CreateAuthorForTenant(tenantId.Value, author);
+        if (request.IsImageAdded && request.ImageFile is not null)
+        {
+            string imageUrl = await StoreImageAsync(request.ImageFile, fileNamePrefix);
+            author.ImageUrl = imageUrl;
+        }
+
+        _repositoryManager.Author.CreateAuthor(author);
         await _repositoryManager.SaveAsync();
 
         var createAuthorResponse = new CreateAuthorResponse
@@ -135,14 +144,7 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
-        string? fileNamePrefix = string.Empty;
-        if (_dbContext.Tenants != null)
-        {
-            var tenant = await _dbContext.Tenants.FindAsync(tenantId);
-            fileNamePrefix = !string.IsNullOrWhiteSpace(tenant?.StorageFileNamePrefix) 
-                ? tenant.StorageFileNamePrefix : tenantId.Value.ToString();
-        }
-
+        string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
 
         var authorEntity = await _repositoryManager.Author.GetAuthorAsync(tenantId.Value, request.Id, true);
 
@@ -151,7 +153,10 @@ public class AuthorUseCase : IAuthorUseCase
 
         _mapper.Map(request, authorEntity);
 
-        await UpdateAuthorWithImageAsync(authorEntity, request.ImageFile, fileNamePrefix);
+        if (request.IsImageAdded && request.ImageFile is not null)
+        {
+            await UpdateAuthorWithImageAsync(authorEntity, request.ImageFile, fileNamePrefix);
+        }
 
         await _repositoryManager.SaveAsync();
 
@@ -187,9 +192,19 @@ public class AuthorUseCase : IAuthorUseCase
     #endregion Public Methods
 
     #region Private Methods
-    public async Task UpdateAuthorWithImageAsync(AuthorModel author, IFormFile? image, string fileNamePrefix)
+
+    private async Task<string> GetStorageFileNamePrefix(Guid tenantId)
     {
-        var storageService = _storageProvider.InvokeInstanceForAzureStorageAsync();
+        if (_dbContext.Tenants == null) return string.Empty;
+
+        var tenant = await _dbContext.Tenants.FindAsync(tenantId);
+        return !string.IsNullOrWhiteSpace(tenant?.StorageFileNamePrefix)
+            ? tenant.StorageFileNamePrefix : tenantId.ToString();
+    }
+
+    private async Task UpdateAuthorWithImageAsync(AuthorModel author, IFormFile? image, string fileNamePrefix)
+    {
+        var storageService = _storageProvider.InvokeInstanceForAzureStorage();
 
         switch (storageService.GetFileState(image, author.ImageUrl))
         {
@@ -201,7 +216,8 @@ public class AuthorUseCase : IAuthorUseCase
                 break;
 
             case FileStatus.Deleted:
-                await storageService.DeleteFileIfExists(author.ImageUrl ?? string.Empty, "Users");
+                var blobOptions = _configReaderService.GetBlobOptions();
+                await storageService.DeleteFileIfExists(author.ImageUrl ?? string.Empty, blobOptions.ImageBlobContainerName);
                 author.ImageUrl = null;
                 break;
             default:
@@ -209,7 +225,19 @@ public class AuthorUseCase : IAuthorUseCase
         }
     }
 
-    public async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
+    private async Task<string> StoreImageAsync(IFormFile? image, string fileNamePrefix)
+    {
+        var blobOptions = _configReaderService.GetBlobOptions();
+        var storageService = _storageProvider.InvokeInstanceForAzureStorage();
+
+        if (image == null) return string.Empty;
+
+        var imageUri = await storageService.UploadFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix);
+
+        return imageUri;
+    }
+
+    private async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
     {
         var blobOptions = _configReaderService.GetBlobOptions();
 
@@ -218,7 +246,6 @@ public class AuthorUseCase : IAuthorUseCase
         var newImageUri = await storageService.EditFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix, oldFileUri);
 
         return newImageUri;
-
     }
     #endregion Private Methods
 }

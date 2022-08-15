@@ -99,13 +99,7 @@
 
                 </MudTd>
                 <MudTd>
-                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Text">
-                        <MudButton Variant="Variant.Filled"
-                                   StartIcon="@Icons.Material.Filled.ViewModule"
-                                   Size="Size.Small"
-                                   Color="Color.Default"
-                                   OnClick="@(() => ViewVideo(video.Id))">@Resource.View</MudButton>
-
+                    <MudButtonGroup OverrideStyles="true">
                         <MudButton Variant="Variant.Filled"
                                    StartIcon="@Icons.Material.Filled.Edit"
                                    Size="Size.Small"

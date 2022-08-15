@@ -5,9 +5,11 @@ namespace ElevateOTT.Application.Common.Interfaces.Mux;
 
 public interface IMuxAssetService
 {
-    Task GetAssetFromMux(string assetId);
-    Task ListAssetsFromMuxByTenant(Guid tenantId);
-    Task<CreateAssetAtMuxResponse> CreateAssetAtMux(CreateAssetAtMuxCommand createAssetAtMuxCommand);
-    Task UpdateAssetAtMux();
-    Task DeleteAssetFromMux(string assetId);
+    Task GetAssetFromMuxAsync(string assetId);
+    Task ListAssetsFromMuxByTenantAsync(Guid tenantId);
+    Task<CreateAssetAtMuxResponse> CreateAssetAtMuxAsync(CreateAssetAtMuxCommand createAssetAtMuxCommand);
+    Task UpdateAssetAtMuxAsync();
+    Task DeleteAssetFromMuxAsync(string assetId);
+    Task<bool> AssetExistsAsync(string assetId);
+
 }

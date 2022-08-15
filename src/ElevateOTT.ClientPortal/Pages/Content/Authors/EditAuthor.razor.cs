@@ -1,5 +1,6 @@
 ﻿using ElevateOTT.ClientPortal.Features.Content.Authors.Commands.UpdateAuthor;
 using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorForEdit;
+using System.ComponentModel;
 
 namespace ElevateOTT.ClientPortal.Pages.Content.Authors;
 
@@ -31,9 +32,7 @@ public partial class EditAuthor : ComponentBase
     private int _maxSlugChars = 60;
 
 
-    private string SlugPlaceholder => !string.IsNullOrWhiteSpace(_authorForEditVm.Name) 
-        ? _authorForEditVm.Name.FormatSlug()
-        : _slugExampleName;
+    private string SlugPlaceholder => _slugExampleName;
 
     // TODO getters and setters ??????
     private StreamContent? _imageContent { get; set; }
@@ -41,12 +40,13 @@ public partial class EditAuthor : ComponentBase
     private EditContextServerSideValidator? _editContextServerSideValidator { get; set; }
     private AuthorForEdit _authorForEditVm { get; set; } = new();
     private UpdateAuthorCommand? _updateAuthorCommand { get; set; }
+
     #endregion Private Properties
 
     #region Protected Methods
     protected override async Task OnInitializedAsync()
     {
-        BreadcrumbService.SetBreadcrumbItems(new List<BreadcrumbItem>
+        BreadcrumbService?.SetBreadcrumbItems(new List<BreadcrumbItem>
         {
             new(Resource.Home, "/"),
             new(Resource.Authors, "/content/authors"),
@@ -59,6 +59,7 @@ public partial class EditAuthor : ComponentBase
         {
             var successResult = httpResponseWrapper.Response as SuccessResult<AuthorForEdit>;
             _authorForEditVm = successResult?.Result;
+            _authorForEditVm.PropertyChanged += NameChangedHandler;
         }
         else
         {
@@ -69,6 +70,12 @@ public partial class EditAuthor : ComponentBase
     #endregion Protected Methods
 
     #region Private Methods
+    private void NameChangedHandler(object? sender, PropertyChangedEventArgs e)
+    {
+        _authorForEditVm.Slug = _authorForEditVm.Name.FormatSlug();
+        StateHasChanged();
+    }
+
     private void GetBase64StringImageUrl(string imageSrc)
     {
         _imageSrc = imageSrc;

@@ -31,7 +31,6 @@ public class VideoUseCase : IVideoUseCase
     private readonly ITenantResolver _tenantResolver;
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
-    private readonly IBlobStorageService _fileStorageService;
     private readonly IMuxAssetService _muxAssetService;
 
     #endregion Private Fields
@@ -46,7 +45,6 @@ public class VideoUseCase : IVideoUseCase
                             ITenantResolver tenantResolver,
                             IStorageProvider storageProvider,
                             IConfigReaderService configReaderService,
-                            IBlobStorageService fileStorageService,
                             IMuxAssetService muxAssetService)
     {
         _dbContext = dbContext;
@@ -57,7 +55,6 @@ public class VideoUseCase : IVideoUseCase
         _tenantResolver = tenantResolver;
         _storageProvider = storageProvider;
         _configReaderService = configReaderService;
-        _fileStorageService = fileStorageService;
         _muxAssetService = muxAssetService;
     }
 
@@ -208,7 +205,6 @@ public class VideoUseCase : IVideoUseCase
         _repositoryManager.Video.DeleteVideo(videoEntity);
         await _repositoryManager.SaveAsync();
 
-
         return Envelope<string>.Result.Ok(Resource.Video_has_been_deleted_successfully);
     }
 
@@ -219,7 +215,8 @@ public class VideoUseCase : IVideoUseCase
 
     public Envelope<SasTokenResponse> GetSasTokenFromAzure()
     {
-        var response = _fileStorageService.GetSasTokenForVideoContainer();
+        var storageService = _storageProvider.InvokeInstanceForAzureStorage();
+        var response = storageService.GetSasTokenForVideoContainer();
 
         return response is null ? Envelope<SasTokenResponse>.Result.NotFound(Resource.Unable_to_obtain_sas_token) 
             : Envelope<SasTokenResponse>.Result.Ok(response);
@@ -230,7 +227,7 @@ public class VideoUseCase : IVideoUseCase
     #region Private Methods
     private async Task UpdateVideoWithImageAsync(VideoModel video, IFormFile? image, string fileNamePrefix)
     {
-        var storageService = _storageProvider.InvokeInstanceForAzureStorageAsync();
+        var storageService = _storageProvider.InvokeInstanceForAzureStorage();
 
         //switch (storageService.GetFileState(image, video.ImageUrl))
         //{

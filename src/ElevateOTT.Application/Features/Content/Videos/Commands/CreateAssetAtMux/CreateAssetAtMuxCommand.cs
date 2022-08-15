@@ -38,7 +38,7 @@ public class CreateAssetAtMuxCommand : IRequest<Envelope<CreateAssetAtMuxRespons
 
         public async Task<Envelope<CreateAssetAtMuxResponse>> Handle(CreateAssetAtMuxCommand request, CancellationToken cancellationToken)
         {
-            var response = await _muxAssetService.CreateAssetAtMux(request);
+            var response = await _muxAssetService.CreateAssetAtMuxAsync(request);
             return Envelope<CreateAssetAtMuxResponse>.Result.Ok(response);
         }
     }

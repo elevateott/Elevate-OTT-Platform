@@ -94,7 +94,7 @@ public partial class AuthorsPage : ComponentBase, IAsyncDisposable
     #region Private Methods
     private void AddAuthor()
     {
-        NavigationManager?.NavigateTo("poc/army/addAuthor");
+        NavigationManager?.NavigateTo("/content/add-author");
     }
 
     private void EditAuthor(Guid id)
@@ -217,11 +217,6 @@ public partial class AuthorsPage : ComponentBase, IAsyncDisposable
             await HubConnection.StartAsync();
             Snackbar.Add("Reporting Hub is now connected.", Severity.Success);
         }
-    }
-
-    private void ViewAuthor(Guid id)
-    {
-        NavigationManager.NavigateTo($"poc/army/viewAuthor/{id}");
     }
     #endregion Private Methods
 }

@@ -49,17 +49,17 @@ public class MuxAssetService : IMuxAssetService
     //    create asset track
     //    delete asset track
 
-    public Task GetAssetFromMux(string assetId)
+    public Task GetAssetFromMuxAsync(string assetId)
     {
         throw new NotImplementedException();
     }
 
-    public Task ListAssetsFromMuxByTenant(Guid tenantId)
+    public Task ListAssetsFromMuxByTenantAsync(Guid tenantId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<CreateAssetAtMuxResponse> CreateAssetAtMux(CreateAssetAtMuxCommand createAssetAtMuxCommand)
+    public async Task<CreateAssetAtMuxResponse> CreateAssetAtMuxAsync(CreateAssetAtMuxCommand createAssetAtMuxCommand)
     {
         var apiInstance = new AssetsApi(_muxConfig);
 
@@ -82,13 +82,30 @@ public class MuxAssetService : IMuxAssetService
         return new CreateAssetAtMuxResponse { AssetId = asset.Data.Id };
     }
 
-    public Task UpdateAssetAtMux()
+    public Task UpdateAssetAtMuxAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAssetFromMux(string assetId)
+    public async Task DeleteAssetFromMuxAsync(string assetId)
     {
-        throw new NotImplementedException();
+        var apiInstance = new AssetsApi(_muxConfig);
+        await apiInstance.DeleteAssetAsync(assetId);
+    }
+
+    public async Task<bool> AssetExistsAsync(string assetId)
+    {
+        var apiInstance = new AssetsApi(_muxConfig);
+        try
+        {
+            // Exception thrown if asset doesn't exist at Mux
+            var response = await apiInstance.GetAssetAsync(assetId);
+            return response.Data.Id.Equals(assetId);
+        }
+        catch (ApiException ex)
+        {
+            _logger.LogError(ex.Message);
+            return false;
+        }
     }
 }

@@ -28,7 +28,7 @@ public class StorageProvider : IStorageProvider
         return _storageFactory.CreateInstance((StorageTypes)storageType);
     }
 
-    public IFileStorageService InvokeInstanceForAzureStorageAsync()
+    public IFileStorageService InvokeInstanceForAzureStorage()
     {
         return _storageFactory.CreateInstance(StorageTypes.AzureStorageService);
     }

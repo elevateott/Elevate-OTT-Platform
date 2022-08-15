@@ -38,10 +38,8 @@ namespace ElevateOTT.Infrastructure.Repository
             await FindByCondition(expression, trackChanges)
                 .SingleOrDefaultAsync();
 
-        public void CreateAuthorForTenant(Guid tenantId, AuthorModel author)
+        public void CreateAuthor(AuthorModel author)
         {
-            author.TenantId = tenantId;
-            author.CreatedOn = DateTime.Now;
             Create(author);
         }
 

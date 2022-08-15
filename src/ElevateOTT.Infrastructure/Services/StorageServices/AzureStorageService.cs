@@ -3,7 +3,7 @@ using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 
 namespace ElevateOTT.Infrastructure.Services.StorageServices;
 
-public class AzureStorageService : IBlobStorageService
+public class AzureStorageService : IFileStorageService
 {
     #region Private Fields
 

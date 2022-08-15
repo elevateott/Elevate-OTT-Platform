@@ -151,6 +151,33 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Author.
+        /// </summary>
+        public static string Add_Author {
+            get {
+                return ResourceManager.GetString("Add_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Category.
+        /// </summary>
+        public static string Add_Category {
+            get {
+                return ResourceManager.GetString("Add_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Collection.
+        /// </summary>
+        public static string Add_Collection {
+            get {
+                return ResourceManager.GetString("Add Collection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New File.
         /// </summary>
         public static string Add_New_File {

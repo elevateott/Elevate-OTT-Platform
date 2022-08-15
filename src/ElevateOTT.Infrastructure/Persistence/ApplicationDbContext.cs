@@ -271,7 +271,6 @@ public class ApplicationDbContext : IdentityDbContext<
     private static void ConfigureOneToManyRelationships(ModelBuilder modelBuilder)
     {
         // Creating one-to-many relationships where ClientSetNull required
-
         modelBuilder.Entity<VideoModel>()
             .HasOne(p => p.Author)
             .WithMany(b => b.Videos)
@@ -286,6 +285,22 @@ public class ApplicationDbContext : IdentityDbContext<
             .HasOne(p => p.Author)
             .WithMany(b => b.LiveStreams)
             .OnDelete(DeleteBehavior.ClientSetNull);
+
+        // Creating one-to-many relationships where ClientCascade required
+        modelBuilder.Entity<AssetImageModel>()
+            .HasOne(p => p.Video)
+            .WithMany(b => b.VideoImages)
+            .OnDelete(DeleteBehavior.ClientCascade);
+
+        modelBuilder.Entity<AssetImageModel>()
+            .HasOne(p => p.LiveStream)
+            .WithMany(b => b.LiveStreamImages)
+            .OnDelete(DeleteBehavior.ClientCascade);
+
+        modelBuilder.Entity<AssetImageModel>()
+            .HasOne(p => p.Podcast)
+            .WithMany(b => b.PodcastImages)
+            .OnDelete(DeleteBehavior.ClientCascade);
     }
 
     private static void ConfigureManyToManyRelationships(ModelBuilder modelBuilder)

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Runtime.InteropServices;
+using AutoMapper;
 using Azure.Core;
 using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
@@ -9,7 +10,6 @@ using ElevateOTT.Domain.Entities;
 using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Domain.Exceptions;
 using ElevateOTT.Infrastructure.Repository;
-using MuxPlaybackIdModel = ElevateOTT.Domain.Entities.Mux.MuxPlaybackIdModel;
 
 namespace ElevateOTT.Infrastructure.Services.Mux;
 
@@ -275,21 +275,14 @@ public class MuxWebhookService : IMuxWebhookService
 
         string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
-        // TODO update video asset
-        var videoToUpdate =
-            await _repositoryManager.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
-                trackChanges: true);
+        var videoToUpdate = _repositoryManager.Video.GetVideoByPassthrough(passthrough);
 
         if (videoToUpdate == null) return false;
 
+        // Possible that 'Asset Ready' handler called first for short videos
         if (videoToUpdate.StreamCreationStatus != AssetCreationStatus.None) return true;
         videoToUpdate.StreamCreationStatus = AssetCreationStatus.Preparing;
         videoToUpdate.AssetId = hookRequest.Data.Id;
-        videoToUpdate.StreamUrl = hookRequest.Data.Url;
-        videoToUpdate.Duration = TimeSpan.FromSeconds(hookRequest.Data.Duration);
-        videoToUpdate.IsTestAsset = hookRequest.Data.Test;
-        videoToUpdate.Mp4Support = hookRequest.Data.Mp4Support == "standard";
-        videoToUpdate.IsHostedOnMux = true;
 
         await _repositoryManager.SaveAsync();
 
@@ -305,44 +298,32 @@ public class MuxWebhookService : IMuxWebhookService
         string passthrough = GetPassthroughValue(hookRequest.Data.Passthrough);
 
         var videoToUpdate = _repositoryManager.Video.GetVideoByPassthrough(passthrough);
+        if (videoToUpdate is null) return false;
 
-        // TODO Playback IDs
-        // save all in playback ids
-        // use main one for stream url
-        // https://stream.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk.m3u8
-
-        // TODO saves image urls
-        /*
-         * https://image.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk/thumbnail.png?width=314&height=178&fit_mode=pad
-
-            https://image.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk/thumbnail.png?width=214&height=121&fit_mode=pad
-
-            https://image.mux.com/Urv9iRsg61OaqXgkjUg6QCLu2cm2Et8zCg1aFNAMCNk/thumbnail.png?width=140&height=64&fit_mode=pad
-         */
-
-        // TODO playback url
-        // https://stream.mux.com/{PLAYBACK_ID}.m3u8
-
-        //var videoToUpdate =
-        //    await _repositoryManager.Video.FindVideoByConditionAsync(v => v.Passthrough != null && v.Passthrough.Equals(hookRequest.Data.Passthrough),
-        //        trackChanges: true);
-
-        if (videoToUpdate is not { StreamCreationStatus: AssetCreationStatus.Preparing }) return false;
+        if (videoToUpdate.StreamCreationStatus == AssetCreationStatus.Ready) return true;
 
         videoToUpdate.StreamCreationStatus = AssetCreationStatus.Ready;
+        videoToUpdate.AssetId = hookRequest.Data.Id;
+        videoToUpdate.Duration = TimeSpan.FromSeconds(hookRequest.Data.Duration);
+        videoToUpdate.IsTestAsset = hookRequest.Data.Test;
+        videoToUpdate.Mp4Support = hookRequest.Data.Mp4Support == "standard";
+        videoToUpdate.IsHostedOnMux = true;
 
         if (hookRequest.Data.PlaybackIds != null)
         {
             var muxOptions = _configReaderService.GetMuxOptions();
-            string publicPlaybackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
-            string signedPlaybackId = GetSignedPlaybackId(hookRequest.Data.PlaybackIds);
+            string? publicPlaybackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
+            string? signedPlaybackId = GetSignedPlaybackId(hookRequest.Data.PlaybackIds);
             string baseStreamUrl = muxOptions.BaseStreamUrl;
             string baseImageUrl = muxOptions.BaseImageUrl;
-            videoToUpdate.StreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
-            videoToUpdate.VideoImages = GetVideoImageUrls(publicPlaybackId, baseImageUrl, videoToUpdate.TenantId, videoToUpdate.Id);
-            videoToUpdate.PublicPlaybackId = publicPlaybackId;
             videoToUpdate.SignedPlaybackId = signedPlaybackId;
-            videoToUpdate.ThumbnailUrl = GetVideoThumbnailUrl(publicPlaybackId, baseImageUrl, 140, 64);
+            if (!string.IsNullOrEmpty(publicPlaybackId))
+            {
+                videoToUpdate.StreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
+                videoToUpdate.VideoImages = GetVideoImageUrls(publicPlaybackId, baseImageUrl, videoToUpdate.TenantId, videoToUpdate.Id);
+                videoToUpdate.PublicPlaybackId = publicPlaybackId;
+                videoToUpdate.ThumbnailUrl = GetVideoThumbnailUrl(publicPlaybackId, baseImageUrl, 140, 64);
+            }
         }
 
         await _repositoryManager.SaveAsync();
@@ -355,26 +336,6 @@ public class MuxWebhookService : IMuxWebhookService
         return true;
 
     }
-    private async Task<bool> HandleVideoAssetLiveStreamCompleted(MuxWebhookRequest? hookRequest)
-    {
-        if (hookRequest?.Data == null) return false;
-        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
-
-        return true;
-    }
-
-    private async Task<bool> HandleVideoAssetDeleted(MuxWebhookRequest? hookRequest)
-    {
-        var video = await GetVideoByAssetId(hookRequest.Data.Id);
-        if (video == null) throw new VideoNotFoundException();
-
-        video.StreamCreationStatus = AssetCreationStatus.Deleted;
-
-        await _repositoryManager.SaveAsync();
-        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
-
-        return true;
-    }
 
     private async Task<bool> HandleVideoAssetUpdated(MuxWebhookRequest? hookRequest)
     {
@@ -386,20 +347,50 @@ public class MuxWebhookService : IMuxWebhookService
         if (videoToUpdate == null) return false;
 
         await _repositoryManager.SaveAsync();
+
+        // Update client with new status via SignalR
+        await _videoHubNotificationService.NotifyCreationStatus(videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
+
         _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
 
         return true;
     }
 
+    private async Task<bool> HandleVideoAssetDeleted(MuxWebhookRequest? hookRequest)
+    {
+        if (hookRequest?.Data == null) return false;
+
+        // Video deleted during API request
+
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
+
+        return await Task.FromResult(true);
+    }
+
+    private async Task<bool> HandleVideoAssetLiveStreamCompleted(MuxWebhookRequest? hookRequest)
+    {
+
+        //
+        // TODO save live stream as video asset on complete
+        //
+
+        if (hookRequest?.Data == null) return false;
+        _logger.LogInformation($"Handle Mux Web Hook for : {hookRequest.Type}");
+
+        return true;
+    }
 
     private async Task<bool> HandleVideoAssetErrored(MuxWebhookRequest? hookRequest)
     {
         if (hookRequest?.Data?.Errors?.Messages == null) return false;
 
-        var video = await GetVideoByAssetId(hookRequest.Data.Id);
-        if (video == null) throw new VideoNotFoundException();
+        var videoToUpdate = await GetVideoByAssetId(hookRequest.Data.Id);
+        if (videoToUpdate == null) throw new VideoNotFoundException();
 
-        video.StreamCreationStatus = AssetCreationStatus.Errored;
+        videoToUpdate.StreamCreationStatus = AssetCreationStatus.Errored;
+
+        // Update client with new status via SignalR
+        await _videoHubNotificationService.NotifyCreationStatus(videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
 
         await _repositoryManager.SaveAsync();
 

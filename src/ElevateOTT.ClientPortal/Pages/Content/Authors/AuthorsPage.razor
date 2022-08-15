@@ -36,17 +36,11 @@
                 <MudTd DataLabel="Name">@author.Name</MudTd>
                 <MudTd DataLabel="CreatedOn">@author.CreatedOn.ToShortDateString()</MudTd>
                 <MudTd>
-                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Text">
-                        <MudButton Variant="Variant.Filled"
-                                   StartIcon="@Icons.Material.Filled.ViewModule"
-                                   Size="Size.Small"
-                                   Color="Color.Default"
-                                   OnClick="@(() => ViewAuthor(author.Id))">@Resource.View</MudButton>
-
+                    <MudButtonGroup OverrideStyles="false">
                         <MudButton Variant="Variant.Filled"
                                    StartIcon="@Icons.Material.Filled.Edit"
                                    Size="Size.Small"
-                                   Color="Color.Default"
+                                   Color="Color.Primary"
                                    OnClick="@(() => EditAuthor(author.Id))">@Resource.Edit</MudButton>
 
                         <MudButton Variant="Variant.Filled"
