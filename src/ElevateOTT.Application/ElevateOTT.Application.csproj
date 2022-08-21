@@ -76,7 +76,8 @@
 	  <Folder Include="Common\Interfaces\Logging\" />
 	  <Folder Include="Common\Interfaces\Services\UtilityServices\" />
 	  <Folder Include="Features\Content\Categories\Commands\" />
-	  <Folder Include="Features\Content\Categories\Queries\" />
+	  <Folder Include="Features\Content\Categories\Queries\GetCategories\" />
+	  <Folder Include="Features\Content\Categories\Queries\GetCategoryForEdit\" />
 	  <Folder Include="Features\Content\Collections\Commands\" />
 	  <Folder Include="Features\Content\Collections\Queries\" />
 	  <Folder Include="Features\Content\Extras\Commands\" />

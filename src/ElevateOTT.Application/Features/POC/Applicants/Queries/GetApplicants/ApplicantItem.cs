@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.POC.Applicants.Queries.GetApplicants;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.POC.Applicants.Queries.GetApplicants;
 
 public class ApplicantItem : AuditableDto
 {

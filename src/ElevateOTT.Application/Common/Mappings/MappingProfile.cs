@@ -9,6 +9,7 @@ using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.Domain.Common.DTOs;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.Common.Mappings;
@@ -21,20 +22,23 @@ public class MappingProfile : Profile
     {
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
-        // CreateMap<VideoModel, VideoDto>().ReverseMap();
-        // CreateMap<LiveStreamModel, LiveStreamDto>().ReverseMap();
-        // CreateMap<CategoryModel, CategoryDto>().ReverseMap();
-        // CreateMap<CollectionModel, CollectionDto>().ReverseMap();
-        // CreateMap<SubscriptionModel, SubscriptionDto>().ReverseMap();
         CreateMap<AuthorModel, AuthorItem>().ReverseMap();
         CreateMap<AuthorModel, AuthorForEdit>().ReverseMap();
         CreateMap<AuthorModel, CreateAuthorCommand>().ReverseMap();
         CreateMap<AuthorModel, UpdateAuthorCommand>().ReverseMap();
+        CreateMap<AuthorModel, AuthorDto>().ReverseMap();
 
         CreateMap<VideoModel, VideoItem>().ReverseMap();
         CreateMap<VideoModel, VideoForEdit>().ReverseMap();
         CreateMap<VideoModel, CreateVideoCommand>().ReverseMap();
         CreateMap<VideoModel, UpdateVideoCommand>().ReverseMap();
+
+        CreateMap<AssetImageModel, AssetImageDto>().ReverseMap();
+
+        CreateMap<CategoryModel, CategoryDto>().ReverseMap();
+
+        CreateMap<TagModel, TagDto>().ReverseMap();
+
 
 
         // TODO

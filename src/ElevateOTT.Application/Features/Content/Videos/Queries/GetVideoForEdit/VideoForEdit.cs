@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 
 public class VideoForEdit : AuditableDto
 {
@@ -35,7 +37,20 @@ public class VideoForEdit : AuditableDto
     public string? SeoTitle { get; set; }
     public string? SeoDescription { get; set; }
     public string? Slug { get; set; }
-    public Guid? AuthorId { get; set; }
+
+    public Guid? TrailerVideoId { get; set; }
+    public Guid? FeaturedCategoryVideoId { get; set; }
+
+    public AssetImageDto? PlayerImage { get; set; }
+    public AssetImageDto? CatalogImage { get; set; }
+    public AssetImageDto? FeaturedCatalogImage { get; set; }
+    public AssetImageDto? AnimatedGif { get; set; }
+
+    public AuthorDto? Author { get; set; }
+    public List<AssetImageDto>? VideoImages { get; set; }
+    public List<CategoryDto>? Categories { get; set; }
+    public List<TagDto>? Tags { get; set; }
+    public List<AuthorDto>? Authors { get; set; }
 
     #endregion Public Properties
 }

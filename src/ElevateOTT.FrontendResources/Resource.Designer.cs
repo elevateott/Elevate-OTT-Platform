@@ -61,6 +61,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years..
+        /// </summary>
+        public static string _ {
+            get {
+                return ResourceManager.GetString(" ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abbreviated Day Names.
         /// </summary>
         public static string Abbreviated_Day_Names {
@@ -313,6 +322,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string Appearance {
+            get {
+                return ResourceManager.GetString("Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applicant.
         /// </summary>
         public static string Applicant {
@@ -538,6 +556,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author by that name not found.
+        /// </summary>
+        public static string Author_by_that_name_not_found {
+            get {
+                return ResourceManager.GetString("Author_by_that_name_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile image will appear on the author page as well as any other pages connected to this author. Recommended resolution:.
         /// </summary>
         public static string Author_image_description {
@@ -664,7 +691,7 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years..
+        ///   Looks up a localized string similar to BMI Details.
         /// </summary>
         public static string BMI_Details {
             get {
@@ -786,6 +813,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Carbon {
             get {
                 return ResourceManager.GetString("Carbon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Catalog Image.
+        /// </summary>
+        public static string Catalog_Image {
+            get {
+                return ResourceManager.GetString("Catalog_Image", resourceCulture);
             }
         }
         
@@ -1083,6 +1119,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Content {
             get {
                 return ResourceManager.GetString("Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content Access.
+        /// </summary>
+        public static string Content_Access {
+            get {
+                return ResourceManager.GetString("Content_Access", resourceCulture);
             }
         }
         
@@ -1538,6 +1583,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloadable.
+        /// </summary>
+        public static string Downloadable {
+            get {
+                return ResourceManager.GetString("Downloadable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloads.
         /// </summary>
         public static string Downloads {
@@ -1633,6 +1687,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Edit_User {
             get {
                 return ResourceManager.GetString("Edit_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Video.
+        /// </summary>
+        public static string Edit_Video {
+            get {
+                return ResourceManager.GetString("Edit_Video", resourceCulture);
             }
         }
         
@@ -1862,6 +1925,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extra Resources.
+        /// </summary>
+        public static string Extra_Resources {
+            get {
+                return ResourceManager.GetString("Extra_Resources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extras.
         /// </summary>
         public static string Extras {
@@ -1885,6 +1957,24 @@ namespace ElevateOTT.FrontendResources {
         public static string FAQ {
             get {
                 return ResourceManager.GetString("FAQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Featured Category Image.
+        /// </summary>
+        public static string Featured_Category_Image {
+            get {
+                return ResourceManager.GetString("Featured_Category_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Featured Category Video.
+        /// </summary>
+        public static string Featured_Category_Video {
+            get {
+                return ResourceManager.GetString("Featured_Category_Video", resourceCulture);
             }
         }
         
@@ -2101,6 +2191,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Full_DateTime_Pattern {
             get {
                 return ResourceManager.GetString("Full_DateTime_Pattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Description.
+        /// </summary>
+        public static string Full_Description {
+            get {
+                return ResourceManager.GetString("Full_Description", resourceCulture);
             }
         }
         
@@ -2366,6 +2465,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Im_sorry_I_can_t_display_anything_until_you {
             get {
                 return ResourceManager.GetString("Im_sorry_I_can\'t_display_anything_until_you", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images &amp; Multimedia.
+        /// </summary>
+        public static string Images_Multimedia {
+            get {
+                return ResourceManager.GetString("Images_Multimedia", resourceCulture);
             }
         }
         
@@ -2883,6 +2991,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More authors found..
+        /// </summary>
+        public static string More_authors_found {
+            get {
+                return ResourceManager.GetString("More_authors_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Account.
         /// </summary>
         public static string My_Account {
@@ -2991,6 +3108,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No authors found.
+        /// </summary>
+        public static string No_authors_found {
+            get {
+                return ResourceManager.GetString("No_authors_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No data available..
         /// </summary>
         public static string No_data_available {
@@ -3086,6 +3212,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Once_you_have_scanned_the_QR_code_or_input_the_key_above {
             get {
                 return ResourceManager.GetString("Once_you_have_scanned_the_QR_code_or_input_the_key_above", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-time purchase price.
+        /// </summary>
+        public static string One_time_Purchase_Price {
+            get {
+                return ResourceManager.GetString("One_time_Purchase_Price", resourceCulture);
             }
         }
         
@@ -3216,6 +3351,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player Image.
+        /// </summary>
+        public static string Player_Image {
+            get {
+                return ResourceManager.GetString("Player_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please.
         /// </summary>
         public static string Please {
@@ -3288,6 +3432,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pricing.
+        /// </summary>
+        public static string Pricing {
+            get {
+                return ResourceManager.GetString("Pricing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {
@@ -3329,6 +3482,24 @@ namespace ElevateOTT.FrontendResources {
         public static string Property {
             get {
                 return ResourceManager.GetString("Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publication.
+        /// </summary>
+        public static string Publication {
+            get {
+                return ResourceManager.GetString("Publication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publication Status.
+        /// </summary>
+        public static string Publication_Status {
+            get {
+                return ResourceManager.GetString("Publication_Status", resourceCulture);
             }
         }
         
@@ -3491,6 +3662,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rental Price.
+        /// </summary>
+        public static string Rental_Price {
+            get {
+                return ResourceManager.GetString("Rental_Price", resourceCulture);
             }
         }
         
@@ -3990,6 +4170,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Short Description.
+        /// </summary>
+        public static string Short_Description {
+            get {
+                return ResourceManager.GetString("Short_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Short Time Pattern.
         /// </summary>
         public static string Short_Time_Pattern {
@@ -4184,6 +4373,24 @@ namespace ElevateOTT.FrontendResources {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription Plan.
+        /// </summary>
+        public static string Subscription_Plan {
+            get {
+                return ResourceManager.GetString("Subscription_Plan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtitles.
+        /// </summary>
+        public static string Subtitles {
+            get {
+                return ResourceManager.GetString("Subtitles", resourceCulture);
             }
         }
         
@@ -4449,6 +4656,24 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trailer Video.
+        /// </summary>
+        public static string Trailer_Video {
+            get {
+                return ResourceManager.GetString("Trailer_Video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try entering more letters..
+        /// </summary>
+        public static string Try_entering_more_letters {
+            get {
+                return ResourceManager.GetString("Try_entering_more_letters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor Authentication.
         /// </summary>
         public static string Two_Factor_Authentication {
@@ -4701,6 +4926,89 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign an author for this video.
+        ///Tip: To manage your authors, go to Content &gt; Authors.
+        /// </summary>
+        public static string Video_Author_Description {
+            get {
+                return ResourceManager.GetString("Video_Author_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This image will appear as a thumbnail in Catalog. Recommended Resolution: 1480x840px.
+        /// </summary>
+        public static string Video_Catalog_Image_Description {
+            get {
+                return ResourceManager.GetString("Video_Catalog_Image_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new or pick one or multiple categories to organize your video in your Catalog page.
+        ///Tip: To manage your Categories in-depth, go to Content &gt; Categories..
+        /// </summary>
+        public static string Video_Categories_Description {
+            get {
+                return ResourceManager.GetString("Video_Categories_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose to offer this video for free or require access..
+        /// </summary>
+        public static string Video_Content_Access_Description {
+            get {
+                return ResourceManager.GetString("Video_Content_Access_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By turning on this feature, you are allowing users to download your content onto their device. Note: this doesn’t affect the native OTT apps, as their download function is different by default..
+        /// </summary>
+        public static string Video_Downloadable_Description {
+            get {
+                return ResourceManager.GetString("Video_Downloadable_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can offer viewers of this video additional files and resources for download. They will appear under the Resources tab on the video player. For example: nutrition guides and templates. Note: if you are offering this video for free, the files you add here will also be free..
+        /// </summary>
+        public static string Video_Extra_Resources_Description {
+            get {
+                return ResourceManager.GetString("Video_Extra_Resources_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a video to appear as a background video for the Catalog slider banner. This video should be max 1:00 minute long - the shorter, the better. Recommended resolution: 1900x800px.
+        /// </summary>
+        public static string Video_Featured_Category_Image_Description {
+            get {
+                return ResourceManager.GetString("Video_Featured_Category_Image_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a video to appear as a background video for the Catalog slider banner. This video should be max 1:00 minute long - the shorter, the better. Recommended resolution: 1900x800px.
+        /// </summary>
+        public static string Video_Featured_Category_Video_Description {
+            get {
+                return ResourceManager.GetString("Video_Featured_Category_Video_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This description will appear on your video page. Use it to explain to the viewer what to expect from your video..
+        /// </summary>
+        public static string Video_Full_Description_Description {
+            get {
+                return ResourceManager.GetString("Video_Full_Description_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Video has been created successfully..
         /// </summary>
         public static string Video_has_been_created_successfully {
@@ -4724,6 +5032,88 @@ namespace ElevateOTT.FrontendResources {
         public static string Video_has_been_updated_successfully {
             get {
                 return ResourceManager.GetString("Video_has_been_updated_successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set a price for access to this video. Minimum amount is 0.50..
+        /// </summary>
+        public static string Video_One_Time_Purchase_Price_Description {
+            get {
+                return ResourceManager.GetString("Video_One_Time_Purchase_Price_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This image will appear for this video in a feature category slider on Catalog page. Recommended Resolution: 1900x800px.
+        /// </summary>
+        public static string Video_Player_Image_Description {
+            get {
+                return ResourceManager.GetString("Video_Player_Image_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set your video&apos;s publication status here: publish, unpublish it or schedule it for a timed release..
+        /// </summary>
+        public static string Video_Publication_Status_Description {
+            get {
+                return ResourceManager.GetString("Video_Publication_Status_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set a price along with a rental period for access to this video. Minimum amount is 0.50..
+        /// </summary>
+        public static string Video_Rental_Price_Description {
+            get {
+                return ResourceManager.GetString("Video_Rental_Price_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This short description will appear in the collection playlist and the Featured Category slider on the catalog page..
+        /// </summary>
+        public static string Video_Short_Description_Description {
+            get {
+                return ResourceManager.GetString("Video_Short_Description_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtitles must be in a valid VTT format media type, such as text/vtt.
+        ///Max file size: 3MB.
+        /// </summary>
+        public static string Video_Subtitles_Description {
+            get {
+                return ResourceManager.GetString("Video_Subtitles_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Title.
+        /// </summary>
+        public static string Video_Title {
+            get {
+                return ResourceManager.GetString("Video_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Give your video a solid title. Remember, it will be visible to the public in your catalog and when the video is being played..
+        /// </summary>
+        public static string Video_Title_Description {
+            get {
+                return ResourceManager.GetString("Video_Title_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a video to be used as a trailer for this video. You may also consider it a preview or a sneak peek..
+        /// </summary>
+        public static string Video_Trailer_Video_Description {
+            get {
+                return ResourceManager.GetString("Video_Trailer_Video_Description", resourceCulture);
             }
         }
         

@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Identity.Roles.Queries.GetRoles;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Identity.Roles.Queries.GetRoles;
 
 public class RoleItem : AuditableDto
 {

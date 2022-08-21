@@ -3,6 +3,7 @@ using ElevateOTT.Application.Features.Content.Authors.Commands.DeleteAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Commands.UpdateAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorsForAutoComplete;
 
 namespace ElevateOTT.WebAPI.Controllers;
 
@@ -25,6 +26,15 @@ public class AuthorsController : ApiController
     //[AutoWrapIgnore]
     [HttpPost]
     public async Task<IActionResult> GetAuthors([FromBody] GetAuthorsQuery request)
+    {
+        var httpRequest = Request;
+        var response = await Mediator.Send(request);
+
+        return TryGetResult(response);
+    }
+
+    [HttpPost("auto-complete")]
+    public async Task<IActionResult> GetAuthorsForAutoComplete([FromBody] GetAuthorsForAutoCompleteQuery request)
     {
         var httpRequest = Request;
         var response = await Mediator.Send(request);

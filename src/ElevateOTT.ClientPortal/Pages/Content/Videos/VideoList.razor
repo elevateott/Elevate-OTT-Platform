@@ -40,10 +40,6 @@
                               Adornment="Adornment.Start"
                               AdornmentIcon="@Icons.Material.Filled.Search"
                               IconSize="Size.Small" Class="mt-0"></MudTextField>
-                <MudFab Style="margin-left: 20px; margin-top: 10px"
-                        Color="Color.Primary"
-                        Size="Size.Small"
-                        Icon="@Icons.Material.Filled.Add" OnClick="AddVideo" />
             </ToolBarContent>
             <HeaderContent>
                 <MudTh T="VideoItem"></MudTh>
@@ -99,11 +95,11 @@
 
                 </MudTd>
                 <MudTd>
-                    <MudButtonGroup OverrideStyles="true">
+                    <MudButtonGroup OverrideStyles="false">
                         <MudButton Variant="Variant.Filled"
                                    StartIcon="@Icons.Material.Filled.Edit"
                                    Size="Size.Small"
-                                   Color="Color.Default"
+                                   Color="Color.Primary"
                                    OnClick="@(() => EditVideo(video.Id))">@Resource.Edit</MudButton>
 
                         <MudButton Variant="Variant.Filled"

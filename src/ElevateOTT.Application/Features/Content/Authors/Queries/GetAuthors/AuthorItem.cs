@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ElevateOTT.Domain.Common.DTOs;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;

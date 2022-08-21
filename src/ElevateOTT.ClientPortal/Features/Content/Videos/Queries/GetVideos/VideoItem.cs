@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ElevateOTT.ClientPortal.Models.DTOs;
 
 namespace ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideos;
 
@@ -25,7 +26,6 @@ public class VideoItem : AuditableDto
     public TimeSpan? Duration { get; set; }
     public bool AllowDownload { get; set; }
     public string? ThumbnailUrl { get; set; }
-    public string? TrailerVideoUrl { get; set; }
     public string? BlobUrl { get; set; }
     public DateTime? UploadedOn { get; set; }
     public DateTime? ReleasedDate { get; set; }
@@ -34,12 +34,17 @@ public class VideoItem : AuditableDto
     public string? DownloadUrl { get; set; }
     public string? Passthrough { get; set; }
     public bool ClosedCaptions { get; set; }
+    public string SeoTitle { get; set; } = string.Empty;
+    public string SeoDescription { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
 
-    // public Guid? VideoFolderId { get; set; }
+    public Guid? TrailerVideoId { get; set; }
+    public Guid? FeaturedCategoryVideoId { get; set; }
 
-    // TODO can video be in multiple collections??
-    //
-    // public Guid? CollectionId { get; set; }
+    public AuthorDto? Author { get; set; }
+    public List<AssetImageDto>? VideoImages { get; set; }
+    public List<CategoryDto>? Categories { get; set; }
+    public List<TagDto>? Tags { get; set; }
 
     #endregion Public Properties
 }

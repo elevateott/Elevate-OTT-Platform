@@ -1,4 +1,4 @@
-﻿namespace ElevateOTT.Domain.Common.Models;
+﻿namespace ElevateOTT.Domain.Common.DTOs;
 
 /// <summary>
 /// Indicates that any class inherits this interface has audit properties as shadow properties.

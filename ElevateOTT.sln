@@ -100,10 +100,10 @@ Global
 		{C4A92F41-5653-4192-B6C7-7CED33B84D5C} = {24056575-ED44-42AA-B4EA-F6138553E4CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
+		RESX_SortFileContentOnSave = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

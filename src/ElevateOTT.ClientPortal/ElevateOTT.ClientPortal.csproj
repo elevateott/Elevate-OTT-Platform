@@ -71,7 +71,6 @@
 	  <Folder Include="Features\Content\Extras\Queries\" />
 	  <Folder Include="Features\Content\LiveStreams\Commands\" />
 	  <Folder Include="Features\Content\LiveStreams\Queries\" />
-	  <Folder Include="Models\Authors\" />
 	  <Folder Include="Models\Reporting\" />
 	  <Folder Include="Pages\Content\Categories\" />
 	  <Folder Include="Pages\Content\Collections\" />

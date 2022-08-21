@@ -13,6 +13,9 @@ public class VideoModel : BaseAsset, IMustHaveTenant
 
     public bool Mp4Support { get; set; }
 
+    public Guid? TrailerVideoId { get; set; }
+    public Guid? FeaturedCategoryVideoId { get; set; }
+
 
     #region foreign keys
 
@@ -24,6 +27,8 @@ public class VideoModel : BaseAsset, IMustHaveTenant
     #region Navigational Properties
     public ICollection<VideoCategoryModel>? VideosCategories { get; set; }
     public ICollection<VideoCollectionModel>? VideosCollections { get; set; }
+    public ICollection<VideoTagModel>? VideosTags { get; set; }
+
     public AuthorModel? Author { get; set; }
     public List<AssetImageModel>? VideoImages { get; set; }
 

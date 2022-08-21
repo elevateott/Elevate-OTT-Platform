@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name=" " xml:space="preserve">
+    <value>A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years.</value>
+  </data>
   <data name="Abbreviated_Day_Names" xml:space="preserve">
     <value>Abbreviated Day Names</value>
   </data>
@@ -197,6 +200,9 @@
   </data>
   <data name="Android" xml:space="preserve">
     <value>Android</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Appearance</value>
   </data>
   <data name="Applicant" xml:space="preserve">
     <value>Applicant</value>
@@ -285,6 +291,9 @@
   <data name="Author_bio_label" xml:space="preserve">
     <value>Author Bio</value>
   </data>
+  <data name="Author_by_that_name_not_found" xml:space="preserve">
+    <value>Author by that name not found</value>
+  </data>
   <data name="Author_image_description" xml:space="preserve">
     <value>Profile image will appear on the author page as well as any other pages connected to this author. Recommended resolution:</value>
   </data>
@@ -319,7 +328,7 @@
     <value>BMI</value>
   </data>
   <data name="BMI_Details" xml:space="preserve">
-    <value>A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years.</value>
+    <value>BMI Details</value>
   </data>
   <data name="BMI_Info" xml:space="preserve">
     <value>Body Mass Index is a simple calculation using a person’s height and weight. The formula is BMI = kg/m2 where kg is a person’s weight in kilograms and m2 is their height in metres squared.</value>
@@ -359,6 +368,9 @@
   </data>
   <data name="Carbon" xml:space="preserve">
     <value>Carbon</value>
+  </data>
+  <data name="Catalog_Image" xml:space="preserve">
+    <value>Catalog Image</value>
   </data>
   <data name="Categories" xml:space="preserve">
     <value>Categories</value>
@@ -461,6 +473,9 @@
   </data>
   <data name="ContentType" xml:space="preserve">
     <value>Content Type</value>
+  </data>
+  <data name="Content_Access" xml:space="preserve">
+    <value>Content Access</value>
   </data>
   <data name="Copernicium" xml:space="preserve">
     <value>Copernicium</value>
@@ -600,6 +615,9 @@
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
+  <data name="Downloadable" xml:space="preserve">
+    <value>Downloadable</value>
+  </data>
   <data name="Downloads" xml:space="preserve">
     <value>Downloads</value>
   </data>
@@ -641,6 +659,9 @@
   </data>
   <data name="Edit_User" xml:space="preserve">
     <value>Edit User</value>
+  </data>
+  <data name="Edit_Video" xml:space="preserve">
+    <value>Edit Video</value>
   </data>
   <data name="Einsteinium" xml:space="preserve">
     <value>Einsteinium</value>
@@ -720,11 +741,20 @@
   <data name="Extras" xml:space="preserve">
     <value>Extras</value>
   </data>
+  <data name="Extra_Resources" xml:space="preserve">
+    <value>Extra Resources</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
   <data name="FAQ" xml:space="preserve">
     <value>FAQ</value>
+  </data>
+  <data name="Featured_Category_Image" xml:space="preserve">
+    <value>Featured Category Image</value>
+  </data>
+  <data name="Featured_Category_Video" xml:space="preserve">
+    <value>Featured Category Video</value>
   </data>
   <data name="Features" xml:space="preserve">
     <value>Features</value>
@@ -800,6 +830,9 @@
   </data>
   <data name="Full_DateTime_Pattern" xml:space="preserve">
     <value>Full DateTime Pattern</value>
+  </data>
+  <data name="Full_Description" xml:space="preserve">
+    <value>Full Description</value>
   </data>
   <data name="Gas" xml:space="preserve">
     <value>Gas</value>
@@ -881,6 +914,9 @@
   </data>
   <data name="If_you_wish_to_change_the_key_used_in_an_authenticator_app_you_should" xml:space="preserve">
     <value>If you wish to change the key used in an authenticator app you should</value>
+  </data>
+  <data name="Images_Multimedia" xml:space="preserve">
+    <value>Images &amp; Multimedia</value>
   </data>
   <data name="Im_sorry_I_can't_display_anything_until_you" xml:space="preserve">
     <value>I'm sorry, I can't display anything until you</value>
@@ -1056,6 +1092,9 @@
   <data name="Month_Names" xml:space="preserve">
     <value>Month Names</value>
   </data>
+  <data name="More_authors_found" xml:space="preserve">
+    <value>More authors found.</value>
+  </data>
   <data name="My_Account" xml:space="preserve">
     <value>My Account</value>
   </data>
@@ -1098,6 +1137,9 @@
   <data name="November" xml:space="preserve">
     <value>November</value>
   </data>
+  <data name="No_authors_found" xml:space="preserve">
+    <value>No authors found</value>
+  </data>
   <data name="No_data_available" xml:space="preserve">
     <value>No data available.</value>
   </data>
@@ -1121,6 +1163,9 @@
   </data>
   <data name="Once_you_have_scanned_the_QR_code_or_input_the_key_above" xml:space="preserve">
     <value>Once you have scanned the QR code or input the key above</value>
+  </data>
+  <data name="One_time_Purchase_Price" xml:space="preserve">
+    <value>One-time purchase price</value>
   </data>
   <data name="On_Premise_File_Storage" xml:space="preserve">
     <value>On-Premise File Storage</value>
@@ -1167,6 +1212,9 @@
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="Player_Image" xml:space="preserve">
+    <value>Player Image</value>
+  </data>
   <data name="Please" xml:space="preserve">
     <value>Please</value>
   </data>
@@ -1191,6 +1239,9 @@
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
   </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>Pricing</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
@@ -1205,6 +1256,12 @@
   </data>
   <data name="Property" xml:space="preserve">
     <value>Property</value>
+  </data>
+  <data name="Publication" xml:space="preserve">
+    <value>Publication</value>
+  </data>
+  <data name="Publication_Status" xml:space="preserve">
+    <value>Publication Status</value>
   </data>
   <data name="Put_these_codes_in_a_safe_place" xml:space="preserve">
     <value>Put these codes in a safe place.</value>
@@ -1259,6 +1316,9 @@
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Rental_Price" xml:space="preserve">
+    <value>Rental Price</value>
   </data>
   <data name="Replace_image" xml:space="preserve">
     <value>Replace Image</value>
@@ -1431,6 +1491,9 @@
   <data name="Short_Date_Pattern" xml:space="preserve">
     <value>Short Date Pattern</value>
   </data>
+  <data name="Short_Description" xml:space="preserve">
+    <value>Short Description</value>
+  </data>
   <data name="Short_Time_Pattern" xml:space="preserve">
     <value>Short Time Pattern</value>
   </data>
@@ -1490,6 +1553,12 @@
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Subscription_Plan" xml:space="preserve">
+    <value>Subscription Plan</value>
+  </data>
+  <data name="Subtitles" xml:space="preserve">
+    <value>Subtitles</value>
   </data>
   <data name="Succeeded" xml:space="preserve">
     <value>Succeeded</value>
@@ -1578,6 +1647,12 @@
   <data name="To_use_an_authenticator_app_go_through_the_following_steps" xml:space="preserve">
     <value>To use an authenticator app go through the following steps:</value>
   </data>
+  <data name="Trailer_Video" xml:space="preserve">
+    <value>Trailer Video</value>
+  </data>
+  <data name="Try_entering_more_letters" xml:space="preserve">
+    <value>Try entering more letters.</value>
+  </data>
   <data name="Two_Factor_Authentication" xml:space="preserve">
     <value>Two-Factor Authentication</value>
   </data>
@@ -1665,6 +1740,35 @@
   <data name="Videos" xml:space="preserve">
     <value>Videos</value>
   </data>
+  <data name="Video_Author_Description" xml:space="preserve">
+    <value>Assign an author for this video.
+Tip: To manage your authors, go to Content &gt; Authors</value>
+  </data>
+  <data name="Video_Catalog_Image_Description" xml:space="preserve">
+    <value>This image will appear as a thumbnail in Catalog. Recommended Resolution: 1480x840px</value>
+  </data>
+  <data name="Video_Categories_Description" xml:space="preserve">
+    <value>Create a new or pick one or multiple categories to organize your video in your Catalog page.
+Tip: To manage your Categories in-depth, go to Content &gt; Categories.</value>
+  </data>
+  <data name="Video_Content_Access_Description" xml:space="preserve">
+    <value>Choose to offer this video for free or require access.</value>
+  </data>
+  <data name="Video_Downloadable_Description" xml:space="preserve">
+    <value>By turning on this feature, you are allowing users to download your content onto their device. Note: this doesn’t affect the native OTT apps, as their download function is different by default.</value>
+  </data>
+  <data name="Video_Extra_Resources_Description" xml:space="preserve">
+    <value>You can offer viewers of this video additional files and resources for download. They will appear under the Resources tab on the video player. For example: nutrition guides and templates. Note: if you are offering this video for free, the files you add here will also be free.</value>
+  </data>
+  <data name="Video_Featured_Category_Image_Description" xml:space="preserve">
+    <value>Pick a video to appear as a background video for the Catalog slider banner. This video should be max 1:00 minute long - the shorter, the better. Recommended resolution: 1900x800px</value>
+  </data>
+  <data name="Video_Featured_Category_Video_Description" xml:space="preserve">
+    <value>Pick a video to appear as a background video for the Catalog slider banner. This video should be max 1:00 minute long - the shorter, the better. Recommended resolution: 1900x800px</value>
+  </data>
+  <data name="Video_Full_Description_Description" xml:space="preserve">
+    <value>This description will appear on your video page. Use it to explain to the viewer what to expect from your video.</value>
+  </data>
   <data name="Video_has_been_created_successfully" xml:space="preserve">
     <value>Video has been created successfully.</value>
   </data>
@@ -1673,6 +1777,34 @@
   </data>
   <data name="Video_has_been_updated_successfully" xml:space="preserve">
     <value>Video has been updated successfully.</value>
+  </data>
+  <data name="Video_One_Time_Purchase_Price_Description" xml:space="preserve">
+    <value>Set a price for access to this video. Minimum amount is 0.50.</value>
+  </data>
+  <data name="Video_Player_Image_Description" xml:space="preserve">
+    <value>This image will appear for this video in a feature category slider on Catalog page. Recommended Resolution: 1900x800px</value>
+  </data>
+  <data name="Video_Publication_Status_Description" xml:space="preserve">
+    <value>Set your video's publication status here: publish, unpublish it or schedule it for a timed release.</value>
+  </data>
+  <data name="Video_Rental_Price_Description" xml:space="preserve">
+    <value>Set a price along with a rental period for access to this video. Minimum amount is 0.50.</value>
+  </data>
+  <data name="Video_Short_Description_Description" xml:space="preserve">
+    <value>This short description will appear in the collection playlist and the Featured Category slider on the catalog page.</value>
+  </data>
+  <data name="Video_Subtitles_Description" xml:space="preserve">
+    <value>Subtitles must be in a valid VTT format media type, such as text/vtt.
+Max file size: 3MB</value>
+  </data>
+  <data name="Video_Title" xml:space="preserve">
+    <value>Video Title</value>
+  </data>
+  <data name="Video_Title_Description" xml:space="preserve">
+    <value>Give your video a solid title. Remember, it will be visible to the public in your catalog and when the video is being played.</value>
+  </data>
+  <data name="Video_Trailer_Video_Description" xml:space="preserve">
+    <value>Choose a video to be used as a trailer for this video. You may also consider it a preview or a sneak peek.</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>View</value>

@@ -31,7 +31,6 @@ public partial class EditAuthor : ComponentBase
     private int _maxSeoDescriptionChars = 170;
     private int _maxSlugChars = 60;
 
-
     private string SlugPlaceholder => _slugExampleName;
 
     // TODO getters and setters ??????
@@ -100,6 +99,7 @@ public partial class EditAuthor : ComponentBase
     {
         return !string.IsNullOrWhiteSpace(_imageSrc);
     }
+
     private void UpdateRteValue(string value)
     {
         _authorForEditVm.Bio = value;
@@ -147,9 +147,6 @@ public partial class EditAuthor : ComponentBase
 
         Console.WriteLine("httpResponse: " + httpResponse);
         Console.WriteLine("httpResponse.Success: " + httpResponse.Success);
-
-
-
 
         if (httpResponse.Success)
         {

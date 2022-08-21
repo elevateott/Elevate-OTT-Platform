@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Reports.GetReports;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Reports.GetReports;
 
 public class ReportItem : AuditableDto
 {

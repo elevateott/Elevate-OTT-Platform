@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Reports.GetReportForEdit;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Reports.GetReportForEdit;
 
 public class ReportForEdit : AuditableDto
 {

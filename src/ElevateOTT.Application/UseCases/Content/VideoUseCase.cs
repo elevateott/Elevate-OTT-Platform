@@ -99,7 +99,6 @@ public class VideoUseCase : IVideoUseCase
 
         // TODO should query be nullable ?????
 
-
         var videoItems = query is not null
             ? await query.Select(video => _mapper.Map<VideoItem>(video))
                 .ToPagedListAsync(request.PageNumber, request.PageSize)

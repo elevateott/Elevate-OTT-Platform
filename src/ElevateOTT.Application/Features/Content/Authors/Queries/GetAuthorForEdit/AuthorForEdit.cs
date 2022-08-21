@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
 
 public class AuthorForEdit : AuditableDto
 {

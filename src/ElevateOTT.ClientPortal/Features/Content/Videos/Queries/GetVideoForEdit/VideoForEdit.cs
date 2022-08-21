@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideoForEdit;
+﻿using ElevateOTT.ClientPortal.Models.DTOs;
+
+namespace ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideoForEdit;
 
 public class VideoForEdit
 {
@@ -23,7 +25,6 @@ public class VideoForEdit
     public TimeSpan? Duration { get; set; }
     public bool AllowDownload { get; set; }
     public string? ThumbnailUrl { get; set; }
-    public string? TrailerVideoUrl { get; set; }
     public string? BlobUrl { get; set; }
     public DateTime? UploadedOn { get; set; }
     public DateTime? ReleasedDate { get; set; }
@@ -32,6 +33,23 @@ public class VideoForEdit
     public string? DownloadUrl { get; set; }
     public string? Passthrough { get; set; }
     public bool ClosedCaptions { get; set; }
+    public string SeoTitle { get; set; } = string.Empty;
+    public string SeoDescription { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
+
+    public Guid? TrailerVideoId { get; set; }
+    public Guid? FeaturedCategoryVideoId { get; set; }
+
+    public AssetImageDto? PlayerImage { get; set; }
+    public AssetImageDto? CatalogImage { get; set; }
+    public AssetImageDto? FeaturedCatalogImage { get; set; }
+    public AssetImageDto? AnimatedGif { get; set; }
+
+    public AuthorDto? Author { get; set; }
+    public List<AssetImageDto>? VideoImages { get; set; }
+    public List<CategoryDto>? Categories { get; set; }
+    public List<TagDto>? Tags { get; set; }
+    public List<AuthorDto>? Authors { get; set; }
 
     #endregion Public Properties
 }

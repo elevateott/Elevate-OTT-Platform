@@ -306,13 +306,13 @@ public class ApplicationDbContext : IdentityDbContext<
     private static void ConfigureManyToManyRelationships(ModelBuilder modelBuilder)
     {
         // Creating many-to-many relationships
-
         modelBuilder.Entity<VideoCategoryModel>().HasKey(x => new { x.VideoId, x.CategoryId });
         modelBuilder.Entity<VideoCollectionModel>().HasKey(x => new { x.VideoId, x.CollectionId });
         modelBuilder.Entity<LiveStreamCategoryModel>().HasKey(x => new { x.LiveStreamId, x.CategoryId });
         modelBuilder.Entity<PodcastCategoryModel>().HasKey(x => new { x.PodcastId, x.CategoryId });
         modelBuilder.Entity<PodcastCollectionModel>().HasKey(x => new { x.PodcastId, x.CollectionId });
         modelBuilder.Entity<CategoryCollectionModel>().HasKey(x => new { x.CategoryId, x.CollectionId });
+        modelBuilder.Entity<VideoTagModel>().HasKey(x => new { x.VideoId, x.TagId });
     }
 
     private void InitiateTenantMode()

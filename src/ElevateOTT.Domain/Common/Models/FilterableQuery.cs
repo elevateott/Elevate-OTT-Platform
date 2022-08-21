@@ -3,6 +3,7 @@
 public abstract class FilterableQuery
 {
     #region Public Properties
+
     public string SearchText { get; set; } = string.Empty;
 
     public string SortBy { get; set; } = string.Empty;
@@ -18,5 +19,6 @@ public abstract class FilterableQuery
     /// Actual total number of records of the selected page.
     /// </summary>
     public int SelectedPageSize { get; set; }
+
     #endregion Public Properties
 }

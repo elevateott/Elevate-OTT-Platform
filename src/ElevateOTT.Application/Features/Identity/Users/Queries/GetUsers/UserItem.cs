@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Identity.Users.Queries.GetUsers;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Identity.Users.Queries.GetUsers;
 
 public class UserItem : AuditableDto
 {

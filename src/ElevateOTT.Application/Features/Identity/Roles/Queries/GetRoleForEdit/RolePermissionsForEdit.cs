@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.Identity.Roles.Queries.GetRoleForEdit;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.Identity.Roles.Queries.GetRoleForEdit;
 
 public class RolePermissionsForEdit : AuditableDto
 {

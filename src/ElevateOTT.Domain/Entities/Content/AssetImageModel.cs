@@ -9,6 +9,8 @@ public class AssetImageModel : BaseEntity, IMustHaveTenant
 
     public string? Name { get; set; }
 
+    public AssetImageType AssetImageType { get; set; }
+
     [Url(ErrorMessage = "Invalid url.")]
     public string? Url { get; set; }
 

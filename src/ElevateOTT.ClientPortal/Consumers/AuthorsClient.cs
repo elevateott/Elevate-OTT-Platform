@@ -2,6 +2,7 @@
 using ElevateOTT.ClientPortal.Features.Content.Authors.Commands.UpdateAuthor;
 using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorForEdit;
 using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorsForAutoComplete;
 
 namespace ElevateOTT.ClientPortal.Consumers;
 
@@ -31,6 +32,11 @@ public class AuthorsClient : IAuthorsClient
     public async Task<HttpResponseWrapper<object>> GetAuthors(GetAuthorsQuery request)
     {
         return await _httpService.Post<GetAuthorsQuery, AuthorsResponse>($"{ControllerName}", request);
+    }
+
+     public async Task<HttpResponseWrapper<object>> GetAuthorsForAutoComplete(GetAuthorsForAutoCompleteQuery request)
+    {
+        return await _httpService.Post<GetAuthorsForAutoCompleteQuery, AuthorsForAutoCompleteResponse>($"{ControllerName}/auto-complete", request);
     }
 
     public async Task<HttpResponseWrapper<object>> CreateAuthor(MultipartFormDataContent request)

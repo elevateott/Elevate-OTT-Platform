@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.Features.POC.Applicants.Queries.GetApplicantForEdit;
+﻿using ElevateOTT.Domain.Common.DTOs;
+
+namespace ElevateOTT.Application.Features.POC.Applicants.Queries.GetApplicantForEdit;
 
 public class ApplicantForEdit : AuditableDto
 {

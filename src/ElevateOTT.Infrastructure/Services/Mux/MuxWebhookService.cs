@@ -1,15 +1,9 @@
-﻿using System.Runtime.InteropServices;
-using AutoMapper;
-using Azure.Core;
+﻿using AutoMapper;
 using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
-using ElevateOTT.Application.Common.Models.ApplicationOptions;
 using ElevateOTT.Application.Common.Models.Mux;
-using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
-using ElevateOTT.Domain.Entities;
 using ElevateOTT.Domain.Entities.Content;
 using ElevateOTT.Domain.Exceptions;
-using ElevateOTT.Infrastructure.Repository;
 
 namespace ElevateOTT.Infrastructure.Services.Mux;
 
@@ -322,7 +316,7 @@ public class MuxWebhookService : IMuxWebhookService
                 videoToUpdate.StreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
                 videoToUpdate.VideoImages = GetVideoImageUrls(publicPlaybackId, baseImageUrl, videoToUpdate.TenantId, videoToUpdate.Id);
                 videoToUpdate.PublicPlaybackId = publicPlaybackId;
-                videoToUpdate.ThumbnailUrl = GetVideoThumbnailUrl(publicPlaybackId, baseImageUrl, 140, 64);
+                videoToUpdate.ThumbnailUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 140, 64);
             }
         }
 
@@ -781,34 +775,38 @@ public class MuxWebhookService : IMuxWebhookService
             {
                 new()
                 {
-                    Name = "Thumbnail_314x178",
-                    Url = GetVideoThumbnailUrl(playbackId, baseStreamUrl, 314, 178),
-                    Width = 314,
-                    Height = 178,
+                    Name = "Player_Image",
+                    AssetImageType = AssetImageType.PlayerImage,
+                    Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
+                    Width = 1920,
+                    Height = 1080,
                     TenantId = tenantId,
                     VideoId = videoId
                 },
                 new()
                 {
-                    Name = "Thumbnail_214x121",
-                    Url = GetVideoThumbnailUrl(playbackId, baseStreamUrl, 214, 121),
-                    Width = 214,
-                    Height = 121,
+                    Name = "Catalog_Image",
+                    AssetImageType = AssetImageType.CatalogImage,
+                    Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
+                    Width = 1480,
+                    Height = 840,
                     TenantId = tenantId,
                     VideoId = videoId
                 },
                 new()
                 {
-                    Name = "Thumbnail_140x64",
-                    Url = GetVideoThumbnailUrl(playbackId, baseStreamUrl, 140, 64),
-                    Width = 140,
-                    Height = 64,
+                    Name = "Featured_Catalog_Image",
+                    AssetImageType = AssetImageType.FeaturedCatalogImage,
+                    Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
+                    Width = 1900,
+                    Height = 800,
                     TenantId = tenantId,
                     VideoId = videoId
                 },
                 new()
                 {
-                    Name = "AnimatedGifUrl",
+                    Name = "Animated_Gif_Url",
+                    AssetImageType = AssetImageType.AnimatedGif,
                     Url = $"{baseStreamUrl}/{playbackId}/animated.gif",
                     Width = 640,
                     Height = 0,
@@ -820,7 +818,7 @@ public class MuxWebhookService : IMuxWebhookService
         return videoImages;
     }
 
-    private string GetVideoThumbnailUrl(string playbackId, string baseStreamUrl, int width, int height) =>
+    private string GetVideoImageUrlAtMux(string playbackId, string baseStreamUrl, int width, int height) =>
         $"{baseStreamUrl}/{playbackId}/thumbnail.png?width={width}&height={height}&fit_mode=pad";
 
     private string? GetStaticRenditionFileName(MuxWebhookRequest? hookRequest)

@@ -163,3 +163,11 @@ public enum ProductItemType
     AddOn,
     Charge,
 }
+
+public enum AssetImageType
+{
+    PlayerImage,
+    CatalogImage,
+    FeaturedCatalogImage,
+    AnimatedGif
+}

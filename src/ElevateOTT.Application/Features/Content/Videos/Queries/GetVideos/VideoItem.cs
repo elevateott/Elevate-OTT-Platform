@@ -1,4 +1,5 @@
-﻿using ElevateOTT.Domain.Entities.Content;
+﻿using ElevateOTT.Domain.Common.DTOs;
+using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
 
@@ -7,6 +8,9 @@ public class VideoItem : AuditableDto
     #region Public Properties
 
     public Guid Id { get; set; }
+    public bool Mp4Support { get; set; }
+    public Guid? TrailerVideoId { get; set; }
+    public Guid? FeaturedCategoryVideoId { get; set; }
     public string? AssetId { get; set; }
     public string? Title { get; set; }
     public string? FileName { get; set; }
@@ -31,7 +35,6 @@ public class VideoItem : AuditableDto
     public DateTime? UploadedOn { get; set; }
     public DateTime? ReleasedDate { get; set; }
     public DateTime? ExpirationDate { get; set; }
-    public bool Mp4Support { get; set; }
     public string? DownloadUrl { get; set; }
     public string? Passthrough { get; set; }
     public bool ClosedCaptions { get; set; }
@@ -40,7 +43,10 @@ public class VideoItem : AuditableDto
     public string? Slug { get; set; }
     public Guid? AuthorId { get; set; }
 
-    //public List<AssetImageModel>? VideoImages { get; set; }
+    public AuthorDto? Author { get; set; }
+    public List<AssetImageDto>? VideoImages { get; set; }
+    public List<CategoryDto>? Categories { get; set; }
+    public List<TagDto>? Tags { get; set; }
 
     #endregion Public Properties
 

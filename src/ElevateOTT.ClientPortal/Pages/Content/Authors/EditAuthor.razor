@@ -19,105 +19,108 @@
                 <MudTabPanel Text="@Resource.Details" Icon="@Icons.Material.Filled.Person">
 
                     <!--TODO add resources -->
+                    <MudCard Elevation="25">
+                        <MudCardContent>
+                            <div class="mx-6 my-4">
+                                <!-- Name -->
+                                <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                    <MudItem xs="12" md="4">
+                                        <div class="d-flex flex-column">
+                                            <MudText Typo="Typo.h5">@Resource.Author_name_label</MudText>
+                                            <MudText Typo="Typo.body2">
+                                                @Resource.Author_name_description
+                                            </MudText>
+                                        </div>
+                                    </MudItem>
 
-                    <div class="mx-6 my-4">
-                        <!-- Name -->
-                        <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
-                            <MudItem xs="12" md="4">
-                                <div class="d-flex flex-column">
-                                    <MudText Typo="Typo.h5">@Resource.Author_name_label</MudText>
-                                    <MudText Typo="Typo.body2">
-                                        @Resource.Author_name_description
-                                    </MudText>
-                                </div>
-                            </MudItem>
+                                    <MudItem xs="12" md="8">
+                                        <MudTextField Label="@Resource.Author_name_label"
+                                                      Variant="Variant.Outlined"
+                                                      Class="pl-md-12"
+                                                      MaxLength="@_maxNameChars"
+                                                      Counter="0"
+                                                      Immediate="true"
+                                                      @bind-Value="_authorForEditVm.Name" For="@(() => _authorForEditVm.Name)" />
+                                    </MudItem>
+                                </MudGrid>
 
-                            <MudItem xs="12" md="8">
-                                <MudTextField Label="@Resource.Author_name_label" 
-                                              Variant="Variant.Outlined" 
-                                              Class="pl-md-12"
-                                              MaxLength="@_maxNameChars"
-                                              Counter="0"
-                                              Immediate="true"
-                                              @bind-Value="_authorForEditVm.Name" For="@(() => _authorForEditVm.Name)"/>
-                            </MudItem>
-                        </MudGrid>
+                                <!-- Bio -->
+                                <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                    <MudItem xs="12" md="4">
+                                        <div class="d-flex flex-column">
+                                            <MudText Typo="Typo.h5">@Resource.Author_bio_label</MudText>
+                                            <MudText Typo="Typo.body2">
+                                                @Resource.Author_bio_description
+                                            </MudText>
+                                        </div>
+                                    </MudItem>
 
-                        <!-- Bio -->
-                        <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
-                            <MudItem xs="12" md="4">
-                                <div class="d-flex flex-column">
-                                    <MudText Typo="Typo.h5">@Resource.Author_bio_label</MudText>
-                                    <MudText Typo="Typo.body2">
-                                        @Resource.Author_bio_description
-                                    </MudText>
-                                </div>
-                            </MudItem>
+                                    <MudItem xs="12" md="8">
 
-                            <MudItem xs="12" md="8">
+                                        <!--TODO set bootstrap primary color -->
+                                        <!-- the  add link feature in rte uses bootstrap-->
 
-                                <!--TODO set bootstrap primary color -->
-                                <!-- the  add link feature in rte uses bootstrap-->
+                                        <div class="pl-md-12">
+                                            <RichTextEditor RteValue="@_authorForEditVm.Bio" OnValueChangedCallback="@UpdateRteValue" />
+                                        </div>
 
-                                <div class="pl-md-12">
-                                    <RichTextEditor RteValue="@_authorForEditVm.Bio" OnValueChangedCallback="@UpdateRteValue"/>
-                                </div>
+                                    </MudItem>
+                                </MudGrid>
 
-                            </MudItem>
-                        </MudGrid>
+                                <!-- Image Upload -->
+                                <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                    <MudItem xs="12" md="4">
+                                        <div class="d-flex flex-column">
+                                            <MudText Typo="Typo.h5">@Resource.Author_image_label</MudText>
+                                            <MudText Typo="Typo.body2">
+                                                @Resource.Author_image_description <span class="semi-bold-text">@_recommendedResolution</span>
+                                            </MudText>
+                                        </div>
+                                    </MudItem>
 
-                        <!-- Image Upload -->
-                        <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
-                            <MudItem xs="12" md="4">
-                                <div class="d-flex flex-column">
-                                    <MudText Typo="Typo.h5">@Resource.Author_image_label</MudText>
-                                    <MudText Typo="Typo.body2">
-                                        @Resource.Author_image_description <span class="semi-bold-text">@_recommendedResolution</span>
-                                    </MudText>
-                                </div>
-                            </MudItem>
-
-                            <MudItem xs="12" md="8">
-                                <div class="pl-md-12">
-                                    <MudCard Elevation="25">
-                                        <MudCardContent>
-                                            <MudPaper Class="pa-2" Outlined="true">
-                                                <div class="d-flex justify-center mb-4">
-                                                    <MudAvatar Image="@(_imageSrc ?? _authorForEditVm.ImageUrl)"
-                                                               Style="height: 200px; width: 200px;">
-                                                    </MudAvatar>
-                                                </div>
-                                                @if (!string.IsNullOrWhiteSpace(_authorForEditVm.ImageUrl))
-                                                {
-                                                    <MudText Align="Align.Center">
-                                                        <MudFab OnClick="() => { _authorForEditVm.ImageUrl = null; }"
-                                                                Color="Color.Warning"
-                                                                Icon="@Icons.Material.Filled.Remove"
-                                                                aria-label="edit"/>
-                                                    </MudText>
-                                                }
-                                                <MudText Align="Align.Center">@($"{_authorForEditVm.Name}")</MudText>
-                                            </MudPaper>
-                                        </MudCardContent>
-                                        <MudCardActions Class="d-flex justify-center">
-                                            <div class="form-group">
-                                                <BpUploadFile ButtonId="imageInput"
-                                                              ButtonIcon="@Icons.Filled.PhotoCamera"
-                                                              ButtonName="@(HasUploadedImage() ? Resource.Replace_image : Resource.Upload_image)"
-                                                              AllowRename="true"
-                                                              AllowedExtensions=".jpg,.png,.jpeg,.bmp"
-                                                              MaxFileSize="10485760"
-                                                              OnFileSelected="ImageSelected"
-                                                              OnFileUnSelected="ImageUnSelected"
-                                                              OnImageUpload="GetBase64StringImageUrl"/>
-                                                <ValidationMessage For="@(() => _authorForEditVm.ImageUrl)"/>
-                                            </div>
-                                        </MudCardActions>
-                                    </MudCard>
-                                </div>
-                            </MudItem>
-                        </MudGrid>
-                    </div>
+                                    <MudItem xs="12" md="8">
+                                        <div class="pl-md-12">
+                                            <MudCard Elevation="25">
+                                                <MudCardContent>
+                                                    <MudPaper Class="pa-2" Outlined="true">
+                                                        <div class="d-flex justify-center mb-4">
+                                                            <MudAvatar Image="@(_imageSrc ?? _authorForEditVm.ImageUrl)"
+                                                                       Style="height: 200px; width: 200px;">
+                                                            </MudAvatar>
+                                                        </div>
+                                                        @if (!string.IsNullOrWhiteSpace(_authorForEditVm.ImageUrl))
+                                                        {
+                                                            <MudText Align="Align.Center">
+                                                                <MudFab OnClick="() => { _authorForEditVm.ImageUrl = null; }"
+                                                                    Color="Color.Warning"
+                                                                    Icon="@Icons.Material.Filled.Remove"
+                                                                    aria-label="edit" />
+                                                            </MudText>
+                                                        }
+                                                        <MudText Align="Align.Center">@($"{_authorForEditVm.Name}")</MudText>
+                                                    </MudPaper>
+                                                </MudCardContent>
+                                                <MudCardActions Class="d-flex justify-center">
+                                                    <div class="form-group">
+                                                        <BpUploadFile ButtonId="imageInput"
+                                                                      ButtonIcon="@Icons.Filled.PhotoCamera"
+                                                                      ButtonName="@(HasUploadedImage() ? Resource.Replace_image : Resource.Upload_image)"
+                                                                      AllowRename="false"
+                                                                      AllowedExtensions=".jpg,.png,.jpeg,.gif"
+                                                                      MaxFileSize="10485760"
+                                                                      OnFileSelected="ImageSelected"
+                                                                      OnFileUnSelected="ImageUnSelected"
+                                                                      OnImageUpload="GetBase64StringImageUrl" />
+                                                        <ValidationMessage For="@(() => _authorForEditVm.ImageUrl)" />
+                                                    </div>
+                                                </MudCardActions>
+                                            </MudCard>
+                                        </div>
+                                    </MudItem>
+                                </MudGrid>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
                 </MudTabPanel>
 
                 <MudTabPanel Text="@Resource.Seo" Icon="@Icons.Material.Filled.Public">
@@ -143,7 +146,7 @@
                                                       Counter="0"
                                                       Immediate="true"
                                                       HelperText="@($"{Resource.Max} {_maxSeoTitleChars} {Resource.Characters}")"
-                                                      @bind-Value="_authorForEditVm.SeoTitle" For="@(() => _authorForEditVm.SeoTitle)"/>
+                                                      @bind-Value="_authorForEditVm.SeoTitle" For="@(() => _authorForEditVm.SeoTitle)" />
                                     </MudItem>
                                 </MudGrid>
 
@@ -159,14 +162,15 @@
                                     </MudItem>
 
                                     <MudItem xs="12" md="8">
-                                        <MudTextField Label="@Resource.Seo_description_label" 
-                                                      Variant="Variant.Outlined" 
+                                        <MudTextField Label="Multiline" 
+                                                      Lines="3" 
+                                                      Variant="Variant.Outlined"
                                                       Class="pl-md-12"
                                                       MaxLength="@_maxSeoDescriptionChars"
                                                       Counter="0"
                                                       Immediate="true"
                                                       HelperText="@($"{Resource.Max} {_maxSeoDescriptionChars} {Resource.Characters}")"
-                                                      @bind-Value="_authorForEditVm.SeoDescription" For="@(() => _authorForEditVm.SeoDescription)"/>
+                                                      @bind-Value="_authorForEditVm.SeoDescription" For="@(() => _authorForEditVm.SeoDescription)" />
                                     </MudItem>
                                 </MudGrid>
 
@@ -190,7 +194,7 @@
                                                       Immediate="true"
                                                       HelperText="@($"{Resource.Slug_helper_text} {Resource.Max} {_maxSlugChars} {Resource.Characters}")"
                                                       Placeholder="@SlugPlaceholder"
-                                                      @bind-Value="_authorForEditVm.Slug" For="@(() => _authorForEditVm.Slug)"/>
+                                                      @bind-Value="_authorForEditVm.Slug" For="@(() => _authorForEditVm.Slug)" />
                                     </MudItem>
                                 </MudGrid>
                             </div>
