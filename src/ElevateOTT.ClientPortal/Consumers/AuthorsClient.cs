@@ -34,7 +34,7 @@ public class AuthorsClient : IAuthorsClient
         return await _httpService.Post<GetAuthorsQuery, AuthorsResponse>($"{ControllerName}", request);
     }
 
-     public async Task<HttpResponseWrapper<object>> GetAuthorsForAutoComplete(GetAuthorsForAutoCompleteQuery request)
+    public async Task<HttpResponseWrapper<object>> GetAuthorsForAutoComplete(GetAuthorsForAutoCompleteQuery request)
     {
         return await _httpService.Post<GetAuthorsForAutoCompleteQuery, AuthorsForAutoCompleteResponse>($"{ControllerName}/auto-complete", request);
     }

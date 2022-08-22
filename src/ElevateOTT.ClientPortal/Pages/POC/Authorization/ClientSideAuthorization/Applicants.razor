@@ -13,7 +13,7 @@
                       Placeholder="@Resource.Search"
                       Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Small" Class="mt-0"></MudTextField>
-        @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Authors.CreateApplicant")))
+        @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Videos.CreateApplicant")))
         {
             <MudFab Style="margin-left: 20px; margin-top: 10px"
                     Color="Color.Primary"
@@ -43,7 +43,7 @@
         <MudTd DataLabel="ModifiedOn">@applicant.ModifiedOn</MudTd>
         <MudTd>
             <MudButtonGroup Color="Color.Primary" Variant="Variant.Text">
-                @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Authors.GetApplicant")))
+                @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Videos.GetApplicant")))
                 {
                     <MudButton Variant="Variant.Filled"
                                StartIcon="@Icons.Material.Filled.ViewModule"
@@ -52,7 +52,7 @@
                                OnClick="@(() => ViewApplicant(applicant.Id))">@Resource.View</MudButton>
                         }
 
-                @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Authors.UpdateApplicant")))
+                @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Videos.UpdateApplicant")))
                 {
                     <MudButton Variant="Variant.Filled"
                                StartIcon="@Icons.Material.Filled.Edit"
@@ -61,7 +61,7 @@
                                OnClick="@(() => EditApplicant(applicant.Id))">@Resource.Edit</MudButton>
                         }
 
-                @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Authors.DeleteApplicant")))
+                @if (Claims.Any(c => c.Type == "permissions" && c.Value.Contains("Videos.DeleteApplicant")))
                 {
                     <MudButton Variant="Variant.Filled"
                                StartIcon="@Icons.Material.Filled.Delete"

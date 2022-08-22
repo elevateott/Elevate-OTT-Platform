@@ -6,6 +6,7 @@ using ElevateOTT.Application.Features.Content.Videos.Queries.GetNewStorageName;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideosForAutoComplete;
 using ElevateOTT.Application.Features.Identity.Tenants.Queries;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,6 +66,14 @@ public class VideosController : ApiController
         var response = await Mediator.Send(request);
         return TryGetResult(response);
 
+    }
+
+    [HttpPost("auto-complete")]
+    public async Task<IActionResult> GetVideosForAutoComplete([FromBody] GetVideosForAutoCompleteQuery request)
+    {
+        var response = await Mediator.Send(request);
+
+        return TryGetResult(response);
     }
 
     //[HttpPost]

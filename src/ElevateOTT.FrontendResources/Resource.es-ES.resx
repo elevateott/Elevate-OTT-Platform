@@ -1095,6 +1095,9 @@
   <data name="More_authors_found" xml:space="preserve">
     <value>Más autores encontrados.!</value>
   </data>
+  <data name="More_videos_found" xml:space="preserve">
+    <value>Contenido Encontrado</value>
+  </data>
   <data name="My_Account" xml:space="preserve">
     <value>Mi cuenta</value>
   </data>
@@ -1145,6 +1148,9 @@
   </data>
   <data name="No_keep_it" xml:space="preserve">
     <value>No, guárdalo</value>
+  </data>
+  <data name="No_videos_found" xml:space="preserve">
+    <value>¡No se encontraron vídeos!</value>
   </data>
   <data name="Nuclear" xml:space="preserve">
     <value>Nuclear</value>
@@ -1743,6 +1749,9 @@
   <data name="Video_Author_Description" xml:space="preserve">
     <value>Asignar un autor para este vídeo.
 Sugerencia: Para gestionar tus autores, ve a Contenido &amp;gt; Autores!</value>
+  </data>
+  <data name="Video_by_that_name_not_found" xml:space="preserve">
+    <value>Video con ese nombre no encontrado.!</value>
   </data>
   <data name="Video_Catalog_Image_Description" xml:space="preserve">
     <value>Esta imagen aparecerá como una miniatura en el catálogo. Resolución recomendada: 1480x840px!</value>

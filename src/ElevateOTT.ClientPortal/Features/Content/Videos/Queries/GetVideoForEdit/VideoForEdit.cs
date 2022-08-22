@@ -40,10 +40,16 @@ public class VideoForEdit
     public Guid? TrailerVideoId { get; set; }
     public Guid? FeaturedCategoryVideoId { get; set; }
 
-    public AssetImageDto? PlayerImage { get; set; }
-    public AssetImageDto? CatalogImage { get; set; }
-    public AssetImageDto? FeaturedCatalogImage { get; set; }
-    public AssetImageDto? AnimatedGif { get; set; }
+    public AssetImageDto? PlayerImage { get; set; } = new();
+    public AssetImageDto? CatalogImage { get; set; } = new();
+    public AssetImageDto? FeaturedCatalogImage { get; set; } = new ();
+    public AssetImageDto? AnimatedGif { get; set; } = new();
+
+    public bool IsPlayerImageAdded { get; set; }
+    public bool IsCatalogImageAdded { get; set; }
+    public bool IsFeaturedCatalogImageAdded { get; set; }
+    public bool IsAnimatedGifAdded { get; set; }
+
 
     public AuthorDto? Author { get; set; }
     public List<AssetImageDto>? VideoImages { get; set; }

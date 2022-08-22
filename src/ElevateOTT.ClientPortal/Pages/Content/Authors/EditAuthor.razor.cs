@@ -78,6 +78,7 @@ public partial class EditAuthor : ComponentBase
     private void GetBase64StringImageUrl(string imageSrc)
     {
         _imageSrc = imageSrc;
+        Console.WriteLine(_imageSrc);
         StateHasChanged();
     }
 

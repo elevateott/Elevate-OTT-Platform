@@ -34,7 +34,8 @@
                                               AllowedExtensions=".jpg,.png,.jpg,.bmp"
                                               MaxFileSize="5242880"
                                               OnFileSelected="AvatarSelected"
-                                              OnFileUnSelected="AvatarUnSelected" OnImageUpload="GetBase64StringImageUrl" />
+                                              OnFileUnSelected="AvatarUnSelected" 
+                                              OnImageUpload="GetBase64StringImageUrl" />
                                 <ValidationMessage For="@(() => CreateUserCommand.AvatarUri)" />
                             </div>
                         </MudCardActions>

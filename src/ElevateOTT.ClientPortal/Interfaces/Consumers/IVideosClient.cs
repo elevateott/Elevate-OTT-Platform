@@ -1,6 +1,7 @@
 ﻿using ElevateOTT.ClientPortal.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Commands.UpdateVideo;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideosForAutoComplete;
 using ElevateOTT.ClientPortal.Models.Videos;
 
 namespace ElevateOTT.ClientPortal.Interfaces.Consumers;
@@ -13,6 +14,7 @@ public interface IVideosClient
     Task<HttpResponseWrapper<object>> GetVideos(GetVideosQuery request);
     Task<HttpResponseWrapper<object>> GetAzureBlobSasToken();
     Task<HttpResponseWrapper<object>> GetNewStorageName();
+    Task<HttpResponseWrapper<object>> GetVideosForAutoComplete(GetVideosForAutoCompleteQuery request);
     Task DirectUploadToAzureStorageAsync(Uri uriSasToken, UploadFileModel file,
         CancellationToken cancellationToken = default);
     //Task StoreVideosForStreaming();

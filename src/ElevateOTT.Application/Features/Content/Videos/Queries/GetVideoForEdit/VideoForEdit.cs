@@ -46,6 +46,11 @@ public class VideoForEdit : AuditableDto
     public AssetImageDto? FeaturedCatalogImage { get; set; }
     public AssetImageDto? AnimatedGif { get; set; }
 
+    public bool IsPlayerImageAdded { get; set; }
+    public bool IsCatalogImageAdded { get; set; }
+    public bool IsFeaturedCatalogImageAdded { get; set; }
+    public bool IsAnimatedGifAdded { get; set; }
+
     public AuthorDto? Author { get; set; }
     public List<AssetImageDto>? VideoImages { get; set; }
     public List<CategoryDto>? Categories { get; set; }

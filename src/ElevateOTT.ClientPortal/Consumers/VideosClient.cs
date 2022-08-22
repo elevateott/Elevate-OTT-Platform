@@ -6,6 +6,7 @@ using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetNewStorageName;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideosForAutoComplete;
 using ElevateOTT.ClientPortal.Models.Videos;
 
 namespace ElevateOTT.ClientPortal.Consumers;
@@ -46,6 +47,11 @@ public class VideosClient : IVideosClient
     public async Task<HttpResponseWrapper<object>> GetVideos(GetVideosQuery request)
     {
         return await _httpService.Post<GetVideosQuery, VideosResponse>($"{ControllerName}", request);
+    }
+
+    public async Task<HttpResponseWrapper<object>> GetVideosForAutoComplete(GetVideosForAutoCompleteQuery request)
+    {
+        return await _httpService.Post<GetVideosForAutoCompleteQuery, VideosForAutoCompleteResponse>($"{ControllerName}/auto-complete", request);
     }
 
     //public async Task<HttpResponseWrapper<object>> CreateVideo(MultipartFormDataContent request)

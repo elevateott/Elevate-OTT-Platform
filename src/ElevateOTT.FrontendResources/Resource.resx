@@ -1095,6 +1095,9 @@
   <data name="More_authors_found" xml:space="preserve">
     <value>More authors found.</value>
   </data>
+  <data name="More_videos_found" xml:space="preserve">
+    <value>More videos found.</value>
+  </data>
   <data name="My_Account" xml:space="preserve">
     <value>My Account</value>
   </data>
@@ -1145,6 +1148,9 @@
   </data>
   <data name="No_keep_it" xml:space="preserve">
     <value>No, keep it</value>
+  </data>
+  <data name="No_videos_found" xml:space="preserve">
+    <value>No videos found.</value>
   </data>
   <data name="Nuclear" xml:space="preserve">
     <value>Nuclear</value>
@@ -1743,6 +1749,9 @@
   <data name="Video_Author_Description" xml:space="preserve">
     <value>Assign an author for this video.
 Tip: To manage your authors, go to Content &gt; Authors</value>
+  </data>
+  <data name="Video_by_that_name_not_found" xml:space="preserve">
+    <value>Video by that name not found.</value>
   </data>
   <data name="Video_Catalog_Image_Description" xml:space="preserve">
     <value>This image will appear as a thumbnail in Catalog. Recommended Resolution: 1480x840px</value>

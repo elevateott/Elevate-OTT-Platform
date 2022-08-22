@@ -2,6 +2,7 @@
 
 @using Features.Content.Authors.Queries.GetAuthorsForAutoComplete
 @using Syncfusion.Blazor.RichTextEditor
+@using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideosForAutoComplete
 
 <h3>Edit Video</h3>
 
@@ -123,23 +124,6 @@
                                     </MudItem>
 
                                     <MudItem xs="12" md="8">
-                                        
-                                        
-                                        @*<MudAutocomplete Label="US States" 
-                                                         @bind-Value="choice2.State" 
-                                                         Required="true"
-                                                         SearchFunc="@SearchAsync" 
-                                                         Immediate="true" 
-                                                         CoerceValue="@coerceValue" 
-                                                         ResetValueOnEmptyText="true"
-                                                         OpenIcon="@Icons.Material.Filled.Search" 
-                                                         AdornmentColor="Color.Secondary"
-                                                         Validation="@(new Func<string, IEnumerable<string>>(Validate))" />*@
-                                        
-                                        
-                                        
-                                        
-
                                         <MudAutocomplete T="AuthorItemForAutoComplete"
                                                          @bind-Value="_selectedAuthor"
                                                          Text="@_selectedAuthor.Name"
@@ -281,37 +265,36 @@
                                         <div class="pl-md-12">
                                             <MudCard Elevation="25">
                                                 <MudCardContent>
-                                                    <MudPaper Class="pa-2" Outlined="true">
-                                                        <div class="d-flex justify-center mb-4">
-                                                            <MudImage Src="@(_imageSrc ?? _videoForEditVm.PlayerImage.Url)"
-                                                                      Style="height: 200px; width: 200px;"
-                                                                      Alt="@_videoForEditVm.PlayerImage.Name"/>
-                                                        </div>
+                                                    @if (!string.IsNullOrWhiteSpace(_playerImageSrc))
+                                                    {
+                                                        <MudPaper Class="pa-2" Outlined="true">
+                                                            <div class="d-flex justify-center mb-4">
+                                                                <MudImage Src="@_playerImageSrc"
+                                                                          Style="height: 200px; width: 200px;"
+                                                                          Alt="Player Image"/>
+                                                            </div>
 
-                                                        @if (!string.IsNullOrWhiteSpace(_videoForEditVm.PlayerImage.Url))
-                                                        {
                                                             <MudText Align="Align.Center">
-                                                                <MudFab OnClick="() => { _videoForEditVm.PlayerImage = null; }"
+                                                                <MudFab OnClick="RemovePlayerImage"
                                                                         Color="Color.Warning"
                                                                         Icon="@Icons.Material.Filled.Remove"
                                                                         aria-label="edit"/>
                                                             </MudText>
-                                                        }
-                                                        <MudText Align="Align.Center">@($"{_videoForEditVm.PlayerImage.Name}")</MudText>
-                                                    </MudPaper>
+                                                        </MudPaper>
+                                                    }
+                                                 
                                                 </MudCardContent>
                                                 <MudCardActions Class="d-flex justify-center">
                                                     <div class="form-group">
-                                                        <BpUploadFile ButtonId="imageInput"
+                                                        <BpUploadFile ButtonId="playerImageInput"
                                                                       ButtonIcon="@Icons.Filled.PhotoCamera"
-                                                                      ButtonName="@(HasUploadedImage() ? Resource.Replace_image : Resource.Upload_image)"
+                                                                      ButtonName="@(HasUploadedPlayerImage() ? Resource.Replace_image : Resource.Upload_image)"
                                                                       AllowRename="false"
                                                                       AllowedExtensions=".jpg,.png,.jpeg,.gif"
                                                                       MaxFileSize="10485760"
-                                                                      OnFileSelected="ImageSelected"
-                                                                      OnFileUnSelected="ImageUnSelected"
-                                                                      OnImageUpload="GetBase64StringImageUrl" />
-                                                        <ValidationMessage For="@(() => _videoForEditVm.PlayerImage.ImageUrl)" />
+                                                                      OnFileSelected="PlayerImageSelected"
+                                                                      OnFileUnSelected="PlayerImageUnSelected"
+                                                                      OnImageUpload="GetBase64StringPlayerImageUrl" />
                                                     </div>
                                                 </MudCardActions>
                                             </MudCard>
@@ -330,7 +313,45 @@
                                         </div>
                                     </MudItem>
 
-                                    <p>form field goes here</p>
+                                      <MudItem xs="12" md="8">
+                                        <div class="pl-md-12">
+                                            <MudCard Elevation="25">
+                                                <MudCardContent>
+                                                    @if (!string.IsNullOrWhiteSpace(_catalogImageSrc))
+                                                    {
+                                                        <MudPaper Class="pa-2" Outlined="true">
+                                                            <div class="d-flex justify-center mb-4">
+                                                                <MudImage Src="@_catalogImageSrc"
+                                                                          Style="height: 200px; width: 200px;"
+                                                                          Alt="Catalog Image"/>
+                                                            </div>
+
+                                                            <MudText Align="Align.Center">
+                                                                <MudFab OnClick="RemoveCatalogImage"
+                                                                        Color="Color.Warning"
+                                                                        Icon="@Icons.Material.Filled.Remove"
+                                                                        aria-label="edit"/>
+                                                            </MudText>
+                                                        </MudPaper>
+                                                    }
+                                                 
+                                                </MudCardContent>
+                                                <MudCardActions Class="d-flex justify-center">
+                                                    <div class="form-group">
+                                                        <BpUploadFile ButtonId="catalogImageInput"
+                                                                      ButtonIcon="@Icons.Filled.PhotoCamera"
+                                                                      ButtonName="@(HasUploadedCatalogImage() ? Resource.Replace_image : Resource.Upload_image)"
+                                                                      AllowRename="false"
+                                                                      AllowedExtensions=".jpg,.png,.jpeg,.gif"
+                                                                      MaxFileSize="10485760"
+                                                                      OnFileSelected="CatalogImageSelected"
+                                                                      OnFileUnSelected="CatalogImageUnSelected"
+                                                                      OnImageUpload="GetBase64StringCatalogImageUrl" />
+                                                    </div>
+                                                </MudCardActions>
+                                            </MudCard>
+                                        </div>
+                                    </MudItem>
                                 </MudGrid>
 
                                 <!-- Trailer Video -->
@@ -344,7 +365,88 @@
                                         </div>
                                     </MudItem>
 
-                                    <p>form field goes here</p>
+                                    <MudItem xs="12" md="8">
+                                        <MudAutocomplete T="VideoItemForAutoComplete"
+                                                         @bind-Value="_selectedTrailerVideo"
+                                                         Text="@_selectedTrailerVideo.Title"
+                                                         Class="pl-md-12"
+                                                         Label="Video"
+                                                         Variant="Variant.Outlined"
+                                                         SearchFunc="@SearchVideos"
+                                                         ResetValueOnEmptyText="false"
+                                                         CoerceText="false"
+                                                         CoerceValue="false"
+                                                         AdornmentIcon="@Icons.Material.Filled.Search"
+                                                         AdornmentColor="Color.Primary"
+                                                         Clearable="true"
+                                                         DebounceInterval="500"
+                                                         MaxHeight="400"
+                                                         MaxItems="50"
+                                                         SelectValueOnTab="true"
+                                                         Validation="@(new Func<string, IEnumerable<string>>(ValidateVideo))">
+
+                                            <ItemTemplate Context="video">
+                                                <div class="d-flex align-center gap-4">
+                                                    @if (!string.IsNullOrWhiteSpace(video.ThumbnailUrl))
+                                                    {
+                                                        <MudImage Src="@video.ThumbnailUrl"
+                                                                  Width="64"
+                                                                  Height="64"
+                                                                  Alt="@video.Title"
+                                                                  Elevation="25"
+                                                                  Class="rounded-lg ma-4"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Icon="@Icons.Material.Filled.Person"
+                                                                 Color="Color.Primary"
+                                                                 Size="Size.Large"/>
+                                                    }
+
+                                                    <MudText>
+                                                        @video.Title
+                                                    </MudText>
+                                                </div>
+
+                                            </ItemTemplate>
+
+                                            <ItemSelectedTemplate Context="video">
+                                                <div class="d-flex align-center gap-4">
+                                                    @if (!string.IsNullOrWhiteSpace(video.ThumbnailUrl))
+                                                    {
+                                                        <MudImage Src="@video.ThumbnailUrl"
+                                                                  Width="64"
+                                                                  Height="64"
+                                                                  Alt="@video.Title"
+                                                                  Elevation="25"
+                                                                  Class="rounded-lg ma-4"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Icon="@Icons.Material.Filled.Person"
+                                                                 Color="Color.Primary"
+                                                                 Size="Size.Large"/>
+                                                    }
+
+                                                    <MudText>
+                                                        @video.Title
+                                                    </MudText>
+                                                </div>
+                                            </ItemSelectedTemplate>
+
+                                            <NoItemsTemplate>
+                                                <MudText Align="Align.Center" Class="px-4 py-1">
+                                                    @Resource.No_videos_found
+                                                </MudText>
+                                            </NoItemsTemplate>
+
+                                            <MoreItemsTemplate>
+                                                <MudText Align="Align.Center" Class="px-4 py-1">
+                                                    @Resource.More_videos_found @Resource.Try_entering_more_letters
+                                                </MudText>
+                                            </MoreItemsTemplate>
+                                        </MudAutocomplete>
+                                    </MudItem>
                                 </MudGrid>
 
                                 <!-- Featured Category Image -->
@@ -358,7 +460,45 @@
                                         </div>
                                     </MudItem>
 
-                                    <p>form field goes here</p>
+                                    <MudItem xs="12" md="8">
+                                        <div class="pl-md-12">
+                                            <MudCard Elevation="25">
+                                                <MudCardContent>
+                                                    @if (!string.IsNullOrWhiteSpace(_featuredCatalogImageSrc))
+                                                    {
+                                                        <MudPaper Class="pa-2" Outlined="true">
+                                                            <div class="d-flex justify-center mb-4">
+                                                                <MudImage Src="@_featuredCatalogImageSrc"
+                                                                          Style="height: 200px; width: 200px;"
+                                                                          Alt="Featured Catalog Image"/>
+                                                            </div>
+
+                                                            <MudText Align="Align.Center">
+                                                                <MudFab OnClick="RemoveFeaturedCatalogImage"
+                                                                        Color="Color.Warning"
+                                                                        Icon="@Icons.Material.Filled.Remove"
+                                                                        aria-label="edit"/>
+                                                            </MudText>
+                                                        </MudPaper>
+                                                    }
+                                                 
+                                                </MudCardContent>
+                                                <MudCardActions Class="d-flex justify-center">
+                                                    <div class="form-group">
+                                                        <BpUploadFile ButtonId="featuredCatalogImageInput"
+                                                                      ButtonIcon="@Icons.Filled.PhotoCamera"
+                                                                      ButtonName="@(HasUploadedFeaturedCatalogImage() ? Resource.Replace_image : Resource.Upload_image)"
+                                                                      AllowRename="false"
+                                                                      AllowedExtensions=".jpg,.png,.jpeg,.gif"
+                                                                      MaxFileSize="10485760"
+                                                                      OnFileSelected="FeaturedCatalogImageSelected"
+                                                                      OnFileUnSelected="FeaturedCatalogImageUnSelected"
+                                                                      OnImageUpload="GetBase64StringFeaturedCatalogImageUrl" />
+                                                    </div>
+                                                </MudCardActions>
+                                            </MudCard>
+                                        </div>
+                                    </MudItem>
                                 </MudGrid>
 
                                 <!-- Featured Category Video -->
@@ -372,7 +512,88 @@
                                         </div>
                                     </MudItem>
 
-                                    <p>form field goes here</p>
+                                    <MudItem xs="12" md="8">
+                                        <MudAutocomplete T="VideoItemForAutoComplete"
+                                                         @bind-Value="_selectedFeaturedCategoryVideo"
+                                                         Text="@_selectedFeaturedCategoryVideo.Title"
+                                                         Class="pl-md-12"
+                                                         Label="Video"
+                                                         Variant="Variant.Outlined"
+                                                         SearchFunc="@SearchVideos"
+                                                         ResetValueOnEmptyText="false"
+                                                         CoerceText="false"
+                                                         CoerceValue="false"
+                                                         AdornmentIcon="@Icons.Material.Filled.Search"
+                                                         AdornmentColor="Color.Primary"
+                                                         Clearable="true"
+                                                         DebounceInterval="500"
+                                                         MaxHeight="400"
+                                                         MaxItems="50"
+                                                         SelectValueOnTab="true"
+                                                         Validation="@(new Func<string, IEnumerable<string>>(ValidateVideo))">
+
+                                            <ItemTemplate Context="video">
+                                                <div class="d-flex align-center gap-4">
+                                                    @if (!string.IsNullOrWhiteSpace(video.ThumbnailUrl))
+                                                    {
+                                                        <MudImage Src="@video.ThumbnailUrl"
+                                                                  Width="64"
+                                                                  Height="64"
+                                                                  Alt="@video.Title"
+                                                                  Elevation="25"
+                                                                  Class="rounded-lg ma-4"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Icon="@Icons.Material.Filled.Person"
+                                                                 Color="Color.Primary"
+                                                                 Size="Size.Large"/>
+                                                    }
+
+                                                    <MudText>
+                                                        @video.Title
+                                                    </MudText>
+                                                </div>
+
+                                            </ItemTemplate>
+
+                                            <ItemSelectedTemplate Context="video">
+                                                <div class="d-flex align-center gap-4">
+                                                    @if (!string.IsNullOrWhiteSpace(video.ThumbnailUrl))
+                                                    {
+                                                        <MudImage Src="@video.ThumbnailUrl"
+                                                                  Width="64"
+                                                                  Height="64"
+                                                                  Alt="@video.Title"
+                                                                  Elevation="25"
+                                                                  Class="rounded-lg ma-4"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Icon="@Icons.Material.Filled.Person"
+                                                                 Color="Color.Primary"
+                                                                 Size="Size.Large"/>
+                                                    }
+
+                                                    <MudText>
+                                                        @video.Title
+                                                    </MudText>
+                                                </div>
+                                            </ItemSelectedTemplate>
+
+                                            <NoItemsTemplate>
+                                                <MudText Align="Align.Center" Class="px-4 py-1">
+                                                    @Resource.No_videos_found
+                                                </MudText>
+                                            </NoItemsTemplate>
+
+                                            <MoreItemsTemplate>
+                                                <MudText Align="Align.Center" Class="px-4 py-1">
+                                                    @Resource.More_videos_found @Resource.Try_entering_more_letters
+                                                </MudText>
+                                            </MoreItemsTemplate>
+                                        </MudAutocomplete>
+                                    </MudItem>
                                 </MudGrid>
                             </div>
                         </MudCardContent>

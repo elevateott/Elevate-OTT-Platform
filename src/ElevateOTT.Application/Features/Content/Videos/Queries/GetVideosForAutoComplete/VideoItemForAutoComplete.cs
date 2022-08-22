@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElevateOTT.Domain.Common.DTOs;
+namespace ElevateOTT.Application.Features.Content.Videos.Queries.GetVideosForAutoComplete;
 
-public class VideoForAutoCompleteDto
+public class VideoItemForAutoComplete
 {
     public Guid Id { get; set; }
     public string? Title { get; set; }

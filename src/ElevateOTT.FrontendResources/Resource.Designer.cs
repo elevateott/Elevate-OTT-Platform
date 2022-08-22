@@ -3000,6 +3000,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More videos found..
+        /// </summary>
+        public static string More_videos_found {
+            get {
+                return ResourceManager.GetString("More_videos_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Account.
         /// </summary>
         public static string My_Account {
@@ -3131,6 +3140,15 @@ namespace ElevateOTT.FrontendResources {
         public static string No_keep_it {
             get {
                 return ResourceManager.GetString("No_keep_it", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No videos found..
+        /// </summary>
+        public static string No_videos_found {
+            get {
+                return ResourceManager.GetString("No_videos_found", resourceCulture);
             }
         }
         
@@ -4932,6 +4950,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Video_Author_Description {
             get {
                 return ResourceManager.GetString("Video_Author_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video by that name not found..
+        /// </summary>
+        public static string Video_by_that_name_not_found {
+            get {
+                return ResourceManager.GetString("Video_by_that_name_not_found", resourceCulture);
             }
         }
         
