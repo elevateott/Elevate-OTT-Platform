@@ -5,12 +5,13 @@ namespace ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
 public class CreateAuthorCommand : IRequest<Envelope<CreateAuthorResponse>>
 {
     #region Public Properties
+
     public string Name { get; set; } = string.Empty;
-    public string Bio { get; set; } = string.Empty;
+    public string? Bio { get; set; } 
     public string? ImageUrl { get; set; }
-    public string SeoTitle { get; set; } = string.Empty;
-    public string SeoDescription { get; set; } = string.Empty;
-    public string Slug { get; set; } = string.Empty;
+    public string? SeoTitle { get; set; }
+    public string? SeoDescription { get; set; }
+    public string? Slug { get; set; }
     public IFormFile? ImageFile { get; set; }
     public bool IsImageAdded { get; set; }
 
@@ -21,7 +22,9 @@ public class CreateAuthorCommand : IRequest<Envelope<CreateAuthorResponse>>
     public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, Envelope<CreateAuthorResponse>>
     {
         #region Private Fields
+
         private readonly IAuthorUseCase _authorUseCase;
+
         #endregion Private Fields
 
         #region Public Constructors

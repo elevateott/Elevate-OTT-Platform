@@ -112,6 +112,8 @@ public class Program
 
         services.AddScoped<IVideosClient, VideosClient>();
 
+        services.AddScoped<ICategoriesClient, CategoriesClient>();
+
         services.AddScoped<VideoHub>();
 
         services.AddScoped<LiveStreamHub>();

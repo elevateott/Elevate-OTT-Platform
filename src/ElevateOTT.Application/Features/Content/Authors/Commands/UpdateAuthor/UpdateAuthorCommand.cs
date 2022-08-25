@@ -9,11 +9,11 @@ public class UpdateAuthorCommand : IRequest<Envelope<string>>
 
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public string Bio { get; set; } = string.Empty;
+    public string? Bio { get; set; } 
     public string? ImageUrl { get; set; }
-    public string SeoTitle { get; set; } = string.Empty;
-    public string SeoDescription { get; set; } = string.Empty;
-    public string Slug { get; set; } = string.Empty;
+    public string? SeoTitle { get; set; } 
+    public string? SeoDescription { get; set; } 
+    public string? Slug { get; set; } 
     public IFormFile? ImageFile { get; set; }
     public bool IsImageAdded { get; set; }
 

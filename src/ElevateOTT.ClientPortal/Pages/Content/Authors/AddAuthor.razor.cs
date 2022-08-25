@@ -92,7 +92,7 @@ public partial class AddAuthor : ComponentBase
 
         var userFormData = new MultipartFormDataContent
         {
-            { new StringContent(_createAuthorCommand.Name ?? string.Empty), "Name" },
+            { new StringContent(_createAuthorCommand.Name ?? string.Empty), "Title" },
             { new StringContent(_createAuthorCommand.Bio ?? string.Empty), "Bio" },
             { new StringContent(_createAuthorCommand.ImageUrl ?? string.Empty), "ImageUrl" },
             { new StringContent(_createAuthorCommand.SeoTitle ?? string.Empty), "SeoTitle" },

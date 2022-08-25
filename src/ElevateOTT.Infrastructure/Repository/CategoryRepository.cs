@@ -1,4 +1,7 @@
-﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+﻿using Ardalis.GuardClauses;
+using ElevateOTT.Application.Common.Extensions;
+using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Application.Features.Content.Categories.Queries.GetCategories;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Infrastructure.Repository
@@ -10,37 +13,44 @@ namespace ElevateOTT.Infrastructure.Repository
         {
         }
 
-        //public async Task<PagedList<CategoryModel>> GetCategoriesAsync(Guid tenantId, CategoryParameters categoryParameters, bool trackChanges)
-        //{
-        //    var categories = await Queryable.Skip(FindAll(trackChanges)
-        //            .Where(a => a.TenantId.Equals(tenantId))
-        //            .Search(categoryParameters.SearchTerm ?? string.Empty)
-        //            .Sort(categoryParameters.OrderBy ?? string.Empty), (categoryParameters.PageNumber - 1) * categoryParameters.PageSize)
-        //        .Take(categoryParameters.PageSize)
-        //        .ToListAsync();
+        public IQueryable<CategoryModel>? GetCategories(Guid tenantId, GetCategoriesQuery? request, bool trackChanges)
+        {
+            Guard.Against.Null(request, nameof(request));
 
-        //    var count = await FindAll(trackChanges).CountAsync();
+            var query = FindAll(trackChanges)
+                .Where(a => a.TenantId.Equals(tenantId));
 
-        //    return new PagedList<CategoryModel>(categories, count, categoryParameters.PageNumber, categoryParameters.PageSize);
-        //}
+            if (!string.IsNullOrWhiteSpace(request.SearchText))
+                query = query.Where(r => r.Title.Contains(request.SearchText));
 
-        public async Task<CategoryModel?> GetCategoryAsync(Guid categoryId, bool trackChanges) =>
-            await FindByCondition(a => a.Id.Equals(categoryId), trackChanges)
-            .SingleOrDefaultAsync();
+            query = !string.IsNullOrWhiteSpace(request.SortBy)
+                ? query.SortBy(request.SortBy)
+                : query.OrderBy(a => a.Title);
+
+            return query;
+        }
+
+        public async Task<CategoryModel?> GetCategoryAsync(Guid tenantId, Guid categoryId, bool trackChanges) =>
+            await FindByCondition(a => a.TenantId.Equals(tenantId)
+                                       && a.Id.Equals(categoryId), trackChanges)
+                .SingleOrDefaultAsync();
 
         public async Task<CategoryModel?> FindCategoryByConditionAsync(Expression<Func<CategoryModel, bool>> expression, bool trackChanges) =>
             await FindByCondition(expression, trackChanges)
                 .SingleOrDefaultAsync();
 
-        //public void CreateCategoryForTenant(Guid tenantId, CategoryModel category)
-        //{
-        //    category.TenantId = tenantId;
-        //    Create(category);
-        //}
-        public async Task<IEnumerable<CategoryModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
-            await FindByCondition(x => ids.Contains(x.Id), trackChanges).ToListAsync();
+        public void CreateCategory(CategoryModel category)
+        {
+            Create(category);
+        }
+
+        public Task<IEnumerable<CategoryModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
 
         public void DeleteCategory(CategoryModel category) => Delete(category);
+
         public async Task<bool> CategoryExistsAsync(Expression<Func<CategoryModel, bool>> expression) => await ExistsAsync(expression);
     }
 }

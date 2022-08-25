@@ -201,7 +201,7 @@ public partial class EditUser : ComponentBase
             var userFormData = new MultipartFormDataContent
             {
                 { new StringContent(UpdateUserCommand.Id ?? string.Empty), "id" },
-                { new StringContent(UpdateUserCommand.Name ?? string.Empty), "Name" },
+                { new StringContent(UpdateUserCommand.Name ?? string.Empty), "Title" },
                 { new StringContent(UpdateUserCommand.Surname ?? string.Empty), "Surname" },
                 { new StringContent(UpdateUserCommand.JobTitle ?? string.Empty), "JobTitle" },
                 { new StringContent(UpdateUserCommand.Email ?? string.Empty), "Email" },

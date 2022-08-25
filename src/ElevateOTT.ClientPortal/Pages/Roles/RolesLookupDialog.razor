@@ -35,7 +35,7 @@
                     <MudTh>
                         <input id="thCheckBox" type="checkbox" checked="@SelectAllVisibleRowsCheckBox" @onchange="(e) => SelectAllVisibleRows(e.Value)">
                     </MudTh>
-                    <MudTh><MudTableSortLabel SortLabel="Name" T="RoleItem" InitialDirection="SortDirection.Ascending">@Resource.Name</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortLabel="Title" T="RoleItem" InitialDirection="SortDirection.Ascending">@Resource.Name</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="IsStatic" T="RoleItem">@Resource.Is_Static</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="IsDefault" T="RoleItem">@Resource.Is_Default</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="CreatedOn" T="RoleItem">@Resource.Created_On</MudTableSortLabel></MudTh>
@@ -44,7 +44,7 @@
                     <MudTd DataLabel="SelectAll">
                         <input type="checkbox" checked="@context.Checked" @onchange="() => AddToSelectedUserRoles(context)" />
                     </MudTd>
-                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="Title">@context.Name</MudTd>
                     <MudTd DataLabel="IsStatic">@context.IsStatic</MudTd>
                     <MudTd DataLabel="IsDefault">@context.IsDefault</MudTd>
                     <MudTd DataLabel="CreatedOn">@context.CreatedOn</MudTd>

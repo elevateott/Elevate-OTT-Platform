@@ -43,6 +43,13 @@ public class VideoItem : AuditableDto
     public string? Slug { get; set; }
     public Guid? AuthorId { get; set; }
 
+
+    public bool HasOneTimePurchasePrice { get; set; }
+    public decimal OneTimePurchasePrice { get; set; }
+    public bool HasRentalPrice { get; set; }
+    public RentalDuration RentalDuration { get; set; }
+    public decimal RentalPrice { get; set; }
+
     public AuthorDto? Author { get; set; }
     public List<AssetImageDto>? VideoImages { get; set; }
     public List<CategoryDto>? Categories { get; set; }

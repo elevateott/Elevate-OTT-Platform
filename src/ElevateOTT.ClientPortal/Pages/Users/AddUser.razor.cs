@@ -111,7 +111,7 @@ public partial class AddUser : ComponentBase
             userFormData.Add(AvatarContent, "Avatar", AvatarContent.Headers.GetValues("FileName").LastOrDefault());
         }
 
-        userFormData.Add(new StringContent(CreateUserCommand.Name ?? string.Empty), "Name");
+        userFormData.Add(new StringContent(CreateUserCommand.Name ?? string.Empty), "Title");
         userFormData.Add(new StringContent(CreateUserCommand.Surname ?? string.Empty), "Surname");
         userFormData.Add(new StringContent(CreateUserCommand.JobTitle ?? string.Empty), "JobTitle");
         userFormData.Add(new StringContent(CreateUserCommand.Email ?? string.Empty), "Email");

@@ -9,12 +9,25 @@ public class VideoModel : BaseAsset, IMustHaveTenant
     // TODO filters
     // TODO Geo-blocking
 
+    // TODO subscription
+
     public Guid TenantId { get; set; }
 
     public bool Mp4Support { get; set; }
 
     public Guid? TrailerVideoId { get; set; }
     public Guid? FeaturedCategoryVideoId { get; set; }
+
+
+    public bool HasOneTimePurchasePrice { get; set; }
+
+    [Column(TypeName = "decimal(18,4)")]
+    public decimal OneTimePurchasePrice { get; set; }
+    public bool HasRentalPrice { get; set; }
+    public RentalDuration RentalDuration { get; set; }
+
+    [Column(TypeName = "decimal(18,4)")]
+    public decimal RentalPrice { get; set; }
 
 
     #region foreign keys

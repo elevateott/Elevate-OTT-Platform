@@ -248,7 +248,7 @@ public partial class BpUploadFile
 
             var safeFileName = fileNameWithoutExtension.Replace(".", "_");
 
-            NewFileName = safeFileName; //Initialize File Name.
+            NewFileName = safeFileName; //Initialize File Title.
 
             if (AllowRename)
             {

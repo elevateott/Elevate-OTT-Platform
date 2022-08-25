@@ -2,10 +2,10 @@
 
 namespace ElevateOTT.ClientPortal.Features.Content.Videos.Commands.UpdateVideo;
 
-public class VideoForEditValidator : AbstractValidator<VideoForEdit>
+public class UpdateVideoCommandValidator : AbstractValidator<VideoForEdit>
 {
     #region Public Constructors
-    public VideoForEditValidator()
+    public UpdateVideoCommandValidator()
     {
         // TODO slug - no spaces or special chars
 

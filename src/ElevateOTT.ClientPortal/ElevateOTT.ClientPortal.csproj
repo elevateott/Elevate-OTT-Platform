@@ -8,6 +8,7 @@
 		<PublishTrimmed>true</PublishTrimmed>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
 
 	<PropertyGroup>
@@ -63,8 +64,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\Content\Categories\Commands\" />
-	  <Folder Include="Features\Content\Categories\Queries\" />
 	  <Folder Include="Features\Content\Collections\Commands\" />
 	  <Folder Include="Features\Content\Collections\Queries\" />
 	  <Folder Include="Features\Content\Extras\Commands\" />
@@ -72,10 +71,11 @@
 	  <Folder Include="Features\Content\LiveStreams\Commands\" />
 	  <Folder Include="Features\Content\LiveStreams\Queries\" />
 	  <Folder Include="Models\Reporting\" />
-	  <Folder Include="Pages\Content\Categories\" />
 	  <Folder Include="Pages\Content\Collections\" />
 	  <Folder Include="Pages\Content\Extras\" />
 	  <Folder Include="Pages\Content\LiveStreams\" />
+	  <Folder Include="wwwroot\images\" />
+	  <Folder Include="wwwroot\favicons\" />
 	</ItemGroup>
 
 </Project>

@@ -1,14 +1,37 @@
-﻿using ElevateOTT.ClientPortal.Models.DTOs;
+﻿using System.ComponentModel;
+using ElevateOTT.ClientPortal.Annotations;
+using System.Runtime.CompilerServices;
+using ElevateOTT.ClientPortal.Models.DTOs;
 
 namespace ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideoForEdit;
 
-public class VideoForEdit
+public class VideoForEdit : INotifyPropertyChanged
 {
     #region Public Properties
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private string _title = string.Empty;
+
+    public string Title
+    {
+        get
+        {
+            return _title;
+        }
+
+        set
+        {
+            if (value != _title)
+            {
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public Guid Id { get; set; }
     public string? AssetId { get; set; }
-    public string? Title { get; set; }
     public string? FileName { get; set; }
     public string? StreamUrl { get; set; }
     public string? ShortDescription { get; set; }
@@ -51,6 +74,12 @@ public class VideoForEdit
     public bool IsAnimatedGifAdded { get; set; }
 
 
+    public bool HasOneTimePurchasePrice { get; set; }
+    public decimal OneTimePurchasePrice { get; set; }
+    public bool HasRentalPrice { get; set; }
+    public RentalDuration RentalDuration { get; set; }
+    public decimal RentalPrice { get; set; }
+
     public AuthorDto? Author { get; set; }
     public List<AssetImageDto>? VideoImages { get; set; }
     public List<CategoryDto>? Categories { get; set; }
@@ -58,4 +87,11 @@ public class VideoForEdit
     public List<AuthorDto>? Authors { get; set; }
 
     #endregion Public Properties
+
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

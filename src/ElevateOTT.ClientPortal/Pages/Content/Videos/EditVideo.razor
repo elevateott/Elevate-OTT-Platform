@@ -615,48 +615,134 @@
                                             </MudText>
                                         </div>
                                     </MudItem>
-
-                                    <p>form field goes here</p>
-                                </MudGrid>
-
-                                <!-- Subscription plan -->
-                                <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
-                                    <MudItem xs="12" md="4">
-                                        <div class="d-flex flex-column">
-                                            <MudText Typo="Typo.h5">@Resource.Subscription_Plan</MudText>
+                                    
+                                    <MudItem xs="12" md="8">
+                                        <div class="pl-md-12">
+                                            <MudButtonGroup OverrideStyles="false">
+                                                <MudButton StartIcon="fas fa-lock-open"
+                                                           Color="Color.Secondary"
+                                                           IconColor="_contentAccessFreeIconColor"
+                                                           OnClick="() => SetContentAccess(0)"
+                                                           Size="Size.Large"
+                                                           Variant="_contentAccessFreeVariant">Free for everyone</MudButton>
+                                                <MudButton StartIcon="fas fa-lock"
+                                                           Color="Color.Secondary"
+                                                           IconColor="_contentAccessPremiumIconColor"
+                                                           OnClick="() => SetContentAccess(1)"
+                                                           Size="Size.Large"
+                                                           Variant="_contentAccessPremiumVariant">Require access</MudButton>
+                                            </MudButtonGroup>
                                         </div>
                                     </MudItem>
-
-                                    <p>form field goes here</p>
                                 </MudGrid>
+                                
+                                @if (_videoForEditVm is not null && _videoForEditVm.ContentAccess == ContentAccess.Premium)
+                                {
+                                    <!-- Subscription plan -->
+                                    <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                        <MudItem xs="12" md="4">
+                                            <div class="d-flex flex-column">
+                                                <MudText Typo="Typo.h5">@Resource.Subscription_Plan</MudText>
+                                            </div>
+                                        </MudItem>
 
-                                <!-- One-time Purchase Price -->
-                                <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
-                                    <MudItem xs="12" md="4">
-                                        <div class="d-flex flex-column">
-                                            <MudText Typo="Typo.h5">@Resource.One_time_Purchase_Price</MudText>
-                                            <MudText Typo="Typo.body2">
-                                                @Resource.Video_One_Time_Purchase_Price_Description
-                                            </MudText>
-                                        </div>
-                                    </MudItem>
+                                        <MudItem xs="12" md="8">
+                                            <div class="pl-md-12">
+                                                <MudSelect T="string" 
+                                                           Label="Subscription Plan" 
+                                                           AnchorOrigin="Origin.BottomCenter"
+                                                           Variant="Variant.Outlined">
+                                                    <MudSelectItem Value="@("Basic")" />
+                                                    <MudSelectItem Value="@("Platinum")" />
+                                                    <MudSelectItem Value="@("Gold")" />
+                                                </MudSelect>
+                                            </div>
+                                        </MudItem>
+                                    </MudGrid>
 
-                                    <p>form field goes here</p>
-                                </MudGrid>
+                                    <!-- One-time Purchase Price -->
+                                    <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                        <MudItem xs="12" md="4">
+                                            <div class="d-flex flex-column">
+                                                <MudText Typo="Typo.h5">@Resource.One_time_Purchase_Price</MudText>
+                                                <MudText Typo="Typo.body2">
+                                                    @Resource.Video_One_Time_Purchase_Price_Description
+                                                </MudText>
+                                            </div>
+                                        </MudItem>
 
-                                <!-- Rental Price -->
-                                <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
-                                    <MudItem xs="12" md="4">
-                                        <div class="d-flex flex-column">
-                                            <MudText Typo="Typo.h5">@Resource.Rental_Price</MudText>
-                                            <MudText Typo="Typo.body2">
-                                                @Resource.Video_Rental_Price_Description
-                                            </MudText>
-                                        </div>
-                                    </MudItem>
+                                        <MudItem xs="12" md="8" Class="pl-md-16">
+                                            <div class="d-flex flex-column gap-6">
+                                                <MudSwitch T="bool" CheckedChanged="@OneTimePurchaseCheckedChanged"
+                                                           Checked="_videoForEditVm.HasOneTimePurchasePrice"
+                                                           Label="One-time Purchase Price"
+                                                           Color="Color.Primary"/>
+                                                @if (_videoForEditVm.HasOneTimePurchasePrice)
+                                                {
+                                                    <MudTextField @bind-Value="_videoForEditVm.OneTimePurchasePrice" 
+                                                                  Label="One-time Purchase Price" 
+                                                                  Variant="Variant.Outlined" 
+                                                                  Adornment="Adornment.Start" 
+                                                                  AdornmentIcon="@Icons.Material.Filled.AttachMoney" 
+                                                                  AdornmentColor="Color.Success" />
+                                                }
+                                            </div>
 
-                                    <p>form field goes here</p>
-                                </MudGrid>
+                                        </MudItem>
+                                    </MudGrid>
+
+                                    <!-- Rental Price -->
+                                    <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                        <MudItem xs="12" md="4">
+                                            <div class="d-flex flex-column">
+                                                <MudText Typo="Typo.h5">@Resource.Rental_Price</MudText>
+                                                <MudText Typo="Typo.body2">
+                                                    @Resource.Video_Rental_Price_Description
+                                                </MudText>
+                                            </div>
+                                        </MudItem>
+
+                                        <MudItem xs="12" md="8" Class="pl-md-16">
+                                            <div class="d-flex flex-column gap-6">
+                                                <MudSwitch T="bool" CheckedChanged="@RentalPurchaseCheckedChanged"
+                                                           Checked="_videoForEditVm.HasRentalPrice"
+                                                           Label="Rental Price"
+                                                           Color="Color.Primary"/>
+                                                @if (_videoForEditVm.HasRentalPrice)
+                                                {
+                                                    <div class="d-flex gap-6 align-center">
+                                                        <MudTextField @bind-Value="_videoForEditVm.RentalPrice" 
+                                                                      Label="Rental Price" 
+                                                                      Variant="Variant.Outlined" 
+                                                                      Adornment="Adornment.Start" 
+                                                                      AdornmentIcon="@Icons.Material.Filled.AttachMoney" 
+                                                                      AdornmentColor="Color.Success" />
+
+                                                        <MudSelect @bind-Value="_videoForEditVm.RentalDuration"
+                                                                   T="RentalDuration" 
+                                                                   Label="Duration" 
+                                                                   Variant="Variant.Outlined"
+                                                                   ToStringFunc="@DurationSelectStringConverter">
+                                                            <MudSelectItem Value="@RentalDuration.OneDay" />
+                                                            <MudSelectItem Value="@RentalDuration.TwoDays" />
+                                                            <MudSelectItem Value="@RentalDuration.ThreeDays" />
+                                                            <MudSelectItem Value="@RentalDuration.FourDays" />
+                                                            <MudSelectItem Value="@RentalDuration.FiveDays" />
+                                                            <MudSelectItem Value="@RentalDuration.SixDays" />
+                                                            <MudSelectItem Value="@RentalDuration.OneWeek" />
+                                                            <MudSelectItem Value="@RentalDuration.TwoWeeks" />
+                                                            <MudSelectItem Value="@RentalDuration.OneMonth" />
+                                                            <MudSelectItem Value="@RentalDuration.ThreeMonths" />
+                                                            <MudSelectItem Value="@RentalDuration.SixMonths" />
+                                                            <MudSelectItem Value="@RentalDuration.OneYear" />
+                                                        </MudSelect>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </MudItem>
+                                    </MudGrid>
+                                }
+                               
                             </div>
                         </MudCardContent>
                     </MudCard>
@@ -677,8 +763,76 @@
                                         </div>
                                     </MudItem>
 
-                                    <p>form field goes here</p>
+                                    <MudItem xs="12" md="8">
+                                        <div class="pl-md-12">
+                                            <MudButtonGroup OverrideStyles="false">
+                                                <MudButton StartIcon="@Icons.Material.Filled.Unpublished"
+                                                           Color="Color.Secondary"
+                                                           IconColor="_publicationStatusUnpublishedIconColor"
+                                                           OnClick="() => SetPublicationStatus(0)"
+                                                           Size="Size.Large"
+                                                           Variant="_publicationStatusUnpublishedVariant">Unpublished</MudButton>
+                                                <MudButton StartIcon="@Icons.Material.Filled.Publish"
+                                                           Color="Color.Secondary"
+                                                           IconColor="_publicationStatusPublishedIconColor"
+                                                           OnClick="() => SetPublicationStatus(1)"
+                                                           Size="Size.Large"
+                                                           Variant="_publicationStatusPublishedVariant">Published</MudButton>
+                                                <MudButton StartIcon="@Icons.Material.Filled.Schedule"
+                                                           Color="Color.Secondary"
+                                                           IconColor="_publicationStatusScheduledIconColor"
+                                                           OnClick="() => SetPublicationStatus(2)"
+                                                           Size="Size.Large"
+                                                           Variant="_publicationStatusScheduledVariant">Scheduled</MudButton>
+                                            </MudButtonGroup>
+                                        </div>
+                                    </MudItem>
                                 </MudGrid>
+                                
+                                @if (_videoForEditVm is not null && (_videoForEditVm.PublicationStatus == PublicationStatus.Published
+                                    || _videoForEditVm.PublicationStatus == PublicationStatus.Scheduled))
+                                {
+                                     <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                    <MudItem xs="12" md="4">
+                                        <div class="d-flex flex-column">
+                                            <MudText Typo="Typo.h5">Expiration Date</MudText>
+                                            <MudText Typo="Typo.body2">
+                                                This video will be removed from the catalog on the date you set here.
+                                            </MudText>
+                                        </div>
+                                    </MudItem>
+
+                                    <MudItem xs="12" md="8">
+                                        <div class="pl-md-12">
+                                            <MudDatePicker Label="Expiration Date" 
+                                                           @bind-Date="_videoForEditVm.ExpirationDate"
+                                                           Placeholder="Select Date"/>
+                                        </div>
+                                    </MudItem>
+                                </MudGrid>
+                                }
+                                
+                                @if (_videoForEditVm is not null && _videoForEditVm.PublicationStatus == PublicationStatus.Scheduled)
+                                {
+                                    <MudGrid Justify="Justify.SpaceBetween" Class="mb-10">
+                                        <MudItem xs="12" md="4">
+                                            <div class="d-flex flex-column">
+                                                <MudText Typo="Typo.h5">Release Date</MudText>
+                                                <MudText Typo="Typo.body2">
+                                                    This video will appear in the catalog on the date you set here.
+                                                </MudText>
+                                            </div>
+                                        </MudItem>
+
+                                        <MudItem xs="12" md="8">
+                                            <div class="pl-md-12">
+                                                <MudDatePicker Label="Release Date" 
+                                                               @bind-Date="_videoForEditVm.ReleasedDate"
+                                                               Placeholder="Select Date"/>
+                                            </div>
+                                        </MudItem>
+                                    </MudGrid>
+                                }
                             </div>
                         </MudCardContent>
                     </MudCard>

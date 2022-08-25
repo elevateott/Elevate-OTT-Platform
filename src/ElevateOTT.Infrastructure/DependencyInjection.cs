@@ -113,6 +113,7 @@ public static class DependencyInjection
 
         services.AddScoped<IAuthorUseCase, AuthorUseCase>();
         services.AddScoped<IVideoUseCase, VideoUseCase>();
+        services.AddScoped<ICategoryUseCase, CategoryUseCase>();
 
         services.AddScoped<IRepositoryManager, RepositoryManager>();
 

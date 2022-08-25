@@ -35,6 +35,7 @@ public class CreateAuthorCommand : INotifyPropertyChanged
     public string SeoDescription { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public bool IsImageAdded { get; set; }
+    public IFormFile? ImageFile { get; set; }
 
     #endregion Public Properties
 

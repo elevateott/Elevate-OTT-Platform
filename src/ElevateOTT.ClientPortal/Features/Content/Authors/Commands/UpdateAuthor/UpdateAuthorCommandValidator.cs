@@ -2,10 +2,10 @@
 
 namespace ElevateOTT.ClientPortal.Features.Content.Authors.Commands.UpdateAuthor;
 
-public class AuthorForEditValidator : AbstractValidator<AuthorForEdit>
+public class UpdateAuthorCommandValidator : AbstractValidator<AuthorForEdit>
 {
     #region Public Constructors
-    public AuthorForEditValidator()
+    public UpdateAuthorCommandValidator()
     {
         // TODO slug - no spaces or special chars
 

@@ -128,7 +128,7 @@ public partial class EditAuthor : ComponentBase
         var userFormData = new MultipartFormDataContent
             {
                 { new StringContent(_updateAuthorCommand.Id.ToString() ?? string.Empty), "id" },
-                { new StringContent(_updateAuthorCommand.Name ?? string.Empty), "Name" },
+                { new StringContent(_updateAuthorCommand.Name ?? string.Empty), "Title" },
                 { new StringContent(_updateAuthorCommand.Bio ?? string.Empty), "Bio" },
                 { new StringContent(_updateAuthorCommand.ImageUrl ?? string.Empty), "ImageUrl" },
                 { new StringContent(_updateAuthorCommand.SeoTitle ?? string.Empty), "SeoTitle" },

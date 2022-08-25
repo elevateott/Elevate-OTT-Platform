@@ -1,17 +1,18 @@
 ﻿namespace ElevateOTT.ClientPortal.Theme;
 
-public class MudBlazorAdminDashboard : MudTheme
+public class AppLightModeTheme : MudTheme
 {
     #region Public Constructors
 
-    public MudBlazorAdminDashboard()
+    public AppLightModeTheme()
     {
         Palette = new Palette()
         {
-            Primary = Colors.Blue.Darken1,
-            Secondary = Colors.DeepPurple.Accent2,
+            Primary = "#1763A6",
+            Secondary = "#038C65",
+            Tertiary = "#D5D96C",
             Background = Colors.Grey.Lighten5,
-            AppbarBackground = Colors.Blue.Darken1,
+            AppbarBackground = "1763A6",
             DrawerBackground = "#FFF",
             DrawerText = "rgba(0,0,0, 0.7)",
             Success = "#06d79c"

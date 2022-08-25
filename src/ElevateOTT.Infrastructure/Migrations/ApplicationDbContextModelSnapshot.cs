@@ -938,6 +938,12 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
+                    b.Property<bool>("HasOneTimePurchasePrice")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasRentalPrice")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsHostedOnMux")
                         .HasColumnType("bit");
 
@@ -956,6 +962,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("Mp4Support")
                         .HasColumnType("bit");
 
+                    b.Property<decimal>("OneTimePurchasePrice")
+                        .HasColumnType("decimal(18,4)");
+
                     b.Property<string>("Passthrough")
                         .HasColumnType("nvarchar(max)");
 
@@ -967,6 +976,12 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ReleasedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("RentalDuration")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("RentalPrice")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("SeoDescription")
                         .HasColumnType("nvarchar(max)");
