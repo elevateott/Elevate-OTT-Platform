@@ -17,7 +17,7 @@ public static class StringExtensions
 
     public static string FormatSlug(this string str)
     {
-        return ReplaceSpaceAndSpecialCharsWithDashes(str).ToLower();
+        return string.IsNullOrWhiteSpace(str) ? str : ReplaceSpaceAndSpecialCharsWithDashes(str).ToLower();
     }
 
     #endregion Public Methods

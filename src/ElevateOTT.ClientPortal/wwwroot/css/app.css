@@ -12,3 +12,20 @@
 .semi-bold-text {
     font-weight: 700;
 }
+
+@font-face {
+    font-family: 'Borned';
+    src: url(../fonts/Borned.otf);
+}
+
+.brand-text {
+    font-family: "Borned", "Montserrat", "Helvetica", "Arial", "sans-serif";
+    font-size: 1.5em;
+    user-select: none;
+    letter-spacing: .5rem;
+    margin-left: 14px;
+}
+
+.bottom-spacing {
+    margin-bottom: 25px; 
+}

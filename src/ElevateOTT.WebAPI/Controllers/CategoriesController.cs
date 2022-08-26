@@ -1,4 +1,5 @@
-﻿using ElevateOTT.Application.Features.Content.Categories.Commands.CreateCategory;
+﻿using AutoWrapper.Filters;
+using ElevateOTT.Application.Features.Content.Categories.Commands.CreateCategory;
 using ElevateOTT.Application.Features.Content.Categories.Commands.DeleteCategory;
 using ElevateOTT.Application.Features.Content.Categories.Commands.UpdateCategory;
 using ElevateOTT.Application.Features.Content.Categories.Queries.GetCategories;

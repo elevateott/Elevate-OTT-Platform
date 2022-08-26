@@ -1,10 +1,9 @@
 ﻿@page "/content/video/{videoId:guid}"
 
 @using Features.Content.Authors.Queries.GetAuthorsForAutoComplete
-@using Syncfusion.Blazor.RichTextEditor
+@using Features.Content.Categories.Queries.GetCategoriesForAutoComplete
 @using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideosForAutoComplete
-
-<h3>Edit Video</h3>
+@using Syncfusion.Blazor.RichTextEditor
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@Resource.Edit_Video</MudText>
 <ServerSideValidator @ref="_serverSideValidator" />
@@ -108,7 +107,87 @@
                                     </MudItem>
 
                                     <MudItem xs="12" md="8">
-                                        <p>form field goes here</p>
+                                        <MudAutocomplete T="CategoryItemForAutoComplete"
+                                                         @bind-Value="_selectedCategory"
+                                                         Text="@_selectedCategory.Title"
+                                                         Class="pl-md-12"
+                                                         Label="Category"
+                                                         Variant="Variant.Outlined"
+                                                         SearchFunc="@SearchCategories"
+                                                         ResetValueOnEmptyText="false"
+                                                         CoerceText="false"
+                                                         CoerceValue="false"
+                                                         AdornmentIcon="@Icons.Material.Filled.Search"
+                                                         AdornmentColor="Color.Primary"
+                                                         Clearable="true"
+                                                         DebounceInterval="500"
+                                                         MaxHeight="400"
+                                                         MaxItems="50"
+                                                         SelectValueOnTab="true"
+                                                         Validation="@(new Func<string, IEnumerable<string>>(ValidateCategory))">
+
+                                            <ItemTemplate Context="category">
+                                                <div class="d-flex align-center gap-4">
+                                                    @if (!string.IsNullOrWhiteSpace(category.ImageUrl))
+                                                    {
+                                                        <MudImage Src="@category.ImageUrl"
+                                                                  Width="64"
+                                                                  Height="64"
+                                                                  Alt="@category.Title"
+                                                                  Elevation="25"
+                                                                  Class="rounded-lg ma-4"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Icon="@Icons.Material.Filled.Person"
+                                                                 Color="Color.Primary"
+                                                                 Size="Size.Large"/>
+                                                    }
+
+                                                    <MudText>
+                                                        @category.Title
+                                                    </MudText>
+                                                </div>
+
+                                            </ItemTemplate>
+
+                                            <ItemSelectedTemplate Context="category">
+                                                <div class="d-flex align-center gap-4">
+                                                    @if (!string.IsNullOrWhiteSpace(category.ImageUrl))
+                                                    {
+                                                        <MudImage Src="@category.ImageUrl"
+                                                                  Width="64"
+                                                                  Height="64"
+                                                                  Alt="@category.Title"
+                                                                  Elevation="25"
+                                                                  Class="rounded-lg ma-4"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Icon="@Icons.Material.Filled.Category"
+                                                                 Color="Color.Primary"
+                                                                 Size="Size.Large"/>
+                                                    }
+
+                                                    <MudText>
+                                                        @category.Title
+                                                    </MudText>
+                                                </div>
+                                            </ItemSelectedTemplate>
+
+                                            <NoItemsTemplate>
+                                                <MudText Align="Align.Center" Class="px-4 py-1">
+                                                    No categories found.
+                                                    @*@Resource.No_categories_found*@
+                                                </MudText>
+                                            </NoItemsTemplate>
+
+                                            <MoreItemsTemplate>
+                                                <MudText Align="Align.Center" Class="px-4 py-1">
+                                                    @*@Resource.More_categories_found*@ No categories found. @Resource.Try_entering_more_letters
+                                                </MudText>
+                                            </MoreItemsTemplate>
+                                        </MudAutocomplete>
                                     </MudItem>
                                 </MudGrid>
 
@@ -236,8 +315,10 @@
                                         </div>
                                     </MudItem>
 
-                                     <MudItem xs="12" md="8">
-                                        <p>form field goes here</p>
+                                     <MudItem xs="12" md="8" Class="pl-md-16">
+                                         <MudButton Variant="Variant.Filled" 
+                                                    StartIcon="far fa-closed-captioning" 
+                                                    Color="Color.Secondary">Upload Subtitles</MudButton>
                                     </MudItem>
                                 </MudGrid>
                             </div>
@@ -854,7 +935,16 @@
                                         </div>
                                     </MudItem>
 
-                                    <p>form field goes here</p>
+                                    <MudItem xs="12" md="8">
+                                        <MudTextField Label="@Resource.Seo_title_label"
+                                                      Variant="Variant.Outlined"
+                                                      Class="pl-md-12"
+                                                      MaxLength="@_maxSeoTitleChars"
+                                                      Counter="0"
+                                                      Immediate="true"
+                                                      HelperText="@($"{Resource.Max} {_maxSeoTitleChars} {Resource.Characters}")"
+                                                      @bind-Value="_videoForEditVm.SeoTitle" For="@(() => _videoForEditVm.SeoTitle)" />
+                                    </MudItem>
                                 </MudGrid>
 
                                 <!-- SEO Description -->
@@ -929,6 +1019,8 @@
         </MudExpansionPanels>
     </MudCard>
 </EditForm>
+
+<div class="bottom-spacing"></div>
 
 @code {
 

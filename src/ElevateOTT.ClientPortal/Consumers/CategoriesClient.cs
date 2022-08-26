@@ -47,7 +47,7 @@ public class CategoriesClient : ICategoriesClient
     {
         Console.WriteLine("UpdateCategory invoked");
         Console.WriteLine("request: " + request);
-        return await _httpService.PostFormData<MultipartFormDataContent, string>($"{ControllerName}", request);
+        return await _httpService.PutFormData<MultipartFormDataContent, string>($"{ControllerName}", request);
     }
 
     public async Task<HttpResponseWrapper<object>> DeleteCategory(Guid id)

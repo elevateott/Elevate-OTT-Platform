@@ -19,7 +19,7 @@ public partial class EditCategory : ComponentBase
     [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
     [Inject] private ICategoriesClient? CategoriesClient { get; set; }
 
-    private string? _imageSrc;
+    private string? _categoryImageSrc;
 
     //
     // TODO these values should come from config
@@ -59,6 +59,11 @@ public partial class EditCategory : ComponentBase
             var successResult = httpResponseWrapper.Response as SuccessResult<CategoryForEdit>;
             _categoryForEditVm = successResult?.Result;
             _categoryForEditVm.PropertyChanged += NameChangedHandler;
+
+            if (!string.IsNullOrWhiteSpace(_categoryForEditVm?.ImageUrl))
+            {
+                _categoryImageSrc = _categoryForEditVm.ImageUrl;
+            }
         }
         else
         {
@@ -77,8 +82,8 @@ public partial class EditCategory : ComponentBase
 
     private void GetBase64StringImageUrl(string imageSrc)
     {
-        _imageSrc = imageSrc;
-        Console.WriteLine(_imageSrc);
+        _categoryImageSrc = imageSrc;
+        Console.WriteLine(_categoryImageSrc);
         StateHasChanged();
     }
 
@@ -98,7 +103,18 @@ public partial class EditCategory : ComponentBase
 
     private bool HasUploadedImage()
     {
-        return !string.IsNullOrWhiteSpace(_imageSrc);
+        return !string.IsNullOrWhiteSpace(_categoryImageSrc);
+    }
+
+    private void RemoveCategoryImage()
+    {
+        _imageContent = null;
+        _categoryImageSrc = null;
+        if (_updateCategoryCommand?.ImageUrl is not null)
+        {
+            _updateCategoryCommand.ImageUrl = null;
+        }
+        StateHasChanged();
     }
 
     private void UpdateRteValue(string value)

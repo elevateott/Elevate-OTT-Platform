@@ -3,23 +3,10 @@
 @namespace ElevateOTT.ClientPortal.Pages.Content.Videos
 
 
-<button class="btn btn-primary form-control-append" @onclick="Connect">
-    Connect
-</button>
-
-<H3>@_message</H3>
-
-@if (_updateReceived)
-{
-    <h4>Update received!</h4>
-}
-
-<MudIcon Icon="@Icons.Filled.VideoFile" Color="Color.Dark" Size="Size.Large" />
-
-<div class="d-flex flex-row gap-1">
+@*<div class="d-flex flex-row gap-1">
     <MudIcon Icon="fas fa-cog fa-spin" Color="Color.Primary" />
     <MudText Typo="Typo.body1">Preparing...</MudText>
-</div>
+</div>*@
 
 <ServerSideValidator @ref="ServerSideValidator" />
         <MudTable Context="video" 
@@ -42,9 +29,9 @@
                               IconSize="Size.Small" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <HeaderContent>
-                <MudTh T="VideoItem"></MudTh>
+                <MudTh></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Title" T="VideoItem" InitialDirection="SortDirection.Ascending">@Resource.Title</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Uploaded On" T="VideoItem">@Resource.Uploaded_On</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="UploadedOn" T="VideoItem">@Resource.Uploaded_On</MudTableSortLabel></MudTh>
                 <MudTh>@Resource.Options</MudTh>
             </HeaderContent>
             <RowTemplate>

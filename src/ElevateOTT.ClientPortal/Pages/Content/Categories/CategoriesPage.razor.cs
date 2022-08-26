@@ -37,7 +37,7 @@ public partial class CategoriesPage : ComponentBase, IAsyncDisposable
             finally
             {
                 await HubConnection.DisposeAsync();
-                Snackbar?.Add("Reporting Hub is closed.", Severity.Error);
+                // Snackbar?.Add("Reporting Hub is closed.", Severity.Error);
             }
         }
     }
@@ -46,6 +46,14 @@ public partial class CategoriesPage : ComponentBase, IAsyncDisposable
     #region Protected Methods
     protected override async Task OnInitializedAsync()
     {
+        //await ServerReload(new TableState
+        //{
+        //    Page = 1,
+        //    PageSize = 10,
+        //    SortLabel = "Title",
+        //    SortDirection = SortDirection.Ascending,
+        //});
+
         BreadcrumbService?.SetBreadcrumbItems(new List<BreadcrumbItem>
         {
             new(Resource.Home, "/"),
@@ -56,37 +64,37 @@ public partial class CategoriesPage : ComponentBase, IAsyncDisposable
 
         if (userIdentity is { IsAuthenticated: true })
         {
-            await StartHubConnection();
-            HubConnection?.On("NotifyReportIssuer", (Func<FileMetaData, ReportStatus, Task>)(async
-            (fileMetaData, reportStatus) =>
-            {
-                switch (reportStatus)
-                {
-                    case ReportStatus.Pending:
-                        Snackbar?.Add(Resource.Your_report_is_being_initiated, Severity.Info);
-                        break;
+            //await StartHubConnection();
+            //HubConnection?.On("NotifyReportIssuer", (Func<FileMetaData, ReportStatus, Task>)(async
+            //(fileMetaData, reportStatus) =>
+            //{
+            //    switch (reportStatus)
+            //    {
+            //        case ReportStatus.Pending:
+            //            Snackbar?.Add(Resource.Your_report_is_being_initiated, Severity.Info);
+            //            break;
 
-                    case ReportStatus.InProgress:
-                        Snackbar?.Add(Resource.Your_report_is_being_generated,
-                    Severity.Warning);
-                        break;
+            //        case ReportStatus.InProgress:
+            //            Snackbar?.Add(Resource.Your_report_is_being_generated,
+            //        Severity.Warning);
+            //            break;
 
-                    case ReportStatus.Completed:
-                        Snackbar?.Add(
-                    string.Format(Resource.Your_report_0_is_ready_to_download, fileMetaData.FileName),
-                    Severity.Success);
-                        await ShowDownloadFileDialogue(fileMetaData, reportStatus);
-                        break;
+            //        case ReportStatus.Completed:
+            //            Snackbar?.Add(
+            //        string.Format(Resource.Your_report_0_is_ready_to_download, fileMetaData.FileName),
+            //        Severity.Success);
+            //            await ShowDownloadFileDialogue(fileMetaData, reportStatus);
+            //            break;
 
-                    case ReportStatus.Failed:
-                        Snackbar?.Add(Resource.Your_report_generation_has_failed,
-                    Severity.Error);
-                        break;
+            //        case ReportStatus.Failed:
+            //            Snackbar?.Add(Resource.Your_report_generation_has_failed,
+            //        Severity.Error);
+            //            break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(reportStatus), reportStatus, null);
-                }
-            }));
+            //        default:
+            //            throw new ArgumentOutOfRangeException(nameof(reportStatus), reportStatus, null);
+            //    }
+            //}));
         }
     }
     #endregion Protected Methods

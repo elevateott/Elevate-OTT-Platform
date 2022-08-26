@@ -59,6 +59,7 @@ public class AuthorsController : ApiController
 
 
     [HttpPut]
+    [RequestFormLimits(MultipartBodyLengthLimit = 20971520)] // 20MB
     public async Task<IActionResult> UpdateAuthor([FromForm] UpdateAuthorCommand request)
     {
         var response = await Mediator.Send(request);

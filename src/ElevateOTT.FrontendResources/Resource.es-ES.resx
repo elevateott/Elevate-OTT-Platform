@@ -1498,7 +1498,7 @@
     <value>Patrón de fecha corta</value>
   </data>
   <data name="Short_Description" xml:space="preserve">
-    <value>Short Description</value>
+    <value>Breve descripción</value>
   </data>
   <data name="Short_Time_Pattern" xml:space="preserve">
     <value>Patrón de tiempo corto</value>
@@ -1807,7 +1807,7 @@ Sugerencia: Para gestionar tus categorías en profundidad, ve a Contenido &amp;g
 Tamaño máximo del archivo: 3MB!</value>
   </data>
   <data name="Video_Title" xml:space="preserve">
-    <value>Video Title</value>
+    <value>Titulo del Video</value>
   </data>
   <data name="Video_Title_Description" xml:space="preserve">
     <value>Dale a tu vídeo un título sólido. Recuerde, será visible para el público en su catálogo y cuando se esté reproduciendo el vídeo.!</value>

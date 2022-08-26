@@ -76,6 +76,7 @@
 	  <Folder Include="Pages\Content\LiveStreams\" />
 	  <Folder Include="wwwroot\images\" />
 	  <Folder Include="wwwroot\favicons\" />
+	  <Folder Include="wwwroot\fonts\" />
 	</ItemGroup>
 
 </Project>

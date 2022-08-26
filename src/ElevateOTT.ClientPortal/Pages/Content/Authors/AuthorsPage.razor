@@ -28,11 +28,17 @@
                         Icon="@Icons.Material.Filled.Add" OnClick="AddAuthor" />
             </ToolBarContent>
             <HeaderContent>
+                <MudTh></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Name" T="AuthorItem" InitialDirection="SortDirection.Ascending">@Resource.Name</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="CreatedOn" T="AuthorItem">@Resource.Created_On</MudTableSortLabel></MudTh>
                 <MudTh>@Resource.Options</MudTh>
             </HeaderContent>
             <RowTemplate>
+                <MudTd>
+                    <MudAvatar Image="@author.ImageUrl"
+                               Style="height: 64px; width: 64px;">
+                    </MudAvatar>
+                </MudTd>
                 <MudTd DataLabel="Title">@author.Name</MudTd>
                 <MudTd DataLabel="CreatedOn">@author.CreatedOn.ToShortDateString()</MudTd>
                 <MudTd>
@@ -57,3 +63,4 @@
         </MudTable>
 
 
+<div class="bottom-spacing"></div>

@@ -2,6 +2,10 @@
 
 public partial class Index : ComponentBase, IAsyncDisposable
 {
+
+    // TODO get real data for dash charts
+
+
     #region Private Properties
 
     [Inject] private NavigationManager NavigationManager { get; set; }
@@ -22,7 +26,7 @@ public partial class Index : ComponentBase, IAsyncDisposable
 
     public async Task InitiateSignalRHub()
     {
-        Snackbar.Add("Dashboard Hub is being initialed.", Severity.Info);
+        // Snackbar.Add("Dashboard Hub is being initialed.", Severity.Info);
 
         var httpResponseWrapper = await DashboardClient.GetHeadlinesData();
 
@@ -114,7 +118,7 @@ public partial class Index : ComponentBase, IAsyncDisposable
 
             await HubConnection.StartAsync();
 
-            Snackbar.Add("Dashboard Hub is now connected.", Severity.Success);
+            // Snackbar.Add("Dashboard Hub is now connected.", Severity.Success);
         }
     }
 

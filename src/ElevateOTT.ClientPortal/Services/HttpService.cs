@@ -168,6 +168,27 @@ public class HttpService : IHttpService
         }
     }
 
+    public async Task<HttpResponseWrapper<object>> PutFormData<TRequest, TResponse>(string url, MultipartFormDataContent data)
+    {
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.Clear();
+        _httpClient.DefaultRequestHeaders.Add("Accept-Language", await _localStorage.GetItemAsync<string>("Culture"));
+
+        Console.WriteLine("base uri: " + _httpClient.BaseAddress);
+
+        using var response = await _httpClient.PutAsync(url, data).ConfigureAwait(false);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseDeserialized = await Deserialize<SuccessResult<TResponse>>(response, DefaultJsonSerializerOptions).ConfigureAwait(false);
+            return new HttpResponseWrapper<object>(responseDeserialized, true, response);
+        }
+        else
+        {
+            var responseDeserialized = await Deserialize<ExceptionResult>(response, DefaultJsonSerializerOptions).ConfigureAwait(false);
+            return new HttpResponseWrapper<object>(responseDeserialized, false, response);
+        }
+    }
+
     public async Task<HttpResponseWrapper<object>> Delete<TResponse>(string url)
     {
         _httpClient.DefaultRequestHeaders.AcceptLanguage.Clear();

@@ -2,8 +2,6 @@
 
 @using Syncfusion.Blazor.RichTextEditor
 
-<h1>@AuthorId</h1>
-
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@Resource.Edit_Author</MudText>
 <ServerSideValidator @ref="_serverSideValidator" />
 <EditForm Model="_authorForEditVm" OnValidSubmit="SubmitForm">
@@ -82,23 +80,22 @@
                                         <div class="pl-md-12">
                                             <MudCard Elevation="25">
                                                 <MudCardContent>
-                                                    <MudPaper Class="pa-2" Outlined="true">
-                                                        <div class="d-flex justify-center mb-4">
-                                                            <MudAvatar Image="@(_imageSrc ?? _authorForEditVm.ImageUrl)"
-                                                                       Style="height: 200px; width: 200px;">
-                                                            </MudAvatar>
-                                                        </div>
-                                                        @if (!string.IsNullOrWhiteSpace(_authorForEditVm.ImageUrl))
-                                                        {
+                                                    @if (!string.IsNullOrWhiteSpace(_authorImageSrc))
+                                                    {
+                                                        <MudPaper Class="pa-2" Outlined="true">
+                                                            <div class="d-flex justify-center mb-4">
+                                                                <MudAvatar Image="@_authorImageSrc"
+                                                                           Style="height: 200px; width: 200px;">
+                                                                </MudAvatar>
+                                                            </div>
                                                             <MudText Align="Align.Center">
-                                                                <MudFab OnClick="() => { _authorForEditVm.ImageUrl = null; }"
-                                                                    Color="Color.Warning"
-                                                                    Icon="@Icons.Material.Filled.Remove"
-                                                                    aria-label="edit" />
+                                                                <MudFab OnClick="RemoveAuthorImage"
+                                                                        Color="Color.Warning"
+                                                                        Icon="@Icons.Material.Filled.Remove"
+                                                                        aria-label="edit"/>
                                                             </MudText>
-                                                        }
-                                                        <MudText Align="Align.Center">@($"{_authorForEditVm.Name}")</MudText>
-                                                    </MudPaper>
+                                                        </MudPaper>
+                                                    }
                                                 </MudCardContent>
                                                 <MudCardActions Class="d-flex justify-center">
                                                     <div class="form-group">
@@ -217,6 +214,8 @@
         </MudExpansionPanels>
     </MudCard>
 </EditForm>
+
+<div class="bottom-spacing"></div>
 
 @code {
 

@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.ClientPortal.Features.Content.Videos.Commands.UpdateVideo;
+﻿using ElevateOTT.ClientPortal.Models.DTOs;
+
+namespace ElevateOTT.ClientPortal.Features.Content.Videos.Commands.UpdateVideo;
 
 public class UpdateVideoCommand
 {
@@ -31,6 +33,34 @@ public class UpdateVideoCommand
     public string? DownloadUrl { get; set; }
     public string? Passthrough { get; set; }
     public bool ClosedCaptions { get; set; }
+
+    public string SeoTitle { get; set; } = string.Empty;
+    public string SeoDescription { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
+
+    public Guid? TrailerVideoId { get; set; }
+    public Guid? FeaturedCategoryVideoId { get; set; }
+
+    public AssetImageDto? PlayerImage { get; set; } = new();
+    public AssetImageDto? CatalogImage { get; set; } = new();
+    public AssetImageDto? FeaturedCatalogImage { get; set; } = new();
+    public AssetImageDto? AnimatedGif { get; set; } = new();
+
+    public bool IsPlayerImageAdded { get; set; }
+    public bool IsCatalogImageAdded { get; set; }
+    public bool IsFeaturedCatalogImageAdded { get; set; }
+    public bool IsAnimatedGifAdded { get; set; }
+
+
+    public bool HasOneTimePurchasePrice { get; set; }
+    public decimal OneTimePurchasePrice { get; set; }
+    public bool HasRentalPrice { get; set; }
+    public RentalDuration RentalDuration { get; set; }
+    public decimal RentalPrice { get; set; }
+
+    public AuthorDto? Author { get; set; }
+    public List<AssetImageDto>? VideoImages { get; set; }
+    public List<CategoryDto>? Categories { get; set; }
 
     #endregion Public Properties
 }

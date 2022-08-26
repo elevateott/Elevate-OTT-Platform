@@ -1,5 +1,5 @@
-﻿using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthors;
-using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorsForAutoComplete;
+﻿using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthorsForAutoComplete;
+using ElevateOTT.ClientPortal.Features.Content.Categories.Queries.GetCategoriesForAutoComplete;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Commands.UpdateVideo;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.ClientPortal.Features.Content.Videos.Queries.GetVideosForAutoComplete;
@@ -22,6 +22,8 @@ public partial class EditVideo : ComponentBase
     [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
     [Inject] private IVideosClient? VideosClient { get; set; }    
     [Inject] private IAuthorsClient? AuthorsClient { get; set; }
+    [Inject] private ICategoriesClient? CategoriesClient { get; set; }
+
 
     private string? _playerImageSrc;
     private string? _catalogImageSrc;
@@ -39,12 +41,19 @@ public partial class EditVideo : ComponentBase
     private int _maxSeoDescriptionChars = 170;
     private int _maxShortDescriptionChars = 140;
     private int _maxSlugChars = 60;
+
+    #region Auto Complete Properties
     private AuthorItemForAutoComplete _selectedAuthor = new();
-    private  AuthorsForAutoCompleteResponse _authorsForAutoResponse = new ();
+    private AuthorsForAutoCompleteResponse _authorsForAutoResponse = new ();
+
+    private CategoryItemForAutoComplete _selectedCategory = new();
+    private CategoriesForAutoCompleteResponse _categoriesForAutoResponse = new();
 
     private VideoItemForAutoComplete _selectedTrailerVideo = new();
     private VideoItemForAutoComplete _selectedFeaturedCategoryVideo = new();
     private VideosForAutoCompleteResponse _videosForAutoResponse = new ();
+    #endregion Auto Complete Properties
+
     private string SlugPlaceholder => _slugExampleName;
 
     // TODO getters and setters ??????
@@ -468,14 +477,14 @@ public partial class EditVideo : ComponentBase
 
     private void UpdateRteValue(string value)
     {
-        //_videoForEditVm.Bio = value;
+        _videoForEditVm.FullDescription = value;
     }
 
     private async Task SubmitForm()
     {
         // TODO guard clauses
 
-        // _editContext?.Validate();
+        _editContext?.Validate();
 
         Console.WriteLine("SubmitForm");
 
@@ -486,18 +495,36 @@ public partial class EditVideo : ComponentBase
         Console.WriteLine($"selected featured category video id: {_selectedFeaturedCategoryVideo}");
 
         // TODO update AuthorId
+        // TODO subtitles
 
-        //_updateVideoCommand = new UpdateAuthorCommand
-        //{
-        //    Id = _videoForEditVm.Id,
-        //    Title = _videoForEditVm.Title,
-        //    Bio = _videoForEditVm.Bio,
-        //    ImageUrl = _videoForEditVm.ImageUrl,
-        //    SeoTitle = _videoForEditVm.SeoTitle,
-        //    SeoDescription = _videoForEditVm.SeoDescription,
-        //    Slug = _videoForEditVm.Slug.FormatSlug(),
-        //    IsImageAdded = _videoForEditVm.IsImageAdded
-        //};
+        _updateVideoCommand = new UpdateVideoCommand
+        {
+            Id = _videoForEditVm.Id,
+            Title = _videoForEditVm.Title,
+            FullDescription = _videoForEditVm.FullDescription,
+            ShortDescription = _videoForEditVm.ShortDescription,
+            AllowDownload = _videoForEditVm.AllowDownload,
+
+
+            PlayerImage = _videoForEditVm.PlayerImage,
+            CatalogImage = _videoForEditVm.CatalogImage,
+            FeaturedCatalogImage = _videoForEditVm.FeaturedCatalogImage,
+            AnimatedGif = _videoForEditVm.AnimatedGif,
+            IsPlayerImageAdded = _videoForEditVm.IsPlayerImageAdded,
+            IsCatalogImageAdded = _videoForEditVm.IsCatalogImageAdded,
+            IsFeaturedCatalogImageAdded = _videoForEditVm.IsFeaturedCatalogImageAdded,
+            IsAnimatedGifAdded = _videoForEditVm.IsAnimatedGifAdded,
+
+            //_selectedAuthor 
+            //_selectedCategory
+            //_selectedTrailerVideo
+            //_selectedFeaturedCategoryVideo
+
+
+            SeoTitle = _videoForEditVm.SeoTitle,
+            SeoDescription = _videoForEditVm.SeoDescription,
+            Slug = _videoForEditVm.Slug.FormatSlug(),
+        };
 
 
         //var userFormData = new MultipartFormDataContent
@@ -539,6 +566,42 @@ public partial class EditVideo : ComponentBase
         //}
     }
 
+    #region Auto Complete Handlers
+
+    private async Task<IEnumerable<CategoryItemForAutoComplete>> SearchCategories(string? value)
+    {
+        System.Console.WriteLine("category auto complete value: " + value ?? "value is null");
+
+        var responseWrapper = await CategoriesClient.GetCategoriesForAutoComplete(
+            new GetCategoriesForAutoCompleteQuery
+            {
+                PageNumber = 50,
+                SearchText = value ?? string.Empty
+            });
+
+        if (responseWrapper.Success)
+        {
+            var successResult = responseWrapper.Response as SuccessResult<CategoriesForAutoCompleteResponse>;
+            if (successResult != null)
+                _categoriesForAutoResponse = successResult.Result;
+        }
+        else
+        {
+            var exceptionResult = responseWrapper.Response as ExceptionResult;
+            _serverSideValidator.Validate(exceptionResult);
+        }
+
+        return _categoriesForAutoResponse.Categories.Items;
+    }
+
+    private IEnumerable<string> ValidateCategory(string? value)
+    {
+        var category = _categoriesForAutoResponse?.Categories?.Items.FirstOrDefault(a => a.Title.Equals(value));
+        if (category is null)
+        {
+            yield return "Category_by_that_name_not_found";
+        }
+    }
     private async Task<IEnumerable<AuthorItemForAutoComplete>> SearchAuthors(string? value)
     {
         System.Console.WriteLine("author auto complete value: " + value ?? "value is null");
@@ -572,5 +635,7 @@ public partial class EditVideo : ComponentBase
             yield return Resource.Author_by_that_name_not_found;
         }
     }
+    #endregion Auto Complete Handlers
+
     #endregion Private Methods
 }

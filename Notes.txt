@@ -1,0 +1,7 @@
+EditVideo
+
+Author Id / author dto
+category id / dto
+images ids / dtos
+
+trailer and featured videos ids and dtos

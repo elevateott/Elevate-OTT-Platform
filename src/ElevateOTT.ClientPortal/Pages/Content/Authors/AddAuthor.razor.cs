@@ -12,7 +12,7 @@ public partial class AddAuthor : ComponentBase
     [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
     [Inject] private IAuthorsClient? AuthorsClient { get; set; }
 
-    private string? _imageSrc;
+    private string? _authorImageSrc;
 
     //
     // TODO these values should come from config
@@ -57,7 +57,7 @@ public partial class AddAuthor : ComponentBase
     }
     private void GetBase64StringImageUrl(string imageSrc)
     {
-        _imageSrc = imageSrc;
+        _authorImageSrc = imageSrc;
         StateHasChanged();
     }
 
@@ -77,8 +77,20 @@ public partial class AddAuthor : ComponentBase
 
     private bool HasUploadedImage()
     {
-        return !string.IsNullOrWhiteSpace(_imageSrc);
+        return !string.IsNullOrWhiteSpace(_authorImageSrc);
     }
+
+    private void RemoveAuthorImage()
+    {
+        _imageContent = null;
+        _authorImageSrc = null;
+        if (_createAuthorCommand?.ImageUrl is not null)
+        {
+            _createAuthorCommand.ImageUrl = null;
+        }
+        StateHasChanged();
+    }
+
     private void UpdateRteValue(string value)
     {
         _createAuthorCommand.Bio = value;

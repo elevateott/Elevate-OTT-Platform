@@ -29,7 +29,7 @@ public class CreateCategoryCommand : INotifyPropertyChanged
     
     public string? Description { get; set; }
 
-    public int Position { get; set; }
+    public int Position { get; set; } = 1;
 
     public string? ImageUrl { get; set; }
 

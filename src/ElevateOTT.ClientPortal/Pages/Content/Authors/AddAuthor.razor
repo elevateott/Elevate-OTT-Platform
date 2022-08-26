@@ -83,30 +83,29 @@
                                 <div class="pl-md-12">
                                     <MudCard Elevation="25">
                                         <MudCardContent>
-                                            <MudPaper Class="pa-2" Outlined="true">
-                                                <div class="d-flex justify-center mb-4">
-                                                    <MudAvatar Image="@(_imageSrc ?? _createAuthorCommand.ImageUrl)"
-                                                               Style="height: 200px; width: 200px;">
-                                                    </MudAvatar>
-                                                </div>
-                                                @if (!string.IsNullOrWhiteSpace(_createAuthorCommand.ImageUrl))
-                                                {
+                                            @if (!string.IsNullOrWhiteSpace(_authorImageSrc))
+                                            {
+                                                <MudPaper Class="pa-2" Outlined="true">
+                                                    <div class="d-flex justify-center mb-4">
+                                                        <MudAvatar Image="@_authorImageSrc"
+                                                                   Style="height: 200px; width: 200px;">
+                                                        </MudAvatar>
+                                                    </div>
                                                     <MudText Align="Align.Center">
-                                                        <MudFab OnClick="() => { _createAuthorCommand.ImageUrl = null; }"
+                                                        <MudFab OnClick="RemoveAuthorImage"
                                                                 Color="Color.Warning"
                                                                 Icon="@Icons.Material.Filled.Remove"
                                                                 aria-label="edit"/>
                                                     </MudText>
-                                                }
-                                                <MudText Align="Align.Center">@($"{_createAuthorCommand.Name}")</MudText>
-                                            </MudPaper>
+                                                </MudPaper>
+                                            }
                                         </MudCardContent>
                                         <MudCardActions Class="d-flex justify-center">
                                             <div class="form-group">
                                                 <BpUploadFile ButtonId="imageInput"
                                                               ButtonIcon="@Icons.Filled.PhotoCamera"
                                                               ButtonName="@(HasUploadedImage() ? Resource.Replace_image : Resource.Upload_image)"
-                                                              AllowRename="true"
+                                                              AllowRename="false"
                                                               AllowedExtensions=".jpg,.png,.jpeg,.bmp"
                                                               MaxFileSize="10485760"
                                                               OnFileSelected="ImageSelected"
@@ -219,6 +218,7 @@
     </MudCard>
 </EditForm>
 
+<div class="bottom-spacing"></div>
 
 @code {
 

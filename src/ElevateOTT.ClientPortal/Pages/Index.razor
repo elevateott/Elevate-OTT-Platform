@@ -3,42 +3,42 @@
 <MudTabs Elevation="2" KeepPanelsAlive="false" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
     <MudTabPanel OnClick="InitiateSignalRHub" Text="@Resource.Realtime_Data">
         <ServerSideValidator @ref="ServerSideValidator" />
-        <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@Resource.Dashboard<MudChip Label="true" Color="Color.Default">@Resource.Live_data_powered_by_SignalR</MudChip></MudText>
+        @*<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">@Resource.Dashboard<MudChip Label="true" Color="Color.Default">@Resource.Live_data_powered_by_SignalR</MudChip></MudText>*@
         <MudGrid>
             <MudItem xs="12" sm="6" md="3">
                 <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height: 100px;">
-                    <MudIcon Icon="@Icons.Material.Filled.Euro" Color="Color.Primary" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
+                    <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Primary" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
                     <div>
 
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@Resource.Total_Cost</MudText>
-                        <MudText Typo="Typo.h5">@HeadlinesResponse.TotalCost</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">In Trial</MudText>
+                        <MudText Typo="Typo.h5">@_ottReport.InTrial</MudText>
                     </div>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="3">
                 <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height: 100px;">
-                    <MudIcon Icon="@Icons.Material.Filled.Layers" Color="Color.Secondary" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
+                    <MudIcon Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Secondary" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
                     <div>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@Resource.Graphite_on_roof</MudText>
-                        <MudText Typo="Typo.h5">@HeadlinesResponse.GraphiteOnRoof</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Active Subscribers</MudText>
+                        <MudText Typo="Typo.h5">@_ottReport.ActiveSubscribers</MudText>
                     </div>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="3">
                 <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height: 100px;">
-                    <MudIcon Icon="@Icons.Material.Filled.Public" Color="Color.Success" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
+                    <MudIcon Icon="@Icons.Material.Filled.Preview" Color="Color.Success" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
                     <div>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@Resource.Global_Spread</MudText>
-                        <MudText Typo="Typo.h5">@HeadlinesResponse.GlobalSpread</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Unique Views</MudText>
+                        <MudText Typo="Typo.h5">@_ottReport.UniqueViews</MudText>
                     </div>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="3">
                 <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height: 100px;">
-                    <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Warning" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
+                    <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="Color.Warning" Class="mx-4" Style="width: 54px; height: 54px;"></MudIcon>
                     <div>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@Resource.Roentgen</MudText>
-                        <MudText Typo="Typo.h5">@HeadlinesResponse.Roentgen</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Current MRR</MudText>
+                        <MudText Typo="Typo.h5">@($"{_ottReport.CurrentMRR:C2}")</MudText>
                     </div>
                 </MudPaper>
             </MudItem>
@@ -187,6 +187,14 @@
 
 @code {
 
+    readonly OttReport _ottReport = new OttReport
+    {
+        InTrial = 33,
+        UniqueViews = 628,
+        ActiveSubscribers = 817,
+        CurrentMRR = 7241.96M
+    };
+
     readonly EarningReport[] _earningReports = new EarningReport[]
                                     {
         new() { Name = "Lunees", Title = "Reactor Engineer", Avatar = "https://avatars2.githubusercontent.com/u/71094850?s=460&u=66c16f5bb7d27dc751f6759a82a3a070c8c7fe4b&v=4", Salary = "$0.99", Severity = Color.Success, SeverityTitle = Resource.Low},
@@ -203,4 +211,14 @@
         public string SeverityTitle;
         public string Salary;
     }
+
+    class OttReport
+    {
+        public int InTrial { get; set; }
+        public int UniqueViews { get; set; }
+        public int ActiveSubscribers { get; set; }
+        public decimal CurrentMRR { get; set; }
+    }
+
+
 }

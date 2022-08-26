@@ -1,5 +1,5 @@
 
-<div class="d-flex flex-column flex-grow-1 gap-6">
+<div class="d-flex flex-column flex-grow-1 gap-2">
     <div>
         <MudPaper @ondragenter="@SetDragClass"
                 @ondragleave="@ClearDragClass"
@@ -11,9 +11,8 @@
                 <InputFile OnChange="OnInputFileChanged" multiple class="absolute mud-width-full mud-height-full overflow-hidden z-2" style="opacity:0;" />
             }
             <MudText Align="Align.Center" Typo="Typo.h6">Drag and drop video files here or click</MudText>
-            <div class="center-text">
-                    <MudIcon
-                        Icon="@Icons.Filled.CloudUpload"
+            <div class="d-flex justify-center">
+                <MudIcon Icon="@Icons.Filled.CloudUpload"
                         Color="Color.Primary"
                         Style="font-size: 6rem;"
                         Title="Upload" />
@@ -35,9 +34,9 @@
             @foreach (var file in _filesToUpload)
             {
                 <div class="d-flex flex-row">                    
-                    <MudText Typo="Typo.body1">
+                    @*<MudText Typo="Typo.body1">
                         @file.FileName
-                    </MudText>                
+                    </MudText> *@               
                  
                     <MudProgressLinear
                         Color="Color.Primary"

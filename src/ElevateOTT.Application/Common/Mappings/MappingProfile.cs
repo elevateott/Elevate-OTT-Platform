@@ -5,6 +5,10 @@ using ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Commands.UpdateAuthor;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthorForEdit;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
+using ElevateOTT.Application.Features.Content.Categories.Commands.CreateCategory;
+using ElevateOTT.Application.Features.Content.Categories.Commands.UpdateCategory;
+using ElevateOTT.Application.Features.Content.Categories.Queries.GetCategories;
+using ElevateOTT.Application.Features.Content.Categories.Queries.GetCategoryForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.UpdateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
@@ -33,9 +37,13 @@ public class MappingProfile : Profile
         CreateMap<VideoModel, CreateVideoCommand>().ReverseMap();
         CreateMap<VideoModel, UpdateVideoCommand>().ReverseMap();
 
-        CreateMap<AssetImageModel, AssetImageDto>().ReverseMap();
-
+        CreateMap<CategoryModel, CategoryItem>().ReverseMap();
+        CreateMap<CategoryModel, CategoryForEdit>().ReverseMap();
+        CreateMap<CategoryModel, CreateCategoryCommand>().ReverseMap();
+        CreateMap<CategoryModel, UpdateCategoryCommand>().ReverseMap();
         CreateMap<CategoryModel, CategoryDto>().ReverseMap();
+
+        CreateMap<AssetImageModel, AssetImageDto>().ReverseMap();
 
         CreateMap<TagModel, TagDto>().ReverseMap();
 

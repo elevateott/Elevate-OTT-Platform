@@ -41,7 +41,7 @@ public partial class VideoList : ComponentBase, IAsyncDisposable
             finally
             {
                 await HubConnection.DisposeAsync();
-                Snackbar?.Add("Reporting Hub is closed.", Severity.Error);
+                //Snackbar?.Add("Reporting Hub is closed.", Severity.Error);
             }
         }
 
@@ -126,19 +126,19 @@ public partial class VideoList : ComponentBase, IAsyncDisposable
 
         VideoHub?.HubConnection?.On<Guid?, AssetCreationStatus>("ReceiveVideoUpdate", (videoId, status) =>
         {
-        //
-        // TODO hub should call this user only for production
-        // currently call All for development
-        //
+            //
+            // TODO hub should call this user only for production
+            // currently call All for development
+            //
 
-        Console.WriteLine("video hub update received!");
-        Console.WriteLine($"video id: {videoId}");
-        Console.WriteLine($"status: {status}");
+            Console.WriteLine("video hub update received!");
+            Console.WriteLine($"video id: {videoId}");
+            Console.WriteLine($"status: {status}");
 
-        Table?.ReloadServerData();
+            Table?.ReloadServerData();
 
-        _updateReceived = true;
-        InvokeAsync(StateHasChanged);
+            _updateReceived = true;
+            InvokeAsync(StateHasChanged);
     });
 
     await VideoHub?.HubConnection?.StartAsync();

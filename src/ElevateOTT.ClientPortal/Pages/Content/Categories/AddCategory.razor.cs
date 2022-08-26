@@ -12,7 +12,7 @@ public partial class AddCategory : ComponentBase
     [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
     [Inject] private ICategoriesClient? CategoriesClient { get; set; }
 
-    private string? _imageSrc;
+    private string? _categoryImageSrc;
 
     //
     // TODO these values should come from config
@@ -20,7 +20,7 @@ public partial class AddCategory : ComponentBase
     // TODO server side validators????
     //
     private string _recommendedResolution = "700x700";
-    private string _slugExampleName = "carey-bryers";
+    private string _slugExampleName = "strength-training";
     private int _maxNameChars = 60;
     private int _maxSeoTitleChars = 60;
     private int _maxSeoDescriptionChars = 170;
@@ -59,7 +59,7 @@ public partial class AddCategory : ComponentBase
     }
     private void GetBase64StringImageUrl(string imageSrc)
     {
-        _imageSrc = imageSrc;
+        _categoryImageSrc = imageSrc;
         StateHasChanged();
     }
 
@@ -79,8 +79,20 @@ public partial class AddCategory : ComponentBase
 
     private bool HasUploadedImage()
     {
-        return !string.IsNullOrWhiteSpace(_imageSrc);
+        return !string.IsNullOrWhiteSpace(_categoryImageSrc);
     }
+
+    private void RemoveCategoryImage()
+    {
+        _imageContent = null;
+        _categoryImageSrc = null;
+        if (_createCategoryCommand?.ImageUrl is not null)
+        {
+            _createCategoryCommand.ImageUrl = null;
+        }
+        StateHasChanged();
+    }
+
     private void UpdateRteValue(string value)
     {
         _createCategoryCommand.Description = value;
@@ -121,7 +133,7 @@ public partial class AddCategory : ComponentBase
         {
             var successResult = httpResponse.Response as SuccessResult<string>;
             Snackbar?.Add(successResult?.Result, Severity.Success);
-            NavigationManager?.NavigateTo("content/categorys");
+            NavigationManager?.NavigateTo("content/categories");
         }
         else
         {

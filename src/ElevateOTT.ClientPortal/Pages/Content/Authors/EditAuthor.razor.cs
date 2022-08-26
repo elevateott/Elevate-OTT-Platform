@@ -19,7 +19,7 @@ public partial class EditAuthor : ComponentBase
     [Inject] private IBreadcrumbService? BreadcrumbService { get; set; }
     [Inject] private IAuthorsClient? AuthorsClient { get; set; }
 
-    private string? _imageSrc;
+    private string? _authorImageSrc;
 
     //
     // TODO these values should come from config
@@ -59,6 +59,11 @@ public partial class EditAuthor : ComponentBase
             var successResult = httpResponseWrapper.Response as SuccessResult<AuthorForEdit>;
             _authorForEditVm = successResult?.Result;
             _authorForEditVm.PropertyChanged += NameChangedHandler;
+
+            if (!string.IsNullOrWhiteSpace(_authorForEditVm?.ImageUrl))
+            {
+                _authorImageSrc = _authorForEditVm.ImageUrl;
+            }
         }
         else
         {
@@ -77,8 +82,8 @@ public partial class EditAuthor : ComponentBase
 
     private void GetBase64StringImageUrl(string imageSrc)
     {
-        _imageSrc = imageSrc;
-        Console.WriteLine(_imageSrc);
+        _authorImageSrc = imageSrc;
+        Console.WriteLine(_authorImageSrc);
         StateHasChanged();
     }
 
@@ -98,9 +103,19 @@ public partial class EditAuthor : ComponentBase
 
     private bool HasUploadedImage()
     {
-        return !string.IsNullOrWhiteSpace(_imageSrc);
+        return !string.IsNullOrWhiteSpace(_authorImageSrc);
     }
 
+    private void RemoveAuthorImage()
+    {
+        _imageContent = null;
+        _authorImageSrc = null;
+        if (_authorForEditVm?.ImageUrl is not null)
+        {
+            _authorForEditVm.ImageUrl = null;
+        }
+        StateHasChanged();
+    }
     private void UpdateRteValue(string value)
     {
         _authorForEditVm.Bio = value;
@@ -128,7 +143,7 @@ public partial class EditAuthor : ComponentBase
         var userFormData = new MultipartFormDataContent
             {
                 { new StringContent(_updateAuthorCommand.Id.ToString() ?? string.Empty), "id" },
-                { new StringContent(_updateAuthorCommand.Name ?? string.Empty), "Title" },
+                { new StringContent(_updateAuthorCommand.Name ?? string.Empty), "Name" },
                 { new StringContent(_updateAuthorCommand.Bio ?? string.Empty), "Bio" },
                 { new StringContent(_updateAuthorCommand.ImageUrl ?? string.Empty), "ImageUrl" },
                 { new StringContent(_updateAuthorCommand.SeoTitle ?? string.Empty), "SeoTitle" },

@@ -14,6 +14,8 @@ public interface IHttpService
 
     Task<HttpResponseWrapper<object>> Put<TRequest, TResponse>(string url, TRequest data);
 
+    Task<HttpResponseWrapper<object>> PutFormData<TRequest, TResponse>(string url, MultipartFormDataContent data);
+
     Task<HttpResponseWrapper<object>> Delete<TResponse>(string url);
 
     Task<HttpResponseWrapper<object>> PostFormData<TRequest, TResponse>(string url, MultipartFormDataContent data);
