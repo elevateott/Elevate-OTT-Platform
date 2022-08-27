@@ -30,6 +30,12 @@ public partial class EditVideo : ComponentBase
     private string? _featuredCatalogImageSrc;
     private string? _animatedGifSrc;
 
+    private StreamContent? _playerImageContent;
+    private StreamContent? _catalogImageContent;
+    private StreamContent? _featuredCatalogImageContent;
+    private StreamContent? _animatedGifContent;
+
+
     //
     // TODO these values should come from config
     //
@@ -51,13 +57,12 @@ public partial class EditVideo : ComponentBase
 
     private VideoItemForAutoComplete _selectedTrailerVideo = new();
     private VideoItemForAutoComplete _selectedFeaturedCategoryVideo = new();
-    private VideosForAutoCompleteResponse _videosForAutoResponse = new ();
+    private VideosForAutoCompleteResponse _videosForAutoCompleteResponse = new ();
     #endregion Auto Complete Properties
 
     private string SlugPlaceholder => _slugExampleName;
 
     // TODO getters and setters ??????
-    private StreamContent? _imageContent { get; set; }
     private ServerSideValidator? _serverSideValidator { get; set; }
     private EditContextServerSideValidator? _editContextServerSideValidator { get; set; }
     private VideoForEdit _videoForEditVm { get; set; } = new();
@@ -114,6 +119,21 @@ public partial class EditVideo : ComponentBase
                     ImageUrl = _videoForEditVm.Author.ImageUrl ?? string.Empty
                 };
             }
+           
+            if (_videoForEditVm.Categories is null)
+            {
+                _videoForEditVm.Categories = new List<CategoryItemForAutoComplete>();
+            }
+
+            if (_videoForEditVm?.TrailerVideo is not null)
+            {
+                _selectedTrailerVideo = _videoForEditVm?.TrailerVideo;
+            }
+            if (_videoForEditVm?.FeaturedCategoryVideo is not null)
+            {
+                _selectedFeaturedCategoryVideo = _videoForEditVm?.FeaturedCategoryVideo;
+            }
+
             //_videoForEditVm.PropertyChanged += NameChangedHandler;
 
             if (_videoForEditVm != null)
@@ -148,17 +168,17 @@ public partial class EditVideo : ComponentBase
 
         if (!string.IsNullOrWhiteSpace(_videoForEditVm?.CatalogImage?.Url))
         {
-            _playerImageSrc = _videoForEditVm?.CatalogImage?.Url;
+            _catalogImageSrc = _videoForEditVm?.CatalogImage?.Url;
         }
 
         if (!string.IsNullOrWhiteSpace(_videoForEditVm?.FeaturedCatalogImage?.Url))
         {
-            _playerImageSrc = _videoForEditVm?.FeaturedCatalogImage?.Url;
+            _featuredCatalogImageSrc = _videoForEditVm?.FeaturedCatalogImage?.Url;
         }
 
         if (!string.IsNullOrWhiteSpace(_videoForEditVm?.AnimatedGif?.Url))
         {
-            _playerImageSrc = _videoForEditVm?.AnimatedGif?.Url;
+            _animatedGifSrc = _videoForEditVm?.AnimatedGif?.Url;
         }
     }
 
@@ -180,7 +200,7 @@ public partial class EditVideo : ComponentBase
         StateHasChanged();
     }
 
-    private void GetBase64StringAniimatedGifUrl(string base64String)
+    private void GetBase64StringAnimatedGifUrl(string base64String)
     {
         _animatedGifSrc = base64String;
         StateHasChanged();
@@ -191,57 +211,60 @@ public partial class EditVideo : ComponentBase
 
     private void PlayerImageSelected(StreamContent content)
     {
-        _imageContent = content;
-        _videoForEditVm.IsPlayerImageAdded = true;
+        Console.WriteLine("PlayerImageSelected");
+        _playerImageContent = content;
+        _videoForEditVm.PlayerImageState = ImageState.Added;
         StateHasChanged();
     }
 
     private void PlayerImageUnSelected()
     {
-        _imageContent = null;
-        _videoForEditVm.IsPlayerImageAdded = false;
+        Console.WriteLine("PlayerImageUnSelected");
+
+        _playerImageContent = null;
+        _videoForEditVm.PlayerImageState = ImageState.Unchanged;
         StateHasChanged();
     }
 
     private void CatalogImageSelected(StreamContent content)
     {
-        _imageContent = content;
-        _videoForEditVm.IsCatalogImageAdded = true;
+        _catalogImageContent = content;
+        _videoForEditVm.CatalogImageState = ImageState.Added;
         StateHasChanged();
     }
 
     private void CatalogImageUnSelected()
     {
-        _imageContent = null;
-        _videoForEditVm.IsCatalogImageAdded = false;
+        _catalogImageContent = null;
+        _videoForEditVm.CatalogImageState = ImageState.Unchanged;
         StateHasChanged();
     }
 
     private void FeaturedCatalogImageSelected(StreamContent content)
     {
-        _imageContent = content;
-        _videoForEditVm.IsFeaturedCatalogImageAdded = true;
+        _featuredCatalogImageContent = content;
+        _videoForEditVm.FeaturedCatalogImageState = ImageState.Added;
         StateHasChanged();
     }
 
     private void FeaturedCatalogImageUnSelected()
     {
-        _imageContent = null;
-        _videoForEditVm.IsFeaturedCatalogImageAdded = false;
+        _featuredCatalogImageContent = null;
+        _videoForEditVm.FeaturedCatalogImageState = ImageState.Unchanged;
         StateHasChanged();
     }
 
     private void AnimatedGifSelected(StreamContent content)
     {
-        _imageContent = content;
-        _videoForEditVm.IsAnimatedGifAdded = true;
+        _animatedGifContent = content;
+        _videoForEditVm.AnimatedGifState = ImageState.Added;
         StateHasChanged();
     }
 
     private void AnimatedGifUnSelected()
     {
-        _imageContent = null;
-        _videoForEditVm.IsAnimatedGifAdded = false;
+        _animatedGifContent = null;
+        _videoForEditVm.AnimatedGifState = ImageState.Unchanged;
         StateHasChanged();
     }
 
@@ -265,14 +288,14 @@ public partial class EditVideo : ComponentBase
         return !string.IsNullOrWhiteSpace(_animatedGifSrc);
     }
 
-    //
-    // TODO do we need remove methods??????
-    //
-
     private void RemovePlayerImage()
     {
-        _imageContent = null;
+        Console.WriteLine("RemovePlayerImage");
+
+        _playerImageContent = null;
         _playerImageSrc = null;
+        _videoForEditVm.PlayerImageState = ImageState.Removed;
+
         if (_videoForEditVm?.PlayerImage is not null)
         {
             _videoForEditVm.PlayerImage = null;
@@ -282,19 +305,24 @@ public partial class EditVideo : ComponentBase
 
     private void RemoveCatalogImage()
     {
-        _imageContent = null;
+        _catalogImageContent = null;
         _catalogImageSrc = null;
+        _videoForEditVm.CatalogImageState = ImageState.Removed;
+
         if (_videoForEditVm?.CatalogImage is not null)
         {
             _videoForEditVm.CatalogImage = null;
+
         }
         StateHasChanged();
     }
 
     private void RemoveFeaturedCatalogImage()
     {
-        _imageContent = null;
+        _featuredCatalogImageContent = null;
         _featuredCatalogImageSrc = null;
+        _videoForEditVm.FeaturedCatalogImageState = ImageState.Removed;
+
         if (_videoForEditVm?.FeaturedCatalogImage is not null)
         {
             _videoForEditVm.FeaturedCatalogImage = null;
@@ -304,8 +332,10 @@ public partial class EditVideo : ComponentBase
 
     private void RemoveAnimatedGifImage()
     {
-        _imageContent = null;
+        _animatedGifContent = null;
         _animatedGifSrc = null;
+        _videoForEditVm.AnimatedGifState = ImageState.Removed;
+
         if (_videoForEditVm?.AnimatedGif is not null)
         {
             _videoForEditVm.AnimatedGif = null;
@@ -330,7 +360,7 @@ public partial class EditVideo : ComponentBase
         {
             var successResult = responseWrapper.Response as SuccessResult<VideosForAutoCompleteResponse>;
             if (successResult != null)
-                _videosForAutoResponse = successResult.Result;
+                _videosForAutoCompleteResponse = successResult.Result;
         }
         else
         {
@@ -338,12 +368,12 @@ public partial class EditVideo : ComponentBase
             _serverSideValidator.Validate(exceptionResult);
         }
 
-        return _videosForAutoResponse.Videos.Items;
+        return _videosForAutoCompleteResponse.Videos.Items;
     }
 
     private IEnumerable<string> ValidateVideo(string? value)
     {
-        var video = _videosForAutoResponse?.Videos?.Items.FirstOrDefault(a => a.Title.Equals(value));
+        var video = _videosForAutoCompleteResponse?.Videos?.Items.FirstOrDefault(a => a.Title.Equals(value));
         if (video is null)
         {
             yield return Resource.Video_by_that_name_not_found;
@@ -478,7 +508,8 @@ public partial class EditVideo : ComponentBase
     private void UpdateRteValue(string value)
     {
         _videoForEditVm.FullDescription = value;
-    }
+    }  
+
 
     private async Task SubmitForm()
     {
@@ -494,8 +525,15 @@ public partial class EditVideo : ComponentBase
         Console.WriteLine($"selected trailer video id: { _selectedTrailerVideo}");
         Console.WriteLine($"selected featured category video id: {_selectedFeaturedCategoryVideo}");
 
-        // TODO update AuthorId
         // TODO subtitles
+
+
+        // TODO 
+        // add image url props to dtos/requests
+        // account for remove image
+        // mux web hook add default images
+
+        Console.WriteLine($"player image state: {_videoForEditVm.PlayerImageState}");
 
         _updateVideoCommand = new UpdateVideoCommand
         {
@@ -505,69 +543,100 @@ public partial class EditVideo : ComponentBase
             ShortDescription = _videoForEditVm.ShortDescription,
             AllowDownload = _videoForEditVm.AllowDownload,
 
-
-            PlayerImage = _videoForEditVm.PlayerImage,
-            CatalogImage = _videoForEditVm.CatalogImage,
-            FeaturedCatalogImage = _videoForEditVm.FeaturedCatalogImage,
-            AnimatedGif = _videoForEditVm.AnimatedGif,
-            IsPlayerImageAdded = _videoForEditVm.IsPlayerImageAdded,
-            IsCatalogImageAdded = _videoForEditVm.IsCatalogImageAdded,
-            IsFeaturedCatalogImageAdded = _videoForEditVm.IsFeaturedCatalogImageAdded,
-            IsAnimatedGifAdded = _videoForEditVm.IsAnimatedGifAdded,
-
-            //_selectedAuthor 
-            //_selectedCategory
-            //_selectedTrailerVideo
-            //_selectedFeaturedCategoryVideo
-
-
             SeoTitle = _videoForEditVm.SeoTitle,
             SeoDescription = _videoForEditVm.SeoDescription,
-            Slug = _videoForEditVm.Slug.FormatSlug(),
+            Slug = _videoForEditVm.Slug?.FormatSlug(),
+
+            PlayerImageState = _videoForEditVm.PlayerImageState,
+            CatalogImageState = _videoForEditVm.CatalogImageState,
+            FeaturedCatalogImageState = _videoForEditVm.FeaturedCatalogImageState,
+            AnimatedGifState = _videoForEditVm.AnimatedGifState,
+
+            CategoryIds = _videoForEditVm.Categories?.Select(c => c.Id).ToList(),
+            AuthorId = _selectedAuthor?.Id ?? _videoForEditVm.AuthorId,
+            TrailerVideoId = _videoForEditVm.TrailerVideo?.Id,
+            FeaturedCategoryVideoId =_videoForEditVm.FeaturedCategoryVideo?.Id,
+
+            PublicationStatus = _videoForEditVm.PublicationStatus,
+            ContentAccess = _videoForEditVm.ContentAccess,
+            ReleasedDate = _videoForEditVm.ReleasedDate,
+            ExpirationDate = _videoForEditVm.ExpirationDate,
+            HasOneTimePurchasePrice = _videoForEditVm.HasOneTimePurchasePrice,
+            OneTimePurchasePrice = _videoForEditVm.OneTimePurchasePrice,
+            HasRentalPrice = _videoForEditVm.HasRentalPrice,
+            RentalPrice = _videoForEditVm.RentalPrice,
+            RentalDuration = _videoForEditVm.RentalDuration,
         };
 
+        var userFormData = new MultipartFormDataContent
+            {
+                { new StringContent(_updateVideoCommand.Id.ToString() ?? string.Empty), "id" },
+                { new StringContent(_updateVideoCommand.Title ?? string.Empty), "Title" },
+                { new StringContent(_updateVideoCommand.FullDescription ?? string.Empty), "FullDescription" },
+                { new StringContent(_updateVideoCommand.ShortDescription ?? string.Empty), "ShortDescription" },
+                { new StringContent(_updateVideoCommand.AllowDownload.ToString()), "AllowDownload" },
 
-        //var userFormData = new MultipartFormDataContent
-        //    {
-        //        { new StringContent(_updateVideoCommand.Id.ToString() ?? string.Empty), "id" },
-        //        { new StringContent(_updateVideoCommand.Title ?? string.Empty), "Title" },
-        //        { new StringContent(_updateVideoCommand.Bio ?? string.Empty), "Bio" },
-        //        { new StringContent(_updateVideoCommand.ImageUrl ?? string.Empty), "ImageUrl" },
-        //        { new StringContent(_updateVideoCommand.SeoTitle ?? string.Empty), "SeoTitle" },
-        //        { new StringContent(_updateVideoCommand.SeoDescription ?? string.Empty), "SeoDescription" },
-        //        { new StringContent(_updateVideoCommand.Slug ?? string.Empty), "Slug" },
-        //        { new StringContent(_updateVideoCommand.IsImageAdded.ToString()), "IsImageAdded" },
-        //    };
+                { new StringContent(_updateVideoCommand.SeoTitle ?? string.Empty), "SeoTitle" },
+                { new StringContent(_updateVideoCommand.SeoDescription ?? string.Empty), "SeoDescription" },
+                { new StringContent(_updateVideoCommand.Slug ?? string.Empty), "Slug" },
 
-        //if (_imageContent != null)
-        //    userFormData.Add(_imageContent, "ImageFile", _imageContent.Headers.GetValues("FileName").LastOrDefault());
+                { new StringContent(_updateVideoCommand.PlayerImageState.ToString()), "PlayerImageState" },
+                { new StringContent(_updateVideoCommand.CatalogImageState.ToString()), "CatalogImageState" },
+                { new StringContent(_updateVideoCommand.FeaturedCatalogImageState.ToString()), "FeaturedCatalogImageState" },
+                { new StringContent(_updateVideoCommand.AnimatedGifState.ToString()), "AnimatedGifState" },
 
-        //Console.WriteLine("pre update call");
+                { new StringContent(_updateVideoCommand.CategoryIds?.ToString() ?? string.Empty), "CategoryIds" },
+                { new StringContent(_updateVideoCommand.AuthorId?.ToString() ?? string.Empty), "AuthorId" },
+                { new StringContent(_updateVideoCommand.TrailerVideoId?.ToString() ?? string.Empty), "TrailerVideoId" },
+                { new StringContent(_updateVideoCommand.FeaturedCategoryVideoId?.ToString() ?? string.Empty), "FeaturedCategoryVideoId" },
 
-        //var httpResponse = await VideosClient.UpdateAuthor(userFormData);
+                { new StringContent(_updateVideoCommand.PublicationStatus.ToString() ?? string.Empty), "PublicationStatus" },
+                { new StringContent(_updateVideoCommand.ContentAccess.ToString() ?? string.Empty), "ContentAccess" },
+                { new StringContent(_updateVideoCommand.ReleasedDate.ToString() ?? string.Empty), "ReleasedDate" },
+                { new StringContent(_updateVideoCommand.ExpirationDate.ToString() ?? string.Empty), "ExpirationDate" },
+                { new StringContent(_updateVideoCommand.HasOneTimePurchasePrice.ToString() ?? string.Empty), "HasOneTimePurchasePrice" },
+                { new StringContent(_updateVideoCommand.OneTimePurchasePrice.ToString() ?? string.Empty), "OneTimePurchasePrice" },
+                { new StringContent(_updateVideoCommand.HasRentalPrice.ToString() ?? string.Empty), "HasRentalPrice" },
+                { new StringContent(_updateVideoCommand.RentalPrice.ToString() ?? string.Empty), "RentalPrice" },
+                { new StringContent(_updateVideoCommand.RentalDuration.ToString() ?? string.Empty), "RentalDuration" },
+            };
 
-        Console.WriteLine("post update call");
+        if (_playerImageContent != null)
+            userFormData.Add(_playerImageContent, "PlayerImage", _playerImageContent.Headers.GetValues("FileName").LastOrDefault());
 
-        //Console.WriteLine("httpResponse: " + httpResponse);
-        //Console.WriteLine("httpResponse.Success: " + httpResponse.Success);
+        if (_catalogImageContent != null)
+            userFormData.Add(_catalogImageContent, "CatalogImage", _catalogImageContent.Headers.GetValues("FileName").LastOrDefault());
+        
+        if (_featuredCatalogImageContent != null)
+            userFormData.Add(_featuredCatalogImageContent, "FeaturedCatalogImage", _featuredCatalogImageContent.Headers.GetValues("FileName").LastOrDefault());
+        
+        if (_animatedGifContent != null)
+            userFormData.Add(_animatedGifContent, "AnimatedGif", _animatedGifContent.Headers.GetValues("FileName").LastOrDefault());
 
 
-        //if (httpResponse.Success)
-        //{
-        //    var successResult = httpResponse.Response as SuccessResult<string>;
-        //    Snackbar?.Add(successResult?.Result, Severity.Success);
-        //    NavigationManager?.NavigateTo("content/videos");
-        //}
-        //else
-        //{
-        //    var exceptionResult = httpResponse.Response as ExceptionResult;
-        //    _editContextServerSideValidator?.Validate(exceptionResult);
-        //    _serverSideValidator?.Validate(exceptionResult);
-        //}
+        var httpResponse = await VideosClient.UpdateVideo(userFormData);
+
+
+        Console.WriteLine("httpResponse: " + httpResponse);
+        Console.WriteLine("httpResponse.Success: " + httpResponse.Success);
+
+
+        if (httpResponse.Success)
+        {
+            var successResult = httpResponse.Response as SuccessResult<string>;
+            Snackbar?.Add(successResult?.Result, Severity.Success);
+            NavigationManager?.NavigateTo("content/videos");
+        }
+        else
+        {
+            var exceptionResult = httpResponse.Response as ExceptionResult;
+            _editContextServerSideValidator?.Validate(exceptionResult);
+            _serverSideValidator?.Validate(exceptionResult);
+        }
     }
 
-    #region Auto Complete Handlers
 
+    #region Auto Complete Handlers
     private async Task<IEnumerable<CategoryItemForAutoComplete>> SearchCategories(string? value)
     {
         System.Console.WriteLine("category auto complete value: " + value ?? "value is null");
@@ -592,6 +661,24 @@ public partial class EditVideo : ComponentBase
         }
 
         return _categoriesForAutoResponse.Categories.Items;
+    }
+
+    private void CategorySelectedHandler(CategoryItemForAutoComplete value)
+    {
+        _selectedCategory = value;
+        if (!_videoForEditVm.Categories.Contains(value))
+        {
+            Console.WriteLine($"add to categories: {value.Title}");
+            _videoForEditVm.Categories.Add(value);
+        }
+        StateHasChanged();
+    }
+
+    private void CategoryRemovedHandler(MudChip chip)
+    {
+        var categoryToRemove = _videoForEditVm.Categories.FirstOrDefault(c => c.Title.Equals(chip.Text));
+        _videoForEditVm.Categories.Remove(categoryToRemove);
+        StateHasChanged();
     }
 
     private IEnumerable<string> ValidateCategory(string? value)

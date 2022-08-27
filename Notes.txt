@@ -1,7 +1,23 @@
 EditVideo
 
+include author
 Author Id / author dto
-category id / dto
-images ids / dtos
 
+many-2-many 
+category id / dto
+
+3 images ids / dtos
+
+subtitles
+
+subscription plan
+
+
+
+find videos, use video for autocomplete dto
 trailer and featured videos ids and dtos
+
+
+
+
+* middleware for outgoing response for api request blows up if html in response

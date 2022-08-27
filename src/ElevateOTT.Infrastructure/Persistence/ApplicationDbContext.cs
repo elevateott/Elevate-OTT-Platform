@@ -69,9 +69,11 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<VideoModel>? Videos { get; set; }
     public DbSet<LiveStreamModel>? LiveStreams { get; set; }
     public DbSet<PodcastModel>? Podcasts { get; set; }
-
-    public DbSet<AssetImageModel>? AssetImages { get; set; }
+    public DbSet<CategoryModel>? Categories { get; set; }
+    public DbSet<VideoCategoryModel>? VideosCategories { get; set; }
+    //public DbSet<AssetImageModel>? AssetImages { get; set; }
     public DbSet<ContentFeedModel>? ContentFeeds { get; set; }
+
 
     #endregion Public Properties
 
@@ -287,20 +289,20 @@ public class ApplicationDbContext : IdentityDbContext<
             .OnDelete(DeleteBehavior.ClientSetNull);
 
         // Creating one-to-many relationships where ClientCascade required
-        modelBuilder.Entity<AssetImageModel>()
-            .HasOne(p => p.Video)
-            .WithMany(b => b.VideoImages)
-            .OnDelete(DeleteBehavior.ClientCascade);
+        //modelBuilder.Entity<AssetImageModel>()
+        //    .HasOne(p => p.Video)
+        //    .WithMany(b => b.VideoImages)
+        //    .OnDelete(DeleteBehavior.ClientCascade);
 
-        modelBuilder.Entity<AssetImageModel>()
-            .HasOne(p => p.LiveStream)
-            .WithMany(b => b.LiveStreamImages)
-            .OnDelete(DeleteBehavior.ClientCascade);
+        //modelBuilder.Entity<AssetImageModel>()
+        //    .HasOne(p => p.LiveStream)
+        //    .WithMany(b => b.LiveStreamImages)
+        //    .OnDelete(DeleteBehavior.ClientCascade);
 
-        modelBuilder.Entity<AssetImageModel>()
-            .HasOne(p => p.Podcast)
-            .WithMany(b => b.PodcastImages)
-            .OnDelete(DeleteBehavior.ClientCascade);
+        //modelBuilder.Entity<AssetImageModel>()
+        //    .HasOne(p => p.Podcast)
+        //    .WithMany(b => b.PodcastImages)
+        //    .OnDelete(DeleteBehavior.ClientCascade);
     }
 
     private static void ConfigureManyToManyRelationships(ModelBuilder modelBuilder)

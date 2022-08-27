@@ -8,10 +8,10 @@ public class VideoItem : AuditableDto
     #region Public Properties
 
     public Guid Id { get; set; }
+    public string? AssetId { get; set; }
     public bool Mp4Support { get; set; }
     public Guid? TrailerVideoId { get; set; }
     public Guid? FeaturedCategoryVideoId { get; set; }
-    public string? AssetId { get; set; }
     public string? Title { get; set; }
     public string? FileName { get; set; }
     public string? StreamUrl { get; set; }
@@ -29,7 +29,6 @@ public class VideoItem : AuditableDto
     public string? LanguageCode { get; set; }
     public TimeSpan? Duration { get; set; }
     public bool AllowDownload { get; set; }
-    public string? ThumbnailUrl { get; set; }
     public string? TrailerVideoUrl { get; set; }
     public string? BlobUrl { get; set; }
     public DateTime? UploadedOn { get; set; }
@@ -43,6 +42,11 @@ public class VideoItem : AuditableDto
     public string? Slug { get; set; }
     public Guid? AuthorId { get; set; }
 
+    public string? ThumbnailUrl { get; set; }
+    public string? PlayerImageUrl { get; set; }
+    public string? CatalogImageUrl { get; set; }
+    public string? FeaturedCatalogImageUrl { get; set; }
+    public string? AnimatedGifUrl { get; set; }
 
     public bool HasOneTimePurchasePrice { get; set; }
     public decimal OneTimePurchasePrice { get; set; }
@@ -52,7 +56,6 @@ public class VideoItem : AuditableDto
 
     public AuthorDto? Author { get; set; }
     public List<AssetImageDto>? VideoImages { get; set; }
-    public List<CategoryDto>? Categories { get; set; }
     public List<TagDto>? Tags { get; set; }
 
     #endregion Public Properties

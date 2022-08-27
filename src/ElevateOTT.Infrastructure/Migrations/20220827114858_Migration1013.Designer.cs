@@ -4,6 +4,7 @@ using ElevateOTT.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElevateOTT.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220827114858_Migration1013")]
+    partial class Migration1013
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,9 +384,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("AllowDownload")
                         .HasColumnType("bit");
 
-                    b.Property<string>("AnimatedGifUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
 
@@ -400,9 +399,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("ButtonPurchaseText")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CatalogImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClosedCaptions")
                         .HasColumnType("bit");
@@ -430,9 +426,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("FeaturedCatalogImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
@@ -475,9 +468,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Passthrough")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlayerImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreRegistrationText")
@@ -659,9 +649,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("AllowDownload")
                         .HasColumnType("bit");
 
-                    b.Property<string>("AnimatedGifUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
 
@@ -672,9 +659,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlobUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CatalogImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClosedCaptions")
@@ -704,9 +688,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FeaturedCatalogImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
 
@@ -730,9 +711,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Passthrough")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlayerImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicPlaybackId")
@@ -913,9 +891,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("AllowDownload")
                         .HasColumnType("bit");
 
-                    b.Property<string>("AnimatedGifUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
 
@@ -926,9 +901,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlobUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CatalogImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClosedCaptions")
@@ -957,9 +929,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("FeaturedCatalogImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("FeaturedCategoryVideoId")
                         .HasColumnType("uniqueidentifier");
@@ -999,9 +968,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("Passthrough")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlayerImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicPlaybackId")
@@ -1783,15 +1749,18 @@ namespace ElevateOTT.Infrastructure.Migrations
                 {
                     b.HasOne("ElevateOTT.Domain.Entities.Content.LiveStreamModel", "LiveStream")
                         .WithMany("LiveStreamImages")
-                        .HasForeignKey("LiveStreamId");
+                        .HasForeignKey("LiveStreamId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("ElevateOTT.Domain.Entities.Content.PodcastModel", "Podcast")
                         .WithMany("PodcastImages")
-                        .HasForeignKey("PodcastId");
+                        .HasForeignKey("PodcastId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("ElevateOTT.Domain.Entities.Content.VideoModel", "Video")
-                        .WithMany()
-                        .HasForeignKey("VideoId");
+                        .WithMany("VideoImages")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("LiveStream");
 
@@ -2106,6 +2075,8 @@ namespace ElevateOTT.Infrastructure.Migrations
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
                 {
+                    b.Navigation("VideoImages");
+
                     b.Navigation("VideosCategories");
 
                     b.Navigation("VideosCollections");

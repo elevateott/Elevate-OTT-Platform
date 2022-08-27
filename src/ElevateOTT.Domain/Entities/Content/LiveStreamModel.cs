@@ -40,7 +40,6 @@ public class LiveStreamModel : BaseAsset, IMustHaveTenant
 
     #region Navigational Properties
     public AuthorModel? Author { get; set; }
-    public List<AssetImageModel>? LiveStreamImages { get; set; }
     public ICollection<LiveStreamCategoryModel>? LiveStreamsCategories { get; set; }
 
     // public List<CommentModel>? Comments { get; set; }

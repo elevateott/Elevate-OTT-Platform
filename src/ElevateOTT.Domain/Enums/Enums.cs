@@ -187,3 +187,10 @@ public enum RentalDuration
     SixMonths,
     OneYear
 }
+
+public enum ImageState
+{
+    Unchanged,
+    Added,
+    Removed
+}

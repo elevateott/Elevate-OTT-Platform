@@ -25,7 +25,6 @@ public class VideoItem : AuditableDto
     public string? LanguageCode { get; set; }
     public TimeSpan? Duration { get; set; }
     public bool AllowDownload { get; set; }
-    public string? ThumbnailUrl { get; set; }
     public string? BlobUrl { get; set; }
     public DateTime? UploadedOn { get; set; }
     public DateTime? ReleasedDate { get; set; }
@@ -37,6 +36,12 @@ public class VideoItem : AuditableDto
     public string SeoTitle { get; set; } = string.Empty;
     public string SeoDescription { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+
+    public string? ThumbnailUrl { get; set; }
+    public string? PlayerImageUrl { get; set; }
+    public string? CatalogImageUrl { get; set; }
+    public string? FeaturedCatalogImageUrl { get; set; }
+    public string? AnimatedGifUrl { get; set; }
 
     public Guid? TrailerVideoId { get; set; }
     public Guid? FeaturedCategoryVideoId { get; set; }

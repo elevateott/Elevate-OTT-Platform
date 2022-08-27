@@ -43,7 +43,6 @@ public class VideoModel : BaseAsset, IMustHaveTenant
     public ICollection<VideoTagModel>? VideosTags { get; set; }
 
     public AuthorModel? Author { get; set; }
-    public List<AssetImageModel>? VideoImages { get; set; }
 
     //public List<ExtraModel>? Extras { get; set; }
     //public List<CommentModel>? Comments { get; set; }

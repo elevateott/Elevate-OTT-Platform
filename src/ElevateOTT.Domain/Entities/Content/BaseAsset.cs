@@ -53,10 +53,7 @@ public abstract class BaseAsset : BaseEntity
     public bool AllowDownload { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
-    public string? DownloadUrl { get; set; }
-
-    [Url(ErrorMessage = "Invalid url.")]
-    public string? ThumbnailUrl { get; set; } 
+    public string? DownloadUrl { get; set; } 
 
     [Url(ErrorMessage = "Invalid url.")]
     public string? TrailerVideoUrl { get; set; }
@@ -66,4 +63,20 @@ public abstract class BaseAsset : BaseEntity
     public DateTime? ReleasedDate { get; set; }
 
     public DateTime? ExpirationDate { get; set; }
+
+    // Images
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? ThumbnailUrl { get; set; }
+
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? PlayerImageUrl { get; set; }
+
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? CatalogImageUrl { get; set; }
+
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? FeaturedCatalogImageUrl { get; set; }
+
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? AnimatedGifUrl { get; set; }
 }

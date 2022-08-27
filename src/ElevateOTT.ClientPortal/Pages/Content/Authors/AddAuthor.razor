@@ -85,18 +85,18 @@
                                         <MudCardContent>
                                             @if (!string.IsNullOrWhiteSpace(_authorImageSrc))
                                             {
-                                                <MudPaper Class="pa-2" Outlined="true">
-                                                    <div class="d-flex justify-center mb-4">
-                                                        <MudAvatar Image="@_authorImageSrc"
-                                                                   Style="height: 200px; width: 200px;">
-                                                        </MudAvatar>
-                                                    </div>
-                                                    <MudText Align="Align.Center">
-                                                        <MudFab OnClick="RemoveAuthorImage"
-                                                                Color="Color.Warning"
-                                                                Icon="@Icons.Material.Filled.Remove"
-                                                                aria-label="edit"/>
-                                                    </MudText>
+                                                <MudPaper Class="pa-2" Outlined="true">   
+                                                      <div class="d-flex flex-column justify-center align-center gap-6">
+                                                            <MudAvatar Image="@_authorImageSrc"
+                                                                Style="height: 200px; width: 200px;">
+                                                            </MudAvatar>
+                                                            
+                                                        <MudButton Variant="Variant.Filled" 
+                                                                StartIcon="@Icons.Material.Filled.Delete" 
+                                                                Color="Color.Error" 
+                                                                OnClick="RemoveAuthorImage">Remove Image
+                                                            </MudButton>
+                                                      </div>  
                                                 </MudPaper>
                                             }
                                         </MudCardContent>

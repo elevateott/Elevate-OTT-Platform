@@ -21,7 +21,6 @@ public class PodcastModel : BaseAsset, IMustHaveTenant
 
     #region Navigational Properties
     public AuthorModel? Author { get; set; }
-    public List<AssetImageModel>? PodcastImages { get; set; }
     public ICollection<PodcastCollectionModel>? PodcastsCollections { get; set; }
     public ICollection<PodcastCategoryModel>? PodcastsCategoriess { get; set; }
 

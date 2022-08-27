@@ -314,9 +314,12 @@ public class MuxWebhookService : IMuxWebhookService
             if (!string.IsNullOrEmpty(publicPlaybackId))
             {
                 videoToUpdate.StreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
-                videoToUpdate.VideoImages = GetVideoImageUrls(publicPlaybackId, baseImageUrl, videoToUpdate.TenantId, videoToUpdate.Id);
                 videoToUpdate.PublicPlaybackId = publicPlaybackId;
                 videoToUpdate.ThumbnailUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 140, 64);
+                videoToUpdate.PlayerImageUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 1920, 1080);
+                videoToUpdate.CatalogImageUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 1480, 840);
+                videoToUpdate.FeaturedCatalogImageUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 1900, 800);
+                videoToUpdate.AnimatedGifUrl = GetVideoAnimatedGifUrlAtMux(publicPlaybackId, baseImageUrl, 1920);
             }
         }
 
@@ -767,59 +770,62 @@ public class MuxWebhookService : IMuxWebhookService
 
         return video;
     }
-    private List<AssetImageModel> GetVideoImageUrls(string playbackId, string baseStreamUrl, Guid tenantId, Guid videoId)
-    {
-        // ref: https://docs.mux.com/guides/video/get-images-from-a-video
+    //private List<AssetImageModel> GetVideoImageUrls(string playbackId, string baseStreamUrl, Guid tenantId, Guid videoId)
+    //{
+    //    // ref: https://docs.mux.com/guides/video/get-images-from-a-video
 
-        var videoImages = new List<AssetImageModel>
-            {
-                new()
-                {
-                    Name = "Player_Image",
-                    AssetImageType = AssetImageType.PlayerImage,
-                    Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
-                    Width = 1920,
-                    Height = 1080,
-                    TenantId = tenantId,
-                    VideoId = videoId
-                },
-                new()
-                {
-                    Name = "Catalog_Image",
-                    AssetImageType = AssetImageType.CatalogImage,
-                    Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
-                    Width = 1480,
-                    Height = 840,
-                    TenantId = tenantId,
-                    VideoId = videoId
-                },
-                new()
-                {
-                    Name = "Featured_Catalog_Image",
-                    AssetImageType = AssetImageType.FeaturedCatalogImage,
-                    Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
-                    Width = 1900,
-                    Height = 800,
-                    TenantId = tenantId,
-                    VideoId = videoId
-                },
-                new()
-                {
-                    Name = "Animated_Gif_Url",
-                    AssetImageType = AssetImageType.AnimatedGif,
-                    Url = $"{baseStreamUrl}/{playbackId}/animated.gif",
-                    Width = 640,
-                    Height = 0,
-                    TenantId = tenantId,
-                    VideoId = videoId
-                },
-            };
+    //    var videoImages = new List<AssetImageModel>
+    //        {
+    //            new()
+    //            {
+    //                Name = "Player_Image",
+    //                AssetImageType = AssetImageType.PlayerImage,
+    //                Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
+    //                Width = 1920,
+    //                Height = 1080,
+    //                TenantId = tenantId,
+    //                VideoId = videoId
+    //            },
+    //            new()
+    //            {
+    //                Name = "Catalog_Image",
+    //                AssetImageType = AssetImageType.CatalogImage,
+    //                Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
+    //                Width = 1480,
+    //                Height = 840,
+    //                TenantId = tenantId,
+    //                VideoId = videoId
+    //            },
+    //            new()
+    //            {
+    //                Name = "Featured_Catalog_Image",
+    //                AssetImageType = AssetImageType.FeaturedCatalogImage,
+    //                Url = GetVideoImageUrlAtMux(playbackId, baseStreamUrl, 140, 64),
+    //                Width = 1900,
+    //                Height = 800,
+    //                TenantId = tenantId,
+    //                VideoId = videoId
+    //            },
+    //            new()
+    //            {
+    //                Name = "Animated_Gif_Url",
+    //                AssetImageType = AssetImageType.AnimatedGif,
+    //                Url = $"{baseStreamUrl}/{playbackId}/animated.gif",
+    //                Width = 640,
+    //                Height = 0,
+    //                TenantId = tenantId,
+    //                VideoId = videoId
+    //            },
+    //        };
 
-        return videoImages;
-    }
+    //    return videoImages;
+    //}
 
     private string GetVideoImageUrlAtMux(string playbackId, string baseStreamUrl, int width, int height) =>
         $"{baseStreamUrl}/{playbackId}/thumbnail.png?width={width}&height={height}&fit_mode=pad";
+
+    private string GetVideoAnimatedGifUrlAtMux(string playbackId, string baseStreamUrl, int width) =>
+        $"{baseStreamUrl}/{playbackId}/animated.gif?width={width}";
 
     private string? GetStaticRenditionFileName(MuxWebhookRequest? hookRequest)
     {

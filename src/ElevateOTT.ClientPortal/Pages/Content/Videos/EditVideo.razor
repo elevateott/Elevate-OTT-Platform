@@ -108,8 +108,9 @@
 
                                     <MudItem xs="12" md="8">
                                         <MudAutocomplete T="CategoryItemForAutoComplete"
-                                                         @bind-Value="_selectedCategory"
-                                                         Text="@_selectedCategory.Title"
+                                                         Value="_selectedCategory"
+                                                         ValueChanged="CategorySelectedHandler"
+                                                         Text="@_selectedCategory.Title"                                                         
                                                          Class="pl-md-12"
                                                          Label="Category"
                                                          Variant="Variant.Outlined"
@@ -188,6 +189,18 @@
                                                 </MudText>
                                             </MoreItemsTemplate>
                                         </MudAutocomplete>
+
+                                        @if (_videoForEditVm?.Categories is not null) 
+                                        {
+                                            <div class="pl-md-12 mt-6">
+                                                @foreach(var c in _videoForEditVm.Categories)
+                                                {
+                                                    <MudChip Color="Color.Dark" 
+                                                             Text="@c.Title" 
+                                                             OnClose="CategoryRemovedHandler" />
+                                                }
+                                            </div>
+                                        }                                       
                                     </MudItem>
                                 </MudGrid>
 
@@ -349,18 +362,17 @@
                                                     @if (!string.IsNullOrWhiteSpace(_playerImageSrc))
                                                     {
                                                         <MudPaper Class="pa-2" Outlined="true">
-                                                            <div class="d-flex justify-center mb-4">
+                                                            <div class="d-flex flex-column justify-center align-center gap-6">
                                                                 <MudImage Src="@_playerImageSrc"
                                                                           Style="height: 200px; width: 200px;"
                                                                           Alt="Player Image"/>
-                                                            </div>
-
-                                                            <MudText Align="Align.Center">
-                                                                <MudFab OnClick="RemovePlayerImage"
-                                                                        Color="Color.Warning"
-                                                                        Icon="@Icons.Material.Filled.Remove"
-                                                                        aria-label="edit"/>
-                                                            </MudText>
+                                                            
+                                                                <MudButton Variant="Variant.Filled" 
+                                                                       StartIcon="@Icons.Material.Filled.Delete" 
+                                                                       Color="Color.Error" 
+                                                                       OnClick="RemovePlayerImage">Remove Image
+                                                                   </MudButton>
+                                                            </div>                                                       
                                                         </MudPaper>
                                                     }
                                                  
@@ -401,18 +413,17 @@
                                                     @if (!string.IsNullOrWhiteSpace(_catalogImageSrc))
                                                     {
                                                         <MudPaper Class="pa-2" Outlined="true">
-                                                            <div class="d-flex justify-center mb-4">
-                                                                <MudImage Src="@_catalogImageSrc"
+                                                             <div class="d-flex flex-column justify-center align-center gap-6">
+                                                                  <MudImage Src="@_catalogImageSrc"
                                                                           Style="height: 200px; width: 200px;"
                                                                           Alt="Catalog Image"/>
-                                                            </div>
-
-                                                            <MudText Align="Align.Center">
-                                                                <MudFab OnClick="RemoveCatalogImage"
-                                                                        Color="Color.Warning"
-                                                                        Icon="@Icons.Material.Filled.Remove"
-                                                                        aria-label="edit"/>
-                                                            </MudText>
+                                                            
+                                                                <MudButton Variant="Variant.Filled" 
+                                                                       StartIcon="@Icons.Material.Filled.Delete" 
+                                                                       Color="Color.Error" 
+                                                                       OnClick="RemoveCatalogImage">Remove Image
+                                                                   </MudButton>
+                                                            </div>  
                                                         </MudPaper>
                                                     }
                                                  
@@ -548,18 +559,17 @@
                                                     @if (!string.IsNullOrWhiteSpace(_featuredCatalogImageSrc))
                                                     {
                                                         <MudPaper Class="pa-2" Outlined="true">
-                                                            <div class="d-flex justify-center mb-4">
-                                                                <MudImage Src="@_featuredCatalogImageSrc"
+                                                            <div class="d-flex flex-column justify-center align-center gap-6">
+                                                                  <MudImage Src="@_featuredCatalogImageSrc"
                                                                           Style="height: 200px; width: 200px;"
                                                                           Alt="Featured Catalog Image"/>
-                                                            </div>
-
-                                                            <MudText Align="Align.Center">
-                                                                <MudFab OnClick="RemoveFeaturedCatalogImage"
-                                                                        Color="Color.Warning"
-                                                                        Icon="@Icons.Material.Filled.Remove"
-                                                                        aria-label="edit"/>
-                                                            </MudText>
+                                                            
+                                                                <MudButton Variant="Variant.Filled" 
+                                                                       StartIcon="@Icons.Material.Filled.Delete" 
+                                                                       Color="Color.Error" 
+                                                                       OnClick="RemoveFeaturedCatalogImage">Remove Image
+                                                                   </MudButton>
+                                                            </div> 
                                                         </MudPaper>
                                                     }
                                                  

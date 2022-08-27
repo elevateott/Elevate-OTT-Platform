@@ -8,6 +8,7 @@ using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Common.Interfaces.Services.StorageServices;
 using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
+using ElevateOTT.Application.Features.Content.Categories.Queries.GetCategoriesForAutoComplete;
 using ElevateOTT.Application.Features.Content.Videos.Commands.CreateAssetAtMux;
 using ElevateOTT.Application.Features.Content.Videos.Commands.CreateVideo;
 using ElevateOTT.Application.Features.Content.Videos.Commands.DeleteVideo;
@@ -16,6 +17,7 @@ using ElevateOTT.Application.Features.Content.Videos.Queries.ExportVideos;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetSasToken;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideoForEdit;
 using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideos;
+using ElevateOTT.Application.Features.Content.Videos.Queries.GetVideosForAutoComplete;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Application.UseCases.Content;
@@ -81,7 +83,42 @@ public class VideoUseCase : IVideoUseCase
         if (video == null)
             return Envelope<VideoForEdit>.Result.NotFound(Resource.Unable_to_load_video);
 
-        var videoForEdit = _mapper.Map<VideoForEdit>(video);
+        var videoForEdit = _mapper.Map<VideoForEdit>(video);    
+
+        foreach(var vc in video.VideosCategories)
+        {
+            videoForEdit?.Categories?.Add(new CategoryItemForAutoComplete
+            {
+                Id = vc.Category.Id,
+                Title = vc.Category.Title,
+                ImageUrl = vc.Category.ImageUrl
+            });
+        }
+
+        // videos
+        if (video?.TrailerVideoId is not null)
+        {
+            var trailerVideo = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, video.TrailerVideoId.Value, false);
+            videoForEdit.TrailerVideo = trailerVideo is not null ? new VideoItemForAutoComplete
+            {
+                Id = trailerVideo.Id,
+                Title = trailerVideo.Title,
+                ThumbnailUrl = trailerVideo.ThumbnailUrl,
+                Duration = trailerVideo.Duration
+            } : null;
+        }
+
+        if (video?.FeaturedCategoryVideoId is not null)
+        {
+            var featuredCategoryVideo = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, video.FeaturedCategoryVideoId.Value, false);
+            videoForEdit.TrailerVideo = featuredCategoryVideo is not null ? new VideoItemForAutoComplete
+            {
+                Id = featuredCategoryVideo.Id,
+                Title = featuredCategoryVideo.Title,
+                ThumbnailUrl = featuredCategoryVideo.ThumbnailUrl,
+                Duration = featuredCategoryVideo.Duration
+            } : null;
+        }
 
         return Envelope<VideoForEdit>.Result.Ok(videoForEdit);
     }
@@ -161,7 +198,7 @@ public class VideoUseCase : IVideoUseCase
         if (tenantId is null)
         {
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        }      
 
         string? fileNamePrefix = string.Empty;
         if (_dbContext.Tenants != null)
@@ -171,15 +208,19 @@ public class VideoUseCase : IVideoUseCase
                 ? tenant.StorageFileNamePrefix : tenantId.Value.ToString();
         }
 
-
         var videoEntity = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, request.Id, true);
 
         if (videoEntity == null)
             return Envelope<string>.Result.NotFound(Resource.Unable_to_load_video);
 
         _mapper.Map(request, videoEntity);
+ 
+        var storageService = _storageProvider.InvokeInstanceForAzureStorage();
 
-        await UpdateVideoWithImageAsync(videoEntity, request.ImageFile, fileNamePrefix);
+        videoEntity.PlayerImageUrl = await UpdateImageAsync(request.PlayerImage, fileNamePrefix, videoEntity?.PlayerImageUrl ?? string.Empty, storageService, request.PlayerImageState);
+        videoEntity.CatalogImageUrl = await UpdateImageAsync(request.CatalogImage, fileNamePrefix, videoEntity?.CatalogImageUrl ?? string.Empty, storageService, request.CatalogImageState);
+        videoEntity.FeaturedCatalogImageUrl = await UpdateImageAsync(request.FeaturedCatalogImage, fileNamePrefix, videoEntity?.FeaturedCatalogImageUrl ?? string.Empty, storageService, request.FeaturedCatalogImageState);
+        videoEntity.AnimatedGifUrl = await UpdateImageAsync(request.AnimatedGif, fileNamePrefix, videoEntity?.AnimatedGifUrl ?? string.Empty, storageService, request.AnimatedGifState);
 
         await _repositoryManager.SaveAsync();
 
@@ -224,38 +265,49 @@ public class VideoUseCase : IVideoUseCase
     #endregion Public Methods
 
     #region Private Methods
-    private async Task UpdateVideoWithImageAsync(VideoModel video, IFormFile? image, string fileNamePrefix)
-    {
-        var storageService = _storageProvider.InvokeInstanceForAzureStorage();
+    //private async Task<string?> SaveAssetImageAsync(string currentImageUri, IFormFile? image, string fileNamePrefix)
+    //{
+    //    var storageService = _storageProvider.InvokeInstanceForAzureStorage();
 
-        //switch (storageService.GetFileState(image, video.ImageUrl))
-        //{
-        //    case FileStatus.Unchanged:
-        //        break;
+    //    string? newImageUri = null;
+    //    switch (storageService.GetFileState(image, currentImageUri))
+    //    {
+    //        case FileStatus.Unchanged:
+    //            break;
 
-        //    case FileStatus.Modified:
-        //        video.ImageUrl = await UpdateImageAsync(image, fileNamePrefix, video.ImageUrl ?? string.Empty, storageService);
-        //        break;
+    //        case FileStatus.Modified:
+    //            newImageUri = await UpdateImageAsync(image, fileNamePrefix, currentImageUri ?? string.Empty, storageService);
+    //            break;
 
-        //    case FileStatus.Deleted:
-        //        await storageService.DeleteFileIfExists(video.ImageUrl ?? string.Empty, "Users");
-        //        video.ImageUrl = null;
-        //        break;
-        //    default:
-        //        throw new ArgumentOutOfRangeException();
-        //}
-    }
+    //        case FileStatus.Deleted:
+    //            var blobOptions = _configReaderService.GetBlobOptions();
+    //            await storageService.DeleteFileIfExists(currentImageUri ?? string.Empty, blobOptions.ImageBlobContainerName);
+    //            newImageUri = null;
+    //            break;
+    //        default:
+    //            throw new ArgumentOutOfRangeException();
+    //    }
 
-    private async Task<string> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string oldFileUri, IFileStorageService storageService)
+    //    return newImageUri ?? currentImageUri;
+    //}
+
+    private async Task<string?> UpdateImageAsync(IFormFile? image, string fileNamePrefix, string currentFileUri, IFileStorageService storageService, ImageState imageState)
     {
         var blobOptions = _configReaderService.GetBlobOptions();
-
-        if (image == null) return string.Empty;
-
-        var newImageUri = await storageService.EditFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix, oldFileUri);
-
-        return newImageUri;
-
+        switch (imageState)
+        {
+            case ImageState.Unchanged:
+                return currentFileUri;
+            case ImageState.Added:                
+                if (image == null) return string.Empty;
+                var newImageUri = await storageService.EditFile(image, blobOptions.ImageBlobContainerName, fileNamePrefix, currentFileUri);
+                return newImageUri;
+            case ImageState.Removed:
+                await storageService.DeleteFileIfExists(currentFileUri, blobOptions.ImageBlobContainerName);
+                return null;
+            default:
+                return currentFileUri;
+        }
     }
     #endregion Private Methods
 }

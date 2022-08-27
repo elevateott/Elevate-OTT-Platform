@@ -110,17 +110,17 @@
                                             @if (!string.IsNullOrWhiteSpace(_categoryImageSrc))
                                             {
                                                 <MudPaper Class="pa-2" Outlined="true">
-                                                    <div class="d-flex justify-center mb-4">
-                                                        <MudImage Src="@_categoryImageSrc"
+                                                      <div class="d-flex flex-column justify-center align-center gap-6">
+                                                           <MudImage Src="@_categoryImageSrc"
                                                                   Style="height: 200px; width: 200px;"
                                                                   Alt="Category Image"/>
-                                                    </div>
-                                                    <MudText Align="Align.Center">
-                                                        <MudFab OnClick="RemoveCategoryImage"
-                                                                Color="Color.Warning"
-                                                                Icon="@Icons.Material.Filled.Remove"
-                                                                aria-label="edit"/>
-                                                    </MudText>
+                                                            
+                                                            <MudButton Variant="Variant.Filled" 
+                                                                StartIcon="@Icons.Material.Filled.Delete" 
+                                                                Color="Color.Error" 
+                                                                OnClick="RemoveCategoryImage">Remove Image
+                                                            </MudButton>
+                                                      </div>
                                                 </MudPaper>
                                             }
                                         </MudCardContent>
