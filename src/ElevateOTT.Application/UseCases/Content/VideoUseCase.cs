@@ -215,18 +215,20 @@ public class VideoUseCase : IVideoUseCase
         if (request.AuthorId.Equals(Guid.Empty)) request.AuthorId = null;
 
         // store catories 
-        if (request.CategoryIds is not null)
+        var categoryIdsAsStrings = request.CategoryIdsAsStrings?.Split(",");
+        if (categoryIdsAsStrings != null && categoryIdsAsStrings.Count() > 0)
         {
             videoEntity.VideosCategories = new List<VideoCategoryModel>();
-            foreach (var categoryId in request.CategoryIds)
+
+            foreach (var categoryId in categoryIdsAsStrings)
             {
                 videoEntity.VideosCategories.Add(new VideoCategoryModel
                 {
                     VideoId = videoEntity.Id,
-                    CategoryId = categoryId
+                    CategoryId = Guid.Parse(categoryId)
                 });
             }
-        }       
+        }      
 
         MapRequestToEntity(request, videoEntity);
  

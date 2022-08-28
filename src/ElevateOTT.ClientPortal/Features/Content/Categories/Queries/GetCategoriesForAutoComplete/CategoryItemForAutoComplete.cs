@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.ClientPortal.Features.Content.Categories.Queries.GetCategoriesForAutoComplete;
+﻿using System.Collections;
+
+namespace ElevateOTT.ClientPortal.Features.Content.Categories.Queries.GetCategoriesForAutoComplete;
 
 public class CategoryItemForAutoComplete
 {
@@ -7,4 +9,5 @@ public class CategoryItemForAutoComplete
     public string? Title { get; set; }
 
     public string? ImageUrl { get; set; }
+
 }

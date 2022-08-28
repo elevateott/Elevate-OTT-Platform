@@ -35,6 +35,8 @@ public class UpdateVideoCommand : BaseAssetDto, IRequest<Envelope<string>>
 
     public List<Guid>? CategoryIds { get; set; }
 
+    public string? CategoryIdsAsStrings { get; set; }
+
     #endregion Public Properties
 
 

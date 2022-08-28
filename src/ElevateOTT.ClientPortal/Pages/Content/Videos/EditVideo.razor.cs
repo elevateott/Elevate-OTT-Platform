@@ -601,6 +601,9 @@ public partial class EditVideo : ComponentBase
 
         Console.WriteLine("category ids count : " + _updateVideoCommand?.CategoryIds?.Count());
 
+        
+        var categoryIdsAsStrings = _updateVideoCommand?.CategoryIds?.Select(c => c.ToString()).ToList();
+
         var userFormData = new MultipartFormDataContent
             {
                 { new StringContent(_updateVideoCommand.Id.ToString() ?? string.Empty), "id" },
@@ -618,7 +621,7 @@ public partial class EditVideo : ComponentBase
                 { new StringContent(_updateVideoCommand.FeaturedCatalogImageState.ToString()), "FeaturedCatalogImageState" },
                 { new StringContent(_updateVideoCommand.AnimatedGifState.ToString()), "AnimatedGifState" },
                 
-                { new StringContent(string.Join(',', _updateVideoCommand.CategoryIds)), "CategoryIds" },
+                { new StringContent(categoryIdsAsStrings != null ? string.Join(',', categoryIdsAsStrings) : string.Empty), "CategoryIdsAsStrings" },
                 { new StringContent(_updateVideoCommand.AuthorId?.ToString() ?? string.Empty), "AuthorId" },
                 { new StringContent(_updateVideoCommand.TrailerVideoId?.ToString() ?? string.Empty), "TrailerVideoId" },
                 { new StringContent(_updateVideoCommand.FeaturedCategoryVideoId?.ToString() ?? string.Empty), "FeaturedCategoryVideoId" },
@@ -709,7 +712,7 @@ public partial class EditVideo : ComponentBase
             _videoForEditVm.CategoryIds = new List<Guid>();
         }
 
-        if (!_selectedCategories.Contains(value))
+        if (!_selectedCategories.Contains(value, new CategoryItemForAutoCompleteEqualityComparer()))
         {
             Console.WriteLine($"add to categories: {value.Title}");
             _selectedCategories.Add(value);
