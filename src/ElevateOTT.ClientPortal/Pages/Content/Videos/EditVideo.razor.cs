@@ -53,6 +53,7 @@ public partial class EditVideo : ComponentBase
     private AuthorsForAutoCompleteResponse _authorsForAutoResponse = new ();
 
     private CategoryItemForAutoComplete _selectedCategory = new();
+    private List<CategoryItemForAutoComplete> _selectedCategories;
     private CategoriesForAutoCompleteResponse _categoriesForAutoResponse = new();
 
     private VideoItemForAutoComplete _selectedTrailerVideo = new();
@@ -120,9 +121,37 @@ public partial class EditVideo : ComponentBase
                 };
             }
            
-            if (_videoForEditVm.Categories is null)
+            if (_videoForEditVm.CategoryIds is not null)
             {
-                _videoForEditVm.Categories = new List<CategoryItemForAutoComplete>();
+                var categoriesResponseWrapper = await CategoriesClient.GetCategoriesForAutoComplete(
+                new GetCategoriesForAutoCompleteQuery
+                {
+                    PageNumber = 50,
+                    SearchText = string.Empty
+                });
+
+                Console.WriteLine("categoriesResponseWrapper.Success" + categoriesResponseWrapper.Success);
+
+                if (categoriesResponseWrapper.Success)
+                {
+                    _selectedCategories = new List<CategoryItemForAutoComplete>();
+                    var categoriesSuccessResult = categoriesResponseWrapper.Response as SuccessResult<CategoriesForAutoCompleteResponse>;
+                    if (categoriesSuccessResult != null)
+                    {
+                        var categoriesForAutoResponse = categoriesSuccessResult.Result;
+                        foreach (var categoryId in _videoForEditVm.CategoryIds)
+                        {
+                            Console.WriteLine("categoryId: " + categoryId);
+
+                            var categoryForAutoComplete = categoriesForAutoResponse?.Categories?.Items.SingleOrDefault(c => c.Id.Equals(categoryId));
+                            if (categoryForAutoComplete is not null)
+                            {
+                                _selectedCategories.Add(categoryForAutoComplete);
+
+                            }
+                        }
+                    }                    
+                }
             }
 
             if (_videoForEditVm?.TrailerVideo is not null)
@@ -161,24 +190,24 @@ public partial class EditVideo : ComponentBase
     #region Image Handler Methods
     private void SetImageSourcesIfExists()
     {
-        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.PlayerImage?.Url))
+        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.PlayerImageUrl))
         {
-            _playerImageSrc = _videoForEditVm?.PlayerImage?.Url;
+            _playerImageSrc = _videoForEditVm?.PlayerImageUrl;
         }
 
-        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.CatalogImage?.Url))
+        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.CatalogImageUrl))
         {
-            _catalogImageSrc = _videoForEditVm?.CatalogImage?.Url;
+            _catalogImageSrc = _videoForEditVm?.CatalogImageUrl;
         }
 
-        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.FeaturedCatalogImage?.Url))
+        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.FeaturedCatalogImageUrl))
         {
-            _featuredCatalogImageSrc = _videoForEditVm?.FeaturedCatalogImage?.Url;
+            _featuredCatalogImageSrc = _videoForEditVm?.FeaturedCatalogImageUrl;
         }
 
-        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.AnimatedGif?.Url))
+        if (!string.IsNullOrWhiteSpace(_videoForEditVm?.AnimatedGifUrl))
         {
-            _animatedGifSrc = _videoForEditVm?.AnimatedGif?.Url;
+            _animatedGifSrc = _videoForEditVm?.AnimatedGifUrl;
         }
     }
 
@@ -533,7 +562,8 @@ public partial class EditVideo : ComponentBase
         // account for remove image
         // mux web hook add default images
 
-        Console.WriteLine($"player image state: {_videoForEditVm.PlayerImageState}");
+        Console.WriteLine($"player image state: {_videoForEditVm.PlayerImageState}");     
+
 
         _updateVideoCommand = new UpdateVideoCommand
         {
@@ -552,8 +582,8 @@ public partial class EditVideo : ComponentBase
             FeaturedCatalogImageState = _videoForEditVm.FeaturedCatalogImageState,
             AnimatedGifState = _videoForEditVm.AnimatedGifState,
 
-            CategoryIds = _videoForEditVm.Categories?.Select(c => c.Id).ToList(),
-            AuthorId = _selectedAuthor?.Id ?? _videoForEditVm.AuthorId,
+            CategoryIds = _videoForEditVm?.CategoryIds ?? new List<Guid>(),
+            AuthorId = _videoForEditVm.AuthorId,
             TrailerVideoId = _videoForEditVm.TrailerVideo?.Id,
             FeaturedCategoryVideoId =_videoForEditVm.FeaturedCategoryVideo?.Id,
 
@@ -567,6 +597,9 @@ public partial class EditVideo : ComponentBase
             RentalPrice = _videoForEditVm.RentalPrice,
             RentalDuration = _videoForEditVm.RentalDuration,
         };
+
+
+        Console.WriteLine("category ids count : " + _updateVideoCommand?.CategoryIds?.Count());
 
         var userFormData = new MultipartFormDataContent
             {
@@ -584,8 +617,8 @@ public partial class EditVideo : ComponentBase
                 { new StringContent(_updateVideoCommand.CatalogImageState.ToString()), "CatalogImageState" },
                 { new StringContent(_updateVideoCommand.FeaturedCatalogImageState.ToString()), "FeaturedCatalogImageState" },
                 { new StringContent(_updateVideoCommand.AnimatedGifState.ToString()), "AnimatedGifState" },
-
-                { new StringContent(_updateVideoCommand.CategoryIds?.ToString() ?? string.Empty), "CategoryIds" },
+                
+                { new StringContent(string.Join(',', _updateVideoCommand.CategoryIds)), "CategoryIds" },
                 { new StringContent(_updateVideoCommand.AuthorId?.ToString() ?? string.Empty), "AuthorId" },
                 { new StringContent(_updateVideoCommand.TrailerVideoId?.ToString() ?? string.Empty), "TrailerVideoId" },
                 { new StringContent(_updateVideoCommand.FeaturedCategoryVideoId?.ToString() ?? string.Empty), "FeaturedCategoryVideoId" },
@@ -666,18 +699,33 @@ public partial class EditVideo : ComponentBase
     private void CategorySelectedHandler(CategoryItemForAutoComplete value)
     {
         _selectedCategory = value;
-        if (!_videoForEditVm.Categories.Contains(value))
+        if (_selectedCategories is null)
+        {
+            _selectedCategories = new List<CategoryItemForAutoComplete>();
+        }
+
+        if (_videoForEditVm?.CategoryIds is null)
+        {
+            _videoForEditVm.CategoryIds = new List<Guid>();
+        }
+
+        if (!_selectedCategories.Contains(value))
         {
             Console.WriteLine($"add to categories: {value.Title}");
-            _videoForEditVm.Categories.Add(value);
+            _selectedCategories.Add(value);
+            if (!_videoForEditVm.CategoryIds.Contains(value.Id))
+            {
+                _videoForEditVm.CategoryIds.Add(value.Id);
+            }
         }
         StateHasChanged();
     }
 
     private void CategoryRemovedHandler(MudChip chip)
     {
-        var categoryToRemove = _videoForEditVm.Categories.FirstOrDefault(c => c.Title.Equals(chip.Text));
-        _videoForEditVm.Categories.Remove(categoryToRemove);
+        var categoryToRemove = _selectedCategories.FirstOrDefault(c => c.Title.Equals(chip.Text));
+        _selectedCategories.Remove(categoryToRemove);
+        _videoForEditVm?.CategoryIds?.Remove(categoryToRemove.Id);
         StateHasChanged();
     }
 
@@ -689,6 +737,17 @@ public partial class EditVideo : ComponentBase
             yield return "Category_by_that_name_not_found";
         }
     }
+
+    private void AuthorSelectedHandler(AuthorItemForAutoComplete value)
+    {
+        _selectedAuthor = value;
+        if (!_selectedAuthor.Equals(Guid.Empty)) 
+        {
+            _videoForEditVm.AuthorId = _selectedAuthor.Id;
+        }
+        StateHasChanged();
+    }
+    
     private async Task<IEnumerable<AuthorItemForAutoComplete>> SearchAuthors(string? value)
     {
         System.Console.WriteLine("author auto complete value: " + value ?? "value is null");

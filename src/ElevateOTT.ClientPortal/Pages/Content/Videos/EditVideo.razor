@@ -190,10 +190,10 @@
                                             </MoreItemsTemplate>
                                         </MudAutocomplete>
 
-                                        @if (_videoForEditVm?.Categories is not null) 
+                                        @if (_selectedCategories is not null) 
                                         {
                                             <div class="pl-md-12 mt-6">
-                                                @foreach(var c in _videoForEditVm.Categories)
+                                                @foreach(var c in _selectedCategories)
                                                 {
                                                     <MudChip Color="Color.Dark" 
                                                              Text="@c.Title" 
@@ -217,7 +217,8 @@
 
                                     <MudItem xs="12" md="8">
                                         <MudAutocomplete T="AuthorItemForAutoComplete"
-                                                         @bind-Value="_selectedAuthor"
+                                                         Value="_selectedAuthor"
+                                                         ValueChanged="AuthorSelectedHandler"
                                                          Text="@_selectedAuthor.Name"
                                                          Class="pl-md-12"
                                                          Label="Author"

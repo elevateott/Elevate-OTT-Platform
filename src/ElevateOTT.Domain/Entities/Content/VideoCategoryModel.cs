@@ -1,7 +1,7 @@
 ﻿namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("VideosCategories")]
-public class VideoCategoryModel : BaseEntity, IMustHaveTenant
+public class VideoCategoryModel : IMustHaveTenant
 {
     public Guid TenantId { get; set; }
 
@@ -9,7 +9,7 @@ public class VideoCategoryModel : BaseEntity, IMustHaveTenant
 
     public Guid CategoryId { get; set; }
 
-    public VideoModel? Video { get; set; }
+    public VideoModel? Video { get; set; } 
 
     public CategoryModel? Category { get; set; }
 }

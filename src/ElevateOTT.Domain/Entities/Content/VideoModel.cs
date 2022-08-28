@@ -38,7 +38,7 @@ public class VideoModel : BaseAsset, IMustHaveTenant
     #endregion
 
     #region Navigational Properties
-    public ICollection<VideoCategoryModel>? VideosCategories { get; set; }
+    public ICollection<VideoCategoryModel>? VideosCategories { get; set; } 
     public ICollection<VideoCollectionModel>? VideosCollections { get; set; }
     public ICollection<VideoTagModel>? VideosTags { get; set; }
 

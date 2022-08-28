@@ -325,6 +325,9 @@ public class MuxWebhookService : IMuxWebhookService
 
         await _repositoryManager.SaveAsync();
 
+        // TODO remove
+        await Task.Delay(5000);
+
         // Update client with new status via SignalR
         await _videoHubNotificationService.NotifyCreationStatus(videoToUpdate.Id, videoToUpdate.StreamCreationStatus);
 

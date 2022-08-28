@@ -17,6 +17,9 @@ public partial class VideoList : ComponentBase, IAsyncDisposable
     [Inject] private NavigationManager? NavigationManager { get; set; }
     [Inject] public VideoHub? VideoHub { get; set; }
 
+    [Parameter]
+    public EventCallback OnVideoUploadComplete { get; set; }
+
     private string SearchString { get; set; } = string.Empty;
     private VideosResponse? VideosResponse { get; set; }
     private ServerSideValidator? ServerSideValidator { get; set; }
@@ -27,9 +30,18 @@ public partial class VideoList : ComponentBase, IAsyncDisposable
     private bool _updateReceived;
 
     private MudTable<VideoItem>? Table { get; set; }
+
     #endregion Private Properties
 
     #region Public Methods
+    public void CallServerReload()
+    {
+        Console.WriteLine("CallServerReload");
+
+        Table?.ReloadServerData();
+        StateHasChanged();
+    }
+
     public async ValueTask DisposeAsync()
     {
         if (HubConnection is not null && HubConnection.State == HubConnectionState.Connected)
@@ -54,7 +66,7 @@ public partial class VideoList : ComponentBase, IAsyncDisposable
             finally
             {
                 await VideoHub.HubConnection.DisposeAsync();
-                Snackbar?.Add("Video Hub is closed.", Severity.Error);
+                //Snackbar?.Add("Video Hub is closed.", Severity.Error);
             }
         }
     }

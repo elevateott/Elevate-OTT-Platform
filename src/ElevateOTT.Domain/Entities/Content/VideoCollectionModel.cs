@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("VideosCollections")]
-public class VideoCollectionModel : BaseEntity, IMustHaveTenant
+public class VideoCollectionModel : IMustHaveTenant
 {
     public Guid TenantId { get; set; }
 

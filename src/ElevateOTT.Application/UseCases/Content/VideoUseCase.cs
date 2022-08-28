@@ -83,17 +83,16 @@ public class VideoUseCase : IVideoUseCase
         if (video == null)
             return Envelope<VideoForEdit>.Result.NotFound(Resource.Unable_to_load_video);
 
-        var videoForEdit = _mapper.Map<VideoForEdit>(video);    
+        var videoForEdit = _mapper.Map<VideoForEdit>(video);
 
-        foreach(var vc in video.VideosCategories)
+        if (video.VideosCategories is not null)
         {
-            videoForEdit?.Categories?.Add(new CategoryItemForAutoComplete
+            videoForEdit.CategoryIds = new List<Guid>();
+            foreach (var vc in video.VideosCategories)
             {
-                Id = vc.Category.Id,
-                Title = vc.Category.Title,
-                ImageUrl = vc.Category.ImageUrl
-            });
-        }
+                videoForEdit?.CategoryIds.Add(vc.CategoryId);
+            }
+        }        
 
         // videos
         if (video?.TrailerVideoId is not null)
@@ -213,7 +212,23 @@ public class VideoUseCase : IVideoUseCase
         if (videoEntity == null)
             return Envelope<string>.Result.NotFound(Resource.Unable_to_load_video);
 
-        _mapper.Map(request, videoEntity);
+        if (request.AuthorId.Equals(Guid.Empty)) request.AuthorId = null;
+
+        // store catories 
+        if (request.CategoryIds is not null)
+        {
+            videoEntity.VideosCategories = new List<VideoCategoryModel>();
+            foreach (var categoryId in request.CategoryIds)
+            {
+                videoEntity.VideosCategories.Add(new VideoCategoryModel
+                {
+                    VideoId = videoEntity.Id,
+                    CategoryId = categoryId
+                });
+            }
+        }       
+
+        MapRequestToEntity(request, videoEntity);
  
         var storageService = _storageProvider.InvokeInstanceForAzureStorage();
 
@@ -225,6 +240,29 @@ public class VideoUseCase : IVideoUseCase
         await _repositoryManager.SaveAsync();
 
         return Envelope<string>.Result.Ok(Resource.Video_has_been_updated_successfully);
+    }
+
+    private void MapRequestToEntity(UpdateVideoCommand request, VideoModel videoEntity)
+    {
+        videoEntity.Title = request.Title;
+        videoEntity.FullDescription = request.FullDescription;
+        videoEntity.ShortDescription = request.ShortDescription;
+        videoEntity.AllowDownload = request.AllowDownload;
+        videoEntity.SeoTitle = request.SeoTitle;
+        videoEntity.SeoDescription = request.SeoDescription;
+        videoEntity.Slug = request.Slug;
+        videoEntity.AuthorId = request.AuthorId;
+        videoEntity.TrailerVideoId = request.TrailerVideoId;
+        videoEntity.FeaturedCategoryVideoId = request.FeaturedCategoryVideoId;
+        videoEntity.PublicationStatus = request.PublicationStatus;
+        videoEntity.ContentAccess = request.ContentAccess;
+        videoEntity.ReleasedDate = request.ReleasedDate;
+        videoEntity.ExpirationDate = request.ExpirationDate; 
+        videoEntity.HasOneTimePurchasePrice = request.HasOneTimePurchasePrice; 
+        videoEntity.OneTimePurchasePrice = request.OneTimePurchasePrice; 
+        videoEntity.HasRentalPrice = request.HasRentalPrice; 
+        videoEntity.RentalPrice = request.RentalPrice; 
+        videoEntity.RentalDuration = request.RentalDuration; 
     }
 
     public async Task<Envelope<string>> DeleteVideo(DeleteVideoCommand request)

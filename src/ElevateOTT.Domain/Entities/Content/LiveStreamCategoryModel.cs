@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ElevateOTT.Domain.Entities.Content;
 
 [Table("LiveStreamsCategories")]
-public class LiveStreamCategoryModel : BaseEntity, IMustHaveTenant
+public class LiveStreamCategoryModel : IMustHaveTenant
 {
     public Guid TenantId { get; set; }
 

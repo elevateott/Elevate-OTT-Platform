@@ -22,7 +22,7 @@ public class CategoryModel : BaseEntity, IMustHaveTenant
 
     #region Navigational Properties
 
-    public ICollection<VideoCategoryModel>? VideosCategories { get; set; }
+    public ICollection<VideoCategoryModel>? VideosCategories { get; set; } 
     public ICollection<CategoryCollectionModel>? CategoriesCollections { get; set; }
     public ICollection<LiveStreamCategoryModel>? LiveStreamsCategories { get; set; }
     public ICollection<PodcastCategoryModel>? PodcastsCategoriess { get; set; }

@@ -10,6 +10,10 @@ public partial class VideoUpload : ComponentBase, IDisposable
 {
     [Inject] private ISnackbar? Snackbar { get; set; }
     [Inject] private IVideosClient? VideosClient { get; set; }
+    [Inject] private NavigationManager? NavigationManager { get; set; }
+
+    [Parameter]
+    public EventCallback OnVideoUploadComplete { get; set; }
 
     private SasTokenResponse? SasTokenResponse { get; set; }
     private NewStorageNameResponse? NewStorageNameResponse { get; set; }
@@ -191,7 +195,25 @@ public partial class VideoUpload : ComponentBase, IDisposable
                         StreamCreationStatus = AssetCreationStatus.None
                     };
 
-                    await VideosClient.CreateVideo(createVideoCommand);
+                    var createVideoResponse = await VideosClient.CreateVideo(createVideoCommand);
+
+                    Console.WriteLine("httpResponse: " + createVideoResponse);
+                    Console.WriteLine("httpResponse.Success: " + createVideoResponse.Success);
+
+
+                    if (createVideoResponse.Success)
+                    {
+                        var successResult = createVideoResponse.Response as SuccessResult<string>;
+                        Snackbar?.Add(successResult?.Result, Severity.Success);
+                        Console.WriteLine("OnVideoUploadComplete success");
+                        await OnVideoUploadComplete.InvokeAsync();
+                    }
+                    else
+                    {
+                        var exceptionResult = createVideoResponse.Response as ExceptionResult;
+                        //_editContextServerSideValidator?.Validate(exceptionResult);
+                        //_serverSideValidator?.Validate(exceptionResult);
+                    }
                 }
             }
         }
