@@ -25,7 +25,6 @@ public class VideosController : ApiController
         _dbContext = dbContext;
     }
 
-
     #region Public Methods
 
     [HttpGet("{id:guid}", Name = "VideoById")]
@@ -36,13 +35,6 @@ public class VideosController : ApiController
         return TryGetResult(response);
     }
     
-
-    [HttpGet("test")]
-    public async Task<IActionResult> GetTest()
-    {
-        var videos = await _dbContext.Videos.Select(r => r).ToListAsync();
-        return Ok(videos);
-    }
 
     [HttpGet("azure-blob-sas-token")]
     public async Task<IActionResult> GetSasToken()
@@ -56,6 +48,15 @@ public class VideosController : ApiController
     {
         var response = await Mediator.Send(new GetNewStorageNameQuery());
         return TryGetResult(response);
+    }
+
+
+
+    [HttpGet("test")]
+    public async Task<IActionResult> GetTest()
+    {
+        var videos = await _dbContext.Videos.Select(r => r).ToListAsync();
+        return Ok(videos);
     }
 
     //[AutoWrapIgnore]

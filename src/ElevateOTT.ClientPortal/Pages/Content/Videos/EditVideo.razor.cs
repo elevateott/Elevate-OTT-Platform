@@ -7,6 +7,9 @@ using ElevateOTT.ClientPortal.Models.DTOs;
 
 namespace ElevateOTT.ClientPortal.Pages.Content.Videos;
 
+
+// TODO Title text field is slow to update field while typing
+
 public partial class EditVideo : ComponentBase
 {
     #region Public Properties
@@ -602,7 +605,8 @@ public partial class EditVideo : ComponentBase
         Console.WriteLine("category ids count : " + _updateVideoCommand?.CategoryIds?.Count());
 
         
-        var categoryIdsAsStrings = _updateVideoCommand?.CategoryIds?.Select(c => c.ToString()).ToList();
+        var categoryIdsList = _updateVideoCommand?.CategoryIds?.Select(c => c.ToString()).ToList();
+        string categoryIdsAsStrings = categoryIdsList != null ? string.Join(',', categoryIdsList) : string.Empty;
 
         var userFormData = new MultipartFormDataContent
             {
@@ -621,7 +625,7 @@ public partial class EditVideo : ComponentBase
                 { new StringContent(_updateVideoCommand.FeaturedCatalogImageState.ToString()), "FeaturedCatalogImageState" },
                 { new StringContent(_updateVideoCommand.AnimatedGifState.ToString()), "AnimatedGifState" },
                 
-                { new StringContent(categoryIdsAsStrings != null ? string.Join(',', categoryIdsAsStrings) : string.Empty), "CategoryIdsAsStrings" },
+                { new StringContent(categoryIdsAsStrings), "CategoryIdsAsStrings" },
                 { new StringContent(_updateVideoCommand.AuthorId?.ToString() ?? string.Empty), "AuthorId" },
                 { new StringContent(_updateVideoCommand.TrailerVideoId?.ToString() ?? string.Empty), "TrailerVideoId" },
                 { new StringContent(_updateVideoCommand.FeaturedCategoryVideoId?.ToString() ?? string.Empty), "FeaturedCategoryVideoId" },
