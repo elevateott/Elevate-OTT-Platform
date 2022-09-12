@@ -4,7 +4,7 @@ public class CreateTenantCommand
 {
     #region Public Properties
 
-    public string TenantName { get; set; }
+    public string SubDomain { get; set; }
 
     #endregion Public Properties
 }

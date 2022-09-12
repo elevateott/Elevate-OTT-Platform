@@ -1,0 +1,7 @@
+backend:
+Add tenant id to token on login and register
+
+
+
+client:
+add tenant id to http requests via interceptor

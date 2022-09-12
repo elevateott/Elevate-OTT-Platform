@@ -35,8 +35,41 @@ public static class NavigationManagerExtensions
     
     public static string GetSubDomain(this NavigationManager navManager)
     {
-        var subDomain = navManager.BaseUri.Split('.')[0].Split("//")[1];
+        var subDomain = navManager.BaseUri.Split('.')[0].Split("//")[1];    
+
         return subDomain;
+    }
+
+    public static string GetDomain(this NavigationManager navManager)
+    {
+        // TODO get ParentDomain from config
+        // http://
+        // www.mysub.elevatott.tv
+        // www.customdomain.com
+      
+
+        var domainSplit = navManager.BaseUri.Split("//")[1];
+        string domainName = string.Empty;
+        if (domainSplit.StartsWith("www."))
+        {
+            domainName = domainSplit.Substring(5);
+        }
+
+        return domainName.TrimEnd('/');
+    }
+
+    public static bool IsLocalHost(this NavigationManager navManager)
+    {
+        return navManager.BaseUri.ToLower().Contains("localhost:");
+    }
+
+    public static bool IsCustomDomain(this NavigationManager navManager)
+    {
+        // TODO get ParentDomain from config
+        // TODO tenant could use their own custom subdomain!!
+
+        string rootDomain = "elevateott.tv";
+        return navManager.BaseUri.ToLower().Contains(rootDomain);
     }
 
     #endregion Public Methods

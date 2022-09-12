@@ -1,4 +1,4 @@
-namespace ElevateOTT.StreamingWebApp.Services;
+﻿namespace ElevateOTT.StreamingWebApp.Services;
 
 public class HttpInterceptorService : IDisposable
 {
@@ -50,6 +50,14 @@ public class HttpInterceptorService : IDisposable
     private async Task HttpClientInterceptor_BeforeSendAsync(object sender, HttpClientInterceptorEventArgs e)
     {
         _spinnerService.Show();
+
+        // TODO
+        // Workflow:
+        // Check if localhost, if yes get subdomain
+        // Else check if custom domain
+        //      if yes, get domain
+        //      if not custom subdomain, get subdomain
+        
 
         var subDomain = _navigationManager.GetSubDomain();
 

@@ -5,9 +5,11 @@ public class Tenant : IAuditable
     #region Public Properties
 
     public Guid Id { get; set; } 
-    public string? OttChannelName { get; set; }
-    public string? Name { get; set; }
-    public string? CustomDomain { get; set; } 
+    public string? ChannelName { get; set; }
+    public string? FullName { get; set; }
+    public string? SubDomain { get; set; }
+    public string? CustomDomain { get; set; }
+    public string? HeardAboutUsFrom { get; set; }
     public string? StorageFileNamePrefix { get; set; } 
     public string? CreatedBy { get; set; } 
     public DateTime CreatedOn { get; set; }

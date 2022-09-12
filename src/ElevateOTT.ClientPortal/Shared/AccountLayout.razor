@@ -6,10 +6,8 @@
 <MudRTLProvider RightToLeft="@IsRightToLeft">
     <MudLayout>
         <MudAppBar>
-            <MudLink Href="/">
-                <img height="36" width="36" src="images/brand.png" />
-            </MudLink>
-            <MudText Typo="Typo.h6" Class="ml-4" Style="letter-spacing: .5rem; font-weight: 300; margin-left: 12px; font-size: 24px; user-select: none;">Elevate OTT</MudText>
+            <AppLogo />
+            <AppBrand />            
             <MudSpacer />
             <MudIconButton Color="Color.Inherit" OnClick="@((e) => DarkMode())" Size="Size.Medium" Icon="@(IsDarkMode ?"fa fa-sun-o":"fa fa-moon-o")" />
             <LanguageSwitcher />

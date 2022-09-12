@@ -58,15 +58,20 @@ public class HttpInterceptorService : IDisposable
 
         //
         // TODO
-        // Use this once using single sub domain
+        // Use this once we start using single sub domain
         //
         var tenantId = await _localStorageService.GetItemAsync<string>(Constants.TenantIdStorageKey);
 
         Console.WriteLine($"tenantId: {tenantId}");
 
         string tenantName = _navigationManager.GetSubDomain();
+        string domainName = _navigationManager.GetDomain();
+
+        _navigationManager.Test();
 
         Console.WriteLine($"tenantName: {tenantName}");
+        Console.WriteLine($"domainName: {domainName}");
+
 
         e.Request.Headers.Add("X-Tenant", tenantName);
 

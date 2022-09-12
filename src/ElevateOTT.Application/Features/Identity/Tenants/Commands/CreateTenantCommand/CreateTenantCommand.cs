@@ -2,9 +2,18 @@
 
 public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
 {
+
+    // TODO
+    // validate subdomain
+    // check if exists
+
+
     #region Public Properties
 
-    public string TenantName { get; set; }
+    public string? ChannelName { get; set; }
+    public string? FullName { get; set; }
+    public string? SubDomain { get; set; }
+    public string? HeardAboutUsFrom { get; set; }
 
     #endregion Public Properties
 
@@ -15,7 +24,10 @@ public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
         return new()
         {
             Id = Guid.NewGuid(),
-            Name = TenantName
+            FullName = FullName,
+            ChannelName = ChannelName,
+            SubDomain = SubDomain,
+            HeardAboutUsFrom = HeardAboutUsFrom
         };
     }
 
@@ -24,18 +36,21 @@ public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
     #region Public Classes
 
     public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, Envelope<CreateTenantResponse>>
-    {
+    {        
+
         #region Private Fields
 
         private readonly ITenantUseCase _roleUseCase;
+        private readonly ITenantResolver _tenantResolver;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public CreateTenantCommandHandler(ITenantUseCase roleUseCase)
+        public CreateTenantCommandHandler(ITenantUseCase roleUseCase, ITenantResolver tenantResolver)
         {
             _roleUseCase = roleUseCase;
+            _tenantResolver = tenantResolver;
         }
 
         #endregion Public Constructors

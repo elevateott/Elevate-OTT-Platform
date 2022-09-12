@@ -96,7 +96,7 @@ namespace ElevateOTT.Infrastructure.Migrations
                 oldType: "nvarchar(max)");
 
             migrationBuilder.AddColumn<string>(
-                name: "OttChannelName",
+                name: "ChannelName",
                 table: "Tenants",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -311,7 +311,7 @@ namespace ElevateOTT.Infrastructure.Migrations
                 table: "Tenants");
 
             migrationBuilder.DropColumn(
-                name: "OttChannelName",
+                name: "ChannelName",
                 table: "Tenants");
 
             migrationBuilder.AlterColumn<string>(

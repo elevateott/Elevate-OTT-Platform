@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Notes.txt = Notes.txt
+		TODO.txt = TODO.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B14E0C4-2F5C-471E-8435-F1675FFA0A49}"
@@ -101,10 +102,10 @@ Global
 		{C4A92F41-5653-4192-B6C7-7CED33B84D5C} = {24056575-ED44-42AA-B4EA-F6138553E4CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
+		RESX_SortFileContentOnSave = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

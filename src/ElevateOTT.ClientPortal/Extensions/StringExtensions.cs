@@ -15,6 +15,12 @@ public static class StringExtensions
         return cleanedStr;
     }
 
+    public static string FormatSubdomain(this string str)
+    {
+        var cleanedStr = Regex.Replace(str, "[^a-zA-Z0-9_.-]+", "", RegexOptions.Compiled).Replace(" ", "").ToLower();
+        return cleanedStr;
+    }
+
     public static string FormatSlug(this string str)
     {
         return string.IsNullOrWhiteSpace(str) ? str : ReplaceSpaceAndSpecialCharsWithDashes(str).ToLower();

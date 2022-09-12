@@ -6,7 +6,7 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
 
     public void Configure(EntityTypeBuilder<Tenant> builder)
     {
-        builder.HasIndex(p => p.Name).IsUnique();
+        builder.HasIndex(p => p.FullName).IsUnique();
         builder.Property(e => e.Id).ValueGeneratedNever();
     }
 

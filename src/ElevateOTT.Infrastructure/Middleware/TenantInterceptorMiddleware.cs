@@ -59,6 +59,11 @@ public class TenantInterceptorMiddleware
                 if (httpContext.Request.Path.Value != null &&
                     httpContext.Request.Path.Value.Contains("callback")) break;
 
+                // If registration workflow, then no tenant exists yet.
+                // Tenant created before app user in registration workflow.
+                if (httpContext.Request.Path.Value != null &&
+                      httpContext.Request.Path.Value.ToLower().Contains("account/register")) break;
+
                 var tenantName = httpContext.Request.Headers["X-Tenant"];
 
                 if (tenantName.Count == 0)
@@ -70,14 +75,17 @@ public class TenantInterceptorMiddleware
 
                 // TODO check if tenant name is Name or CustomDomain
 
-                var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
+                var tenantId = dbContext.Tenants.FirstOrDefault(t => t.SubDomain.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
 
+                //tenantId = Guid.Parse("58330475-6dd1-47a0-bc22-3afa1cb0ece8");
+                
                 if (httpContext.Request.Path.Value is { } pathValue
                     && tenantId is null
                     && tenantName[0] != Host
                     && !pathValue.Contains("hangfire")
                     && !pathValue.Contains("/Hubs/")
-                    && !pathValue.Contains("callback"))
+                    && !pathValue.Contains("callback")
+                    && !pathValue.ToLower().Contains("account/register"))
                     throw new Exception(Resource.Invalid_tenant_name);
 
                 tenantResolver.SetTenantId(tenantId);
