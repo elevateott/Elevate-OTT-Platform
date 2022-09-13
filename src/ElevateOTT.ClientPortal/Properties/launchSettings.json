@@ -20,7 +20,7 @@
     "DefaultBlazor.Wasm": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://testerdave-2022724195054337.localhost:5001/",
+      "launchUrl": "https://localhost:5001/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

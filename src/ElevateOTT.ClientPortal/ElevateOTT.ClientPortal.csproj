@@ -31,30 +31,36 @@
 	  <Compile Remove="Pages\Content\Authors\Authors.razor.cs" />
 	  <Compile Remove="Pages\Content\Videos\VideoCreation.razor.cs" />
 	  <Compile Remove="Pages\Content\Videos\VideoDetails.razor.cs" />
+	  <Compile Remove="Pages\SubscriptionPlans\SubscriptionPlanTest.razor.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="Pages\ChannelInfo\ChannelInfo.razor" />
 	  <Content Remove="Pages\Content\Authors\Authors.razor" />
 	  <Content Remove="Pages\Content\Videos\VideoCreation.razor" />
 	  <Content Remove="Pages\Content\Videos\VideoDetails.razor" />
+	  <Content Remove="Pages\JSInteropPlay\JSInteropPlay.razor" />
+	  <Content Remove="Pages\SubscriptionPlans\SubscriptionPlanTest.razor" />
+	  <Content Remove="wwwroot\js\blazorInterop.js" />
+	  <Content Remove="wwwroot\js\JSIsolation.js" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.13.1" />
 		<PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
 		<PackageReference Include="Lorem.Universal.Net" Version="4.0.80" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.6" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.6" />
-		<PackageReference Include="Syncfusion.Blazor" Version="20.2.0.40" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.8" />
+		<PackageReference Include="Syncfusion.Blazor" Version="20.2.0.48" />
 		<PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="10.1.0" />
-		<PackageReference Include="MudBlazor" Version="6.0.11" />
+		<PackageReference Include="MudBlazor" Version="6.0.15" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,9 +77,12 @@
 	  <Folder Include="Features\Content\LiveStreams\Commands\" />
 	  <Folder Include="Features\Content\LiveStreams\Queries\" />
 	  <Folder Include="Models\Reporting\" />
+	  <Folder Include="Pages\ChannelInfo\" />
 	  <Folder Include="Pages\Content\Collections\" />
 	  <Folder Include="Pages\Content\Extras\" />
 	  <Folder Include="Pages\Content\LiveStreams\" />
+	  <Folder Include="Pages\JSInteropPlay\" />
+	  <Folder Include="Pages\SubscriptionPlans\" />
 	  <Folder Include="wwwroot\images\" />
 	  <Folder Include="wwwroot\favicons\" />
 	  <Folder Include="wwwroot\fonts\" />

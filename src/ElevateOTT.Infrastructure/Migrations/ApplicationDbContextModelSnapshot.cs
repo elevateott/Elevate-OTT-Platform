@@ -1337,6 +1337,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ChannelName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -1352,7 +1355,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(450)");
 
@@ -1362,28 +1364,23 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("LicenseKey")
                         .HasColumnType("nvarchar(max)");
 
-=======
->>>>>>> parent of 536757c (started on free trial sign up flow)
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("OttChannelName")
+                    b.Property<string>("StorageFileNamePrefix")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StorageFileNamePrefix")
+                    b.Property<string>("SubDomain")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("FullName")
                         .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .HasFilter("[FullName] IS NOT NULL");
 
                     b.ToTable("Tenants");
                 });

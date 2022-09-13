@@ -906,6 +906,9 @@
   <data name="Hour" xml:space="preserve">
     <value>Hour</value>
   </data>
+  <data name="How_Did_You_Hear_About_Us" xml:space="preserve">
+    <value>How did you hear about us?</value>
+  </data>
   <data name="Hydro" xml:space="preserve">
     <value>Hydro</value>
   </data>
@@ -1327,6 +1330,9 @@
   <data name="Register_Confirmation" xml:space="preserve">
     <value>Register Confirmation</value>
   </data>
+  <data name="Registration_Disclaimer" xml:space="preserve">
+    <value>By providing your email address and clicking the button to sign up, you agree to Elevate OTT's Terms of Service and Privacy Policy. You can change your communication preferences anytime.</value>
+  </data>
   <data name="Remember_me" xml:space="preserve">
     <value>Remember me?</value>
   </data>
@@ -1564,6 +1570,9 @@
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="Start_Your_Free_Trial" xml:space="preserve">
+    <value>Start Your Free Trial</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
@@ -1864,6 +1873,9 @@ Max file size: 3MB</value>
   </data>
   <data name="Your_account_contains_personal_data_that_you_have_given_us" xml:space="preserve">
     <value>Your account contains personal data that you have given us.</value>
+  </data>
+  <data name="Your_Channel_Name" xml:space="preserve">
+    <value>Your Channel Name</value>
   </data>
   <data name="Your_password_has_been_reset" xml:space="preserve">
     <value>Your password has been reset</value>

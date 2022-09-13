@@ -20,7 +20,7 @@ public class CustomerModel : BaseEntity, IMustHaveTenant
 
 
     [MaxLength(50, ErrorMessage = "Maximum length for the OTT Channel Name is 100 characters.")]
-    public string OttChannelName { get; set; } = string.Empty;
+    public string ChannelName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Email is required.")]
     [EmailAddress]

@@ -44,20 +44,43 @@ public static class NavigationManagerExtensions
     // since in this context, all sub domain will be the same 
     // ex: my.elevateott.tv
 
-    public static bool IsBaseUriACustomDomain(this NavigationManager navManager)
+
+    public static void Test(this NavigationManager navManager)
     {
-        // TODO check if url contains domain name
-        // ex: contains("elevateott.tv")
-        // put name in config
+        // https://testerdave-2022724195054337.localhost:44335/
+        // http://testerdave-2022724195054337.localhost:44335/
+        // https://testerdave-2022724195054337.elevateott.tv
+        // https://www.elevateott.tv/
+        // http://www.elevateott.tv/
+        // https://www.customdomain.com/
+        // https://customsubdomain.customdomain.com
+        // https://customsubdomain.customdomain.co.uk
+        // https://www.customdomain.co.uk/
+        // http://www.customdomain.co.uk/
 
-        string baseUri = navManager.BaseUri;
-        if (string.IsNullOrEmpty(baseUri) || baseUri.Contains("localhost")) return false;
 
-        var domainSplit = navManager.BaseUri.Split('.');
-        return domainSplit.Length == 2;
+        string url1 = "https://testerdave-2022724195054337.localhost:44335/";
+        string url2 = "http://testerdave-2022724195054337.localhost:44335/";
+        string url3 = "https://testerdave-2022724195054337.elevateott.tv";
+        string url4 = "https://www.elevateott.tv/";
+        string url5 = "http://www.elevateott.tv/";
+        string url6 = "https://www.customdomain.com/";
+        string url7 = "https://customsubdomain.customdomain.com";
+        string url8 = "https://customsubdomain.customdomain.co.uk";
+        string url9 = "https://www.customdomain.co.uk/";
+        string url10 = "http://www.customdomain.co.uk/";
+
+
+
+        // IsLocalHost       
+
+        // IsCustomDomain
+
+        // GetSubDomain
+
+        // GetDomain
     }
 
-<<<<<<< HEAD
 
     //public static string GetSubDomain(this NavigationManager navManager)
     //{
@@ -97,23 +120,6 @@ public static class NavigationManagerExtensions
     //    string rootDomain = "elevateott.tv";
     //    return !navManager.BaseUri.ToLower().Contains(rootDomain);
     //}
-=======
-    public static string GetSubDomain(this NavigationManager navManager)
-    {
-        var subDomain = navManager.BaseUri.Split('.')[0].Split("//")[1];
-        return subDomain;
-    }
-
-    public static string GetDomain(this NavigationManager navManager)
-    {
-        var domain = navManager.BaseUri.Split("//")[1];
-        if (domain.StartsWith("www."))
-        {
-            domain = domain.Substring(5);
-        }
-        return domain;
-    }
->>>>>>> parent of 536757c (started on free trial sign up flow)
 
     #endregion Public Methods
 }

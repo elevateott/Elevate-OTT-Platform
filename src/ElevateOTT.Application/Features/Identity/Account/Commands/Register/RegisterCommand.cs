@@ -1,13 +1,19 @@
-﻿namespace ElevateOTT.Application.Features.Identity.Account.Commands.Register;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ElevateOTT.Application.Features.Identity.Account.Commands.Register;
 
 public class RegisterCommand : IRequest<Envelope<RegisterResponse>>
 {
     #region Public Properties
 
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string ConfirmPassword { get; set; }
-    public string ReturnUrl { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
+    public string? ConfirmPassword { get; set; }
+    public string? ReturnUrl { get; set; }
+    public string? ChannelName { get; set; }
+    public string? FullName { get; set; }
+    public string? SubDomain { get; set; }
+    public string? HeardAboutUsFrom { get; set; }
 
     #endregion Public Properties
 
