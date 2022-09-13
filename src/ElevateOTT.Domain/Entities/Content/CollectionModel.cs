@@ -24,9 +24,9 @@ public class CollectionModel : BaseEntity, IMustHaveTenant
     #endregion
 
     #region Navigational Properties
-    public ICollection<VideoCollectionModel>? VideosCollections { get; set; }
-    public ICollection<CategoryCollectionModel>? CategoriesCollections { get; set; }
-    public ICollection<PodcastCollectionModel>? PodcastsCollections { get; set; }
+    //public ICollection<VideoCollectionModel>? VideosCollections { get; set; }
+    //public ICollection<CategoryCollectionModel>? CategoriesCollections { get; set; }
+    //public ICollection<PodcastCollectionModel>? PodcastsCollections { get; set; }
 
     #endregion
 

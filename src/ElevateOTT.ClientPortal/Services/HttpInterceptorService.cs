@@ -64,16 +64,16 @@ public class HttpInterceptorService : IDisposable
 
         Console.WriteLine($"tenantId: {tenantId}");
 
-        string tenantName = _navigationManager.GetSubDomain();
-        string domainName = _navigationManager.GetDomain();
+        // string tenantName = _navigationManager.GetSubDomain();
+        //string domainName = _navigationManager.GetDomain();
 
-        _navigationManager.Test();
+        // _navigationManager.Test();
 
-        Console.WriteLine($"tenantName: {tenantName}");
-        Console.WriteLine($"domainName: {domainName}");
+        //Console.WriteLine($"tenantName: {tenantName}");
+        //Console.WriteLine($"domainName: {domainName}");
 
-
-        e.Request.Headers.Add("X-Tenant", tenantName);
+        // @context.User.Claims.FirstOrDefault(c => c.Type == "AvatarUri").Value
+        e.Request.Headers.Add("X-Tenant", tenantId);
 
         // Console.WriteLine(new System.Diagnostics.StackTrace());
 

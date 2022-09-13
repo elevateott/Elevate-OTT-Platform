@@ -393,6 +393,9 @@
   <data name="Change_your_account_settings" xml:space="preserve">
     <value>Cambiar la configuración de la cuenta</value>
   </data>
+  <data name="Channel_Name_Is_Required" xml:space="preserve">
+    <value>El nombre del canal es obligatorio (puede cambiarlo más tarde).!</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Caracteres</value>
   </data>
@@ -681,6 +684,9 @@
   <data name="Email_Confirmed" xml:space="preserve">
     <value>Correo electrónico confirmado</value>
   </data>
+  <data name="Email_Is_Required" xml:space="preserve">
+    <value>¡Se requiere correo electrónico!</value>
+  </data>
   <data name="Employee_broke_a_finger_while_writing_some_code" xml:space="preserve">
     <value>El empleado se rompió un dedo mientras escribía un código</value>
   </data>
@@ -833,6 +839,9 @@
   </data>
   <data name="Full_Description" xml:space="preserve">
     <value>Descripción completa</value>
+  </data>
+  <data name="Full_Name_Is_Required" xml:space="preserve">
+    <value>El nombre completo es obligatorio</value>
   </data>
   <data name="Gas" xml:space="preserve">
     <value>Gas</value>
@@ -1145,6 +1154,9 @@
   </data>
   <data name="No_authors_found" xml:space="preserve">
     <value>No se ha encontrado ningún autor</value>
+  </data>
+  <data name="No_Credit_Card_Required" xml:space="preserve">
+    <value>No requiere tarjeta de crédito</value>
   </data>
   <data name="No_data_available" xml:space="preserve">
     <value>No hay datos disponibles.</value>
@@ -1523,6 +1535,9 @@
   </data>
   <data name="Sign_up" xml:space="preserve">
     <value>Únete</value>
+  </data>
+  <data name="Sign_Up_For_Free_Trial" xml:space="preserve">
+    <value>¡Regístrese para su prueba gratuita!</value>
   </data>
   <data name="Slug_description" xml:space="preserve">
     <value>Establezca el slug en su enlace permanente de la página de autor. Por ejemplo: myott.tv/authors/</value>

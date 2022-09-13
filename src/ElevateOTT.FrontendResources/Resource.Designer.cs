@@ -889,6 +889,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel Name is required (you can change it later)..
+        /// </summary>
+        public static string Channel_Name_Is_Required {
+            get {
+                return ResourceManager.GetString("Channel_Name_Is_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Characters.
         /// </summary>
         public static string Characters {
@@ -1754,6 +1763,15 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is required..
+        /// </summary>
+        public static string Email_Is_Required {
+            get {
+                return ResourceManager.GetString("Email_Is_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee broke a finger while writing some code.
         /// </summary>
         public static string Employee_broke_a_finger_while_writing_some_code {
@@ -2200,6 +2218,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Full_Description {
             get {
                 return ResourceManager.GetString("Full_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Name is required..
+        /// </summary>
+        public static string Full_Name_Is_Required {
+            get {
+                return ResourceManager.GetString("Full_Name_Is_Required", resourceCulture);
             }
         }
         
@@ -3131,6 +3158,15 @@ namespace ElevateOTT.FrontendResources {
         public static string No_authors_found {
             get {
                 return ResourceManager.GetString("No_authors_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Credit Card Required.
+        /// </summary>
+        public static string No_Credit_Card_Required {
+            get {
+                return ResourceManager.GetString("No_Credit_Card_Required", resourceCulture);
             }
         }
         
@@ -4283,6 +4319,15 @@ namespace ElevateOTT.FrontendResources {
         public static string Sign_up {
             get {
                 return ResourceManager.GetString("Sign_up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Up For Your Free Trial.
+        /// </summary>
+        public static string Sign_Up_For_Free_Trial {
+            get {
+                return ResourceManager.GetString("Sign_Up_For_Free_Trial", resourceCulture);
             }
         }
         

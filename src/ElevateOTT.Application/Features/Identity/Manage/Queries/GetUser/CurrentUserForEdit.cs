@@ -18,6 +18,7 @@ public class CurrentUserForEdit
     public string PhoneNumber { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
+    public string FullName { get; set; } = string.Empty;
     public string JobTitle { get; set; }
     public string AvatarUri { get; set; }
     public List<UserAttachmentItem> AssignedAttachments { get; set; }

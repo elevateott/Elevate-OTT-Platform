@@ -180,6 +180,15 @@
   <data name="Email_is_invalid" xml:space="preserve">
     <value>Email '{0}' is invalid.</value>
   </data>
+  <data name="Email_is_required" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="Email_must_be_at_least_6_chars" xml:space="preserve">
+    <value>Email must be at least 6 characters.</value>
+  </data>
+  <data name="Email_must_not_exceed_60_characters" xml:space="preserve">
+    <value>Email must not exceed 60 characters.</value>
+  </data>
   <data name="Entity_with_key_was_not_found" xml:space="preserve">
     <value>Entity "{0}" with key "{1}" was not found.</value>
   </data>
@@ -247,7 +256,7 @@
     <value>Invalid user ID.</value>
   </data>
   <data name="Invalid_video_Id" xml:space="preserve">
-    <value></value>
+    <value>Invalid video ID</value>
   </data>
   <data name="Job_title_is_required" xml:space="preserve">
     <value>Job title is required.</value>
@@ -326,6 +335,9 @@
   </data>
   <data name="Password_must_not_exceed_200_characters" xml:space="preserve">
     <value>Password must not exceed 200 characters.</value>
+  </data>
+  <data name="Password_must_not_exceed_20_characters" xml:space="preserve">
+    <value>Password must not exceed 20 characters.</value>
   </data>
   <data name="Password_reset_link_was_sent" xml:space="preserve">
     <value>Password reset link was sent. Please check your email.</value>

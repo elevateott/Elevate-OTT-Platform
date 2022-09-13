@@ -54,7 +54,11 @@ public class AccountUseCase : IAccountUseCase
 
     public async Task<Envelope<LoginResponse>> Login(LoginCommand request)
     {
-        var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, lockoutOnFailure: true);
+        
+        var users = await _userManager.Users.ToListAsync();
+        var appUser = await _userManager.FindByEmailAsync("cbastistini1@addtoany.com");
+
+        var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, lockoutOnFailure: false);
 
         if (result.Succeeded)
         {
@@ -173,6 +177,8 @@ public class AccountUseCase : IAccountUseCase
 
         if (_userManager.Options.SignIn.RequireConfirmedAccount)
         {
+            // TODO set up email provider
+
             var callbackUrl = await _userManager.SendActivationEmailAsync(user, _configReaderService, _notificationService, _httpContextAccessor);
 
             var payload = new RegisterResponse

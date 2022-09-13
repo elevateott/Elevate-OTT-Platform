@@ -8,6 +8,7 @@ public class ConfigReaderService : IConfigReaderService
     private readonly JwtOptions _jwtOptionsSnapshot;
     private readonly SmtpOption _smtpOptionSnapshot;
     private readonly ClientAppOptions _clientAppOptionsSnapshot;
+    private readonly LicenseInfoOptions _licenseInfoOptionsSnapshot;
     private readonly BlobOptions _blobOptionsSnapshot;
     private readonly ChargebeeOptions _chargebeeOptionsSnapshot;
     private readonly MuxOptions _muxOptionsSnapshot;
@@ -28,8 +29,7 @@ public class ConfigReaderService : IConfigReaderService
                                IOptionsSnapshot<MuxOptions> muxOptionsSnapshot,
                                IOptionsSnapshot<CryptoOptions> cryptoOptionsSnapshot,
                                IOptionsSnapshot<TinyPNGOptions> tinyPngOptionsSnapshot,
-
-
+                               IOptionsSnapshot<LicenseInfoOptions> licenseInfoOptionsSnapshot,
                                IHttpContextAccessor httpContextAccessor)
     {
         _appOptionsSnapshot = appOptionsSnapshot.Value;
@@ -41,6 +41,7 @@ public class ConfigReaderService : IConfigReaderService
         _muxOptionsSnapshot = muxOptionsSnapshot.Value;
         _cryptoOptionsSnapshot = cryptoOptionsSnapshot.Value;
         _tinyPngOptionsSnapshot = tinyPngOptionsSnapshot.Value;
+        _licenseInfoOptionsSnapshot = licenseInfoOptionsSnapshot.Value;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -91,6 +92,11 @@ public class ConfigReaderService : IConfigReaderService
     public ClientAppOptions GetClientAppOptions()
     {
         return _clientAppOptionsSnapshot;
+    }
+
+    public LicenseInfoOptions GetLicenseInfoOptions()
+    {
+        return _licenseInfoOptionsSnapshot;
     }
 
     public string GetSubDomain()

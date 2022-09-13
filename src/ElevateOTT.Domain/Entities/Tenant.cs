@@ -4,7 +4,8 @@ public class Tenant : IAuditable
 {
     #region Public Properties
 
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
+    public string? LicenseKey { get; set; }
     public string? ChannelName { get; set; }
     public string? FullName { get; set; }
     public string? SubDomain { get; set; }

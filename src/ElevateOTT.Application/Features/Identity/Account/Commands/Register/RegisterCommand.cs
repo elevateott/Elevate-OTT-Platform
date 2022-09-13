@@ -25,6 +25,7 @@ public class RegisterCommand : IRequest<Envelope<RegisterResponse>>
         {
             UserName = Email,
             Email = Email,
+            FullName = FullName
         };
     }
 

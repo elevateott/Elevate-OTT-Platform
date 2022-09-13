@@ -1,4 +1,5 @@
-﻿using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthors;
+﻿using Blazored.LocalStorage;
+using ElevateOTT.ClientPortal.Features.Content.Authors.Queries.GetAuthors;
 
 namespace ElevateOTT.ClientPortal.Pages.Content.Authors;
 
@@ -201,12 +202,11 @@ public partial class AuthorsPage : ComponentBase, IAsyncDisposable
         {
             Snackbar.Add("Reporting Hub is being initialed.", Severity.Info);
 
-            var subDomain = NavigationManager.GetSubDomain();
-
+            var tenantId = await LocalStorage.GetItemAsync<string>(Constants.TenantIdStorageKey);
             var culture = await LocalStorage.GetItemAsync<string>("Culture");
 
             HubConnection = new HubConnectionBuilder()
-                .WithUrl($"{ApiUrlProvider.BaseHubUrl}/Hubs/DataExportHub?X-Tenant={subDomain}&Accept-Language={culture}",
+                .WithUrl($"{ApiUrlProvider.BaseHubUrl}/Hubs/DataExportHub?X-Tenant={tenantId}&Accept-Language={culture}",
                     options =>
                     {
                         //options.Headers.Add("X-Tenant", subDomain); //Doesn't Work

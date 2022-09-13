@@ -5,6 +5,12 @@ namespace ElevateOTT.Domain.Entities.Content;
 [Table("Authors")]
 public class AuthorModel : BaseEntity, IMustHaveTenant
 {
+    public AuthorModel()
+    {
+        Videos = new List<VideoModel>();
+        LiveStreams = new List<LiveStreamModel>();
+        Podcasts = new List<PodcastModel>();
+    }
     public Guid TenantId { get; set; }
 
     [Required(ErrorMessage = "Author name is a required field.")]
@@ -29,9 +35,9 @@ public class AuthorModel : BaseEntity, IMustHaveTenant
 
     #region Navigational Properties
 
-    public List<VideoModel>? Videos { get; set; }
-    public List<LiveStreamModel>? LiveStreams { get; set; }
-    public List<PodcastModel>? Podcasts { get; set; }
+    public ICollection<VideoModel> Videos { get; set; }
+    public ICollection<LiveStreamModel> LiveStreams { get; set; }
+    public ICollection<PodcastModel> Podcasts { get; set; }
 
     #endregion
 }

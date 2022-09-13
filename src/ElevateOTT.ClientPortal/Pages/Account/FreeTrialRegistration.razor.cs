@@ -5,6 +5,7 @@ public partial class FreeTrialRegistration : ComponentBase
     #region Private Properties
 
     // TODO validate subdomain and check if exists
+    // TODO check if email exists
 
     [Inject] private IReturnUrlProvider ReturnUrlProvider { get; set; }
     [Inject] private IAccountsClient AccountsClient { get; set; }

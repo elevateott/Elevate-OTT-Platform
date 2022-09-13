@@ -3,6 +3,11 @@
 [Table("Categories")]
 public class CategoryModel : BaseEntity, IMustHaveTenant
 {
+
+    public CategoryModel()
+    {
+        VideosCategories = new List<VideoCategoryModel>();
+    }
     public Guid TenantId { get; set; }
 
     public string? Title { get; set; } 
@@ -22,10 +27,10 @@ public class CategoryModel : BaseEntity, IMustHaveTenant
 
     #region Navigational Properties
 
-    public ICollection<VideoCategoryModel>? VideosCategories { get; set; } 
-    public ICollection<CategoryCollectionModel>? CategoriesCollections { get; set; }
-    public ICollection<LiveStreamCategoryModel>? LiveStreamsCategories { get; set; }
-    public ICollection<PodcastCategoryModel>? PodcastsCategoriess { get; set; }
+    public ICollection<VideoCategoryModel> VideosCategories { get; set; } 
+    //public ICollection<CategoryCollectionModel>? CategoriesCollections { get; set; }
+    //public ICollection<LiveStreamCategoryModel>? LiveStreamsCategories { get; set; }
+    //public ICollection<PodcastCategoryModel>? PodcastsCategoriess { get; set; }
 
     #endregion
 }

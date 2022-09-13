@@ -10,54 +10,63 @@
                 <EditForm Model="@RegisterCommand" OnValidSubmit="RegisterUser">
                     <EditContextServerSideValidator @ref="EditContextServerSideValidator" />
                     <FluentValidationValidator />
-                    <MudText Typo="Typo.h5" GutterBottom="true">Sign Up For Your Free Trial</MudText>
-                    <MudText Typo="Typo.caption" GutterBottom="true">No Credit Card Required</MudText>
+                    <MudText Typo="Typo.h5" GutterBottom="true">@Resource.Sign_Up_For_Free_Trial</MudText>
+                    <MudText Typo="Typo.caption" GutterBottom="true">@Resource.No_Credit_Card_Required</MudText>
                     <MudText Class="my-4">
                         @Resource.Already_have_an_account <MudLink Href="/account/login">@Resource.Sign_in</MudLink>
                     </MudText>
 
-                    <MudTextField Label="@Resource.FullName"
+                    <div class="d-flex gap-4 mb-4">
+                          <MudTextField Label="@Resource.FullName"
                                   Variant="Variant.Outlined"
                                   @bind-Value="RegisterCommand.FullName"
                                   For="@(() => RegisterCommand.FullName)"
                                   Required="true"
-                                  RequiredError="Full Name is required."
-                                  MaxLength="60" />
+                                  RequiredError="@Resource.Full_Name_Is_Required"
+                                  MaxLength="60"/>
+
+                          <MudTextField Label="@Resource.Email"
+                                        Variant="Variant.Outlined"
+                                        @bind-Value="RegisterCommand.Email"
+                                        For="@(() => RegisterCommand.Email)"
+                                        Required="true"
+                                        RequiredError="@Resource.Email_Is_Required"
+                                        InputType="InputType.Email" />
+                    </div>
+                  
 
                     <MudTextField Label="@Resource.Your_Channel_Name"
                                   Variant="Variant.Outlined"
                                   @bind-Value="RegisterCommand.ChannelName"
                                   For="@(() => RegisterCommand.ChannelName)"
                                   Required="true"
-                                  RequiredError="Channel Name is required (you can change it later)."
-                                  MaxLength="40" />
+                                  RequiredError="@Resource.Channel_Name_Is_Required"
+                                  MaxLength="40"
+                                  Class="mb-2" />
+                
 
-                    <MudTextField Label="@Resource.Email"
-                                  Variant="Variant.Outlined"
-                                  @bind-Value="RegisterCommand.Email"
-                                  For="@(() => RegisterCommand.Email)"
-                                  Required="true"
-                                  RequiredError="Email is required." />
+                    <div class="d-flex gap-4 mb-2">
+                        <MudTextField Label="@Resource.Password"
+                                Variant="Variant.Outlined"
+                                @bind-Value="RegisterCommand.Password"
+                                For="@(() => RegisterCommand.Password)"
+                                InputType="@PasswordInput"
+                                Adornment="Adornment.End"
+                                AdornmentIcon="@PasswordInputIcon"
+                                OnAdornmentClick="TogglePasswordVisibility" />
 
-                    <MudTextField Label="@Resource.Password"
-                                  Variant="Variant.Outlined"
-                                  @bind-Value="RegisterCommand.Password"
-                                  For="@(() => RegisterCommand.Password)"
-                                  InputType="@PasswordInput"
-                                  Adornment="Adornment.End"
-                                  AdornmentIcon="@PasswordInputIcon"
-                                  OnAdornmentClick="TogglePasswordVisibility" />
+                        <MudTextField Label="@Resource.Confirm_Password"
+                                Variant="Variant.Outlined"
+                                @bind-Value="RegisterCommand.ConfirmPassword"
+                                For="@(() => RegisterCommand.ConfirmPassword)"
+                                InputType="@PasswordInput"
+                                Adornment="Adornment.End"
+                                AdornmentIcon="@PasswordInputIcon"
+                                OnAdornmentClick="TogglePasswordVisibility" />
+                    </div>
+                  
 
-                    <MudTextField Label="@Resource.Confirm_Password"
-                                  Variant="Variant.Outlined"
-                                  @bind-Value="RegisterCommand.ConfirmPassword"
-                                  For="@(() => RegisterCommand.ConfirmPassword)"
-                                  InputType="@PasswordInput"
-                                  Adornment="Adornment.End"
-                                  AdornmentIcon="@PasswordInputIcon"
-                                  OnAdornmentClick="TogglePasswordVisibility" />
-
-                    <MudSelect T="string"
+                    <MudSelect T="string" Class="mb-2"
                                Label="@Resource.How_Did_You_Hear_About_Us"
                                @bind-Value="RegisterCommand.HeardAboutUsFrom"
                                AnchorOrigin="Origin.BottomCenter"
@@ -77,7 +86,8 @@
                                Color="Color.Primary"
                                Size="Size.Large"
                                FullWidth="true"
-                               Disabled="SubmitButtonDisabled">
+                               Disabled="SubmitButtonDisabled"
+                               Class="mb-2">
                         @Resource.Start_Your_Free_Trial
                     </MudButton>
                     <MudText Typo="Typo.caption" Class="mt-2">@Resource.Registration_Disclaimer</MudText>

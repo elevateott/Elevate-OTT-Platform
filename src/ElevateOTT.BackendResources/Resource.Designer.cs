@@ -250,6 +250,33 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is required..
+        /// </summary>
+        public static string Email_is_required {
+            get {
+                return ResourceManager.GetString("Email_is_required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email must be at least 6 characters..
+        /// </summary>
+        public static string Email_must_be_at_least_6_chars {
+            get {
+                return ResourceManager.GetString("Email_must_be_at_least_6_chars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email must not exceed 60 characters..
+        /// </summary>
+        public static string Email_must_not_exceed_60_characters {
+            get {
+                return ResourceManager.GetString("Email_must_not_exceed_60_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entity &quot;{0}&quot; with key &quot;{1}&quot; was not found..
         /// </summary>
         public static string Entity_with_key_was_not_found {
@@ -448,7 +475,7 @@ namespace ElevateOTT.BackendResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Invalid video ID.
         /// </summary>
         public static string Invalid_video_Id {
             get {
@@ -635,6 +662,15 @@ namespace ElevateOTT.BackendResources {
         public static string Password_must_be_at_least_6_characters {
             get {
                 return ResourceManager.GetString("Password_must_be_at_least_6_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must not exceed 20 characters..
+        /// </summary>
+        public static string Password_must_not_exceed_20_characters {
+            get {
+                return ResourceManager.GetString("Password_must_not_exceed_20_characters", resourceCulture);
             }
         }
         

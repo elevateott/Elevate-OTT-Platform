@@ -42,7 +42,7 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         builder.Property(u => u.NormalizedEmail)
             .IsRequired();
 
-        builder.Ignore(x => x.FullName);
+        // builder.Ignore(x => x.FullName);
     }
 
     #endregion Public Methods

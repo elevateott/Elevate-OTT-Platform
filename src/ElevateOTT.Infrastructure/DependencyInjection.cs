@@ -99,10 +99,12 @@ public static class DependencyInjection
         services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<IDemoUserPasswordSetterService, DemoUserPasswordSetterService>();
 
-         services.AddScoped<IMuxWebhookService, MuxWebhookService>();
-         services.AddScoped<IMuxAssetService, MuxAssetService>();
+        services.AddScoped<ILicenseService, LicenseService>();
 
-         services.AddScoped<IAccountUseCase, AccountUseCase>();
+        services.AddScoped<IMuxWebhookService, MuxWebhookService>();
+        services.AddScoped<IMuxAssetService, MuxAssetService>();
+
+        services.AddScoped<IAccountUseCase, AccountUseCase>();
         services.AddScoped<IManageUseCase, ManageUseCase>();
         services.AddScoped<IRoleUseCase, RoleUseCase>();
         services.AddScoped<IPermissionUseCase, PermissionUseCase>();

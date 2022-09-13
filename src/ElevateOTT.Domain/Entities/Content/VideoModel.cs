@@ -11,6 +11,11 @@ public class VideoModel : BaseAsset, IMustHaveTenant
 
     // TODO subscription
 
+    public VideoModel()
+    {
+        VideosCategories = new List<VideoCategoryModel>();
+    }
+
     public Guid TenantId { get; set; }
 
     public bool Mp4Support { get; set; }
@@ -38,14 +43,15 @@ public class VideoModel : BaseAsset, IMustHaveTenant
     #endregion
 
     #region Navigational Properties
-    public ICollection<VideoCategoryModel>? VideosCategories { get; set; } 
-    public ICollection<VideoCollectionModel>? VideosCollections { get; set; }
-    public ICollection<VideoTagModel>? VideosTags { get; set; }
+    public ICollection<VideoCategoryModel> VideosCategories { get; set; } 
+
+    //public ICollection<VideoCollectionModel>? VideosCollections { get; set; }
+    //public ICollection<VideoTagModel>? VideosTags { get; set; }
 
     public AuthorModel? Author { get; set; }
 
-    //public List<ExtraModel>? Extras { get; set; }
-    //public List<CommentModel>? Comments { get; set; }
-    //public List<SubtitleModel>? Subtitles { get; set; }
+    //public ICollection<ExtraModel>? Extras { get; set; }
+    //public ICollection<CommentModel>? Comments { get; set; }
+    //public ICollection<SubtitleModel>? Subtitles { get; set; }
     #endregion
 }

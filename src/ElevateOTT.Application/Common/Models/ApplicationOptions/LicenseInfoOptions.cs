@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ElevateOTT.Application.Common.Models.ApplicationOptions;
-public class CryptoOptions
-{
 
+public class LicenseInfoOptions
+{
     #region Public Fields
 
-    public const string Section = "Crypto";
+    public const string Section = "LicenseInfo";
 
     #endregion Public Fields
 
     #region Public Properties
 
-    public string CryptoSecretKey { get; set; } = string.Empty;
-    public string CryptoIV { get; set; } = string.Empty;
+    public string ProductName { get; set; } = string.Empty;
+    public string Secret { get; set; } = string.Empty;
 
     #endregion Public Properties
 }

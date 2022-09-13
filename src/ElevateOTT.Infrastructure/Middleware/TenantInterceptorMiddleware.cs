@@ -64,33 +64,47 @@ public class TenantInterceptorMiddleware
                 if (httpContext.Request.Path.Value != null &&
                       httpContext.Request.Path.Value.ToLower().Contains("account/register")) break;
 
-                var tenantName = httpContext.Request.Headers["X-Tenant"];
+                // If login workflow, then tenant not yet known
+                if (httpContext.Request.Path.Value != null &&
+                    httpContext.Request.Path.Value.ToLower().Contains("account/login")) break;
 
-                if (tenantName.Count == 0)
-                    tenantName = string.Empty;
+                // X-Tenant could be tenant id guid or subdomain/domain.
+                // If request from client portal, X-Tenant is tenant id guid
+                // If request from streaming web app, X-Tenant is subdomain/domain
 
-                Console.WriteLine("tenantName @ API interceptor: " + tenantName);
+                var xTenant = httpContext.Request.Headers["X-Tenant"];
+
+                if (xTenant.Count == 0)
+                    xTenant = string.Empty;
+
+                if (dbContext.Tenants != null)
+                {
+                    Guid? tenantId = Guid.TryParse(xTenant.FirstOrDefault(), out Guid xTenantValue) 
+                        ? xTenantValue 
+                        : dbContext.Tenants.FirstOrDefault(t => t.CustomDomain != null && t.SubDomain != null && (t.SubDomain.Equals(xTenant.FirstOrDefault()) || t.CustomDomain.Equals(xTenant.FirstOrDefault())))?.Id;
+
+                    Console.WriteLine("tenantName @ API interceptor: " + xTenant);
                 
-                // TODO guard against tenantName null or empty
-
-                // TODO check if tenant name is Name or CustomDomain
-
-                var tenantId = dbContext.Tenants.FirstOrDefault(t => t.SubDomain.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
-
-                //tenantId = Guid.Parse("58330475-6dd1-47a0-bc22-3afa1cb0ece8");
+                    // TODO guard against tenantName null or empty
+                    // TODO check if tenant name is Name or CustomDomain
+                    //tenantId = Guid.Parse("58330475-6dd1-47a0-bc22-3afa1cb0ece8");
                 
-                if (httpContext.Request.Path.Value is { } pathValue
-                    && tenantId is null
-                    && tenantName[0] != Host
-                    && !pathValue.Contains("hangfire")
-                    && !pathValue.Contains("/Hubs/")
-                    && !pathValue.Contains("callback")
-                    && !pathValue.ToLower().Contains("account/register"))
-                    throw new Exception(Resource.Invalid_tenant_name);
+                    if (httpContext.Request.Path.Value is { } pathValue
+                        && tenantId is null
+                        && xTenant[0] != Host
+                        && !pathValue.Contains("hangfire")
+                        && !pathValue.Contains("/Hubs/")
+                        && !pathValue.Contains("callback")
+                        && !pathValue.ToLower().Contains("account/register"))
+                        throw new Exception(Resource.Invalid_tenant_name);
 
-                tenantResolver.SetTenantId(tenantId);
+                    if (tenantId.HasValue)
+                    {
+                        tenantResolver.SetTenantId(tenantId);
+                    }
+                }
 
-                tenantResolver.SetTenantName(tenantName);
+                //tenantResolver.SetTenantName(xTenant);
 
                 break;
             }

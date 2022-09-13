@@ -61,6 +61,8 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<FileStorageSettings>? FileStorageSettings { get; set; }
 
     public DbSet<Tenant>? Tenants { get; set; }
+
+
     public DbSet<Applicant>? Applicants { get; set; }
     public DbSet<Reference>? References { get; set; }
     public DbSet<Report>? Reports { get; set; }
@@ -71,9 +73,9 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<PodcastModel>? Podcasts { get; set; }
     public DbSet<CategoryModel>? Categories { get; set; }
     public DbSet<VideoCategoryModel>? VideosCategories { get; set; }
-    //public DbSet<AssetImageModel>? AssetImages { get; set; }
     public DbSet<ContentFeedModel>? ContentFeeds { get; set; }
 
+    // TODO update interface when adding entities here
 
     #endregion Public Properties
 
@@ -287,34 +289,18 @@ public class ApplicationDbContext : IdentityDbContext<
             .HasOne(p => p.Author)
             .WithMany(b => b.LiveStreams)
             .OnDelete(DeleteBehavior.ClientSetNull);
-
-        // Creating one-to-many relationships where ClientCascade required
-        //modelBuilder.Entity<AssetImageModel>()
-        //    .HasOne(p => p.Video)
-        //    .WithMany(b => b.VideoImages)
-        //    .OnDelete(DeleteBehavior.ClientCascade);
-
-        //modelBuilder.Entity<AssetImageModel>()
-        //    .HasOne(p => p.LiveStream)
-        //    .WithMany(b => b.LiveStreamImages)
-        //    .OnDelete(DeleteBehavior.ClientCascade);
-
-        //modelBuilder.Entity<AssetImageModel>()
-        //    .HasOne(p => p.Podcast)
-        //    .WithMany(b => b.PodcastImages)
-        //    .OnDelete(DeleteBehavior.ClientCascade);
     }
 
     private static void ConfigureManyToManyRelationships(ModelBuilder modelBuilder)
     {
         // Creating many-to-many relationships
         modelBuilder.Entity<VideoCategoryModel>().HasKey(x => new { x.VideoId, x.CategoryId });
-        modelBuilder.Entity<VideoCollectionModel>().HasKey(x => new { x.VideoId, x.CollectionId });
-        modelBuilder.Entity<LiveStreamCategoryModel>().HasKey(x => new { x.LiveStreamId, x.CategoryId });
-        modelBuilder.Entity<PodcastCategoryModel>().HasKey(x => new { x.PodcastId, x.CategoryId });
-        modelBuilder.Entity<PodcastCollectionModel>().HasKey(x => new { x.PodcastId, x.CollectionId });
-        modelBuilder.Entity<CategoryCollectionModel>().HasKey(x => new { x.CategoryId, x.CollectionId });
-        modelBuilder.Entity<VideoTagModel>().HasKey(x => new { x.VideoId, x.TagId });
+        //modelBuilder.Entity<VideoCollectionModel>().HasKey(x => new { x.VideoId, x.CollectionId });
+        //modelBuilder.Entity<LiveStreamCategoryModel>().HasKey(x => new { x.LiveStreamId, x.CategoryId });
+        //modelBuilder.Entity<PodcastCategoryModel>().HasKey(x => new { x.PodcastId, x.CategoryId });
+        //modelBuilder.Entity<PodcastCollectionModel>().HasKey(x => new { x.PodcastId, x.CollectionId });
+        //modelBuilder.Entity<CategoryCollectionModel>().HasKey(x => new { x.CategoryId, x.CollectionId });
+        //modelBuilder.Entity<VideoTagModel>().HasKey(x => new { x.VideoId, x.TagId });
     }
 
     private void InitiateTenantMode()

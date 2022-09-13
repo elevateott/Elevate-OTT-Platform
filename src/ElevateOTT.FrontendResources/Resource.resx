@@ -393,6 +393,9 @@
   <data name="Change_your_account_settings" xml:space="preserve">
     <value>Change Your Account Settings</value>
   </data>
+  <data name="Channel_Name_Is_Required" xml:space="preserve">
+    <value>Channel Name is required (you can change it later).</value>
+  </data>
   <data name="Characters" xml:space="preserve">
     <value>Characters</value>
   </data>
@@ -681,6 +684,9 @@
   <data name="Email_Confirmed" xml:space="preserve">
     <value>Email Confirmed</value>
   </data>
+  <data name="Email_Is_Required" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
   <data name="Employee_broke_a_finger_while_writing_some_code" xml:space="preserve">
     <value>Employee broke a finger while writing some code</value>
   </data>
@@ -833,6 +839,9 @@
   </data>
   <data name="Full_Description" xml:space="preserve">
     <value>Full Description</value>
+  </data>
+  <data name="Full_Name_Is_Required" xml:space="preserve">
+    <value>Full Name is required.</value>
   </data>
   <data name="Gas" xml:space="preserve">
     <value>Gas</value>
@@ -1145,6 +1154,10 @@
   </data>
   <data name="No_authors_found" xml:space="preserve">
     <value>No authors found</value>
+  </data>
+  <data name="No_Credit_Card_Required" xml:space="preserve">
+    <value>No Credit Card Required</value>
+    
   </data>
   <data name="No_data_available" xml:space="preserve">
     <value>No data available.</value>
@@ -1523,6 +1536,10 @@
   </data>
   <data name="Sign_up" xml:space="preserve">
     <value>Sign up</value>
+  </data>
+  <data name="Sign_Up_For_Free_Trial" xml:space="preserve">
+    <value>Sign Up For Your Free Trial</value>
+    
   </data>
   <data name="Slug_description" xml:space="preserve">
     <value>Set the slug to your author page permalink. Ex: myott.tv/authors/</value>

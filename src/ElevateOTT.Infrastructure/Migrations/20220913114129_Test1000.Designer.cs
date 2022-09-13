@@ -12,79 +12,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElevateOTT.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220824180219_Migration1012")]
-    partial class Migration1012
+    [Migration("20220913114129_Test1000")]
+    partial class Test1000
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AssetImageModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AssetImageType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("LiveStreamId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PodcastId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("VideoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LiveStreamId");
-
-                    b.HasIndex("PodcastId");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("AssetImages");
-                });
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AuthorModel", b =>
                 {
@@ -148,27 +86,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<Guid>("CollectionId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -344,27 +261,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -384,6 +280,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("AllowDownload")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AnimatedGifUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
 
@@ -399,6 +298,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("ButtonPurchaseText")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CatalogImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClosedCaptions")
                         .HasColumnType("bit");
@@ -426,6 +328,9 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FeaturedCatalogImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
@@ -468,6 +373,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Passthrough")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlayerImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreRegistrationText")
@@ -570,27 +478,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -608,27 +495,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<Guid>("CollectionId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -649,6 +515,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("AllowDownload")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AnimatedGifUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
 
@@ -659,6 +528,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlobUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CatalogImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClosedCaptions")
@@ -688,6 +560,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FeaturedCatalogImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
 
@@ -711,6 +586,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Passthrough")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlayerImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicPlaybackId")
@@ -812,27 +690,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -850,27 +707,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<Guid>("CollectionId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -891,6 +727,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<bool>("AllowDownload")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AnimatedGifUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AssetId")
                         .HasColumnType("nvarchar(max)");
 
@@ -901,6 +740,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlobUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CatalogImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClosedCaptions")
@@ -929,6 +771,9 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FeaturedCatalogImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("FeaturedCategoryVideoId")
                         .HasColumnType("uniqueidentifier");
@@ -968,6 +813,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("Passthrough")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlayerImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicPlaybackId")
@@ -1040,27 +888,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<Guid>("TagId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -1209,6 +1036,10 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDemo")
                         .HasColumnType("bit");
@@ -1431,7 +1262,7 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Height")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -1451,7 +1282,7 @@ namespace ElevateOTT.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
@@ -1706,6 +1537,9 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ChannelName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -1721,52 +1555,34 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("HeardAboutUsFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LicenseKey")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ChannelName")
+                    b.Property<string>("StorageFileNamePrefix")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StorageFileNamePrefix")
+                    b.Property<string>("SubDomain")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("FullName")
                         .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .HasFilter("[FullName] IS NOT NULL");
 
                     b.ToTable("Tenants");
-                });
-
-            modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.AssetImageModel", b =>
-                {
-                    b.HasOne("ElevateOTT.Domain.Entities.Content.LiveStreamModel", "LiveStream")
-                        .WithMany("LiveStreamImages")
-                        .HasForeignKey("LiveStreamId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("ElevateOTT.Domain.Entities.Content.PodcastModel", "Podcast")
-                        .WithMany("PodcastImages")
-                        .HasForeignKey("PodcastId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("ElevateOTT.Domain.Entities.Content.VideoModel", "Video")
-                        .WithMany("VideoImages")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.Navigation("LiveStream");
-
-                    b.Navigation("Podcast");
-
-                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.CategoryCollectionModel", b =>
@@ -2054,15 +1870,11 @@ namespace ElevateOTT.Infrastructure.Migrations
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.LiveStreamModel", b =>
                 {
-                    b.Navigation("LiveStreamImages");
-
                     b.Navigation("LiveStreamsCategories");
                 });
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.PodcastModel", b =>
                 {
-                    b.Navigation("PodcastImages");
-
                     b.Navigation("PodcastsCategoriess");
 
                     b.Navigation("PodcastsCollections");
@@ -2075,8 +1887,6 @@ namespace ElevateOTT.Infrastructure.Migrations
 
             modelBuilder.Entity("ElevateOTT.Domain.Entities.Content.VideoModel", b =>
                 {
-                    b.Navigation("VideoImages");
-
                     b.Navigation("VideosCategories");
 
                     b.Navigation("VideosCollections");

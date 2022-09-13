@@ -69,7 +69,7 @@ public static class NavigationManagerExtensions
         // TODO tenant could use their own custom subdomain!!
 
         string rootDomain = "elevateott.tv";
-        return navManager.BaseUri.ToLower().Contains(rootDomain);
+        return !navManager.BaseUri.ToLower().Contains(rootDomain);
     }
 
     #endregion Public Methods

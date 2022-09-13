@@ -29,6 +29,13 @@ public interface IApplicationDbContext : IDisposable
     DbSet<AuthorModel>? Authors { get; set; }
     DbSet<VideoModel>? Videos { get; set; }
 
+    DbSet<LiveStreamModel>? LiveStreams { get; set; }
+
+    DbSet<PodcastModel>? Podcasts { get; set; }
+    DbSet<CategoryModel>? Categories { get; set; }
+    DbSet<VideoCategoryModel>? VideosCategories { get; set; }
+    DbSet<ContentFeedModel>? ContentFeeds { get; set; }
+
 
 
     DbContext Current { get; }

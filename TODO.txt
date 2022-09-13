@@ -5,3 +5,7 @@ Add tenant id to token on login and register
 
 client:
 add tenant id to http requests via interceptor
+
+
+ // TODO add validation for other fields
+// Check if email address already in use

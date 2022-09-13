@@ -22,6 +22,8 @@ public interface IConfigReaderService
 
     ClientAppOptions GetClientAppOptions();
 
+    LicenseInfoOptions GetLicenseInfoOptions();
+
     string GetSubDomain();
 
     BlobOptions GetBlobOptions();
@@ -29,6 +31,7 @@ public interface IConfigReaderService
     ChargebeeOptions GetChargebeeOptions();
 
     CryptoOptions GetCryptoOptions();
+
 
     MuxOptions GetMuxOptions();
 

@@ -18,7 +18,11 @@ public class Applicant : IAuditable, IMustHaveTenant
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public DateTime? DateOfBirth { get; set; }
+
+    [Column(TypeName = "decimal(18,4)")]
     public decimal Height { get; set; }
+
+    [Column(TypeName = "decimal(18,4)")]
     public decimal Weight { get; set; }
     public string CreatedBy { get; set; } = string.Empty;
     public DateTime CreatedOn { get; set; }

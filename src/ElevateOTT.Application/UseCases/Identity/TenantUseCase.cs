@@ -14,6 +14,7 @@ public class TenantUseCase : ITenantUseCase
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IDemoIdentitySeeder _demoIdentitySeeder;
     private readonly ITenantResolver _tenantResolver;
+    private readonly ILicenseService _licenseService;
 
     #endregion Private Fields
 
@@ -24,7 +25,8 @@ public class TenantUseCase : ITenantUseCase
                          UserManager<ApplicationUser> userManager,
                          RoleManager<ApplicationRole> roleManager,
                          IDemoIdentitySeeder demoIdentitySeeder,
-                         ITenantResolver tenantResolver)
+                         ITenantResolver tenantResolver, 
+                         ILicenseService licenseService)
     {
         _dbContext = dbContext;
         _partManager = partManager;
@@ -32,6 +34,7 @@ public class TenantUseCase : ITenantUseCase
         _roleManager = roleManager;
         _demoIdentitySeeder = demoIdentitySeeder;
         _tenantResolver = tenantResolver;
+        _licenseService = licenseService;
     }
 
     #endregion Public Constructors
@@ -46,8 +49,12 @@ public class TenantUseCase : ITenantUseCase
         var tenant = request.MapToEntity();
 
         tenant.StorageFileNamePrefix = Guid.NewGuid().ToString().Replace("-", "");
+        tenant.LicenseKey = _licenseService.GenerateLicenseForTenant(tenant.Id);
 
-        await _dbContext.Tenants.AddAsync(tenant);
+        if (_dbContext.Tenants != null)
+        {
+            await _dbContext.Tenants.AddAsync(tenant);
+        }
 
         await _dbContext.SaveChangesAsync();
 
@@ -58,10 +65,15 @@ public class TenantUseCase : ITenantUseCase
         };
 
         _tenantResolver.SetTenantId(tenant.Id);
+
+
         await CreateSampleApplicants();
+
         await AddStaticRoles();
 
         var result = await CreateTenantSuperAdmin();
+
+        //return Envelope<CreateTenantResponse>.Result.Ok(payload);
 
         if (result.IsError)
             return Envelope<CreateTenantResponse>.Result.AddErrors(result.ModelStateErrors, ResponseType.ServerError, result.Message);

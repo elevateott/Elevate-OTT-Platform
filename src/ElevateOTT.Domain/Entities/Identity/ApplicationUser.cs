@@ -17,9 +17,11 @@ public class ApplicationUser : IdentityUser, IAuditable, IMayHaveTenant
 
     #region Public Properties
 
+    // TODO remove first/last name add FullName
+
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
-    public string FullName => $"{Name} {Surname}";
+    public string FullName { get; set; } = string.Empty;
     public string JobTitle { get; set; } = string.Empty;
     public string AvatarUri { get; set; } = string.Empty;
     public bool IsSuspended { get; set; }
