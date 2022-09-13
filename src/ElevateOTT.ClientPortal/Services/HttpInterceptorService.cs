@@ -58,12 +58,13 @@ public class HttpInterceptorService : IDisposable
 
         //
         // TODO
-        // Use this once we start using single sub domain
+        // Use this once using single sub domain
         //
         var tenantId = await _localStorageService.GetItemAsync<string>(Constants.TenantIdStorageKey);
 
         Console.WriteLine($"tenantId: {tenantId}");
 
+<<<<<<< HEAD
         // string tenantName = _navigationManager.GetSubDomain();
         //string domainName = _navigationManager.GetDomain();
 
@@ -74,6 +75,13 @@ public class HttpInterceptorService : IDisposable
 
         // @context.User.Claims.FirstOrDefault(c => c.Type == "AvatarUri").Value
         e.Request.Headers.Add("X-Tenant", tenantId);
+=======
+        string tenantName = _navigationManager.GetSubDomain();
+
+        Console.WriteLine($"tenantName: {tenantName}");
+
+        e.Request.Headers.Add("X-Tenant", tenantName);
+>>>>>>> parent of 536757c (started on free trial sign up flow)
 
         // Console.WriteLine(new System.Diagnostics.StackTrace());
 

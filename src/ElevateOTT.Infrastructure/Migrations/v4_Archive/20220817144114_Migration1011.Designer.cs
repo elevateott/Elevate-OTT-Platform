@@ -1715,7 +1715,7 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ChannelName")
+                    b.Property<string>("OttChannelName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StorageFileNamePrefix")

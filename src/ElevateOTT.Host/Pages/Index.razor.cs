@@ -46,7 +46,7 @@ public partial class Index
     {
         SubmitButtonDisabled = true;
         ShowProgress = true;
-        CreateTenantCommand.SubDomain = FinalTenantName;
+        CreateTenantCommand.TenantName = FinalTenantName;
         SubmitButtonDisabled = true;
 
         var httpResponseWrapper = await TenantsClient.CreateTenant(CreateTenantCommand);

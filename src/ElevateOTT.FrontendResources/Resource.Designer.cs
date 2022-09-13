@@ -2430,15 +2430,6 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How did you hear about us?.
-        /// </summary>
-        public static string How_Did_You_Hear_About_Us {
-            get {
-                return ResourceManager.GetString("How_Did_You_Hear_About_Us", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hydro.
         /// </summary>
         public static string Hydro {
@@ -3702,15 +3693,6 @@ namespace ElevateOTT.FrontendResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By providing your email address and clicking the button to sign up, you agree to Elevate OTT&apos;s Terms of Service and Privacy Policy. You can change your communication preferences anytime..
-        /// </summary>
-        public static string Registration_Disclaimer {
-            get {
-                return ResourceManager.GetString("Registration_Disclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Remember me?.
         /// </summary>
         public static string Remember_me {
@@ -4418,15 +4400,6 @@ namespace ElevateOTT.FrontendResources {
         public static string Start {
             get {
                 return ResourceManager.GetString("Start", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start Your Free Trial.
-        /// </summary>
-        public static string Start_Your_Free_Trial {
-            get {
-                return ResourceManager.GetString("Start_Your_Free_Trial", resourceCulture);
             }
         }
         
@@ -5393,15 +5366,6 @@ namespace ElevateOTT.FrontendResources {
         public static string Your_account_contains_personal_data_that_you_have_given_us {
             get {
                 return ResourceManager.GetString("Your_account_contains_personal_data_that_you_have_given_us", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your Channel Name.
-        /// </summary>
-        public static string Your_Channel_Name {
-            get {
-                return ResourceManager.GetString("Your_Channel_Name", resourceCulture);
             }
         }
         

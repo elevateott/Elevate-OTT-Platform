@@ -17,7 +17,7 @@ public partial class MainLayout
     public bool DrawerOpen { get; set; } = true;
 
     //public bool IsDarkMode { get; set; }
-    public bool IsDarkMode { get; set; } = false;
+    public bool IsDarkMode { get; set; } = true;
 
     public bool IsRightToLeft { get; set; }
 

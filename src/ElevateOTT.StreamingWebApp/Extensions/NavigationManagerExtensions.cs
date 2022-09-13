@@ -35,11 +35,11 @@ public static class NavigationManagerExtensions
     
     public static string GetSubDomain(this NavigationManager navManager)
     {
-        var subDomain = navManager.BaseUri.Split('.')[0].Split("//")[1];    
-
+        var subDomain = navManager.BaseUri.Split('.')[0].Split("//")[1];
         return subDomain;
     }
 
+<<<<<<< HEAD
     public static string GetDomain(this NavigationManager navManager)
     {
         // TODO get ParentDomain from config
@@ -72,5 +72,7 @@ public static class NavigationManagerExtensions
         return !navManager.BaseUri.ToLower().Contains(rootDomain);
     }
 
+=======
+>>>>>>> parent of 536757c (started on free trial sign up flow)
     #endregion Public Methods
 }

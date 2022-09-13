@@ -59,6 +59,7 @@ public class TenantInterceptorMiddleware
                 if (httpContext.Request.Path.Value != null &&
                     httpContext.Request.Path.Value.Contains("callback")) break;
 
+<<<<<<< HEAD
                 // If registration workflow, then no tenant exists yet.
                 // Tenant created before app user in registration workflow.
                 if (httpContext.Request.Path.Value != null &&
@@ -67,6 +68,9 @@ public class TenantInterceptorMiddleware
                 // If login workflow, then tenant not yet known
                 if (httpContext.Request.Path.Value != null &&
                     httpContext.Request.Path.Value.ToLower().Contains("account/login")) break;
+=======
+                var tenantName = httpContext.Request.Headers["X-Tenant"];
+>>>>>>> parent of 536757c (started on free trial sign up flow)
 
                 // X-Tenant could be tenant id guid or subdomain/domain.
                 // If request from client portal, X-Tenant is tenant id guid
@@ -85,6 +89,7 @@ public class TenantInterceptorMiddleware
 
                     Console.WriteLine("tenantName @ API interceptor: " + xTenant);
                 
+<<<<<<< HEAD
                     // TODO guard against tenantName null or empty
                     // TODO check if tenant name is Name or CustomDomain
                     //tenantId = Guid.Parse("58330475-6dd1-47a0-bc22-3afa1cb0ece8");
@@ -97,6 +102,21 @@ public class TenantInterceptorMiddleware
                         && !pathValue.Contains("callback")
                         && !pathValue.ToLower().Contains("account/register"))
                         throw new Exception(Resource.Invalid_tenant_name);
+=======
+                // TODO guard against tenantName null or empty
+
+                // TODO check if tenant name is Name or CustomDomain
+
+                var tenantId = dbContext.Tenants.FirstOrDefault(t => t.Name.Equals(tenantName.FirstOrDefault()) || t.CustomDomain.Equals(tenantName.FirstOrDefault()))?.Id;
+
+                if (httpContext.Request.Path.Value is { } pathValue
+                    && tenantId is null
+                    && tenantName[0] != Host
+                    && !pathValue.Contains("hangfire")
+                    && !pathValue.Contains("/Hubs/")
+                    && !pathValue.Contains("callback"))
+                    throw new Exception(Resource.Invalid_tenant_name);
+>>>>>>> parent of 536757c (started on free trial sign up flow)
 
                     if (tenantId.HasValue)
                     {

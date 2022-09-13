@@ -32,7 +32,7 @@ public class SignalRContextProvider : ISignalRContextProvider
 
     public Guid? GetTenantId(HubCallerContext hubCallerContext)
     {
-        return _dbContext.Tenants.FirstOrDefault(t => t.FullName == GetTenantName(hubCallerContext))?.Id;
+        return _dbContext.Tenants.FirstOrDefault(t => t.Name == GetTenantName(hubCallerContext))?.Id;
     }
 
     public string GetTenantName(HubCallerContext hubCallerContext)

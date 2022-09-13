@@ -906,9 +906,6 @@
   <data name="Hour" xml:space="preserve">
     <value>Hora</value>
   </data>
-  <data name="How_Did_You_Hear_About_Us" xml:space="preserve">
-    <value>¿Cómo nos has conocido?</value>
-  </data>
   <data name="Hydro" xml:space="preserve">
     <value>Hidro</value>
   </data>
@@ -1329,9 +1326,6 @@
   <data name="Register_Confirmation" xml:space="preserve">
     <value>Confirmación de registro</value>
   </data>
-  <data name="Registration_Disclaimer" xml:space="preserve">
-    <value>Al proporcionar su dirección de correo electrónico y hacer clic en el botón para registrarse, acepta los Términos de servicio y la Política de privacidad de Elevate Ott. ¡Puede cambiar sus preferencias de comunicación en cualquier momento!</value>
-  </data>
   <data name="Remember_me" xml:space="preserve">
     <value>¿Recuérdame?</value>
   </data>
@@ -1568,9 +1562,6 @@
   </data>
   <data name="Start" xml:space="preserve">
     <value>Empezar</value>
-  </data>
-  <data name="Start_Your_Free_Trial" xml:space="preserve">
-    <value>Comienza tu prueba gratuita</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Estado</value>
@@ -1871,9 +1862,6 @@ Tamaño máximo del archivo: 3MB!</value>
   </data>
   <data name="Your_account_contains_personal_data_that_you_have_given_us" xml:space="preserve">
     <value>Su cuenta contiene datos personales que nos ha dado.</value>
-  </data>
-  <data name="Your_Channel_Name" xml:space="preserve">
-    <value>Nombre del canal</value>
   </data>
   <data name="Your_password_has_been_reset" xml:space="preserve">
     <value>Su contraseña ha sido restablecida</value>
