@@ -53,61 +53,69 @@ public class TenantInterceptorMiddleware
                 throw new ArgumentNullException(nameof(httpContext), nameof(httpContext) + " is required");
 
             case TenantMode.MultiTenant:
-            {
-                // If 'callback' in path, then request is from a webhook.
-                // In webhook callbacks, tenants are set in the webhook services.
-                if (httpContext.Request.Path.Value != null &&
-                    httpContext.Request.Path.Value.Contains("callback")) break;
-
-                // If registration workflow, then no tenant exists yet.
-                // Tenant created before app user in registration workflow.
-                if (httpContext.Request.Path.Value != null &&
-                      httpContext.Request.Path.Value.ToLower().Contains("account/register")) break;
-
-                // If login workflow, then tenant not yet known
-                if (httpContext.Request.Path.Value != null &&
-                    httpContext.Request.Path.Value.ToLower().Contains("account/login")) break;
-
-                // X-Tenant could be tenant id guid or subdomain/domain.
-                // If request from client portal, X-Tenant is tenant id guid
-                // If request from streaming web app, X-Tenant is subdomain/domain
-
-                var xTenant = httpContext.Request.Headers["X-Tenant"];
-
-                if (xTenant.Count == 0)
-                    xTenant = string.Empty;
-
-                if (dbContext.Tenants != null)
                 {
-                    Guid? tenantId = Guid.TryParse(xTenant.FirstOrDefault(), out Guid xTenantValue) 
-                        ? xTenantValue 
-                        : dbContext.Tenants.FirstOrDefault(t => t.CustomDomain != null && t.SubDomain != null && (t.SubDomain.Equals(xTenant.FirstOrDefault()) || t.CustomDomain.Equals(xTenant.FirstOrDefault())))?.Id;
+                    // If 'callback' in path, then request is from a webhook.
+                    // In webhook callbacks, tenants are set in the webhook services.
+                    if (httpContext.Request.Path.Value != null &&
+                        httpContext.Request.Path.Value.Contains("callback")) break;
 
-                    Console.WriteLine("tenantName @ API interceptor: " + xTenant);
-                
-                    // TODO guard against tenantName null or empty
-                    // TODO check if tenant name is Name or CustomDomain
-                    //tenantId = Guid.Parse("58330475-6dd1-47a0-bc22-3afa1cb0ece8");
-                
-                    if (httpContext.Request.Path.Value is { } pathValue
-                        && tenantId is null
-                        && xTenant[0] != Host
-                        && !pathValue.Contains("hangfire")
-                        && !pathValue.Contains("/Hubs/")
-                        && !pathValue.Contains("callback")
-                        && !pathValue.ToLower().Contains("account/register"))
-                        throw new Exception(Resource.Invalid_tenant_name);
+                    // If registration workflow, then no tenant exists yet.
+                    // Tenant created before app user in registration workflow.
+                    if (httpContext.Request.Path.Value != null &&
+                        httpContext.Request.Path.Value.ToLower().Contains("account/register")) break;
 
-                    if (tenantId.HasValue)
+
+                    // If login workflow, then tenant not yet known
+                    if (httpContext.Request.Path.Value != null &&
+                        httpContext.Request.Path.Value.ToLower().Contains("account/login"))
                     {
-                        tenantResolver.SetTenantId(tenantId);
+                        // Login needs a tenant id
+                        //tenantResolver.SetTenantId(Guid.Parse("91ccc3dc-68b0-468e-ad9a-3233d5b5eb8b"));
+                        //tenantResolver.SetTenantId(Guid.Empty);
+                        tenantResolver.IsLoginWorkflow = true;
+                        break;
                     }
+
+                    // X-Tenant could be tenant id guid or subdomain/domain.
+                    // If request from client portal, X-Tenant is tenant id guid
+                    // If request from streaming web app, X-Tenant is subdomain/domain
+
+                    var xTenant = httpContext.Request.Headers["X-Tenant"];
+
+                    if (xTenant.Count == 0)
+                        xTenant = string.Empty;
+
+                    if (dbContext.Tenants != null)
+                    {
+                        Guid? tenantId = Guid.TryParse(xTenant.FirstOrDefault(), out Guid xTenantValue)
+                            ? xTenantValue
+                            : dbContext.Tenants.FirstOrDefault(t => t.CustomDomain != null && t.SubDomain != null && (t.SubDomain.Equals(xTenant.FirstOrDefault()) || t.CustomDomain.Equals(xTenant.FirstOrDefault())))?.Id;
+
+                        Console.WriteLine("tenantName @ API interceptor: " + xTenant);
+
+                        // TODO guard against tenantName null or empty
+                        // TODO check if tenant name is Name or CustomDomain
+                        //tenantId = Guid.Parse("58330475-6dd1-47a0-bc22-3afa1cb0ece8");
+
+                        if (httpContext.Request.Path.Value is { } pathValue
+                            && tenantId is null
+                            && xTenant[0] != Host
+                            && !pathValue.Contains("hangfire")
+                            && !pathValue.Contains("/Hubs/")
+                            && !pathValue.Contains("callback")
+                            && !pathValue.ToLower().Contains("account/register"))
+                            throw new Exception(Resource.Invalid_tenant_name);
+
+                        if (tenantId.HasValue)
+                        {
+                            tenantResolver.SetTenantId(tenantId);
+                        }
+                    }
+
+                    //tenantResolver.SetTenantName(xTenant);
+
+                    break;
                 }
-
-                //tenantResolver.SetTenantName(xTenant);
-
-                break;
-            }
 
             case TenantMode.SingleTenant:
                 {

@@ -20,11 +20,11 @@ public class ApplicationRole : IdentityRole, IAuditable, IMayHaveTenant
     public ICollection<ApplicationUserRole> UserRoles { get; set; }
     public ICollection<ApplicationRoleClaim> RoleClaims { get; set; }
 
-    public string CreatedBy { get; set; } = string.Empty;
+    public string? CreatedBy { get; set; }
     public DateTime CreatedOn { get; set; }
-    public string ModifiedBy { get; set; } = string.Empty;
+    public string? ModifiedBy { get; set; }
     public DateTime? ModifiedOn { get; set; }
-    public string DeletedBy { get; set; } = string.Empty;
+    public string? DeletedBy { get; set; }
     public DateTime? DeletedOn { get; set; }
 
     #endregion Public Properties

@@ -2,6 +2,7 @@
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
 using ElevateOTT.Application.UseCases.Content;
+using ElevateOTT.Infrastructure.Identity.Stores;
 using ElevateOTT.Infrastructure.Repository;
 using ElevateOTT.Infrastructure.Services.Mux;
 

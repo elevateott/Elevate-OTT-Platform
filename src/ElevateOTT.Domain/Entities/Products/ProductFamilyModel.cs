@@ -1,27 +1,32 @@
 ﻿namespace ElevateOTT.Domain.Entities.Products;
 
 [Table("ProductFamilies")]
-public class ProductFamilyModel : BaseEntity
+public class ProductFamilyModel : BaseEntity, IMustHaveTenant
 {
-    public string ChargebeeItemFamilyId { get; set; } = string.Empty;
+    public Guid TenantId { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public ProductFamilyModel()
+    {
+        ProductItems = new List<ProductItemModel>();
+    }
+    public string? ChargebeeItemFamilyId { get; set; }
 
-    public string Description { get; set; } = string.Empty;
+    public string? Name { get; set; }
+
+    public string? Description { get; set; }
 
     public ProductFamilyStatus Status { get; set; }
 
     public long ResourceVersion { get; set; }
 
-    public string Object { get; set; } = string.Empty;
+    public string? Object { get; set; }
 
     #region foreign keys
-    //[ForeignKey(nameof(TenantModel))]
-    //public Guid? TenantId { get; set; }
+  
     #endregion
 
     #region navigational properties
-    //public TenantModel? Tenant { get; set; }
-    public List<ProductItemModel>? ProductItems { get; set; }
+   
+    public List<ProductItemModel> ProductItems { get; set; }
     #endregion
 }

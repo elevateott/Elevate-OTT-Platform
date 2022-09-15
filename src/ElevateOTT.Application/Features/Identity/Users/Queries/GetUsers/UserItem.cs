@@ -30,7 +30,7 @@ public class UserItem : AuditableDto
             UserName = u.UserName,
             Email = u.Email,
             Name = u.Name,
-            FullName = u.FullName,
+            //FullName = u.FullName,
             Surname = u.Surname,
             JobTitle = u.JobTitle,
             AvatarUri = u.AvatarUri,

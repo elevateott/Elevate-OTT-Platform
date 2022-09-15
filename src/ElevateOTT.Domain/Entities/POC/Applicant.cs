@@ -15,8 +15,8 @@ public class Applicant : IAuditable, IMustHaveTenant
 
     public Guid Id { get; set; }
     public int Ssn { get; set; }
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
     public DateTime? DateOfBirth { get; set; }
 
     [Column(TypeName = "decimal(18,4)")]
@@ -24,19 +24,20 @@ public class Applicant : IAuditable, IMustHaveTenant
 
     [Column(TypeName = "decimal(18,4)")]
     public decimal Weight { get; set; }
-    public string CreatedBy { get; set; } = string.Empty;
+    public string? CreatedBy { get; set; }
     public DateTime CreatedOn { get; set; }
-    public string ModifiedBy { get; set; } = string.Empty;
+    public string? ModifiedBy { get; set; }
     public DateTime? ModifiedOn { get; set; }
-    public string DeletedBy { get; set; } = string.Empty;
+    public string? DeletedBy { get; set; }
     public DateTime? DeletedOn { get; set; }
     public Guid TenantId { get; set; }
 
     #endregion Public Properties
 
-    #region Private Properties
 
-    public ICollection<Reference>? References { get; set; }
+    #region Navigational Properties
 
-    #endregion Private Properties
+    public ICollection<Reference> References { get; set; }
+
+    #endregion Navigational Properties
 }

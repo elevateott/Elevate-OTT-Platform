@@ -30,6 +30,8 @@ public class SignalRContextProvider : ISignalRContextProvider
         return $"{httpContext?.Scheme}://{httpContext?.Host}";
     }
 
+    
+
     public Guid? GetTenantId(HubCallerContext hubCallerContext)
     {
         return _dbContext.Tenants.FirstOrDefault(t => t.FullName == GetTenantName(hubCallerContext))?.Id;

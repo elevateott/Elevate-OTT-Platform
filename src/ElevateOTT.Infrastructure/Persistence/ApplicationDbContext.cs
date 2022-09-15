@@ -16,9 +16,9 @@ public class ApplicationDbContext : IdentityDbContext<
     #region Private Fields
 
     private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
-          {
-              builder.AddConsole();
-          });
+    {
+        builder.AddConsole();
+    });
 
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITenantResolver _tenantResolver;
@@ -61,7 +61,6 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<FileStorageSettings>? FileStorageSettings { get; set; }
 
     public DbSet<Tenant>? Tenants { get; set; }
-
 
     public DbSet<Applicant>? Applicants { get; set; }
     public DbSet<Reference>? References { get; set; }
@@ -343,11 +342,15 @@ public class ApplicationDbContext : IdentityDbContext<
     }
 
     private void SetQueryFilterOnMultiTenantsEntities(ModelBuilder builder)
-    {
-        builder.SetQueryFilterOnAllEntities<IMayHaveTenant>(p => p.TenantId == _tenantResolver.GetTenantId());
+    { 
+        // TODO re-think this for production
+        // login will not work with this. The context can't access Users because we don't have tenant id before login.
+        // We have to login first to then resolve the tenant id. 
+        //builder.SetQueryFilterOnAllEntities<IMayHaveTenant>(p => p.TenantId == _tenantResolver.GetTenantId());
 
         builder.SetQueryFilterOnAllEntities<IMustHaveTenant>(p => p.TenantId == _tenantResolver.GetTenantId());
     }
 
     #endregion Private Methods
 }
+

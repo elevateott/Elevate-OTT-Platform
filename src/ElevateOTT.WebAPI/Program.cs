@@ -1,4 +1,6 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using FluentValidation;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -10,14 +12,25 @@ builder.Services.AddHealthChecks();
 
 builder.Services.AddAppLocalization();
 
-builder.Services
-    .AddControllers(options => { options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; })
-    .AddFluentValidation(fv => { fv.RegisterValidatorsFromAssemblyContaining<IApplicationDbContext>(); })
+//builder.Services
+//    .AddControllers(options => { options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; })
+//    .AddFluentValidation(fv => { fv.RegisterValidatorsFromAssemblyContaining<IApplicationDbContext>(); })
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+//        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+//    });
+
+builder.Services.AddControllers(options => { options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; })
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
+
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters()
+    .AddValidatorsFromAssemblyContaining<IApplicationDbContext>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
@@ -66,6 +79,9 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
+        //
+        // TODO remove for production
+        //
         var context = services.GetRequiredService<ApplicationDbContext>();
         await context.Database.EnsureCreatedAsync();
         var permissionScannerService = services.GetRequiredService<IPermissionScannerService>();

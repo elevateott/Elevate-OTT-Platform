@@ -54,11 +54,16 @@ public class AccountUseCase : IAccountUseCase
 
     public async Task<Envelope<LoginResponse>> Login(LoginCommand request)
     {
-        
-        var users = await _userManager.Users.ToListAsync();
-        var appUser = await _userManager.FindByEmailAsync("cbastistini1@addtoany.com");
+        var tenants = await _dbContext.Tenants.ToListAsync();
+
+        var users = await _dbContext.Users.ToListAsync();
+
+
+        //var users = await _userManager.Users.ToListAsync();
+        var appUser = await _userManager.FindByEmailAsync("admin@demo");
 
         var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, lockoutOnFailure: false);
+        _tenantResolver.IsLoginWorkflow = false;
 
         if (result.Succeeded)
         {

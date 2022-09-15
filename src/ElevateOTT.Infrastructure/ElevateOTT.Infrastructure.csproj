@@ -32,6 +32,7 @@
     <Compile Remove="Identity\Extensions\GoogleAuthExtension.cs" />
     <Compile Remove="Logging\LoggerManager.cs" />
     <Compile Remove="Middleware\GlobalExceptionHandler.cs" />
+    <Compile Remove="Persistence\ApplicationDbContext - Copy.cs" />
     <Compile Remove="Repository\CommentRepository.cs" />
     <Compile Remove="Repository\ExtraRepository.cs" />
     <Compile Remove="Repository\ItemPriceRepository.cs" />

@@ -1,22 +1,24 @@
 ﻿namespace ElevateOTT.Domain.Entities.Products;
 
 [Table("ItemPrices")]
-public class ItemPriceModel : BaseEntity
+public class ItemPriceModel : BaseEntity, IMustHaveTenant
 {
+    public Guid TenantId { get; set; }
+
     #region Chargebee Properties
-    public string ChargebeeItemPriceId { get; set; } = string.Empty;
+    public string? ChargebeeItemPriceId { get; set; }
 
-    public string ItemId { get; set; } = string.Empty;
+    public string? ItemId { get; set; }
 
-    public string ItemFamilyId { get; set; } = string.Empty;
+    public string? ItemFamilyId { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     public ItemStatus Status { get; set; }
 
-    public string ExternalName { get; set; } = string.Empty;
+    public string? ExternalName { get; set; }
 
-    public string PricingModel { get; set; } = string.Empty;
+    public string? PricingModel { get; set; }
 
     public long ResourceVersion { get; set; }
 
@@ -25,21 +27,21 @@ public class ItemPriceModel : BaseEntity
     [Column(TypeName = "decimal(18,4)")]
     public decimal Price { get; set; }
 
-    public string PricingInDecimal { get; set; } = string.Empty;
+    public string? PricingInDecimal { get; set; }
 
     public int Period { get; set; }
 
     public BillingPeriodUnit PeriodUnit { get; set; }
 
-    public string CurrencyCode { get; set; } = string.Empty;
+    public string? CurrencyCode { get; set; }
 
-    public string Object { get; set; } = string.Empty;
+    public string? Object { get; set; }
 
     public int FreeQuantity { get; set; }
 
-    public string FreeQuantityInDecimal { get; set; } = string.Empty;
+    public string? FreeQuantityInDecimal { get; set; }
 
-    public string Channel { get; set; } = string.Empty;
+    public string? Channel { get; set; }
 
     public bool IsTaxable { get; set; }
 

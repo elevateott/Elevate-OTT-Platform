@@ -99,7 +99,7 @@ public class TenantUseCase : ITenantUseCase
 
         return new StorageNamePrefixResponse
         {
-            TenantId = tenantId, 
+            TenantId = tenantId,
             StorageFileNamePrefix = tenant?.StorageFileNamePrefix
         };
     }
@@ -109,6 +109,7 @@ public class TenantUseCase : ITenantUseCase
         var tenantId = _tenantResolver.GetTenantId();
         var tenant = _dbContext.Tenants?.FirstOrDefault(t => t.Id.Equals(tenantId));
         if (tenant == null) return;
+
         if (string.IsNullOrWhiteSpace(tenant.StorageFileNamePrefix))
         {
             tenant.StorageFileNamePrefix = Guid.NewGuid().ToString().Replace("-", "");

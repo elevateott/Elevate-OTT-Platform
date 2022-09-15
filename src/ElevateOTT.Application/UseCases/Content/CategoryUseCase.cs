@@ -140,7 +140,7 @@ public class CategoryUseCase : ICategoryUseCase
         {
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
-
+        // TODO uncomment
         string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
 
         var categoryEntity = await _repositoryManager.Category.GetCategoryAsync(tenantId.Value, request.Id, true);
@@ -184,7 +184,6 @@ public class CategoryUseCase : ICategoryUseCase
     #endregion Public Methods
 
     #region Private Methods
-
     private async Task<string> GetStorageFileNamePrefix(Guid tenantId)
     {
         if (_dbContext.Tenants == null) return string.Empty;

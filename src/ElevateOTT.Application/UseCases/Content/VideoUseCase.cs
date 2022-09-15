@@ -200,6 +200,7 @@ public class VideoUseCase : IVideoUseCase
         }      
 
         string? fileNamePrefix = string.Empty;
+
         if (_dbContext.Tenants != null)
         {
             var tenant = await _dbContext.Tenants.FindAsync(tenantId);

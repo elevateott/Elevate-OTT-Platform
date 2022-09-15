@@ -1,30 +1,37 @@
 ﻿namespace ElevateOTT.Domain.Entities.Products;
 
 [Table("ProductItems")]
-public class ProductItemModel : BaseEntity
+public class ProductItemModel : BaseEntity, IMustHaveTenant
 {
+    public Guid TenantId { get; set; }
+
+    public ProductItemModel()
+    {
+        ItemPrices = new List<ItemPriceModel>();
+    }
+
     #region Chargebee Properties
     public ProductItemType Type { get; set; }
 
-    public string ItemId { get; set; } = string.Empty;
+    public string? ItemId { get; set; }
 
-    public string ItemFamilyId { get; set; } = string.Empty;
+    public string? ItemFamilyId { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
-    public string ExternalName { get; set; } = string.Empty;
+    public string? ExternalName { get; set; }
 
     public string? Description { get; set; }
 
     public ItemStatus Status { get; set; }
 
-    public string ChargeModel { get; set; } = string.Empty;
+    public string? ChargeModel { get; set; }
 
     public int FreeQuantity { get; set; }
 
-    public string Object { get; set; } = string.Empty;
+    public string? Object { get; set; }
 
-    public string CurrencyCode { get; set; } = string.Empty;
+    public string? CurrencyCode { get; set; }
 
     public bool EnabledInHostedPages { get; set; }
 
@@ -38,11 +45,11 @@ public class ProductItemModel : BaseEntity
 
     public bool Taxable { get; set; }
 
-    public string Channel { get; set; } = string.Empty;
+    public string? Channel { get; set; }
 
-    public string Unit { get; set; } = string.Empty;
+    public string? Unit { get; set; }
 
-    public string UsageCalculation { get; set; } = string.Empty;
+    public string? UsageCalculation { get; set; }
 
     public bool IsShippable { get; set; }
 
@@ -50,20 +57,20 @@ public class ProductItemModel : BaseEntity
 
     public long ResourceVersion { get; set; }
 
-    public string RedirectUrl { get; set; } = string.Empty;
+    public string? RedirectUrl { get; set; }
 
-    public string ItemApplicability { get; set; } = string.Empty;
+    public string? ItemApplicability { get; set; }
     #endregion
 
-    public string Title { get; set; } = string.Empty;
+    public string? Title { get; set; }
 
-    public string ShortDescription { get; set; } = string.Empty;
+    public string? ShortDescription { get; set; }
 
-    public string LongDescription { get; set; } = string.Empty;
+    public string? LongDescription { get; set; }
 
-    public string Sku { get; set; } = string.Empty;
+    public string? Sku { get; set; }
 
-    public string Image { get; set; } = string.Empty;
+    public string Image { get; set; }
 
     public SubscriptionAvailability SubscriptionAvailability { get; set; }
 
@@ -74,6 +81,6 @@ public class ProductItemModel : BaseEntity
 
     #region navigational properties
     public ProductFamilyModel? ProductFamily { get; set; }
-    public List<ItemPriceModel>? ItemPrices { get; set; }
+    public List<ItemPriceModel> ItemPrices { get; set; }
     #endregion
 }

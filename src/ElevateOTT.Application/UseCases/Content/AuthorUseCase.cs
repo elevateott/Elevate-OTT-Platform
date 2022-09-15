@@ -112,7 +112,7 @@ public class AuthorUseCase : IAuthorUseCase
         {
             return Envelope<CreateAuthorResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
-
+    
         string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
 
         var author = _mapper.Map<AuthorModel>(request);
@@ -144,6 +144,7 @@ public class AuthorUseCase : IAuthorUseCase
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
         }
 
+        // TODO uncomment
         string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
 
         var authorEntity = await _repositoryManager.Author.GetAuthorAsync(tenantId.Value, request.Id, true);
@@ -192,7 +193,6 @@ public class AuthorUseCase : IAuthorUseCase
     #endregion Public Methods
 
     #region Private Methods
-
     private async Task<string> GetStorageFileNamePrefix(Guid tenantId)
     {
         if (_dbContext.Tenants == null) return string.Empty;

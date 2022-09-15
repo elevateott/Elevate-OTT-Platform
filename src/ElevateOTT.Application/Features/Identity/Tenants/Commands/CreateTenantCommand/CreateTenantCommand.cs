@@ -9,7 +9,7 @@ public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
 
 
     #region Public Properties
-
+    public string TenantName { get; set; }
     public string? ChannelName { get; set; }
     public string? FullName { get; set; }
     public string? SubDomain { get; set; }

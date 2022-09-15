@@ -26,6 +26,7 @@ public interface IApplicationDbContext : IDisposable
     DbSet<Reference>? References { get; set; }
     DbSet<Report>? Reports { get; set; }
 
+
     DbSet<AuthorModel>? Authors { get; set; }
     DbSet<VideoModel>? Videos { get; set; }
 

@@ -16,6 +16,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Entities\Identity - Copy\**" />
+	  <Compile Remove="Entities\Settings - Copy\**" />
+	  <EmbeddedResource Remove="Entities\Identity - Copy\**" />
+	  <EmbeddedResource Remove="Entities\Settings - Copy\**" />
+	  <None Remove="Entities\Identity - Copy\**" />
+	  <None Remove="Entities\Settings - Copy\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.8" />

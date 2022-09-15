@@ -17,29 +17,27 @@ public class ApplicationUser : IdentityUser, IAuditable, IMayHaveTenant
 
     #region Public Properties
 
-    // TODO remove first/last name add FullName
-
-    public string Name { get; set; } = string.Empty;
-    public string Surname { get; set; } = string.Empty;
-    public string FullName { get; set; } = string.Empty;
-    public string JobTitle { get; set; } = string.Empty;
-    public string AvatarUri { get; set; } = string.Empty;
+    public Guid? TenantId { get; set; }
+    public string? Name { get; set; } 
+    public string? Surname { get; set; } 
+    public string FullName => $"{Name} {Surname}";
+    public string? JobTitle { get; set; } 
+    public string? AvatarUri { get; set; } 
     public bool IsSuspended { get; set; }
     public bool IsStatic { get; set; }
     public bool IsDemo { get; set; }
-    public string RefreshToken { get; set; } = string.Empty;
+    public string? RefreshToken { get; set; } 
     public DateTime RefreshTokenTimeSpan { get; set; }
-    public Guid? TenantId { get; set; }
     public List<ApplicationUserClaim> Claims { get; set; }
     public List<ApplicationUserLogin> Logins { get; set; }
     public List<ApplicationUserToken> Tokens { get; set; }
     public List<ApplicationUserRole> UserRoles { get; set; }
     public List<ApplicationUserAttachment> UserAttachments { get; set; }
-    public string CreatedBy { get; set; } = string.Empty;
+    public string? CreatedBy { get; set; } 
     public DateTime CreatedOn { get; set; }
-    public string ModifiedBy { get; set; } = string.Empty;
+    public string? ModifiedBy { get; set; } 
     public DateTime? ModifiedOn { get; set; }
-    public string DeletedBy { get; set; } = string.Empty;
+    public string? DeletedBy { get; set; } 
     public DateTime? DeletedOn { get; set; }
 
     #endregion Public Properties

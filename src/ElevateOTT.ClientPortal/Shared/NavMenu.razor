@@ -1,6 +1,7 @@
 ﻿
 <AuthorizeView>
     <Authorized>
+        <!-- TODO get claims in cs file -->
         <PersonCard FullName="@context.User.Claims.FirstOrDefault(c=>c.Type == "FullName").Value"
                     AvatarUri="@context.User.Claims.FirstOrDefault(c=>c.Type == "AvatarUri").Value"
                     JobTitle="@context.User.Claims.FirstOrDefault(c=>c.Type == "JobTitle").Value"
@@ -94,7 +95,7 @@
 
         <MudNavLink Href="/poc/GlobalVariable" Icon="@Icons.Material.Outlined.AirplaneTicket">@Resource.Global_Variable</MudNavLink>
     </MudNavGroup>
-    
+
     <MudNavGroup Title="@Resource.Settings" Icon="@Icons.Material.Outlined.Settings" IconColor="Color.Primary" Expanded="false">
         <MudNavLink Href="settings/identitySettings" Icon="@Icons.Material.Outlined.AdminPanelSettings">@Resource.Identity_Settings</MudNavLink>
         <MudNavLink Href="settings/tokenSettings" Icon="@Icons.Material.Outlined.Lock">@Resource.Token_Settings</MudNavLink>
