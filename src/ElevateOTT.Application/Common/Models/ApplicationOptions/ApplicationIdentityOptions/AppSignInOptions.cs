@@ -24,7 +24,9 @@ public class AppSignInOptions
         {
             //RequireConfirmedEmail = RequireConfirmedEmail,
             //RequireConfirmedPhoneNumber = RequireConfirmedPhoneNumber,
-            RequireConfirmedAccount = RequireConfirmedAccount
+
+            // TODO set this to true after email activation workflow set up
+            RequireConfirmedAccount = false // RequireConfirmedAccount
         };
     }
 

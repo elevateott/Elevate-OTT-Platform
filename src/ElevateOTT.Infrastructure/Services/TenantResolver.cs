@@ -12,7 +12,6 @@ public class TenantResolver : ITenantResolver
     #region Public Properties
 
     public TenantMode TenantMode { get; set; }
-    public bool IsLoginWorkflow { get; set; }
 
     #endregion Public Properties
 

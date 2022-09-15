@@ -6,8 +6,6 @@ public interface ITenantResolver
 
     TenantMode TenantMode { get; set; }
 
-    bool IsLoginWorkflow { get; set; }
-
     #endregion Public Properties
 
     #region Public Methods

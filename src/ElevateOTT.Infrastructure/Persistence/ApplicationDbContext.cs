@@ -342,12 +342,9 @@ public class ApplicationDbContext : IdentityDbContext<
     }
 
     private void SetQueryFilterOnMultiTenantsEntities(ModelBuilder builder)
-    { 
-        // TODO re-think this for production
-        // login will not work with this. The context can't access Users because we don't have tenant id before login.
-        // We have to login first to then resolve the tenant id. 
-        //builder.SetQueryFilterOnAllEntities<IMayHaveTenant>(p => p.TenantId == _tenantResolver.GetTenantId());
-
+    {
+        builder.SetQueryFilterOnAllEntities<IMayHaveTenant>(p => p.TenantId == _tenantResolver.GetTenantId());
+        
         builder.SetQueryFilterOnAllEntities<IMustHaveTenant>(p => p.TenantId == _tenantResolver.GetTenantId());
     }
 

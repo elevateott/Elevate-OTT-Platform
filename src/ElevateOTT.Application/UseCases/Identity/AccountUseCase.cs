@@ -1,4 +1,6 @@
-﻿namespace ElevateOTT.Application.UseCases.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace ElevateOTT.Application.UseCases.Identity;
 
 public class AccountUseCase : IAccountUseCase
 {
@@ -54,16 +56,16 @@ public class AccountUseCase : IAccountUseCase
 
     public async Task<Envelope<LoginResponse>> Login(LoginCommand request)
     {
-        var tenants = await _dbContext.Tenants.ToListAsync();
+        
+        var userEntity = await _userManager.Users.IgnoreQueryFilters()
+            .FirstOrDefaultAsync(u => u.Email.Equals(request.Email));
 
-        var users = await _dbContext.Users.ToListAsync();
-
-
-        //var users = await _userManager.Users.ToListAsync();
-        var appUser = await _userManager.FindByEmailAsync("admin@demo");
+        if (userEntity != null)
+        {
+            _tenantResolver.SetTenantId(userEntity.TenantId);
+        }
 
         var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, lockoutOnFailure: false);
-        _tenantResolver.IsLoginWorkflow = false;
 
         if (result.Succeeded)
         {
@@ -188,7 +190,7 @@ public class AccountUseCase : IAccountUseCase
 
             var payload = new RegisterResponse
             {
-                RequireConfirmedAccount = true,
+                RequireConfirmedAccount = false, // TODO set this to true after email activation workflow set up
                 DisplayConfirmAccountLink = true,
                 Email = user.Email,
                 EmailConfirmationUrl = HttpUtility.UrlEncode(callbackUrl),

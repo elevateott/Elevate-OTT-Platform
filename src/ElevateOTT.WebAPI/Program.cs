@@ -73,27 +73,29 @@ builder.Services.AddScoped<ILiveStreamHubNotificationService, LiveStreamHubNotif
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+//
+// TODO remove for production
+// This creates new db and seeds with fake data
+//
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
 
-    try
-    {
-        //
-        // TODO remove for production
-        //
-        var context = services.GetRequiredService<ApplicationDbContext>();
-        await context.Database.EnsureCreatedAsync();
-        var permissionScannerService = services.GetRequiredService<IPermissionScannerService>();
-        await ApplicationDbContextSeeder.SeedAsync(permissionScannerService);
-    }
-    catch (Exception ex)
-    {
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+//    try
+//    {
+//        var context = services.GetRequiredService<ApplicationDbContext>();
+//        await context.Database.EnsureCreatedAsync();
+//        var permissionScannerService = services.GetRequiredService<IPermissionScannerService>();
+//        await ApplicationDbContextSeeder.SeedAsync(permissionScannerService);
+//    }
+//    catch (Exception ex)
+//    {
+//        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-        logger.LogError(ex, $"An error occurred while migrating or seeding the database.|{ex.InnerException?.ToString() ?? ex.Message}");
-    }
-}
+//        logger.LogError(ex, $"An error occurred while migrating or seeding the database.|{ex.InnerException?.ToString() ?? ex.Message}");
+//    }
+//}
+
 // Configure the HTTP request pipeline.
 
 ServiceActivator.Configure(app.Services.CreateScope().ServiceProvider);

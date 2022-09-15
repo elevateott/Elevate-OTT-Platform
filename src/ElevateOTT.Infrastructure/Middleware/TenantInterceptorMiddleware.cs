@@ -67,14 +67,8 @@ public class TenantInterceptorMiddleware
 
                     // If login workflow, then tenant not yet known
                     if (httpContext.Request.Path.Value != null &&
-                        httpContext.Request.Path.Value.ToLower().Contains("account/login"))
-                    {
-                        // Login needs a tenant id
-                        //tenantResolver.SetTenantId(Guid.Parse("91ccc3dc-68b0-468e-ad9a-3233d5b5eb8b"));
-                        //tenantResolver.SetTenantId(Guid.Empty);
-                        tenantResolver.IsLoginWorkflow = true;
-                        break;
-                    }
+                        httpContext.Request.Path.Value.ToLower().Contains("account/login")) break;
+
 
                     // X-Tenant could be tenant id guid or subdomain/domain.
                     // If request from client portal, X-Tenant is tenant id guid

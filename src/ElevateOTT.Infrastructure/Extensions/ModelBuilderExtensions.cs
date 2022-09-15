@@ -1,10 +1,5 @@
 ﻿namespace ElevateOTT.Infrastructure.Extensions;
 
-/*
-    Copyright Phil Haack
-    Licensed under the MIT license - https://github.com/haacked/CodeHaacks/blob/main/LICENSE.
-    */
-
 public static class ModelBuilderExtensions
 {
     #region Private Fields
