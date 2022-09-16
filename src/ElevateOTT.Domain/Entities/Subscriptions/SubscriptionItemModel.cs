@@ -17,11 +17,11 @@ public class SubscriptionItemModel : BaseEntity
 
     public int Quantity { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal UnitPrice { get; set; }
+    
+    public double UnitPrice { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal Amount { get; set; }
+    
+    public double Amount { get; set; }
 
     public int FreeQuantity { get; set; }
 

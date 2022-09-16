@@ -19,11 +19,11 @@ public class Applicant : IAuditable, IMustHaveTenant
     public string? LastName { get; set; }
     public DateTime? DateOfBirth { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal Height { get; set; }
+    
+    public double Height { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal Weight { get; set; }
+    
+    public double Weight { get; set; }
     public string? CreatedBy { get; set; }
     public DateTime CreatedOn { get; set; }
     public string? ModifiedBy { get; set; }

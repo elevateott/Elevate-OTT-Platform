@@ -12,11 +12,11 @@ public class ApplicantItem : AuditableDto
     public string LastName { get; set; } = string.Empty;
     public string FullName => $"{FirstName} {LastName}";
     public DateTime? DateOfBirth { get; set; }
-    public decimal Height { get; set; }
-    public decimal Weight { get; set; }
+    public double Height { get; set; }
+    public double Weight { get; set; }
     public List<ApplicantReferenceItem> References { get; set; }
 
-    public decimal Bmi
+    public double Bmi
     {
         get => Height != 0 ? Weight / (Height / 100 * 2) : 0;
         set { if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value)); }

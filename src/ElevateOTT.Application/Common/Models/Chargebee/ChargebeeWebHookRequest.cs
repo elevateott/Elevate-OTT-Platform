@@ -171,19 +171,19 @@ public class SubscriptionItem
 
     [JsonPropertyName("quantity")] public int Quantity { get; set; }
 
-    [JsonPropertyName("quantity_in_decimal")] public string QuantityInDecimal { get; set; } = string.Empty;
+    [JsonPropertyName("quantity_in_double")] public string QuantityIndouble { get; set; } = string.Empty;
 
-    [JsonPropertyName("unit_price")] public decimal UnitPrice { get; set; }
+    [JsonPropertyName("unit_price")] public double UnitPrice { get; set; }
 
-    [JsonPropertyName("unit_price_in_decimal")] public string UnitPriceInDecimal { get; set; } = string.Empty;
+    [JsonPropertyName("unit_price_in_double")] public string UnitPriceIndouble { get; set; } = string.Empty;
 
-    [JsonPropertyName("amount")] public decimal Amount { get; set; }
+    [JsonPropertyName("amount")] public double Amount { get; set; }
 
-    [JsonPropertyName("amount_in_decimal")] public string AmountInDecimal { get; set; } = string.Empty;
+    [JsonPropertyName("amount_in_double")] public string AmountIndouble { get; set; } = string.Empty;
 
     [JsonPropertyName("free_quantity")] public int FreeQuantity { get; set; }
 
-    [JsonPropertyName("free_quantity_in_decimal")] public string FreeQuantityInDecimal { get; set; } = string.Empty;
+    [JsonPropertyName("free_quantity_in_double")] public string FreeQuantityIndouble { get; set; } = string.Empty;
 
     [JsonPropertyName("object")] public string Object { get; set; } = string.Empty;
 }
@@ -276,9 +276,9 @@ public class ItemPrice
 
     [JsonPropertyName("created_at")] public long CreatedAt { get; set; }
 
-    [JsonPropertyName("price")] public decimal Price { get; set; }
+    [JsonPropertyName("price")] public double Price { get; set; }
 
-    [JsonPropertyName("price_in_decimal")] public string PricingInDecimal { get; set; } = string.Empty;
+    [JsonPropertyName("price_in_double")] public string PricingIndouble { get; set; } = string.Empty;
 
     [JsonPropertyName("period")] public int Period { get; set; }
 
@@ -290,7 +290,7 @@ public class ItemPrice
 
     [JsonPropertyName("free_quantity")] public int FreeQuantity { get; set; }
 
-    [JsonPropertyName("free_quantity_in_decimal")] public string FreeQuantityInDecimal { get; set; } = string.Empty;
+    [JsonPropertyName("free_quantity_in_double")] public string FreeQuantityIndouble { get; set; } = string.Empty;
 
     [JsonPropertyName("channel")] public string Channel { get; set; } = string.Empty;
 
@@ -380,7 +380,7 @@ public class Plan
 
     [JsonPropertyName("name")] public string Name { get; set; } = string.Empty;
 
-    [JsonPropertyName("price")] public decimal Price { get; set; }
+    [JsonPropertyName("price")] public double Price { get; set; }
 
     [JsonPropertyName("period")] public int Period { get; set; }
 
@@ -454,7 +454,7 @@ public class AddOn
 
     [JsonPropertyName("period")] public int Period { get; set; }
 
-    [JsonPropertyName("price")] public decimal Price { get; set; }
+    [JsonPropertyName("price")] public double Price { get; set; }
 
     [JsonPropertyName("updated_at")] public long UpdatedAt { get; set; }
 

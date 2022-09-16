@@ -26,13 +26,13 @@ public class VideoModel : BaseAsset, IMustHaveTenant
 
     public bool HasOneTimePurchasePrice { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal OneTimePurchasePrice { get; set; }
+    
+    public double OneTimePurchasePrice { get; set; }
     public bool HasRentalPrice { get; set; }
     public RentalDuration RentalDuration { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal RentalPrice { get; set; }
+    
+    public double RentalPrice { get; set; }
 
 
     #region foreign keys

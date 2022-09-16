@@ -19,25 +19,25 @@ public class HeadlinesResponse
 
     #region Public Properties
 
-    public decimal TotalCost
+    public double TotalCost
     {
         get { return TotalCost = _rnd.Next(1, 1000000); }
         set { }
     }
 
-    public decimal GraphiteOnRoof
+    public double GraphiteOnRoof
     {
         get { return GraphiteOnRoof = _rnd.Next(1, 1000000); }
         set { }
     }
 
-    public decimal GlobalSpread
+    public double GlobalSpread
     {
         get { return GlobalSpread = _rnd.Next(1, 1000000); }
         set { }
     }
 
-    public decimal Roentgen
+    public double Roentgen
     {
         get { return Roentgen = _rnd.Next(1, 1000000); }
         set { }

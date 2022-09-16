@@ -32,7 +32,7 @@ public class ApplicantForEditValidator : AbstractValidator<ApplicantForEdit>
             .InclusiveBetween(40, 200).WithMessage(BackendResources.Resource.Only_those_who_weigh_between_50_and_200_with_normal_BMI_are_allowed_for_enlisting);
 
         RuleFor(a => a.Bmi).Cascade(CascadeMode.Stop)
-            .InclusiveBetween(18.5m, 24.9m).WithMessage(BackendResources.Resource.Only_those_whose_BMI_between_18_5_and_24_9_are_allowed_for_enlisting);
+            .InclusiveBetween(18.5, 24.9).WithMessage(BackendResources.Resource.Only_those_whose_BMI_between_18_5_and_24_9_are_allowed_for_enlisting);
     }
 
     #endregion Public Constructors

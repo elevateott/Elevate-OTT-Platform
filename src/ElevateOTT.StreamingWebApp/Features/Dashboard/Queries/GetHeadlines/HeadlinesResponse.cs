@@ -4,10 +4,10 @@ public class HeadlinesResponse
 {
     #region Public Properties
 
-    public decimal TotalCost { get; set; }
-    public decimal GraphiteOnRoof { get; set; }
-    public decimal GlobalSpread { get; set; }
-    public decimal Roentgen { get; set; }
+    public double TotalCost { get; set; }
+    public double GraphiteOnRoof { get; set; }
+    public double GlobalSpread { get; set; }
+    public double Roentgen { get; set; }
 
     #endregion Public Properties
 }

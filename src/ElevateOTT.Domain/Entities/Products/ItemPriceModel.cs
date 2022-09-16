@@ -24,8 +24,8 @@ public class ItemPriceModel : BaseEntity, IMustHaveTenant
 
     public bool Archivable { get; set; }
 
-    [Column(TypeName = "decimal(18,4)")]
-    public decimal Price { get; set; }
+    
+    public double Price { get; set; }
 
     public string? PricingInDecimal { get; set; }
 

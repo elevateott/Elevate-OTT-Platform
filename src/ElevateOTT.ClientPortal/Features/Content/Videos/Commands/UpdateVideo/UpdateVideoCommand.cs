@@ -10,10 +10,10 @@ public class UpdateVideoCommand : BaseAssetDto
     public bool Mp4Support { get; set; } 
 
     public bool HasOneTimePurchasePrice { get; set; }
-    public decimal OneTimePurchasePrice { get; set; }
+    public double OneTimePurchasePrice { get; set; }
     public bool HasRentalPrice { get; set; }
     public RentalDuration RentalDuration { get; set; }
-    public decimal RentalPrice { get; set; }
+    public double RentalPrice { get; set; }
 
     public Guid? TrailerVideoId { get; set; }
     public Guid? FeaturedCategoryVideoId { get; set; }
