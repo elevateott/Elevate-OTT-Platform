@@ -5,5 +5,9 @@ cd ElevateOTT.Infrastructure
 dotnet ef migrations add --startup-project ..\ElevateOTT.WebAPI\ MigrationName
 dotnet ef database update --startup-project ..\ElevateOTT.WebAPI\
 
+dotnet ef migrations remove --startup-project ..\ElevateOTT.WebAPI\
+
+--verbose
+
 
 https://docs.microsoft.com/en-us/ef/core/cli/dotnet#update-the-tools

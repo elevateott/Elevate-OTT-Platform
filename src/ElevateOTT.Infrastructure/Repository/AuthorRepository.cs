@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using DocumentFormat.OpenXml.Presentation;
 using ElevateOTT.Application.Common.Interfaces.Repository;
 using ElevateOTT.Application.Features.Content.Authors.Queries.GetAuthors;
 using ElevateOTT.Domain.Entities.Content;
@@ -16,6 +17,7 @@ namespace ElevateOTT.Infrastructure.Repository
         {
             Guard.Against.Null(request, nameof(request));
 
+            // TODO may not need tenant id
             var query = FindAll(trackChanges)
                 .Where(a => a.TenantId.Equals(tenantId));
 

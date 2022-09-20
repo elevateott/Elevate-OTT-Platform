@@ -108,7 +108,7 @@ public class AddRequiredHeaderParameter : IOperationFilter
         });
         operation.Parameters.Add(new OpenApiParameter
         {
-            Name = "Accept-Language",
+            Name = "Accept-LanguageCode",
             In = ParameterLocation.Header,
             Schema = new OpenApiSchema
             {

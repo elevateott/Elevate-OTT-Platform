@@ -18,12 +18,15 @@
 
   <ItemGroup>
     <Compile Remove="Identity\Managers\**" />
+    <Compile Remove="Migrations\v4_Archive\**" />
     <Compile Remove="Organaisations\**" />
     <Compile Remove="Persistence\NewFolder\**" />
     <EmbeddedResource Remove="Identity\Managers\**" />
+    <EmbeddedResource Remove="Migrations\v4_Archive\**" />
     <EmbeddedResource Remove="Organaisations\**" />
     <EmbeddedResource Remove="Persistence\NewFolder\**" />
     <None Remove="Identity\Managers\**" />
+    <None Remove="Migrations\v4_Archive\**" />
     <None Remove="Organaisations\**" />
     <None Remove="Persistence\NewFolder\**" />
   </ItemGroup>

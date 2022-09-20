@@ -1,10 +1,12 @@
 ﻿using ElevateOTT.Application.Common.Interfaces.Mux;
 using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Application.Common.Interfaces.Services.UtilityServices;
 using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
 using ElevateOTT.Application.UseCases.Content;
 using ElevateOTT.Infrastructure.Identity.Stores;
 using ElevateOTT.Infrastructure.Repository;
 using ElevateOTT.Infrastructure.Services.Mux;
+using ElevateOTT.Infrastructure.Services.UtilityServices;
 
 namespace ElevateOTT.Infrastructure;
 
@@ -89,7 +91,7 @@ public static class DependencyInjection
         services.AddScoped<IHtmlReportBuilder, HtmlReportBuilder>();
 
         services.AddScoped<IFileStorageService, AzureStorageService>();
-        services.AddScoped<IFileStorageService, OnPremiseStorageService>();
+        //services.AddScoped<IFileStorageService, OnPremiseStorageService>();
 
         services.AddScoped<IDataExportService, DataExportService>();
         services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
@@ -104,6 +106,7 @@ public static class DependencyInjection
 
         services.AddScoped<IMuxWebhookService, MuxWebhookService>();
         services.AddScoped<IMuxAssetService, MuxAssetService>();
+        services.AddScoped<IServiceUtils, ServiceUtils>();
 
         services.AddScoped<IAccountUseCase, AccountUseCase>();
         services.AddScoped<IManageUseCase, ManageUseCase>();
@@ -117,6 +120,8 @@ public static class DependencyInjection
         services.AddScoped<IAuthorUseCase, AuthorUseCase>();
         services.AddScoped<IVideoUseCase, VideoUseCase>();
         services.AddScoped<ICategoryUseCase, CategoryUseCase>();
+        services.AddScoped<IContentFeedUseCase, ContentFeedUseCase>();
+        services.AddScoped<IContentFeedService, ContentFeedService>();
 
         services.AddScoped<IRepositoryManager, RepositoryManager>();
 

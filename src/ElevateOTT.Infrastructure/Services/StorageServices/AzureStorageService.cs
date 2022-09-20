@@ -186,6 +186,34 @@ public class AzureStorageService : IFileStorageService
         return !string.IsNullOrWhiteSpace(oldUrl) ? FileStatus.Unchanged : FileStatus.Deleted;
     }
 
+    public async Task<string> SaveContentFeed(string jsonString, string fileNamePrefix, int? version)
+    {
+        var blobOptions = _configReaderService.GetBlobOptions();
+        string fileName = blobOptions.ContentFeedFileName;
+        string versionStr = (version is null ? blobOptions.ContentFeedVersion : version.ToString()) ?? "1";
+
+        string containerName = blobOptions.ContentFeedBlobContainerName;
+
+        var blobName = $"{fileNamePrefix}/{fileName}-v{versionStr}.json";
+
+        // Get a reference to a container and then create it if doesn't exist
+        var container = new BlobContainerClient(_connectionString, containerName);
+        await container.CreateIfNotExistsAsync();
+        await container.SetAccessPolicyAsync(PublicAccessType.Blob);
+
+        await container.DeleteBlobIfExistsAsync(blobName, DeleteSnapshotsOption.IncludeSnapshots);
+
+        // Get a reference to a blob 
+        var blob = container.GetBlobClient(blobName);
+
+        using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonString)))
+        {
+            await blob.UploadAsync(ms);
+        }
+
+        return blob.Uri.ToString(); 
+    }
+
     #endregion Public Methods
 
     #region Private Methods

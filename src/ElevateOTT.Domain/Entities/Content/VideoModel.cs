@@ -17,21 +17,13 @@ public class VideoModel : BaseAsset, IMustHaveTenant
     }
 
     public Guid TenantId { get; set; }
-
     public bool Mp4Support { get; set; }
-
     public Guid? TrailerVideoId { get; set; }
     public Guid? FeaturedCategoryVideoId { get; set; }
-
-
     public bool HasOneTimePurchasePrice { get; set; }
-
-    
     public double OneTimePurchasePrice { get; set; }
     public bool HasRentalPrice { get; set; }
     public RentalDuration RentalDuration { get; set; }
-
-    
     public double RentalPrice { get; set; }
 
 

@@ -1,4 +1,7 @@
-﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+﻿using Ardalis.GuardClauses;
+using Azure.Core;
+using ElevateOTT.Application.Common.Interfaces.Repository;
+using ElevateOTT.Domain.Entities;
 using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Infrastructure.Repository
@@ -9,11 +12,13 @@ namespace ElevateOTT.Infrastructure.Repository
         : base(applicationDbContext)
         {
         }
+        public IQueryable<ContentFeedModel> GetContentFeeds(bool trackChanges)
+        {
+            // TODO may not need tenant id
+            var query = FindAll(trackChanges);
 
-        //public async Task<PagedList<ContentFeedModel>> GetContentFeedsAsync(Guid tenantId, ContentFeedParameters contentFeedParameters, bool trackChanges)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            return query;
+        }
 
         public async Task<ContentFeedModel?> GetContentFeedAsync(Guid contentFeedId, bool trackChanges) =>
             await FindByCondition(a => a.Id.Equals(contentFeedId), trackChanges)
@@ -23,11 +28,11 @@ namespace ElevateOTT.Infrastructure.Repository
             await FindByCondition(expression, trackChanges)
                 .SingleOrDefaultAsync();
 
-        //public void CreateContentFeedForTenant(Guid tenantId, ContentFeedModel contentFeed)
-        //{
-        //    contentFeed.TenantId = tenantId;
-        //    Create(contentFeed);
-        //}
+        public void CreateContentFeedForTenant(ContentFeedModel contentFeed)
+        {
+            Create(contentFeed);
+        }
+
         public async Task<IEnumerable<ContentFeedModel>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
             await FindByCondition(x => ids.Contains(x.Id), trackChanges).ToListAsync();
 

@@ -75,7 +75,6 @@ var app = builder.Build();
 
 //
 // TODO remove for production
-// This creates new db and seeds with fake data
 //
 //using (var scope = app.Services.CreateScope())
 //{

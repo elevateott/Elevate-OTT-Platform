@@ -4,6 +4,7 @@ using ElevateOTT.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElevateOTT.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220919221100_Migration1000")]
+    partial class Migration1000
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,9 +290,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("PublicPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PublicStreamUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PublicationStatus")
                         .HasColumnType("int");
 
@@ -322,9 +321,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("SignedPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SignedStreamUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Sku")
                         .HasColumnType("nvarchar(max)");
 
@@ -345,6 +341,9 @@ namespace ElevateOTT.Infrastructure.Migrations
 
                     b.Property<int>("StreamType")
                         .HasColumnType("int");
+
+                    b.Property<string>("PublicStreamUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -464,9 +463,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("PublicPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PublicStreamUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PublicationStatus")
                         .HasColumnType("int");
 
@@ -486,14 +482,14 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("SignedPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SignedStreamUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StreamCreationStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("PublicStreamUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -639,9 +635,6 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("PublicPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PublicStreamUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PublicationStatus")
                         .HasColumnType("int");
 
@@ -667,14 +660,14 @@ namespace ElevateOTT.Infrastructure.Migrations
                     b.Property<string>("SignedPlaybackId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SignedStreamUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StreamCreationStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("PublicStreamUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");

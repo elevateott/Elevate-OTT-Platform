@@ -153,5 +153,10 @@ public class OnPremiseStorageService : IFileStorageService
         return !string.IsNullOrWhiteSpace(oldUrl) ? FileStatus.Unchanged : FileStatus.Deleted;
     }
 
+    public Task<string> SaveContentFeed(string jsonString, string fileNamePrefix, int? version)
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion Public Methods
 }

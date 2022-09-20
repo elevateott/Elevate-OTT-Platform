@@ -28,7 +28,7 @@ public static class HttpContextExtensions
 
     public static string GetLanguage(this IHttpContextAccessor httpContextAccessor)
     {
-        var language = httpContextAccessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+        var language = httpContextAccessor.HttpContext.Request.Headers["Accept-LanguageCode"].ToString();
 
         return language ?? string.Empty;
     }

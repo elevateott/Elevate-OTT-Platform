@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ElevateOTT.Application.Features.Identity.Tenants.Queries;
+
 public class StorageNamePrefixResponse
 {
     public Guid? TenantId { get; set; }

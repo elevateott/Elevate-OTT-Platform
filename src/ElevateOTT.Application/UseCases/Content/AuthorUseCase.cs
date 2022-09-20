@@ -28,6 +28,7 @@ public class AuthorUseCase : IAuthorUseCase
     private readonly ITenantResolver _tenantResolver;
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
+    private readonly IContentFeedService _contentFeedService;
 
     #endregion Private Fields
 
@@ -40,7 +41,8 @@ public class AuthorUseCase : IAuthorUseCase
                             IRepositoryManager repositoryManager,
                             ITenantResolver tenantResolver, 
                             IStorageProvider storageProvider, 
-                            IConfigReaderService configReaderService)
+                            IConfigReaderService configReaderService, 
+                            IContentFeedService contentFeedService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -50,6 +52,7 @@ public class AuthorUseCase : IAuthorUseCase
         _tenantResolver = tenantResolver;
         _storageProvider = storageProvider;
         _configReaderService = configReaderService;
+        _contentFeedService = contentFeedService;
     }
 
     #endregion Public Constructors
@@ -126,6 +129,8 @@ public class AuthorUseCase : IAuthorUseCase
         _repositoryManager.Author.CreateAuthor(author);
         await _repositoryManager.SaveAsync();
 
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
         var createAuthorResponse = new CreateAuthorResponse
         {
             Id = author.Id,
@@ -161,6 +166,9 @@ public class AuthorUseCase : IAuthorUseCase
 
         await _repositoryManager.SaveAsync();
 
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
+
         return Envelope<string>.Result.Ok(Resource.Author_has_been_updated_successfully);
     }
 
@@ -181,6 +189,9 @@ public class AuthorUseCase : IAuthorUseCase
 
         _repositoryManager.Author.DeleteAuthor(authorEntity);
         await _repositoryManager.SaveAsync();
+
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
 
         return Envelope<string>.Result.Ok(Resource.Author_has_been_deleted_successfully);
     }
