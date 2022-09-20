@@ -13,12 +13,15 @@ namespace ElevateOTT.Infrastructure.Repository
         {
         }
 
-        public IQueryable<CategoryModel>? GetCategories(Guid tenantId, GetCategoriesQuery? request, bool trackChanges)
+        public IQueryable<CategoryModel>? GetCategories(GetCategoriesQuery? request, bool trackChanges)
         {
             Guard.Against.Null(request, nameof(request));
 
-            var query = FindAll(trackChanges)
-                .Where(a => a.TenantId.Equals(tenantId));
+            //var query = FindAll(trackChanges)
+            //    .Where(a => a.TenantId.Equals(tenantId));
+
+            // TODO may not need tenant id
+            var query = FindAll(trackChanges);
 
             if (!string.IsNullOrWhiteSpace(request.SearchText))
                 query = query.Where(r => r.Title.Contains(request.SearchText));
@@ -30,9 +33,8 @@ namespace ElevateOTT.Infrastructure.Repository
             return query;
         }
 
-        public async Task<CategoryModel?> GetCategoryAsync(Guid tenantId, Guid categoryId, bool trackChanges) =>
-            await FindByCondition(a => a.TenantId.Equals(tenantId)
-                                       && a.Id.Equals(categoryId), trackChanges)
+        public async Task<CategoryModel?> GetCategoryAsync(Guid categoryId, bool trackChanges) =>
+            await FindByCondition(a =>  a.Id.Equals(categoryId), trackChanges)
                 .SingleOrDefaultAsync();
 
         public async Task<CategoryModel?> FindCategoryByConditionAsync(Expression<Func<CategoryModel, bool>> expression, bool trackChanges) =>

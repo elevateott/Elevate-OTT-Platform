@@ -5,36 +5,27 @@ namespace ElevateOTT.Domain.Entities.Content;
 public abstract class BaseAsset : BaseEntity
 {
     [Url(ErrorMessage = "Invalid url.")]
-    public string? StreamUrl { get; set; }
+    public string? PublicStreamUrl { get; set; }
+
+    [Url(ErrorMessage = "Invalid url.")]
+    public string? SignedStreamUrl { get; set; }
 
     [Url(ErrorMessage = "Invalid url.")]
     public string? BlobUrl { get; set; }
-
     public string? SeoTitle { get; set; }
-
     public string? SeoDescription { get; set; }
-
     public string? Slug { get; set; }
-
     public string? Passthrough { get; set; }
     public bool ClosedCaptions { get; set; }
-
     public string? PublicPlaybackId { get; set; }
     public string? SignedPlaybackId { get; set; }
-
     public string? AssetId { get; set; } 
     public AssetCreationStatus StreamCreationStatus { get; set; }
-
     public PublicationStatus PublicationStatus { get; set; }
-
     public ContentAccess ContentAccess { get; set; }
-
-    public bool IsTestAsset { get; set; } 
-
-    public bool IsHostedOnMux { get; set; } 
-
-    public string? FileName { get; set; } 
-
+    public bool IsTestAsset { get; set; }
+    public bool IsHostedOnMux { get; set; }
+    public string? FileName { get; set; }
     public string? BlobName { get; set; }
 
     [StringLength(300)]

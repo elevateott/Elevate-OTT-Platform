@@ -1,4 +1,5 @@
-﻿using ElevateOTT.Domain.Entities.Content;
+﻿ using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
+ using ElevateOTT.Domain.Entities.Content;
 
 namespace ElevateOTT.Infrastructure.Persistence;
 
@@ -23,6 +24,7 @@ public class ApplicationDbContext : IdentityDbContext<
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITenantResolver _tenantResolver;
     private readonly IConfiguration _configuration;
+    private readonly IContentFeedService _contentFeedService;
 
     #endregion Private Fields
 
@@ -30,11 +32,13 @@ public class ApplicationDbContext : IdentityDbContext<
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
                                 IHttpContextAccessor httpContextAccessor,
                                 ITenantResolver tenantResolver,
-                                IConfiguration configuration) : base(options)
+                                IConfiguration configuration, 
+                                IContentFeedService contentFeedService) : base(options)
     {
         _httpContextAccessor = httpContextAccessor;
         _tenantResolver = tenantResolver;
         _configuration = configuration;
+        _contentFeedService = contentFeedService;
         Current = this;
     }
 
@@ -167,6 +171,7 @@ public class ApplicationDbContext : IdentityDbContext<
         {
             var id = await base.SaveChangesAsync(cancellationToken);
             TargetTenantIdProvidedByHost = null;
+
             return id;
         }
         catch (Exception ex)

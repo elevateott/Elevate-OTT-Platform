@@ -43,7 +43,7 @@ public class UpdateAuthorCommand : IRequest<Envelope<string>>
 
         public async Task<Envelope<string>> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
-            return await _authorUseCase.EditAuthor(request);
+           return await _authorUseCase.EditAuthor(request);
         }
 
         #endregion Public Methods

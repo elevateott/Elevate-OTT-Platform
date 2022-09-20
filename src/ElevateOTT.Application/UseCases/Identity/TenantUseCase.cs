@@ -1,4 +1,6 @@
-﻿using ElevateOTT.Application.Features.Identity.Tenants.Queries;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using ElevateOTT.Application.Common.Interfaces.Services.UtilityServices;
+using ElevateOTT.Application.Features.Identity.Tenants.Queries;
 using ElevateOTT.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,7 @@ public class TenantUseCase : ITenantUseCase
     private readonly IDemoIdentitySeeder _demoIdentitySeeder;
     private readonly ITenantResolver _tenantResolver;
     private readonly ILicenseService _licenseService;
+    private readonly IServiceUtils _serviceUtils;
 
     #endregion Private Fields
 
@@ -26,7 +29,7 @@ public class TenantUseCase : ITenantUseCase
                          RoleManager<ApplicationRole> roleManager,
                          IDemoIdentitySeeder demoIdentitySeeder,
                          ITenantResolver tenantResolver, 
-                         ILicenseService licenseService)
+                         ILicenseService licenseService, IServiceUtils serviceUtils)
     {
         _dbContext = dbContext;
         _partManager = partManager;
@@ -35,6 +38,7 @@ public class TenantUseCase : ITenantUseCase
         _demoIdentitySeeder = demoIdentitySeeder;
         _tenantResolver = tenantResolver;
         _licenseService = licenseService;
+        _serviceUtils = serviceUtils;
     }
 
     #endregion Public Constructors
@@ -53,6 +57,13 @@ public class TenantUseCase : ITenantUseCase
 
         if (_dbContext.Tenants != null)
         {
+            // Check if subdomain already exists, if so add random characters to end
+            var tenantWithSubdomain = await _dbContext.Tenants.FirstOrDefaultAsync(t => t.SubDomain != null && t.SubDomain.Equals(request.SubDomain));
+            if (tenantWithSubdomain is not null)
+            {
+                tenant.SubDomain = $"{request.SubDomain}-{_serviceUtils.RandomString(10, lowerCase: true)}";
+            }
+
             await _dbContext.Tenants.AddAsync(tenant);
         }
 
@@ -83,6 +94,14 @@ public class TenantUseCase : ITenantUseCase
         return result.IsError
             ? Envelope<CreateTenantResponse>.Result.ServerError(result.Message)
             : Envelope<CreateTenantResponse>.Result.Ok(payload);
+    }
+
+    public Tenant? GetTenant()
+    {
+        var tenantId = _tenantResolver.GetTenantId();
+        var tenant = _dbContext.Tenants?.FirstOrDefault(t => t.Id.Equals(tenantId));
+
+        return tenant;
     }
 
     public StorageNamePrefixResponse GetTenantStorageNamePrefix()

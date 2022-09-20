@@ -19,5 +19,7 @@ public interface IFileStorageService
 
     FileStatus GetFileState(IFormFile? formFile, string? oldUrl);
 
+    Task<string> SaveContentFeed(string jsonString, string fileNamePrefix, int? version);
+
     #endregion Public Methods
 }

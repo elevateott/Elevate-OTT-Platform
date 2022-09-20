@@ -9,6 +9,7 @@ public class Tenant : IAuditable
     public string? FullName { get; set; }
     public string? SubDomain { get; set; }
     public string? CustomDomain { get; set; }
+    public string? LanguageCode { get; set; } = "en-US";
     public string? HeardAboutUsFrom { get; set; }
     public string? StorageFileNamePrefix { get; set; }
     public string? CreatedBy { get; set; }

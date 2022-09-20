@@ -33,7 +33,7 @@ public static class LocalizationExtensions
 
         localizationOptions.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
         {
-            var userLanguages = context.Request.Headers["Accept-Language"].ToString();
+            var userLanguages = context.Request.Headers["Accept-LanguageCode"].ToString();
             var firstLanguage = userLanguages.Split(',').FirstOrDefault();
             var defaultLanguage = string.IsNullOrEmpty(firstLanguage) ? supportedCultures[0] : firstLanguage;
             return Task.FromResult(new ProviderCultureResult(defaultLanguage, defaultLanguage));

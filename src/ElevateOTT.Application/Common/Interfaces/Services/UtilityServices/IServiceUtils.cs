@@ -26,4 +26,12 @@ public interface IServiceUtils
     string EncodeTo64(string toEncode);
 
     string DecodeBase64(string toDecode);
+
+    /// <summary>
+    /// Generates a random string with a given size. 
+    /// </summary>
+    /// <param name="subdomain"></param>
+    /// <returns></returns>
+    string RandomString(int size, bool lowerCase = false);
+
 }

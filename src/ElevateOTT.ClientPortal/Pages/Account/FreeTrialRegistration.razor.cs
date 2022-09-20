@@ -44,6 +44,8 @@ public partial class FreeTrialRegistration : ComponentBase
     {
         SubmitButtonDisabled = true;
 
+        RegisterCommand.SubDomain = RegisterCommand?.ChannelName?.FormatSubdomain();
+
         var httpResponseWrapper = await AccountsClient.Register(RegisterCommand);
 
         if (httpResponseWrapper.Success)

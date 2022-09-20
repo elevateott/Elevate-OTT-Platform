@@ -25,8 +25,8 @@ public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
         {
             Id = Guid.NewGuid(),
             FullName = FullName,
-            ChannelName = ChannelName,
             SubDomain = SubDomain,
+            ChannelName = ChannelName,
             HeardAboutUsFrom = HeardAboutUsFrom
         };
     }
@@ -40,16 +40,16 @@ public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
 
         #region Private Fields
 
-        private readonly ITenantUseCase _roleUseCase;
+        private readonly ITenantUseCase _tenantUseCase;
         private readonly ITenantResolver _tenantResolver;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public CreateTenantCommandHandler(ITenantUseCase roleUseCase, ITenantResolver tenantResolver)
+        public CreateTenantCommandHandler(ITenantUseCase tenantUseCase, ITenantResolver tenantResolver)
         {
-            _roleUseCase = roleUseCase;
+            _tenantUseCase = tenantUseCase;
             _tenantResolver = tenantResolver;
         }
 
@@ -59,7 +59,7 @@ public class CreateTenantCommand : IRequest<Envelope<CreateTenantResponse>>
 
         public async Task<Envelope<CreateTenantResponse>> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
         {
-            return await _roleUseCase.AddTenant(request);
+            return await _tenantUseCase.AddTenant(request);
         }
 
         #endregion Public Methods

@@ -1,4 +1,5 @@
-﻿using ElevateOTT.Application.Common.Interfaces.Repository;
+﻿using DocumentFormat.OpenXml.Presentation;
+using ElevateOTT.Application.Common.Interfaces.Repository;
 
 namespace ElevateOTT.Infrastructure.Repository
 {
@@ -24,9 +25,9 @@ namespace ElevateOTT.Infrastructure.Repository
 			  ApplicationDbContext.Set<T>()
 				.Where(expression);
 
-		public void Create(T entity) => ApplicationDbContext.Set<T>().Add(entity);
+        public void Create(T entity) => ApplicationDbContext.Set<T>().Add(entity);
 
-		public void Update(T entity) => ApplicationDbContext.Set<T>().Update(entity);
+        public void Update(T entity) => ApplicationDbContext.Set<T>().Update(entity);
 
 		public void Delete(T entity) => ApplicationDbContext.Set<T>().Remove(entity);
 

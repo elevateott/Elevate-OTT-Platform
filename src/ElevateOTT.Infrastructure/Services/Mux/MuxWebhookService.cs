@@ -313,7 +313,7 @@ public class MuxWebhookService : IMuxWebhookService
             videoToUpdate.SignedPlaybackId = signedPlaybackId;
             if (!string.IsNullOrEmpty(publicPlaybackId))
             {
-                videoToUpdate.StreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
+                videoToUpdate.PublicStreamUrl = $"{baseStreamUrl}/{publicPlaybackId}.m3u8";
                 videoToUpdate.PublicPlaybackId = publicPlaybackId;
                 videoToUpdate.ThumbnailUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 140, 64);
                 videoToUpdate.PlayerImageUrl = GetVideoImageUrlAtMux(publicPlaybackId, baseImageUrl, 1920, 1080);
@@ -758,7 +758,7 @@ public class MuxWebhookService : IMuxWebhookService
     //        string? playbackId = GetPublicPlaybackId(hookRequest.Data.PlaybackIds);
     //        string baseStreamUrl = muxOptions.BaseStreamUrl;
     //        // videoCreation.VideoImages = GetVideoImageUrls(playbackId, baseStreamUrl);
-    //        videoCreation.StreamUrl = $"{baseStreamUrl}/{playbackId}.m3u8";
+    //        videoCreation.PublicStreamUrl = $"{baseStreamUrl}/{playbackId}.m3u8";
     //        videoCreation.PublicPlaybackId = playbackId;
     //    }
 

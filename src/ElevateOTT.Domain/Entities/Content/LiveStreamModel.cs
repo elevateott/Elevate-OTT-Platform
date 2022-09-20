@@ -8,7 +8,6 @@ public class LiveStreamModel : BaseAsset, IMustHaveTenant
     public Guid TenantId { get; set; }
     public string? Name { get; set; }
     public string? Sku { get; set; }
-    public string? StreamUrl { get; set; }
     public string? StreamKey { get; set; }
     public StreamType StreamType { get; set; } = StreamType.Hls;
     public string? RtmpUrl { get; set; }

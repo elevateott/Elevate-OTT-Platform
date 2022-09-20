@@ -1,4 +1,5 @@
-﻿using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
+﻿using System.Runtime.CompilerServices;
+using ElevateOTT.Application.Common.Interfaces.UseCases.Content;
 
 namespace ElevateOTT.Application.Features.Content.Authors.Commands.CreateAuthor;
 
@@ -25,6 +26,7 @@ public class CreateAuthorCommand : IRequest<Envelope<CreateAuthorResponse>>
 
         private readonly IAuthorUseCase _authorUseCase;
 
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -37,7 +39,7 @@ public class CreateAuthorCommand : IRequest<Envelope<CreateAuthorResponse>>
         #region Public Methods
         public async Task<Envelope<CreateAuthorResponse>> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
         {
-            return await _authorUseCase.AddAuthor(request);
+           return  await _authorUseCase.AddAuthor(request);
         }
         #endregion Public Methods
     }

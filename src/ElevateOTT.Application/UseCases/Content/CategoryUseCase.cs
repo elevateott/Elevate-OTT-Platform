@@ -24,6 +24,8 @@ public class CategoryUseCase : ICategoryUseCase
     private readonly ITenantResolver _tenantResolver;
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
+    private readonly IContentFeedService _contentFeedService;
+
 
     #endregion Private Fields
 
@@ -36,7 +38,7 @@ public class CategoryUseCase : ICategoryUseCase
                             IRepositoryManager repositoryManager,
                             ITenantResolver tenantResolver,
                             IStorageProvider storageProvider,
-                            IConfigReaderService configReaderService)
+                            IConfigReaderService configReaderService, IContentFeedService contentFeedService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -46,6 +48,7 @@ public class CategoryUseCase : ICategoryUseCase
         _tenantResolver = tenantResolver;
         _storageProvider = storageProvider;
         _configReaderService = configReaderService;
+        _contentFeedService = contentFeedService;
     }
 
     #endregion Public Constructors
@@ -59,14 +62,14 @@ public class CategoryUseCase : ICategoryUseCase
             return Envelope<CategoryForEdit>.Result.BadRequest("Invalid category id");
         }
 
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<CategoryForEdit>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<CategoryForEdit>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        var category = await _repositoryManager.Category.GetCategoryAsync(tenantId.Value, request.Id.Value, false);
+        var category = await _repositoryManager.Category.GetCategoryAsync(request.Id.Value, false);
 
         if (category == null)
             return Envelope<CategoryForEdit>.Result.NotFound("Unable to load category");
@@ -78,14 +81,14 @@ public class CategoryUseCase : ICategoryUseCase
 
     public async Task<Envelope<CategoriesResponse>> GetCategories(GetCategoriesQuery request)
     {
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<CategoriesResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<CategoriesResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        var query = _repositoryManager.Category.GetCategories(tenantId.Value, request, false);
+        var query = _repositoryManager.Category.GetCategories(request, false);
 
         var categoryItems = query is not null
             ? await query.Select(category => _mapper.Map<CategoryItem>(category))
@@ -102,14 +105,14 @@ public class CategoryUseCase : ICategoryUseCase
 
     public async Task<Envelope<CreateCategoryResponse>> AddCategory(CreateCategoryCommand request)
     {
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<CreateCategoryResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<CreateCategoryResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
+        string fileNamePrefix = await GetStorageFileNamePrefix();
 
         var category = _mapper.Map<CategoryModel>(request);
 
@@ -121,6 +124,10 @@ public class CategoryUseCase : ICategoryUseCase
 
         _repositoryManager.Category.CreateCategory(category);
         await _repositoryManager.SaveAsync();
+
+
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
 
         var createCategoryResponse = new CreateCategoryResponse
         {
@@ -134,16 +141,15 @@ public class CategoryUseCase : ICategoryUseCase
 
     public async Task<Envelope<string>> EditCategory(UpdateCategoryCommand request)
     {
-        var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
         // TODO uncomment
-        string fileNamePrefix = await GetStorageFileNamePrefix(tenantId.Value);
+        string? fileNamePrefix = await GetStorageFileNamePrefix();
 
-        var categoryEntity = await _repositoryManager.Category.GetCategoryAsync(tenantId.Value, request.Id, true);
+        var categoryEntity = await _repositoryManager.Category.GetCategoryAsync(request.Id, true);
 
         if (categoryEntity == null)
             return Envelope<string>.Result.NotFound("Unable_to_load_category");
@@ -157,19 +163,22 @@ public class CategoryUseCase : ICategoryUseCase
 
         await _repositoryManager.SaveAsync();
 
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
+
         return Envelope<string>.Result.Ok("Category_has_been_updated_successfully");
     }
 
     public async Task<Envelope<string>> DeleteCategory(DeleteCategoryCommand request)
     {
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        var categoryEntity = await _repositoryManager.Category.GetCategoryAsync(tenantId.Value, request.Id, true);
+        var categoryEntity = await _repositoryManager.Category.GetCategoryAsync(request.Id, true);
         await _repositoryManager.SaveAsync();
 
         if (categoryEntity == null)
@@ -178,14 +187,19 @@ public class CategoryUseCase : ICategoryUseCase
         _repositoryManager.Category.DeleteCategory(categoryEntity);
         await _repositoryManager.SaveAsync();
 
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
+
         return Envelope<string>.Result.Ok("Category_has_been_deleted_successfully");
     }
 
     #endregion Public Methods
 
     #region Private Methods
-    private async Task<string> GetStorageFileNamePrefix(Guid tenantId)
+    private async Task<string?> GetStorageFileNamePrefix()
     {
+        var tenantId = _tenantResolver.GetTenantId();
+
         if (_dbContext.Tenants == null) return string.Empty;
 
         var tenant = await _dbContext.Tenants.FindAsync(tenantId);

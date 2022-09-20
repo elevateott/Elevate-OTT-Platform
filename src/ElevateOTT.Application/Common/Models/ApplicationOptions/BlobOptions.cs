@@ -19,6 +19,9 @@ public class BlobOptions
     public string ContentFeedBlobContainerName { get; set; } = string.Empty;
     public int SASExpiresOnInMinutes { get; set; }
     public string BlobBaseUrl { get; set; } = string.Empty;
+    public string ContentFeedFileName { get; set; } = string.Empty;
+    public string ContentFeedVersion { get; set; } = string.Empty;
+
 
     #endregion Public Properties
 }

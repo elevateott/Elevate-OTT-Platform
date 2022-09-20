@@ -21,13 +21,17 @@ public class RegisterCommand : IRequest<Envelope<RegisterResponse>>
 
     public ApplicationUser MapToEntity()
     {
-        var nameSplit = FullName?.Split(' ');
+        var nameSplit = FullName?.Trim().Split(' ');
         string firstName = string.Empty;
         string lastName = string.Empty;
         if (nameSplit != null)
         {
             firstName = nameSplit[0];
             lastName = nameSplit[^1];
+        }
+        else
+        {
+            firstName = FullName ?? string.Empty;
         }
 
         string[] defaultProfilePics = new[]

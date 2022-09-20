@@ -14,13 +14,12 @@ namespace ElevateOTT.Infrastructure.Repository
         {
         }
 
-        public IQueryable<VideoModel>? GetVideos(Guid tenantId, GetVideosQuery? request, bool trackChanges)
+        public IQueryable<VideoModel>? GetVideos(GetVideosQuery? request, bool trackChanges)
         {
             Guard.Against.Null(request, nameof(request));
 
             var query = FindAll(trackChanges)
-                .Include(v => v.Author)
-                .Where(v => v.TenantId.Equals(tenantId));
+                .Include(v => v.Author).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.SearchText))
                 query = query
@@ -41,9 +40,8 @@ namespace ElevateOTT.Infrastructure.Repository
             return video;
         }
 
-        public async Task<VideoModel?> GetVideoAsync(Guid tenantId, Guid videoId, bool trackChanges) =>
-            await FindByCondition(a => a.TenantId.Equals(tenantId)
-                                       && a.Id.Equals(videoId), trackChanges)
+        public async Task<VideoModel?> GetVideoAsync(Guid videoId, bool trackChanges) =>
+            await FindByCondition(a => a.Id.Equals(videoId), trackChanges)
                 .Include(v => v.Author)
                 .Include(v => v.VideosCategories)
                 .SingleOrDefaultAsync();
@@ -54,10 +52,8 @@ namespace ElevateOTT.Infrastructure.Repository
                 .Include(v => v.VideosCategories)
                 .SingleOrDefaultAsync();
 
-        public void CreateVideoForTenant(Guid tenantId, VideoModel video)
+        public void CreateVideoForTenant(VideoModel video)
         {
-            video.TenantId = tenantId;
-            video.CreatedOn = DateTime.Now;
             Create(video);
         }
 

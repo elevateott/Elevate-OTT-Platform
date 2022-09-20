@@ -34,6 +34,7 @@ public class VideoUseCase : IVideoUseCase
     private readonly IStorageProvider _storageProvider;
     private readonly IConfigReaderService _configReaderService;
     private readonly IMuxAssetService _muxAssetService;
+    private readonly IContentFeedService _contentFeedService;
 
     #endregion Private Fields
 
@@ -47,7 +48,8 @@ public class VideoUseCase : IVideoUseCase
                             ITenantResolver tenantResolver,
                             IStorageProvider storageProvider,
                             IConfigReaderService configReaderService,
-                            IMuxAssetService muxAssetService)
+                            IMuxAssetService muxAssetService, 
+                            IContentFeedService contentFeedService)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -58,6 +60,7 @@ public class VideoUseCase : IVideoUseCase
         _storageProvider = storageProvider;
         _configReaderService = configReaderService;
         _muxAssetService = muxAssetService;
+        _contentFeedService = contentFeedService;
     }
 
     #endregion Public Constructors
@@ -71,14 +74,14 @@ public class VideoUseCase : IVideoUseCase
             return Envelope<VideoForEdit>.Result.BadRequest(Resource.Invalid_video_Id);
         }
 
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<VideoForEdit>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<VideoForEdit>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        var video = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, request.Id.Value, false);
+        var video = await _repositoryManager.Video.GetVideoAsync(request.Id.Value, false);
    
         if (video == null)
             return Envelope<VideoForEdit>.Result.NotFound(Resource.Unable_to_load_video);
@@ -97,7 +100,7 @@ public class VideoUseCase : IVideoUseCase
         // videos
         if (video?.TrailerVideoId is not null)
         {
-            var trailerVideo = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, video.TrailerVideoId.Value, false);
+            var trailerVideo = await _repositoryManager.Video.GetVideoAsync(video.TrailerVideoId.Value, false);
             videoForEdit.TrailerVideo = trailerVideo is not null ? new VideoItemForAutoComplete
             {
                 Id = trailerVideo.Id,
@@ -109,7 +112,7 @@ public class VideoUseCase : IVideoUseCase
 
         if (video?.FeaturedCategoryVideoId is not null)
         {
-            var featuredCategoryVideo = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, video.FeaturedCategoryVideoId.Value, false);
+            var featuredCategoryVideo = await _repositoryManager.Video.GetVideoAsync(video.FeaturedCategoryVideoId.Value, false);
             videoForEdit.TrailerVideo = featuredCategoryVideo is not null ? new VideoItemForAutoComplete
             {
                 Id = featuredCategoryVideo.Id,
@@ -124,14 +127,14 @@ public class VideoUseCase : IVideoUseCase
 
     public async Task<Envelope<VideosResponse>> GetVideos(GetVideosQuery request)
     {
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<VideosResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<VideosResponse>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        var query = _repositoryManager.Video.GetVideos(tenantId.Value, request, false);
+        var query = _repositoryManager.Video.GetVideos(request, false);
 
         // TODO should query be nullable ?????
 
@@ -169,7 +172,7 @@ public class VideoUseCase : IVideoUseCase
         video.DownloadUrl = videoUrl;
         video.TenantId = tenantId.Value;
 
-        _repositoryManager.Video.CreateVideoForTenant(tenantId.Value, video);
+        _repositoryManager.Video.CreateVideoForTenant(video);
         await _repositoryManager.SaveAsync();
 
         var createVideoResponse = new CreateVideoResponse
@@ -197,7 +200,7 @@ public class VideoUseCase : IVideoUseCase
         if (tenantId is null)
         {
             return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }      
+        }
 
         string? fileNamePrefix = string.Empty;
 
@@ -208,7 +211,7 @@ public class VideoUseCase : IVideoUseCase
                 ? tenant.StorageFileNamePrefix : tenantId.Value.ToString();
         }
 
-        var videoEntity = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, request.Id, true);
+        var videoEntity = await _repositoryManager.Video.GetVideoAsync(request.Id, true);
 
         if (videoEntity == null)
             return Envelope<string>.Result.NotFound(Resource.Unable_to_load_video);
@@ -242,6 +245,8 @@ public class VideoUseCase : IVideoUseCase
 
         await _repositoryManager.SaveAsync();
 
+        await _contentFeedService.CreateContentFeed(_dbContext);
+
         return Envelope<string>.Result.Ok(Resource.Video_has_been_updated_successfully);
     }
 
@@ -270,14 +275,14 @@ public class VideoUseCase : IVideoUseCase
 
     public async Task<Envelope<string>> DeleteVideo(DeleteVideoCommand request)
     {
-        var tenantId = _tenantResolver.GetTenantId();
+        //var tenantId = _tenantResolver.GetTenantId();
 
-        if (tenantId is null)
-        {
-            return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
-        }
+        //if (tenantId is null)
+        //{
+        //    return Envelope<string>.Result.BadRequest(Resource.Invalid_tenant_Id);
+        //}
 
-        var videoEntity = await _repositoryManager.Video.GetVideoAsync(tenantId.Value, request.Id, true);
+        var videoEntity = await _repositoryManager.Video.GetVideoAsync(request.Id, true);
         await _repositoryManager.SaveAsync();
 
         if (videoEntity == null)
@@ -285,6 +290,8 @@ public class VideoUseCase : IVideoUseCase
 
         _repositoryManager.Video.DeleteVideo(videoEntity);
         await _repositoryManager.SaveAsync();
+
+        await _contentFeedService.CreateContentFeed(_dbContext);
 
         return Envelope<string>.Result.Ok(Resource.Video_has_been_deleted_successfully);
     }
